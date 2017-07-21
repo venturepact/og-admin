@@ -1,0 +1,424 @@
+<div class="col-md-12 np">
+    <div class="container col-md-12 np">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <div class="col-sm-8">
+                                <h4>Membership Details</h4>
+                            </div>
+                            <div class="col-sm-2">
+                                <h4>Edit:</h4>
+                            </div>
+                            <div class="col-sm-2">
+                                <label class="switch">
+                                    <input type="checkbox" [(ngModel)]="edit_mode">
+                                    <div class="slider round"></div>
+                                </label>
+                            </div>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div *ngIf="!edit_mode" class=" col-md-12 col-lg-12 ">
+                                <table class="table table-bordered table-hover table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>Current Plan:</td>
+                                            <td>
+                                                {{plan==null?'NA':plan}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subscription status:</td>
+                                            <td>
+                                                {{subscriptionStatus==null?'NA':subscriptionStatus}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>started on:</td>
+                                            <td>
+                                                {{start_date==null?'NA':start_date}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trial Start</td>
+                                            <td>
+                                                {{trial_start}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trial End</td>
+                                            <td>
+                                                {{trial_end}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>No of Addon</td>
+                                            <td>
+                                                {{company.addon_quantity}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            Reset current usage on <br/>subscription renewal or upgrade.
+                                          </td>
+                                          <td>
+                                            <label class="switch">
+                                              <input type="checkbox" id="resetChange" [(ngModel)] = "reset_current_usage" (change)="changed()" [ngModelOptions]="{standalone: true}">
+                                              <div class="slider round"></div>
+                                            </label>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reset Period</td>
+                                            <td>
+                                                {{company.reset_period}} days
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table col-sm-12 table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Base Plan Limit</th>
+                                            <th>Limit per Addon</th>
+                                            <th>Current Limit
+                                                <p><small>(plan Limit + no of Addon* limit per Addon)</small></p>
+                                            </th>
+                                            <th>
+                                                Current Usage<br/>
+                                                (<small>Unique Leads &amp; Visits</small>)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Leads</td>
+                                            <td>{{company.leads.total == -1 ?'unlimited': company.leads.total}}</td>
+                                            <td>{{company.addon_leads}}</td>
+                                            <td>{{company.current_limit_leads ==-1 ?'unlimited': company.current_limit_leads}}</td>
+                                            <td>{{company.current_usage_leads}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Visits</td>
+                                            <td>{{company.traffic.frequency == -1 ?'unlimited' : company.traffic.frequency}}</td>
+                                            <td>{{company.addon_traffic}}</td>
+                                            <td>{{company.current_limit_traffic == -1 ?'unlimited' : company.current_limit_traffic}}</td>
+                                            <td>{{company.current_usage_traffic}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="submit" *ngIf = "company.current_limit_traffic !== -1 && subscriptionStatus=='active'" id="addAddonbtn" (click)="addAddon()" class="btn btn-blue btn-red btn-signUp">
+                                    Add Addon
+                                </button>
+                                <p *ngIf="err_message !== ''" style="color:red">{{'*' + err_message}}</p>
+                                <p *ngIf = "company.current_limit_traffic == -1">*Addon can't be applied as there is no limit on leads and visits.</p>
+                            </div>
+
+                            <form [formGroup]="updateFormDetail"  (ngSubmit)="updateCompanyAddon()" *ngIf="edit_mode" class="col-sm-12">
+                                <div class="borderbox">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Base Plan Leads
+                                        </div>
+                                        <div class="col-sm-3" *ngIf="!plan_leads_check">
+                                            <input class="form-control" [(ngModel)]="plan_leads" type="text" formControlName="plan_leads" />
+                                        </div>
+                                        <div class="col-sm-3" *ngIf="plan_leads_check">
+                                            <input class="form-control" value="Unlimited"  disabled type="text" />
+                                        </div>
+                                        <div class="checkbox col-sm-5">
+                                            <label><input type="checkbox" [(ngModel)] = "plan_leads_check" [ngModelOptions]="{standalone: true}"   >*Unlimited</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="error" *ngIf="updateFormDetail.controls.plan_leads.errors?.pattern">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                invalid number
+                                            </p>
+                                            <p class="error" *ngIf="updateFormDetail.controls.plan_leads.errors?.required">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                required
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Base Plan Visits
+                                        </div>
+                                        <div class="col-sm-3" *ngIf="!plan_traffic_check">
+                                            <input class="form-control" [(ngModel)]="plan_traffic" formControlName="plan_traffic" type="text" />
+                                        </div>
+                                        <div class="col-sm-3" *ngIf="plan_traffic_check">
+                                            <input class="form-control"  value="Unlimited" disabled type="text" />
+                                        </div>
+                                        <div class="checkbox col-sm-5">
+                                            <label><input type="checkbox" [(ngModel)] = "plan_traffic_check" [ngModelOptions]="{standalone: true}"  >*Unlimited</label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="error" *ngIf="updateFormDetail.controls.plan_traffic.errors?.pattern">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                invalid number
+                                            </p>
+                                            <p class="error" *ngIf="updateFormDetail.controls.plan_traffic.errors?.required">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="borderbox">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Leads/Addon
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input class="form-control" formControlName="addon_leads" [(ngModel)]="addon_leads" (change)="test()" type="text" />
+                                        </div>
+                                        <div class="checkbox col-sm-5">
+
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="error" *ngIf="updateFormDetail.controls.addon_leads.errors?.pattern">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                invalid number
+                                            </p>
+                                             <p class="error" *ngIf="updateFormDetail.controls.addon_leads.errors?.required">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                required
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Visits/Addon
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input class="form-control" formControlName="addon_traffic" [(ngModel)]="addon_traffic" type="text" />
+                                        </div>
+                                        <div class="checkbox col-sm-5">
+
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="error" *ngIf="updateFormDetail.controls.addon_traffic.errors?.pattern">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                invalid number
+                                            </p>
+                                            <p class="error" *ngIf="updateFormDetail.controls.addon_traffic.errors?.required">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="borderbox">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Reset Period(days)
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select formControlName="reset_period" [(ngModel)]="reset_period">
+                                                <option *ngFor="let period of company.reset_period_list" value= {{period}}>
+                                                    {{period}}
+                                                </option>
+                                            </select>
+                                            <!--<input class="form-control" formControlName="reset_period" [(ngModel)]="reset_period" type="text" />-->
+                                        </div>
+                                        <div class="checkbox col-sm-5">
+
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="error" *ngIf="updateFormDetail.controls.reset_period.errors?.pattern">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                invalid number
+                                            </p>
+                                            <p class="error" *ngIf="updateFormDetail.controls.reset_period.errors?.required">
+                                                <span class="mat-icon">
+                                                    <i class="material-icons">report_problem</i>
+                                                </span>
+                                                required
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" id="btnSaveDetail"  class="btn btn-blue btn-red btn-signUp">Update</button>
+
+                                <p>*Addon will not be apply if Base Plan is unlimited</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <div class="col-sm-12">
+                                <h4>Membership Details</h4>
+                            </div>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class=" col-md-12 col-lg-12 ">
+                                <table class="table table-bordered table-hover table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>Card Type</td>
+                                            <td>
+                                                {{card?.card_type}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Customer ID</td>
+                                            <td>
+                                                {{card?.customer_id}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Expiry Month</td>
+                                            <td>
+                                                {{card?.expiry_month}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Expiry Year</td>
+                                            <td>
+                                                {{card?.expiry_year}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Masked No</td>
+                                            <td>{{card?.masked_number}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12 np payment-history">
+    <div class="col-md-12 col-sm-12 col-xs-12 np payment-history-details-header">
+        <div class="col-md-8 col-sm-8 col-xs-12 np">
+            <h6 class="">Invoices</h6>
+        </div>
+        <div class="col-md-4 np membership-top-wrapper-sec1-right">
+            <ul class="">
+                <!-- <li>
+                    <a href="javascript:void(0);" class="">
+                        <span class="mat-icon">
+                            <i class="material-icons">help</i>
+                        </span>
+                        &nbsp;Billing FAQs
+                    </a>
+                </li> -->
+                <!-- <li>
+                    <a href="javascript:void(0);" class="">
+                        <span class="mat-icon">
+                            <i class="material-icons">chat_bubble</i>
+                        </span>
+                        &nbsp;Contact Us
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <div class="payment-history-dialog">
+        <!-- Modal content-->
+        <div class="payment-history-content">
+            <!-- <div class="payment-history-header ">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+                <h5 class="payment-history-title">Payment History</h5>
+            </div> -->
+            <div class="payment-history-body col-md-12 np">
+                <div class="sahil-material">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No.</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Paid Via</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let invoice of invoices" value="invoice">
+                                <tr *ngIf="isInvoiceExist">
+                                    <td>{{invoice.invoiceNo}}</td>
+                                    <td class="text-opacity">{{invoice.date}} </td>
+                                    <td>$ {{invoice.amount_paid/100}} </td>
+                                    <td class="text-opacity">Credit Card</td>
+                                    <td>
+                                        <a href="{{invoice.href}}" class="invoiceId pdf-download" target="_blank">
+                                            PDF
+                                            <!-- <i class="material-icons">file_download</i> -->
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr *ngIf="!isInvoiceExist">
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="5" class="no-invoice">
+                                        No Invoice has been raised
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-history-footer col-md-12 np">
+                <div class="col-md-5 np"></div>
+                <div class="col-md-7 np">
+                    <!--<button type="" class="btn btn-red-outline btn-hover">Approve Request</button>-->
+                    <ul class="pagination hide">
+                        <li><a href="javascript:void(0);">1</a></li>
+                        <li><a href="javascript:void(0);">2</a></li>
+                        <li><a href="javascript:void(0);">3</a></li>
+                        <li><a href="javascript:void(0);">4</a></li>
+                        <li><a href="javascript:void(0);">5</a></li>
+                        <li><a href="javascript:void(0);"><i class="material-icons">play_arrow</i></a></li>
+                        <li><a href="javascript:void(0);"><i class="material-icons">skip_next</i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

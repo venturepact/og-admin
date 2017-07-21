@@ -1,0 +1,145 @@
+<div class="col-md-10">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<div class="col-sm-12 ">
+								<h4>Email Logs</h4>
+							</div>
+						</div>
+					</div>
+					<div  class="panel-body">
+						<div style="margin-top:20px" class="panel-group">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse"  data-parent="#inbox_mail" href="#inbox_mail">
+				       						Inbox 
+										</a>
+									</h4>
+								</div>
+								<div id="inbox_mail"  class="panel-collapse collapse">
+									<div class="panel-body">
+										<div>
+											<table id="#inbox-datatable" class="dataTable">
+												<thead>
+													<th>
+														Sender
+													</th>
+													<th>
+														Reciever
+													</th>
+													<th>
+														Subject
+													</th>
+													<th>
+														Template ID
+													</th>
+													<th>
+														Status
+													</th>
+													<th>
+														Date
+													</th>
+												</thead>
+												<tbody>
+													<tr *ngFor= "let log of inbox">
+														<td>
+															{{log.sender}}
+														</td>
+														<td>
+															{{log.receiver}}
+														</td>
+														<td>
+															{{log.subject}}
+														</td>
+														<td>
+															{{log.templateId}}
+														</td>
+														<td>
+															{{log.status}}
+														</td>
+														<td>
+															{{log.createdAt}}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel-body">
+						<div class="panel-group">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse"  data-parent="#outbox_mail" href="#outbox_mail">
+				       						Outbox
+										</a>
+									</h4>
+								</div>
+								<div id="outbox_mail" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div>
+											<table id="#outbox-datatable"  class="dataTable">
+												<thead>
+													<th>
+														Sender
+													</th>
+													<th>
+														Reciever
+													</th>
+													<th>
+														Subject
+													</th>
+													<th>
+														Template ID
+													</th>
+													<th>
+														Status
+													</th>
+													<th>
+														Date
+													</th>
+												</thead>
+												<tbody>
+													<tr *ngFor= "let log of outbox">
+														<td>
+															{{log.sender}}
+														</td>
+														<td>
+															{{log.receiver}}
+														</td>
+														<td>
+															{{log.subject}}
+														</td>
+														<td>
+															{{log.templateId}}
+														</td>
+														<td>
+															{{log.status}}
+														</td>
+														<td>
+															{{log.createdAt}}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

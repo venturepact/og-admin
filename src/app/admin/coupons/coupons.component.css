@@ -1,0 +1,297 @@
+:host {
+  display: block;
+  padding: 0 16px;
+}
+
+input {
+  width: 250px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 0 0 8px;
+}
+
+.all-companies-container{
+  top:100px;
+  position: relative;
+  margin-left: 255px;
+}
+
+
+.dataTables_length{
+  display: inherit;
+}
+
+.dataTables_filter{
+  display: inherit;
+}
+
+#createPromocodeModal .modal-header, #viewPromocodeModal .modal-header {
+  border-radius: 7px 7px 0 0
+}
+#createPromocodeModal .btn-red-outline, #viewPromocodeModal .btn-erd-outline {
+  float: right
+}
+#createPromocodeModal span#upgradeLink button {
+  color: #fb545b;
+  background-color: #fff;
+  border-radius: 0;
+  font-size: 10px;
+  padding: 6px 10px;
+  transition: all .3s ease 0s;
+  font-family: montserratregular;
+  text-transform: uppercase;
+  box-shadow: none;
+  border: none;
+  margin-left: 10px
+}
+#createPromocodeModal span#upgradeLink button:hover {
+  background: #fdb6b9;
+  color: #fb545b;
+  border-color: #fdb6b9
+}
+#createPromocodeModal .alert.alert-danger p, #viewPromocodeModal .alert.alert-danger p {
+  float: left;
+  width: auto;
+  padding-top: 5px
+}
+#createPromocodeModal .alert.alert-danger p span,, #viewPromocodeModal .alert.alert-danger p span,
+#createPromocodeModal span#upgradeLink, #viewPromocodeModal span#upgradeLink {
+  float: left
+}
+#createPromocodeModal .modal-content, #viewPromocodeModal .modal-content {
+  border-radius: 8px
+}
+#createPromocodeModal .modal-header, #viewPromocodeModal .modal-header {
+  padding: 10px 17px;
+  border-bottom: none;
+  background: #61686e
+}
+#createPromocodeModal.modal button.close.btn-close, #viewPromocodeModal.modal  button.close.btn-close{
+  text-shadow: none;
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  z-index: 9;
+  opacity: 1;
+  transition: all .3s ease 0s!important
+}
+#createPromocodeModal.modal button.close.btn-help, #viewPromocodeModal.modal button.close.btn-help {
+  text-shadow: none;
+  position: absolute;
+  right: 40px;
+  top: 11px;
+  z-index: 9;
+  opacity: 1;
+  transition: all .3s ease 0s!important
+}
+#createPromocodeModal.modal i.material-icons, #viewPromocodeModal.modal i.material-icons {
+  font-size: 16px;
+  color: #fff
+}
+#createPromocodeModal.modal button.close.btn-help i.material-icons, #viewPromocodeModal.modal button.close.btn-help i.material-icons {
+  font-size: 14px;
+  color: #fff
+}
+#createPromocodeModal .modal-title, #viewPromocodeModal .modal-title {
+  text-transform: uppercase;
+  color: #fff
+}
+#createPromocodeModal .modal-body, #viewPromocodeModal .modal-body {
+  padding: 15px 25px 30px
+}
+#createPromocodeModal .btn-red-outline, #viewPromocodeModal .btn-red-outline {
+  color: #fb545b;
+  background-color: #fff;
+  border-color: #ffb5b8;
+  border-radius: 0;
+  font-size: 11px;
+  padding: 7px 20px;
+  margin: 10px 0;
+  transition: all .3s ease 0s;
+  font-family: montserratregular;
+  text-transform: uppercase
+}
+#createPromocodeModal .modal-footer, #viewPromocodeModal .modal-footer {
+  padding: 15px 25px;
+  text-align: right;
+  border-top: none
+}
+.modal#createPromocodeModal .form-group:first-child, .modal#viewPromocodeModal .form-group:first-child {
+  margin-top: 12px
+}
+.alert.alert-danger {
+  background: 0 0!important;
+  border: none;
+  position: relative;
+  top: -12px;
+  left: 0;
+  padding: 0;
+  color: #fb545b!important;
+  font-size: 11px;
+  margin: 0;
+  float: left;
+  width: 100%;
+  text-align: left
+}
+.alert.alert-danger p {
+  position: absolute;
+  width: 100%
+}
+.alert.alert-dange p span.mat-icon {
+  float: left;
+  width: auto
+}
+.alert.alert-danger p span.mat-icon i.material-icons {
+  float: left;
+  font-size: 12px!important;
+  margin-right: 5px;
+  margin-top: 1px;
+  color: #fb545b!important
+}
+.alert.alert-danger.custom-alert {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 0;
+  background: #feddde!important
+}
+.alert.alert-danger.custom-alert p {
+  position: relative
+}
+.radio-inline {
+  font-size: 11px!important;
+  font-weight: 400!important;
+  padding-left: 0;
+  font-family: montserratlight;
+  color: #666!important
+}
+.radio-inline input[type=radio] {
+  left: -9999px;
+  position: absolute
+}
+.form-group.form-group-radio .radio-inline+.radio-inline {
+  margin-left: 15px
+}
+.radio-inline label {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  top: 0;
+  border: 1px solid #fb545b;
+  border-radius: 50%;
+  margin: 0 7px 0 auto;
+  cursor: pointer
+}
+.form-group.form-group-radio {
+  margin: 20px 0;
+  float: left;
+  width: 100%
+}
+.form-group-radio label {
+  float: left
+}
+.radio-inline input[type=radio]:checked+label {
+  background: #fb545b
+}
+.radio-inline input[type=radio]:checked+label::after {
+  font-family: "Material Icons";
+  content: "\e5ca"
+}
+.radio-inline label::after {
+  display: inline-block;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  left: 1px;
+  top: -5px;
+  font-size: 15px;
+  color: #fff
+}
+
+#createPromocodeModal .in-active, #viewPromocodeModal .in-active{
+  position: absolute;
+  top: 14px;
+  right: 0;
+  font-size: 10px !important;
+  color: #666 !important;
+  font-family: montserratregular;
+  text-transform: uppercase;
+}
+.imgLoad{
+  display:block;
+  margin: 0 auto;
+}
+#couponView{
+  padding: 10px 10px;
+}
+#tblCouponView td{
+  padding: 5px 5px;
+  padding-right: 15px;
+}
+
+
+/* switch class  */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #5E35B1 !important;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.couponNote{
+  font-size: 10px;
+  color: #999;
+}

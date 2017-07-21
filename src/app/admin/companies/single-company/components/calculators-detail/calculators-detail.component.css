@@ -1,0 +1,16 @@
+.pad-div{
+    padding-bottom: 50px;
+}
+
+.panel-title{
+  color: #fff;
+  background: #fb5559;
+  padding: 15px 15px;
+  float: left;
+    width: 100%;
+}
+.panel{
+  border: 1px solid #fb5559 !important;
+  float: left;
+  width: 100%;
+}

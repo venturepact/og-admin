@@ -1,0 +1,423 @@
+<div id="table" class="all-companies-container">
+  <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+    <div class="dataTables_length" id="table-dataTables_length">
+      <label>Show
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)" class="">
+          <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
+        </select>
+        entries
+      </label>
+    </div>
+    <div id="table-datatable_filter" class="dataTables_filter">
+      <button id="createPromocode" class="btn btn-primary" data-toggle="modal" data-target="#createPromocodeModal">Create</button>
+      <label>
+        Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
+      </label>
+      <label>Status
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "statusChange($event)" class="">
+          <option value="active">Active</option>
+          <option value="deleted">Deleted</option>
+          <option value="archived">Archived</option>
+          <option value="expired">Expired</option>
+        </select>
+      </label>
+    </div>
+    <div *ngIf="loading">
+      <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+    </div>
+    <table *ngIf="!loading" class="dataTable">
+      <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Code
+        </th>
+        <th>
+          For Plan
+        </th>
+        <th>
+          Created At
+        </th>
+        <th *ngIf="status == 'active' || status == 'archived'">
+          View
+        </th>
+        <th *ngIf="status == 'active'">
+          Delete
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let couponcode of couponcodes">
+        <td>
+          {{couponcode.name}}
+        </td>
+        <td>
+          {{couponcode.id}}
+        </td>
+        <td>
+          {{couponcode.apply_for}}
+        </td>
+        <td>
+          {{couponcode.createdAt.split('T')[0]}}
+        </td>
+        <td *ngIf="status == 'active' || status == 'archived'">
+          <button class="btn btn-link" id="btnView{{couponcode._id}}"  (click)="viewPromocode(couponcode._id)">
+            <i class="ui-tooltip material-icons" id="view{{couponcode._id}}" style="font-size: 22px;" data-original-title="View">remove_red_eye</i>
+          </button>
+        </td>
+        <td *ngIf="status == 'active'">
+          <button class="btn btn-link" id="button{{couponcode._id}}"  (click)="deletePromocodeConfirm(couponcode)">
+            <i class="ui-tooltip material-icons" id="del{{couponcode._id}}" style="font-size: 22px;" data-original-title="delete">delete_forever</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+    <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+         id="all-companies-datatable_previous">Previous</a>
+      <span><a class="paginate_button" [ngClass] = "1==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(1)"  tabindex="0">1</a></span>
+      <span *ngIf="current_page >= 5">...</span>
+      <span><a class="paginate_button" [ngClass] = "num==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(num)"  tabindex="0" *ngFor = "let num of arrayOf(total_pages)">{{num}}</a></span>
+      <span *ngIf="current_page <= total_pages - 5">...</span>
+      <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass] = "total_pages==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(total_pages)"  tabindex="0">{{total_pages}}</a></span>
+      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
+    </div>
+  </div>
+</div>
+
+<div id="createPromocodeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Create New Promocode</h5>
+      </div>
+      <form [formGroup]="createCouponsForm" id="createCouponsForm" (ngSubmit)="createPromo()">
+        <div class="modal-body">
+          <div class="alert alert-danger custom-alert" id="couponcodeMessage" *ngIf="error">
+            <p>
+							<span class="mat-icon">
+								<i class="material-icons">report_problem</i>
+							</span>
+              {{Message}}
+            </p>
+          </div>
+          <div class="sahil-material">
+            <div class="form-group label-floating" [class.is-empty]="!createCouponsForm.value.couponName">
+              <label class="control-label" for="couponName"> Name</label>
+              <input class="form-control" id="couponName" type="text" autocomplete="off" formControlName="couponName" name="couponName" (keyup)="NameChange()"/>
+            </div>
+            <div *ngIf="createCouponsForm.controls.couponName.touched && !createCouponsForm.controls.couponName.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.couponName.errors.required">
+								<span class="mat-icon">
+                  <i class="material-icons">report_problem</i>
+                </span>
+                Coupon name is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.couponName.errors.minlength">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Min 2 character is required.
+              </p>
+            </div>
+
+            <div class="form-group label-floating" [class.is-empty]="!createCouponsForm.value.couponCode">
+              <label class="control-label" for="couponCode"> Code</label>
+              <input class="form-control" id="couponCode" type="text" [(ngModel)]="createCouponsForm.value.couponCode" autocomplete="off" formControlName="couponCode" name="couponCode">
+            </div>
+            <div *ngIf="createCouponsForm.controls.couponCode.touched && !createCouponsForm.controls.couponCode.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.couponCode.errors.required">
+								<span class="mat-icon">
+                  <i class="material-icons">report_problem</i>
+                </span>
+                Coupon Code is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.couponCode.errors.minlength">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Min 2 character is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.couponCode.errors.pattern">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Should not contain white space and special characters other then %,-,_.
+              </p>
+            </div>
+
+            <label class="control-label"> Discount Type</label>
+            <div class="form-group form-group-radio">
+              <label class="radio-inline" title="Flat free">
+                <input type="radio" value="fixed_amount" id="radioFixed" formControlName="discountType" name="discountType" (click)="DiscountType('fixed_amount')">
+                <label for="radioFixed"> </label> Fixed Amount {{ createCouponsForm.controls['discountType'].value }}
+              </label>
+              <label class="radio-inline"  title="percentage discount of price">
+                <input type="radio" value="percentage" id="radioPercentage" formControlName="discountType" name="discountType" (click)="DiscountType('percentage')">
+                <label for="radioPercentage"> </label> Percentage
+              </label><br/>
+              <small class="couponNote" id="discountTypeNote">The specified amount will be given as discount.</small>
+            </div>
+
+            <div class="form-group label-floating" [class.is-empty]="!createCouponsForm.value.discountValue">
+              <label class="control-label" for="discountValue"> Discount Value</label>
+              <input class="form-control" id="discountValue" type="text" autocomplete="off" formControlName="discountValue" name="discountValue">
+              <label class="in-active" id="discountValueSpan">USD</label>
+            </div>
+
+
+            <div *ngIf="createCouponsForm.controls.discountValue.touched && !createCouponsForm.controls.discountValue.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.discountValue.errors.required">
+								<span class="mat-icon">
+                  <i class="material-icons">report_problem</i>
+                </span>
+                Discount Value required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.discountValue.errors.minlength">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Min 1 character is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.discountValue.errors.pattern">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Should be Number not more then 2 decimal place.
+              </p>
+            </div>
+
+
+            <label class="control-label"> Duration Type</label>
+            <small class="couponNote">(* How long should this coupon be applied to the subscription?)</small>
+            <div class="form-group form-group-radio">
+              <label class="radio-inline"  title="One Time coupons can only be used once in a subscription and cannot be used again after being redeemed. Once the discount is applied on the initial charge, the coupon will no longer be applicable.">
+                <input type="radio" value="one_time" id="radioOneTime" formControlName="durationType" name="durationType" (click)="DurationType('one_time')">
+                <label for="radioOneTime"> </label> One Time {{ createCouponsForm.controls['durationType'].value }}
+              </label>
+              <label class="radio-inline"  title="Limited Period coupons will have a fixed time duration. Once this time is over, the coupon can no longer be applied to the subscription.">
+                <input type="radio" value="limited_period" id="radioLimitedPeriod" formControlName="durationType" name="durationType" (click)="DurationType('limited_period')">
+                <label for="radioLimitedPeriod"> </label> Limited Period
+              </label>
+              <label class="radio-inline" title="Forever coupons do not have an expiration time set, and the discount will be applied as long as the subscription is active, even if you change the plan.">
+                <input type="radio" value="forever" id="radioForever" formControlName="durationType" name="durationType" (click)="DurationType('forever')">
+                <label for="radioForever"> </label> Forever
+              </label>
+            </div>
+
+            <div class="form-group label-floating" *ngIf="limitedPeriod" [class.is-empty]="!createCouponsForm.value.durationValue">
+              <label class="control-label" for="durationValue">Duration</label>
+              <input class="form-control" id="durationValue" type="text" autocomplete="off" formControlName="durationValue" name="durationValue">
+              <label class="in-active">Month</label>
+            </div>
+            <div *ngIf="limitedPeriod && createCouponsForm.controls.durationValue.touched && !createCouponsForm.controls.durationValue.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.durationValue.errors.required">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Min 1 number is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.durationValue.errors.minlength">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Min 1 number is required.
+              </p>
+              <p *ngIf="createCouponsForm.controls.durationValue.errors.pattern">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Should be Number.
+              </p>
+            </div>
+
+            <div class="form-group label-floating" [class.is-empty]="!createCouponsForm.value.maxRedem">
+              <label class="control-label" for="maxRedem"> Maximum Redemptions (leave empty for unlimited)</label>
+              <input class="form-control" id="maxRedem" type="text" autocomplete="off" formControlName="maxRedem" name="maxRedem">
+            </div>
+            <small class="couponNote">(* Maximum number of times this coupon can be redeemed.)</small>
+            <div *ngIf="createCouponsForm.controls.maxRedem.touched && !createCouponsForm.controls.maxRedem.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.maxRedem.errors.pattern">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Should be Number.
+              </p>
+            </div>
+
+
+            <div class="form-group label-floating" [class.is-empty]="!createCouponsForm.value.extra_calc">
+              <label class="control-label" for="extra_calc"> Number of Calculators</label>
+              <input class="form-control" id="extra_calc" type="text" autocomplete="off" formControlName="extra_calc" name="extra_calc">
+              <small class="couponNote">(* This will override the plan calculators even if plan has unlimited calculators.)</small>
+            </div>
+            <div *ngIf="createCouponsForm.controls.extra_calc.touched && !createCouponsForm.controls.extra_calc.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.extra_calc.errors.pattern">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Should be Number and must be greater than 0 and should not start with 0.
+              </p>
+            </div>
+
+
+            <div class="form-group label-floating"  [class.is-empty]="!createCouponsForm.value.applyFor">
+              <label class="control-label" for="applyFor"> Coupon for Plan</label>
+              <select class="form-control" id="applyFor" formControlName="applyFor" name="applyFor">
+                <option *ngFor="let plan of planList" value="{{plan.plan.id}}">{{plan.plan.name}}</option>
+              </select>
+
+              <!--<input class="form-control" id="applyFor" type="text" autocomplete="off" formControlName="applyFor" name="applyFor">-->
+            </div>
+            <div *ngIf="limitedPeriod && createCouponsForm.controls.applyFor.touched && !createCouponsForm.controls.applyFor.valid" class="alert alert-danger">
+              <p *ngIf="createCouponsForm.controls.applyFor.errors.required">
+								<span class="mat-icon">
+								  	<i class="material-icons">report_problem</i>
+								</span>
+                Please Select one plan.
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" [disabled]="!createCouponsForm.valid" class="btn btn-red-outline btn-add-user btn-hover" id="btnCreateCoupon">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="viewPromocodeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Promocode</h5>
+        <div class="pull-right" *ngIf="status == 'active'">
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="edit_coupon">
+            <div class="slider round"></div>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="loadingModal">
+        <img src="assets/images/logoAnim.gif" alt="loading..." class="imgLoad">
+      </div>
+      <div id="couponView" *ngIf="!loadingModal">
+        <div class="alert alert-danger" *ngIf="error">{{Message}}</div>
+        <table id="tblCouponView">
+          <tbody>
+            <tr>
+              <th>Coupon Name</th>
+              <th>:</th>
+              <td>{{viewCouponDB.name}}</td>
+            </tr>
+            <tr>
+              <th>Coupon Code</th>
+              <th>:</th>
+              <td>{{viewCouponDB.id}}</td>
+            </tr>
+            <tr>
+              <th>Coupon Discount</th>
+              <th>:</th>
+              <td *ngIf="viewCouponCB.discount_type === 'percentage'">{{viewCouponCB.discount_percentage}}%</td>
+              <td *ngIf="viewCouponCB.discount_type !== 'percentage'">{{viewCouponCB.discount_amount/100}} USD</td>
+            </tr>
+            <tr>
+              <th>Maximum Redemption</th>
+              <th>:</th>
+              <td *ngIf="!viewCouponCB.max_redemptions">Unlimited</td>
+              <td *ngIf="viewCouponCB.max_redemptions">{{viewCouponCB.max_redemptions}}</td>
+            </tr>
+            <tr>
+              <th>Coupon Status</th>
+              <th>:</th>
+              <td>{{viewCouponCB.status}}</td>
+            </tr>
+              <tr *ngIf="!edit_coupon">
+                <th>Coupon For Plan</th>
+                <th>:</th>
+                <td>{{viewCouponDB.apply_for}}</td>
+              </tr>
+              <tr *ngIf="!edit_coupon">
+                <th>Calculators</th>
+                <th>:</th>
+                <td *ngIf="viewCouponDB.extra_calc == -1">Unlimited</td>
+                <td *ngIf="viewCouponDB.extra_calc != -1">{{viewCouponDB.extra_calc}}</td>
+              </tr>
+              <tr *ngIf="edit_coupon">
+                <th colspan="3">
+                  <br/>
+                  <form [formGroup]="editCouponsForm" id="editCouponsForm" (ngSubmit)="editPromo()">
+                    <div class="form-group label-floating" [class.is-empty]="!edt_extra_calc">
+                      <label class="control-label" for="edit_extra_calc"> Number of Calculators</label>
+                      <input class="form-control" id="edit_extra_calc" formControlName="edit_extra_calc" [(ngModel)]="edt_extra_calc" type="text" autocomplete="off" name="edit_extra_calc">
+                    </div>
+                    <!--<div *ngIf="createCouponsForm.controls.extra_calc.touched && !createCouponsForm.controls.extra_calc.valid" class="alert alert-danger">-->
+                      <!--<p *ngIf="createCouponsForm.controls.extra_calc.errors.pattern">-->
+                        <!--<span class="mat-icon">-->
+                          <!--<i class="material-icons">report_problem</i>-->
+                        <!--</span>-->
+                        <!--Should be Number.-->
+                      <!--</p>-->
+                    <!--</div>-->
+
+
+                    <div class="form-group label-floating" [class.is-empty]="!edt_apply_for">
+                      <label class="control-label" for="edit_applyFor"> Coupon for Plan</label>
+                      <select class="form-control" id="edit_applyFor" name="edit_applyFor" formControlName="edit_applyFor" [(ngModel)]="edt_apply_for">
+                        <option *ngFor="let plan of planList" value="{{plan.plan.id}}">{{plan.plan.name}}</option>
+                      </select>
+                    </div>
+                    <!--<div *ngIf="limitedPeriod && createCouponsForm.controls.applyFor.touched && !createCouponsForm.controls.applyFor.valid" class="alert alert-danger">-->
+                      <!--<p *ngIf="createCouponsForm.controls.applyFor.errors.required">-->
+                        <!--<span class="mat-icon">-->
+                          <!--<i class="material-icons">report_problem</i>-->
+                        <!--</span>-->
+                        <!--Please Select one plan.-->
+                      <!--</p>-->
+                    <!--</div>-->
+
+
+                    <button type="submit" id="btnSaveCoupon"  class="btn btn-blue btn-red btn-signUp">Update</button>
+                  </form>
+                </th>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="delConfirmdeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Delete Promocode</h5>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="error" class="alert alert-danger">{{Message}}</div>
+        Are you Sure ? You want to delete coupon {{delCoupon.id}}<br/>
+        *Note: If this coupon is associated with any plan subscription then it will not be deleted but is archived.
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnDelNo" data-dismiss="modal"  class="btn btn-blue btn-red btn-signUp">No</button>
+        <button type="button" id="btnDelYes" (click)="deletePromocode(delCoupon._id)"  class="btn btn-blue btn-red btn-signUp">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

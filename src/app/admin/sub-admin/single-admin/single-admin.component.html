@@ -1,0 +1,7 @@
+<div *ngIf="loading">
+</div>
+<div *ngIf="!loading" class="single-user-container">
+    <app-account-details  [companies] = "companies"></app-account-details>
+  <app-subadmin-log></app-subadmin-log>
+</div>
+

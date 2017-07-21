@@ -1,0 +1,120 @@
+<div class="all-users-container">
+
+	<div id="table">
+		<div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+			<div class="dataTables_length" id="table-dataTables_length">
+				<label>Show 
+                <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)" class="">
+                    <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
+                </select>
+                entries
+            </label>
+			</div>
+			<div id="table-datatable_filter" class="dataTables_filter">
+				<label>
+					Search with Status:
+					<select [(ngModel)]='selectedStatus' (change)="changed($event)">
+						<option value='PENDING'>pending</option>
+						<option value='APPROVED'>Approved</option>
+						<option value='DISAPPROVED'>Disapproved</option>
+					</select>
+				</label>
+				<label>
+                    Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
+          </label>
+			</div>
+			<div *ngIf="loading">
+				<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+			</div>
+			<table *ngIf="!loading" class="dataTable">
+				<thead>
+					<tr>
+						<th>
+							App
+						</th>
+						<th>
+							Company
+						</th>
+						<th>
+							Sub Domain
+						</th>
+						<th>
+							Plan
+						</th>
+						<th>
+							Status
+						</th>
+						<th>
+							Updated At
+						</th>
+						<th>
+							Preview
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let pending of data;let i=index">
+						<td>
+							{{ pending.name }}
+						</td>
+						<td>
+							{{ pending?.company?.name }}
+						</td>
+						<td>
+							{{ pending?.company?.sub_domain }}
+						</td>
+						<td>
+							{{ pending?.company?.billing.chargebee_plan_id.split('_')[0] | uppercase}}
+						</td>
+						<td>
+							{{ pending?.custom_script?.status }}
+						</td>
+						<td>
+							{{ dateFormat(pending?.updatedAt) }}
+						</td>
+						<td>
+							<a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item"><i class="ui-tooltip material-icons"
+							 (click)="selected=pending" style="font-size: 22px;" data-original-title="Edit">visibility</i></a>
+							<!--<a (click)="showScript(pending._id)"><i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit">mode_edit</i></a>-->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+			<div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+				<a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+				 id="all-companies-datatable_previous">Previous</a>
+				<span><a class="paginate_button" [ngClass] = "1==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(1)"  tabindex="0">1</a></span>
+				<span *ngIf="current_page >= 5">...</span>
+				<span><a class="paginate_button" [ngClass] = "num==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(num)"  tabindex="0" *ngFor = "let num of arrayOf(total_pages)">{{num}}</a></span>
+				<span *ngIf="current_page <= total_pages - 5">...</span>
+				<span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass] = "total_pages==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(total_pages)"  tabindex="0">{{total_pages}}</a></span>
+				<a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="pending-item" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content modal-bg">
+			<div class="modal-header">
+				<button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+          </button>
+				<h5 class="modal-title">Script</h5>
+			</div>
+			<div class="modal-body">
+				<div class="sahil-material">
+					<textarea [value]="selected?.custom_script?.value" [readonly]="true" rows="25" style="width:100%"></textarea>
+					Comments<textarea #txt rows="5" style="width:90%"></textarea>
+					<!--<div class="alert alert-danger custom-alert" *ngIf="error" id="success-addCompany">{{errorMessage}}</div>-->
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-basic" (click)="setStatus(selected,'APPROVED',txt.value)" [disabled]="!txt.value" data-dismiss="modal">Approved</button>
+				<button type="button" class="btn btn-default" (click)="setStatus(selected,'DISAPPROVED',txt.value)" [disabled]="!txt.value" data-dismiss="modal">Disapproved</button>
+			</div>
+		</div>
+	</div>
+</div>

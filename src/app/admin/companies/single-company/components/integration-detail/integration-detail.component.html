@@ -1,0 +1,180 @@
+<div class="col-md-12 np">
+  <div class="container col-md-12 np">
+    <div class="row">
+      <div
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <div class="col-sm-12">
+                <h4>Integrations Config</h4>
+              </div>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <table class="table table-bordered table-hover table-user-information custom-table">
+                  <thead>
+                  <tr>
+                    <th *ngIf="integrationConfig">
+                      <select [(ngModel)]="selectedIntegrationConfig">
+                        <option disabled>Select Integrations</option>
+                        <option *ngFor="let config of integrationConfig" [ngValue]="config">
+                          {{config.type}}
+                        </option>
+                      </select>
+                    </th>
+                    <th>
+                      <button (click)="getIntegrationsConfig()">View Details</button>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="selectedIntegrationConfig">
+                  <tr *ngFor="let key of keysGetter(selectedIntegrationConfig)">
+                    <td>{{key}}</td>
+                    <td>{{selectedIntegrationConfig[key] | json}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <div class="col-sm-12">
+                <h4>Calculator Configuration</h4>
+              </div>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <table class="table table-bordered table-hover table-user-information custom-table">
+                  <tbody>
+                  <tr>
+                    <td>
+                      <button (click)="getAppIntegrationsConfig()">View Details</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="appConfig.apps">
+                    <td>
+                      <select [(ngModel)]="selectedAppIntegrations">
+                        <option disabled>Select</option>
+                        <option *ngFor="let app of appConfig.apps" [ngValue]="app._id">
+                          {{app.name}}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <select *ngIf="selectedAppIntegrations && keysGetter(appConfig?.calc_integration)?.length>0"
+                              [(ngModel)]="selectedIntegration">
+                        <option disabled>Select</option>
+                        <option
+                          *ngFor="let integration of keysGetter(appConfig?.calc_integration[selectedAppIntegrations])"
+                          [ngValue]="integration">
+                          {{integration}}
+                        </option>
+                      </select>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12 col-lg-12">
+                <table class="table table-bordered table-hover table-user-information"
+                       *ngIf="selectedIntegration">
+                  <tr
+                    *ngFor="let key of keysGetter(appConfig.calc_integration[selectedAppIntegrations][selectedIntegration])">
+                    <td>{{ key }}</td>
+                    <td>{{appConfig.calc_integration[selectedAppIntegrations][selectedIntegration][key] | json}}</td>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad np">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div class="col-sm-12">
+              <h4>Integrations Logs</h4>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <table class="table table-bordered table-hover table-user-information custom-table">
+                <thead>
+                <tr>
+                  <td>
+                    <select [(ngModel)]="selectedAppLog" *ngIf="integrationLogs">
+                      <option disabled>Select Calculator</option>
+                      <option *ngFor="let appName of keysGetter(integrationLogs)" [ngValue]="appName">
+                        {{appName}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <button (click)="getIntegrationLogs()">View Details</button>
+                  </td>
+                </tr>
+                </thead>
+              </table>
+
+              <div id="table">
+                <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div id="table-datatable_filter" class="dataTables_filter">
+                    <label style="color: black">
+                      Search:<input type="search" placeholder="" [(ngModel)]="search" aria-controls="table"
+                                    (keyup)="searchData()" [formControl]='input'>
+                    </label>
+                  </div>
+                  <table id="log-datatable" class="dataTable table table-hover table-striped custom-table">
+                    <thead>
+                    <tr>
+                      <th>App</th>
+                      <th>Visitor key</th>
+                      <th>Account type</th>
+                      <th>Success</th>
+                      <th>Code</th>
+                      <th>Message</th>
+                      <th>Data</th>
+                      <th>Is Syncable</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="selectedAppLog">
+                    <tr *ngFor="let integrationLog of integrationLogs[selectedAppLog]">
+                      <td>{{integrationLog?.app.name}}</td>
+                      <td>{{integrationLog?.visitor_key}}</td>
+                      <td>{{integrationLog?.account_type}}</td>
+                      <td>{{integrationLog?.success}}</td>
+                      <td>{{integrationLog?.code}}</td>
+                      <td>{{integrationLog?.message}}</td>
+                      <td>{{integrationLog?.data | json}}</td>
+                      <td>{{integrationLog?.isSyncable}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

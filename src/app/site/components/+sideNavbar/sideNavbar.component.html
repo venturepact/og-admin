@@ -1,0 +1,217 @@
+<header id="setting-header" class="hide">
+    <nav class="navbar navbar-default navbar-fixed-top white-logo">
+      <div class="container-fluid nav-padding">
+          <div class="col-xs-2 np">
+              <a href="javascript:void(0);" (click)="goBack()">
+                  <span class="mat-icon"><i class="material-icons">arrow_back</i></span>
+              </a>
+          </div>
+          <div class="navbar-header col-xs-8 np">
+              <!-- <a href="#" class="navbar-brand">
+                  <img src="assets/images/headerLogo-white.png" class="" />
+              </a> -->
+              <h4 class="col-xs-12 np ellipsis title">{{sideNaveBarHeader}}</h4>
+          </div>
+      </div>
+    </nav>
+</header>
+<div *ngIf="!is_subcripion_cancelled" class="left-sidebar col-md-3 col-sm-3 col-xs-3 np" id="lgScrSideNavbar">
+    <div id="" class="tabbable tabs-left">
+        <ul>
+            <li class="setting-nav" id="membDet" (click)="showTab('membership')" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/membership']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">view_carousel</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Membership Details</h6>
+                        <span class="">View your plan details and invoices</span>
+                    </div>
+                </a>
+            </li>
+            <li class="setting-nav" id="teamSet" (click)="showTab('team-setting')">
+              <a [routerLink]="['/settings']" data-toggle="tab">
+                      <span class="left-sidebar-icon">
+                      <i class="material-icons">bubble_chart</i>
+                    </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Team Settings</h6>
+                  <span class="">Invite new team members and manage user permissions</span>
+                </div>
+              </a>
+            </li>
+            <li class="setting-nav" id="apiKey" (click)="showTab('api-key')" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/api-key']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">developer_board</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">API Key</h6>
+                        <span class="">Copy or Regenerate your API Key used for Integration</span>
+                    </div>
+                </a>
+            </li>
+             <li class="setting-nav hide" id="integrations" (click)="showTab('integrations')">
+                <a href="javascript:void(0)" data-toggle="tab" >
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">dialpad</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Integrations</h6>
+                        <span class="">Manage Integrations</span>
+                    </div>
+                </a>
+            </li>
+            <li class="setting-nav" id="accSet" (click)="showTab('my-account')" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/my-account']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">face</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">My Account</h6>
+                        <span class="">View and edit your account details</span>
+                    </div>
+                </a>
+            </li>
+            <!--<li class="setting-nav" id="referral" (click)="showTab('referral')">
+              <a [routerLink]="['/settings/referral']" data-toggle="tab" [routerLinkActive]="['active']">
+                <span class="left-sidebar-icon">
+                  <i class="material-icons">redeem</i>
+                </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Referral</h6>
+                  <span class="">Generate Referral Coupon</span>
+                </div>
+              </a>
+            </li>-->
+            <li class="setting-nav" id="customDomain" (click)="showTab('custom-domain')" [routerLinkActive]="['active']">
+                <a href="javascript:void(0)" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">language</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class=""><span>Custom Domain</span><i class="material-icons lock-icon" *ngIf="!isCNameAccess">lock_outline</i> </h6>
+                        <span class="">Host your calculator on a Custom domain using CNAME</span>
+                    </div>
+                </a>
+            </li>
+            <!--<li class="setting-nav" id="webhook" (click)="showTab('webhook')" [routerLinkActive]="['active']">-->
+              <!--<a [routerLink]="['/settings/webhook']" data-toggle="tab">-->
+                      <!--<span class="left-sidebar-icon">-->
+                      <!--<i class="material-icons">language</i>-->
+                    <!--</span>-->
+                <!--<div class="left-sidebar-title">-->
+                  <!--<h6 class="">Webhook</h6>-->
+                  <!--<span class="">Webhooks to get updates about your account</span>-->
+                <!--</div>-->
+              <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</div>
+<div *ngIf="!is_subcripion_cancelled" class="left-sidebar col-md-3 col-sm-3 col-xs-3 np mobile-left-sidebar" id="smScrSideNavbar">
+    <div class="tabbable tabs-left" id="left-sidebar-tabs-left">
+        <ul>
+            <li class="setting-nav" id="membDet-m" (click)="showTab('membership');addHide()" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/membership']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">view_carousel</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Membership Details</h6>
+                        <span class="">View your plan details and invoices</span>
+                    </div>
+                </a>
+            </li>
+            <li class="setting-nav" id="teamSet-m" (click)="showTab('team-setting');addHide()">
+              <a [routerLink]="['/settings']" data-toggle="tab">
+                      <span class="left-sidebar-icon">
+                      <i class="material-icons">bubble_chart</i>
+                    </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Team Settings</h6>
+                  <span class="">Invite new team members and manage user permissions</span>
+                </div>
+              </a>
+            </li>
+            <li class="setting-nav" id="apiKey-m" (click)="showTab('api-key');addHide()" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/api-key']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">developer_board</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">API Key</h6>
+                        <span class="">Copy or Regenerate your API Key used for Integration</span>
+                    </div>
+                </a>
+            </li>
+            <!--<li class="hide" id="notif">
+                <a href="#noti-settings" data-toggle="tab" (click)="showTab(3)">
+                    <span class="left-sidebar-icon noti-icon">
+                    <i class="material-icons">notifications_active</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Notification Settings</h6>
+                        <span class="">Select which notifications you wish to receive and how you want to receive them.</span>
+                    </div>
+                </a>
+            </li>-->
+            <li class="setting-nav hide" id="integrations-m" (click)="showTab('integrations');addHide()">
+                 <a href="javascript:void(0)" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">dialpad</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Integrations</h6>
+                        <span class="">Manage Integrations</span>
+                    </div>
+                </a>
+            </li>
+            <li class="setting-nav" id="accSet-m" (click)="showTab('my-account');addHide()" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/my-account']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">face</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">My Account</h6>
+                        <span class="">View and edit your account details</span>
+                    </div>
+                </a>
+            </li>
+            <!--<li class="setting-nav" id="referral-m" (click)="showTab('referral');addHide()" [routerLinkActive]="['active']">
+              <a [routerLink]="['/settings/referral']" data-toggle="tab">
+                <span class="left-sidebar-icon">
+                  <i class="material-icons">redeem</i>
+                </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Referral</h6>
+                  <span class="">Generate Referral Coupon</span>
+                </div>
+              </a>
+          </li>-->
+          <li class="setting-nav" id="customDomain-m" (click)="showTab('custom-domain');addHide()" [routerLinkActive]="['active']">
+                <a [routerLink]="['/settings/custom-domain']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">language</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Custom Domain</h6>
+                        <span class="">Host your calculator on a Custom domain using CNAME</span>
+                    </div>
+                </a>
+            </li>
+          <!--<li class="setting-nav" id="webhook-m" (click)="showTab('webhook');addHide()" [routerLinkActive]="['active']">-->
+            <!--<a [routerLink]="['/settings/webhook']" data-toggle="tab">-->
+              <!--<span class="left-sidebar-icon">-->
+                <!--<i class="material-icons">language</i>-->
+              <!--</span>-->
+              <!--<div class="left-sidebar-title">-->
+                <!--<h6 class="">Webhook</h6>-->
+                <!--<span class="">Webhooks to get updates about your account</span>-->
+              <!--</div>-->
+            <!--</a>-->
+          <!--</li>-->
+        </ul>
+    </div>
+</div>
+

@@ -1,0 +1,27 @@
+.all-erorrs-container{
+  top:100px;
+  position: relative;
+  margin-left: 255px;
+}
+.btn-design{
+  border:2px solid #fb545b;
+    color: #636f76;
+    background: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+.dataTable{
+  width:90%;
+}
+.logContainer{
+  max-height: 600px;
+    overflow-y:auto;
+}
+.dataTables_length{
+  display: inherit;
+}
+
+.dataTables_filter{
+  display: inherit;
+}   
+

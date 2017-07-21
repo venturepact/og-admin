@@ -1,0 +1,69 @@
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad np">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="col-sm-8">
+							<h4>Company Features</h4>
+						</div>
+						<div class="col-sm-2">
+							<h4>Edit:</h4>
+						</div>
+						<div class="col-sm-2">
+							<label class="switch">
+								<input type="checkbox" [(ngModel)]="edit_mode">
+								<div class="slider round"></div>
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				<div *ngIf="edit_mode" class="panel-body">
+					<div class="row">
+						<div class="panel-group" *ngIf = "loading">
+							<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+						</div>
+						<div class="panel-group" *ngIf = "!loading" [attr.id]="'accord'">
+							<span id="feature_span" *ngFor="let feature of features; let i = index">
+								<div class="panel panel-default np feature-panel" > 
+									<div class="panel-heading list">
+										<h4 class="panel-title feature-panel-title">
+											<input  type="checkbox" (change) = "subfeatureCheck(i)" [(ngModel)] = "feature.active" class="no-left" name="feature">
+											<a class="no-left" data-toggle="collapse" [attr.data-parent]="'#accord' " [attr.href]="'#'+ feature.feature._id">
+												{{feature.feature.name | uppercase}}
+											</a>
+										</h4>
+									</div>
+									<div [attr.id]="  feature.feature._id " *ngIf="feature.sub_features.length !=0" class="panel-collapse">
+										<div class="panel-body">
+						<!-- #######################Sub Featuress#####################################  -->
+											<div  class=" frmgrp-padd form-group">
+												<label for="comment_desc">Sub Features:</label>
+												<span id="feature_span" *ngFor="let sub of feature.sub_features;let j = index">
+													<div class="panel subf-panel panel-default np">
+														<div class="panel-heading list">
+															<h4 class="panel-title subf-panel-title" *ngIf= "(feature.feature._id !== 'formula_operators')">
+																<input  type="checkbox" (change)="parentFeatureCheck(i,$event)" [(ngModel)] = "sub.active" class="no-left" />
+																{{sub.feature.name}}
+															</h4>
+															<h4 class="panel-title subf-panel-title" *ngIf= "(feature.feature._id === 'formula_operators')">
+																<input  type="checkbox" (change)="checkOne(i,j,$event)"  [(ngModel)] = "sub.active"  class="no-left" />
+																{{sub.feature.name}}
+															</h4>
+														</div>
+													</div>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+						<button class="pull-left" (click)="updateCompanyFeatures()">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,178 @@
+:host {
+  display: block;
+  padding: 0 16px;
+}
+
+input {
+  width: 250px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 0 0 8px;
+}
+
+.all-companies-container {
+  top: 100px;
+  position: relative;
+  margin-left: 255px;
+}
+
+.admin-ltd{
+  top: 100px;
+  position: relative;
+  margin-left: 0px;
+}
+
+.table-sortable {
+  display: block;
+  overflow-x: auto;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.sort-icon:after {
+  content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7X QMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC');
+}
+
+.table-sortable > thead > tr > th {
+  cursor: pointer;
+  position: relative;
+  background-image: none;
+}
+
+.both::after {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7X QMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC');
+}
+
+thead th .asc {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZ0lEQVQ4y2NgGLKgquEuFxBPAGI2ahhWCsS/gDibUoO0gPgxEP8H4ttArEyuQYxAPBdqEAxPBImTY5gjEL9DM+wTENuQahAvEO9DMwiGdwAxOymGJQLxTyD+jgWDxCMZRsEoGAVoAADeemwtPcZI2wAAAABJRU5ErkJggg==');
+}
+
+thead th .desc {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZUlEQVQ4y2NgGAWjYBSggaqGu5FA/BOIv2PBIPFEUgxjB+IdQPwfC94HxLykus4GiD+hGfQOiB3J8SojEE9EM2wuSJzcsFMG4ttQgx4DsRalkZENxL+AuJQaMcsGxBOAmGvopk8AVz1sLZgg0bsAAAAASUVORK5CYII= ');
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.dp-outer {
+  position: relative;
+  width: 205px;
+  float: right;
+  z-index: 9;
+}
+
+.datepicker-outer {
+  border: 2px solid #fb545b;
+  width: 100%;
+  padding: 4px 10px 4px 28px;
+  float: right;
+  color: #636f76;
+  z-index: 9;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.datepicker-outer:focus {
+  outline: none !important;
+}
+
+.datepicker-outer.datepicker {
+  padding: 4px 10px 4px 30px !important;
+}
+
+.tabs-wrapper .tab-pane#person {
+  padding-left: 15px;
+}
+
+.dp-outer .icon-left {
+  position: absolute;
+  font-size: 14px;
+  top: 8px;
+  z-index: -1;
+  left: 9px;
+  color: #bec5c9;
+}
+
+.dp-outer .icon-right {
+  position: absolute;
+  right: 5px;
+  top: 9px;
+  font-size: 16px;
+  z-index: -1;
+  color: #bec5c9;
+}
+
+/*date rangepicker css*/
+.daterangepicker.dropdown-menu {
+  right: 28px !important;
+  width: 492px !important;
+}
+
+.daterangepicker.opensright:before {
+  right: 40px !important;
+}
+
+.daterangepicker.opensright:after {
+  right: 41px !important;
+}
+
+.daterangepicker .ranges {
+  margin: 4px;
+  text-align: right !important;
+  width: 98%;
+}
+
+.btn-danger {
+  margin-right: 5px;
+}
+
+/*date rangepicker end css*/
+
+.dataTables_length {
+  display: block !important;
+}
+
+.dataTables_filter {
+  display: block !important;
+}
+
+.advanced-filter {
+  clear: both;
+  margin-top: 20px;
+  background: beige;
+  padding-top: 20px;
+}
+
+.filter-icon {
+  cursor: pointer;
+  display: inline;
+  margin-left: 10px;
+}
+
+.apply-filter-container {
+  margin: 10px;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

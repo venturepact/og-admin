@@ -1,0 +1,298 @@
+<div id="table" class="" [class.all-companies-container]="sub_role !== 'ADMIN_LTD'" [class.admin-ltd]="sub_role === 'ADMIN_LTD'">
+
+  <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+    <div class="dataTables_length" id="table-dataTables_length">
+      <label style="color: black">Show
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable"
+                (change)="limitChange($event)"
+                class="">
+          <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+        </select>
+        entries
+      </label>
+    </div>
+    <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
+      <span class="glyphicon glyphicon-filter"></span>
+      Filter
+    </div>
+    <div id="table-datatable_filter" class="dataTables_filter">
+      <label style="color: black">
+        Search:<input type="search" placeholder="By Name, Sub Domain, Plan" [(ngModel)]="search" aria-controls="table"
+                       [formControl]='input'>
+      </label>
+    </div>
+
+    <div *ngIf="loading">
+      <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+    </div>
+
+    <div *ngIf="showAdvancedFilter" class="advanced-filter">
+      <div class="row filter-params-container" style="position:relative"
+           *ngFor="let filter of filters;let i = index;">
+        <div class="" [ngClass]="{'hidden':!(filter.visible)}">
+          <button (click)="removeFilter(i)">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+          <select (change)="setFilterProperty($event.target,i)" title="Select Operators">
+            <option style="display: none"></option>
+            <optgroup label="Company">
+
+              <option *ngFor="let property of filter.company_properties;" class="company"
+                      [value]="toStr(property)">
+                {{property.name}}
+              </option>
+            </optgroup>
+
+            <optgroup label="App">
+              <option *ngFor="let property of filter.app_properties;" class="app" [value]="toStr(property)">
+                {{property.name}}
+              </option>
+            </optgroup>
+
+          </select>
+
+          <select (change)="setFilterOperator($event.target.value,i)" title="Select Operators">
+            <option style="display: none"></option>
+            <option *ngFor="let operator of filter.operators[filter.selected_property]">
+              {{operator}}
+            </option>
+          </select>
+
+          <div *ngIf="(filter.select_property_type==='date')"
+               style="display: inline-block">
+
+            <og-date-picker *ngIf="!(filter.selected_operator==='between')"
+                            style="position:absolute;bottom:0" (date)="setDateStart($event,i)">
+            </og-date-picker>
+
+            <og-date-range-picker style="position:absolute;bottom:0"
+                                  (date)="setDateRange($event,i)">
+            </og-date-range-picker>
+          </div>
+
+          <div *ngIf="filter.select_property_type!='date' && filter.select_property_type!='bool'"
+               style="display: inline-block">
+            <input type="text" title="Enter value" (change)="setFilterValue($event.target.value,i)">
+            <input *ngIf="filter.selected_operator==='between'" title="Enter value"
+                   type="number" (change)="filtersPostData[i]['value'][1]=$event.target.value;">
+          </div>
+
+          <div *ngIf="filter.selected_property==='appsumo_created'" style="display: inline-block">
+            <select (change)="setFilterValue($event.target.value,i)" title="Select">
+              <option style="display: none"></option>
+              <option>true</option>
+              <option>false</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="apply-filter-container">
+        <button (click)="addFilter()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button (click)="filterResults()">Fetch Results</button>
+      </div>
+    </div>
+
+    <table *ngIf="!loading" id="successrate-datatable"
+           class="dataTable table table-hover table-striped table-sortable">
+      <thead>
+
+      <tr class="company-row">
+        <th (click)="sort('name')">
+          <div class="sort-icon"><a href="javascript:void(0);">Company</a></div>
+        </th>
+        <th>
+          No of Calculators
+        </th>
+        <th (click)="sort('current_usage.traffic')">
+          <div class="sort-icon"><a href="javascript:void(0);">Visits/Limit</a></div>
+        </th>
+        <th (click)="sort('current_usage.leads')">
+          <div class="sort-icon"><a href="javascript:void(0);">Leads/Limit</a></div>
+        </th>
+        <th>
+          Conversion rate
+        </th>
+        <th>
+          Reset Current Usage
+        </th>
+        <th (click)="sort('createdAt')">
+          <div class="sort-icon"><a href="javascript:void(0);">Sign Up</a></div>
+        </th>
+        <th>
+          Trial
+        </th>
+        <th (click)="sort('is_appsumo_created')">
+          <div class="sort-icon"><a href="javascript:void(0);">Appsumo created</a></div>
+        </th>
+        <th (click)="sort('billing.chargebee_plan_id')">
+          <div class="sort-icon"><a href="javascript:void(0);">Plan name</a></div>
+        </th>
+        <th>
+        </th>
+        <th>
+          Edit
+        </th>
+
+      </tr>
+      </thead>
+      <tbody *ngFor="let company of company">
+      <tr>
+        <td>
+          <a href="javascript:void(0);" (click)="toggleCompanyDetails(company)">{{company.name}}</a>
+        </td>
+        <td>
+          {{company.calculators}}/{{company.calcLimit}}
+        </td>
+        <td>
+          {{company.visitors}}/{{company.visitsLimit}}
+        </td>
+        <td>
+          {{company.leads}}/{{company.leadsLimit}}
+        </td>
+        <td>
+          {{company.conversionRate}}%
+        </td>
+        <td>{{company.reset_current_usage}}</td>
+        <td>{{company.created_at}}</td>
+        <td>
+          <div *ngIf="trialStatusLoading" class="loadersmall"></div>
+          <div *ngIf="!trialStatusLoading">{{company.trial_status}}</div>
+        </td>
+        <td>{{company.is_appsumo_created}}</td>
+        <td>{{company.plan}}</td>
+        <td>
+          <a href="" data-toggle="modal" data-target="#companyDetailsModal"
+             (click)="getPaymentsInfo(company._id)">
+            Payments</a>
+        </td>
+        <td>
+          <a [routerLink]="['/admin/company',company._id]">
+            <i class="ui-tooltip material-icons" style="font-size: 22px;"
+               data-original-title="Edit">
+              mode_edit</i></a>
+        </td>
+      </tr>
+      <tr *ngIf="company.showDetails">
+        <td colspan="11">
+          <og-company-details [company]="company"></og-company-details>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="dataTables_info" id="table-datatable_info" role="status"
+         aria-live="polite"></div>
+    <div class="dataTables_paginate paging_simple_numbers"
+         id="all-companies-datatable_paginate">
+      <a class="paginate_button previous " aria-controls="all-companies-datatable"
+         data-dt-idx="0" tabindex="0"
+         (click)="previous()"
+         id="all-companies-datatable_previous">Previous</a>
+      <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
+               aria-controls="all-companies-datatable"
+               (click)="paging(1)" tabindex="0">1</a></span>
+      <span *ngIf="current_page >= 5">...</span>
+      <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
+               aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
+               *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
+      <span *ngIf="current_page <= total_pages - 5">...</span>
+      <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
+               [ngClass]="total_pages==current_page?'current':''"
+               aria-controls="all-companies-datatable"
+               (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
+      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
+         (click)="next()"
+         id="all-companies-datatable_next">Next</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="companyDetailsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Details</h4>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="paymentLoading">
+          <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoading">
+        </div>
+      </div>
+      <div class="payment-history-dialog" *ngIf="!paymentLoading">
+        <!-- Modal content-->
+        <div class="payment-history-content">
+          <p style="">&nbsp;&nbsp;&nbsp;&nbsp;<b>Invoices</b></p>
+          <div class="payment-history-body col-md-12 np">
+
+            <div class="sahil-material">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Invoice No.</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Paid Via</th>
+                    <th>Download</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngFor="let invoice of invoices" value="invoice">
+                  <tr *ngIf="isInvoiceExist">
+                    <td>{{invoice.invoiceNo}}</td>
+                    <td class="text-opacity">{{invoice.date}}</td>
+                    <td>$ {{invoice.amount_paid/100}}</td>
+                    <td class="text-opacity">Credit Card</td>
+                    <td>
+                      <a href="{{invoice.href}}" class="invoiceId pdf-download" target="_blank">
+                        PDF
+                        <!-- <i class="material-icons">file_download</i> -->
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tbody>
+                  <tr *ngIf="!isInvoiceExist">
+                    <td></td>
+                    <td></td>
+                    <td colspan="5" class="no-invoice">
+                      No Invoice has been raised
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="payment-history-footer col-md-12 np">
+            <div class="col-md-5 np"></div>
+            <div class="col-md-7 np">
+              <!--<button type="" class="btn btn-red-outline btn-hover">Approve Request</button>-->
+              <ul class="pagination hide">
+                <li><a href="javascript:void(0);">1</a></li>
+                <li><a href="javascript:void(0);">2</a></li>
+                <li><a href="javascript:void(0);">3</a></li>
+                <li><a href="javascript:void(0);">4</a></li>
+                <li><a href="javascript:void(0);">5</a></li>
+                <li><a href="javascript:void(0);"><i class="material-icons">play_arrow</i></a>
+                </li>
+                <li><a href="javascript:void(0);"><i class="material-icons">skip_next</i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

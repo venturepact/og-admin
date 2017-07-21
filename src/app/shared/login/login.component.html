@@ -1,0 +1,179 @@
+<div  id="login" class="login">
+    <div class="login-dialog">
+        <!-- Modal content-->
+        <div class="login-content modal-bg">
+            <div class="login-body">
+                <a id="menu-close" href="javascript:void(0);" (click)="closeLogin()">
+                    <button type="button" class="close btn-close">
+                    <i class="material-icons">close</i></button>
+                </a>
+                <div class="col-md-12 col-sm-12 col-xs-12 np">
+                    <div class="col-md-6 col-sm-6 col-xs-12 np login-left">
+                        <div class="col-md-12 col-sm-12 col-xs-12 np login-left-inner">
+                            <div class="text-center logo-section">
+                                <!-- <p class="font-italic text-grey">or login with</p> -->
+                                <img class="login-logo" src="assets/images/outgrow-logo.png" alt="Logo">
+                                <span class="">Let's Give Your Interactive <br/>Content a New Home</span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 np sahil-material">
+                                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                    <div id="is-Error" class="alert alert-danger custom-alert hide">
+                                    <p>
+                                        <span class="mat-icon">
+                                            <i class="material-icons">report_problem</i>
+                                        </span>
+                                        <span id = "login-error-msg">
+                                            {{ErrorMsg}}
+                                        </span>
+                                      <a href="javascript:void(0);" id="sendMail" *ngIf="resendEmailShow" (click)="resendEmail()">Click here to receive the verification link again</a>
+                                    </p>
+                                    </div>
+                                    <div class="form-group label-floating"  [class.is-empty] = "model.emails.email ==''">
+                                        <label for="inputEmail" class="control-label">Email</label>
+                                        <input id="inputEmail" type="email"  class="form-control" formControlName="email" (focus)="hideErrorMessage()" tabindex="1">
+                                    </div>
+                                    <div *ngIf="loginForm.controls.email.touched  && !loginForm.controls.email.valid" class="alert alert-danger">
+                                        <p *ngIf="loginForm.controls.email.errors.required">
+                                        <span class="mat-icon">
+                                            <i class="material-icons">report_problem</i>
+                                        </span>
+                                        Email is required.</p>
+                                        <p *ngIf="loginForm.controls.email.errors.checkmail">
+                                        <span class="mat-icon">
+                                            <i class="material-icons">report_problem</i>
+                                        </span>
+                                        Invalid Email.</p>
+                                    </div>
+                                    <div class="label-floating form-group " [class.is-empty] = "model.password ==''">
+                                        <label for="inputPassword" class="control-label">Password</label>
+                                        <input id="inputPassword" type="password"  class="form-control" required formControlName="password" (focus)="hideErrorMessage()" tabindex="2">
+                                        <a href="javascript:void(0)" class="forgot-btn" (click)="forgetPassword()" tabindex="3">Forgot Password ?</a>
+                                    </div>
+                                    <div *ngIf="loginForm.controls.password.touched  && !loginForm.controls.password.valid" class="alert alert-danger">
+                                        <p *ngIf="loginForm.controls.password.errors.required">
+                                            <span class="mat-icon">
+                                                <i class="material-icons">report_problem</i>
+                                            </span>
+                                            Password is required.
+                                        </p>
+                                        <p *ngIf="loginForm.controls.password.errors.minlength">
+											<span class="mat-icon">
+	                                            <i class="material-icons">report_problem</i>
+	                                        </span>
+											Min 8 character is required.
+										</p>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 np text-center">
+                                        <button (click)="callGA()" type="submit" [disabled]="!loginForm.valid" class="btn btn-red next-step btn-login" id='loginSubmit'>Login</button>
+                                        <p class="dont-acc-signup" *ngIf="isDomainExist" >     Logging in for the first time?
+                                            <a class="text-red" (click)="signUp()" tabindex="4"> Sign up</a> instead
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 np login-right">
+                        <div class="col-md-12 col-sm-12 col-xs-12 np login-right-inner">
+                            <div class="login-testimonial">
+                                <div class="testimonial-block">
+                                    <span>“</span>
+                                </div>
+                                <div class="testimonial-content">
+                                     <!--<span class="testi-desc">The Formulas Are Awesome</span>-->
+                                    <!--<span class="testi-client">Marketing Executive at a Top 10 Hotel Chain</span>-->
+                                </div>
+                            </div>
+                          <div class="img-section">
+                                    <!--<img class="img-margin img-width login-img1 animated bounceInLeft go" src="assets/images/login1.jpg" alt="img">
+                                    <img class="img-margin img-width login-img2 animated bounceInRight go" src="assets/images/login2.jpg" alt="img">
+                                    <img class="img-margin img-width login-img3 animated bounceInUp go" src="assets/images/login3.jpg" alt="img">-->
+                                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators">
+                                       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+										<li data-target="#myCarousel" data-slide-to="1"></li>
+										<li data-target="#myCarousel" data-slide-to="2"></li>
+										<li data-target="#myCarousel" data-slide-to="3"></li>
+										<li data-target="#myCarousel" data-slide-to="4"></li>
+										<li data-target="#myCarousel" data-slide-to="5"></li>
+										<li data-target="#myCarousel" data-slide-to="6"></li>
+                                    </ol>
+
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                        <img src="assets/images/testimonial1.png" alt="testimonial">
+                                        </div>
+                                        <div class="item">
+                                        <img src="assets/images/testimonial2.png" alt="testimonial">
+                                        </div>
+                                        <div class="item">
+                                        <img src="assets/images/testimonial3.png" alt="testimonial">
+                                        </div>
+                                          <div class="item">
+                                        <img src="assets/images/testimonial4.png" alt="testimonial">
+                                        </div>
+                                        <div class="item">
+                                        <img src="assets/images/testimonial5.png" alt="testimonial">
+                                        </div>
+                                          <div class="item">
+                                        <img src="assets/images/testimonial6.png" alt="testimonial">
+                                        </div>
+                                        <div class="item">
+                                        <img src="assets/images/testimonial7.png" alt="testimonial">
+                                        </div>
+                                    </div>
+
+                                    <!-- Left and right controls -->
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!--<og-payment-modal></og-payment-modal>-->
+
+
+<!--
+<div *ngIf="ErrorMessageIsVisible" class="modal fade show in danger" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ErrorMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!--<script>
+    $(document).ready(function(){
+
+        $('#menu-close').click(function(){
+            $(".login").fadeOut(300);
+        });
+    }
+</script>-->

@@ -1,0 +1,202 @@
+<div class="promo-container">
+	<div class="row ptb15">
+		<div class="col-md-5">
+			<h1 class="nm">Promotion Checklist</h1>
+		</div>
+		<div class="col-md-7">
+			<button (click)="resetOpenPopup(true)" class="btn btn-primary pull-right" >
+				Add Item
+			</button>
+		</div>
+	</div>
+	<div  id="table">
+		<div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+			<div class="dataTables_length" id="table-dataTables_length">
+				<label>Show 
+                <select name="table-dataTables_length" aria-controls="all-promolist-datatable" (change) = "limitChange($event)" class="">
+                    <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
+                </select>
+                entries
+            </label>
+			</div>
+			<div id="table-datatable_filter" class="dataTables_filter">
+				<label>
+                    Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
+            </label>
+			</div>
+			<div *ngIf="loading">
+				<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+			</div>
+			<table *ngIf="!loading" class="dataTable">
+				<thead>
+					<tr>
+						<th>STRATEGY</th>
+						<th>RELATED RESOURCE</th>
+						<th>CATEGORY</th>
+						<th>GOALS</th>
+						<th>SCORE</th>
+						<th>DATE UPDATED</th>
+						<th>VIEW</th>
+						<th>DELETE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let promoItem of promoListItems; let i = index;" id="{{ promoItem._id }}">
+						<td>{{promoItem.strategy}}</td>
+						<td>{{promoItem.resource}}</td>
+						<td>{{promoItem.category}}</td>
+						<td>{{ promoItem.goals.join(',') }}</td>
+						<td>{{promoItem.score}}</td>
+						<td>{{promoItem.updatedAt.split('T')[0] }}</td>
+						<td><i class="material-icons pointer" (click)="resetOpenPopup(false, true, promoItem._id, i)">visibility</i></td>
+						<td><i class="material-icons editbtn pointer" (click)="deletePromoItem(promoItem._id, i)">delete</i></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite">
+			</div>
+			
+			<div class="dataTables_paginate paging_simple_numbers" id="all-promolist-datatable_paginate">
+				
+				<a 
+					class="paginate_button previous" 
+					aria-controls="all-promolist-datatable" 
+					data-dt-idx="0" 
+					tabindex="0" 
+					(click)="previous()"
+					id="all-promolist-datatable_previous"
+				>
+					Previous
+				</a>
+				
+				<span>
+					<a 
+						class="paginate_button" 
+						[ngClass] = "1==current_page?'current':''" 
+						aria-controls="all-promolist-datatable" 
+						(click) = "paging(1)"  
+						tabindex="0"
+					>
+						1
+					</a>
+				</span>
+				
+				<span *ngIf="current_page >= 5">...</span>
+				
+				<span>
+					<a 
+						class="paginate_button" 
+						[ngClass] = "num==current_page?'current':''" 
+						aria-controls="all-promolist-datatable" 
+						(click) = "paging(num)"  
+						tabindex="0" 
+						*ngFor = "let num of arrayOf(total_pages)"
+					>
+						{{num}}
+					</a>
+				</span>
+				
+				<span *ngIf="current_page <= total_pages - 5">...</span>
+				
+				<span>
+					<a 
+						class="paginate_button" 
+						*ngIf="total_pages!=1 && total_pages!=0" 
+						[ngClass] = "total_pages==current_page?'current':''" 
+						aria-controls="all-promolist-datatable" 
+						(click) = "paging(total_pages)"  
+						tabindex="0"
+					>
+						{{total_pages}}
+					</a>
+				</span>
+				
+				<a 
+					class="paginate_button next" 
+					aria-controls="all-promolist-datatable" 
+					tabindex="0" 
+					(click)="next()" 
+					id="all-promolist-datatable_next"
+				>
+					Next
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">CREATE/EDIT PROMOTION CHECKLIST ITEM</h4>
+			</div>
+			<div class="modal-body">
+				
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="strategy" class="alignleft col-sm-2 control-label">STRATEGY</label>
+						<div class="col-sm-9 floatright">
+							<input required name="strategy" type="text" class="form-control" id="strategy" [(ngModel)]="modalData.strategy">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="category" class="alignleft col-sm-2 control-label">CATEGORY</label>
+						<div class="col-sm-9 floatright">
+							<input required name="category" type="text" class="form-control" id="category" [(ngModel)]="modalData.category">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="goal" class="alignleft col-sm-2 control-label">GOAL</label>
+						<div class="col-sm-9 floatright">
+							<select multiple required name="goal" id="goal" class="form-control" [(ngModel)]="modalData.goals">
+								<option [disabled]=true>Select a goal name</option>
+								<option [selected]="modalData.goals.indexOf(goalname) >= 0" *ngFor="let goalname of promoGoals" [value]="goalname">
+									{{ goalname }}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="score" class="alignleft col-sm-2 control-label">SCORE</label>
+						<div class="col-sm-9 floatright">
+							<input required name="score" type="number" class="form-control" id="score" [(ngModel)]="modalData.score">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="resource" class="alignleft col-sm-2 control-label">RESOURCE</label>
+						<div class="col-sm-9 floatright">
+							<input required name="resource" type="text" class="form-control" id="resource" [(ngModel)]="modalData.resource">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="description" class="alignleft col-sm-2 control-label">DESCRIPTION</label>
+						<div class="col-sm-9 floatright">
+							<input required name="description" type="text" class="form-control" id="description" [(ngModel)]="modalData.description">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button *ngIf="!modalData.id" type="submit" class="btn btn-default" (click)="saveUpdateListItem()">SAVE</button>
+							<button *ngIf="modalData.id" type="submit" class="btn btn-default" (click)="saveUpdateListItem()">UPDATE</button>
+							<button type="submit" class="btn btn-default" (click)="resetOpenPopup(true, false)">RESET</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

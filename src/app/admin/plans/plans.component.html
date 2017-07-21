@@ -1,0 +1,84 @@
+<div *ngIf="loading" class="col-md-10">
+    <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+</div>
+<div class="col-md-4 settingBox" >
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Site Settings</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-hover table-user-information" >
+                        <tr>
+                            <th colspan = "2" >Addon</th>
+                        <tr>
+                        <tr>
+                            <td>
+                                Leads
+                            </td>
+                            <td>
+                                <input type="text"  [(ngModel)]="addon_leads"   />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Traffic
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)] = "addon_traffic" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button (click)= "updateSiteSettings()" >Submit</button>
+                                <span>{{siteSettingMsg}}</span>
+                            </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="panel-heading">
+            <a [routerLink]="['/admin/features']"><h3 class="panel-title">Features</h3></a>
+        </div>
+    </div>-->
+</div>
+<div class="col-md-4 settingBox">
+  <div class="row">
+        <div>
+            <a [routerLink]="['/admin/features']" type="button" class="btn btn-default">
+            Feature
+            </a>
+        </div>
+    </div>
+</div>
+<div *ngIf="!loading" class="col-md-12 all-plans-container" id="my-account">
+    <div class="col-md-2 col-sm-2 col-xs-12"></div>
+    <div class="col-md-8 col-sm-8 col-xs-12 np">
+        <!-- Start: Nav tabs -->
+        <div class="np">
+            <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
+                <li role="presentation" [class.active]="i==0" *ngFor="let plan of plans;
+                let i =index">
+                    <a href="#{{plan.plan._id}}" *ngIf="plan.plan.name!='Student'" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">{{plan.plan.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- End: Nav tabs -->
+        <!-- Start: tabs sub content -->
+        <div class="tab-content tab-sub-content tab-sub-content-2">
+            <!-- Start: tab my-profile -->
+            <div [class.active]="i==0" *ngFor="let plan of plans; let i = index" role="tabpanel" class="tab-pane sahil-material my-profile"
+                id="{{plan.plan._id}}">
+                <og-features [data]="plan"></og-features>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-12">
+
+    </div>
+</div>

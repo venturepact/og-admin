@@ -1,0 +1,17 @@
+.custom-table td {
+  word-break: break-all;
+}
+
+.dataTables_length {
+  display: inherit;
+}
+
+.dataTables_filter {
+  display: inherit;
+}
+
+.custom-table {
+  display: block;
+  overflow-x: auto;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}

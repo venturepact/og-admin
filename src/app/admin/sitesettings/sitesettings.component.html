@@ -1,0 +1,173 @@
+<div class="col-sm-10 hellobar-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  toppad">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="col-sm-8">
+                <h4>Appsumo User hellobar message</h4>
+              </div>
+              <div class="col-sm-2">
+                <h4>Edit:</h4>
+              </div>
+              <div class="col-sm-2">
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="edit_appsumo_hellobar" (click)="froalaInit('appsumo')">
+                  <div class="slider round"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-12" *ngIf = "loadingAppsumo">
+                <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+              </div>
+              <div class=" col-md-12 col-lg-12 " *ngIf = "!loadingAppsumo">
+                <table class="table table-bordered table-hover table-user-information">
+                  <tbody>
+                    <tr>
+                      <td width="10%">
+                        Message
+                      </td>
+                      <td *ngIf="!edit_appsumo_hellobar">
+                        <span *ngIf="appsumoMessage" [innerHTML]="appsumoMessage"></span>
+                        <span *ngIf="!appsumoMessage">No message set yet</span>
+                      </td>
+                      <td *ngIf="edit_appsumo_hellobar">
+                          <div class="col-sm-8">
+                            <textarea class="wysiwyg-appsumo" [(ngModel)]="appsumoMessage"></textarea>
+                          </div>
+                          <br/>
+                        <button type="submit" id="btnSaveAppsumoMsg" class="btn btn-blue btn-red btn-signUp" (click)="editAppsumoMessage()">Save</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="col-sm-8">
+                <h4>Trial User hellobar message</h4>
+              </div>
+              <div class="col-sm-2">
+                <h4>Edit:</h4>
+              </div>
+              <div class="col-sm-2">
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="edit_trial_hellobar" (click)="froalaInit('trial')">
+                  <div class="slider round"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-12" *ngIf = "loadingTrial">
+                <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoadt"></div>
+              </div>
+              <div class=" col-md-12 col-lg-12 " *ngIf = "!loadingTrial">
+                <table class="table table-bordered table-hover table-user-information">
+                  <tbody>
+                  <tr>
+                    <td width="10%">
+                      Message
+                    </td>
+                    <td *ngIf="!edit_trial_hellobar">
+                      <span *ngIf="trialMessage" [innerHTML]="trialMessage"></span>
+                      <span *ngIf="!trialMessage">No message set yet</span>
+                    </td>
+                    <td *ngIf="edit_trial_hellobar">
+                        <div class="col-sm-8">
+                          <textarea class="wysiwyg-trial" [(ngModel)]="trialMessage"></textarea>
+                        </div>
+                        <br/>
+                        <button type="submit" id="btnSaveTrialMsg" class="btn btn-blue btn-red btn-signUp" (click)="editTrialMessage()">Save</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row promolist">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="col-sm-8">
+                <h4>PromotionChecklist Goals</h4>
+              </div>
+              <div class="col-sm-2">
+                <h4>Edit:</h4>
+              </div>
+              <div class="col-sm-2">
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="edit_promolist_items">
+                  <div class="slider round"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-12" *ngIf = "loadingPromoList">
+                <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoadt"></div>
+              </div>
+              <div class=" col-md-12 col-lg-12 " *ngIf = "!loadingPromoList">
+                <div *ngIf="!edit_promolist_items" class="row">
+                  <div class="col-md-4">
+                    Active Available Goals
+                  </div>
+                  <div class="col-md-8">
+                    <ul *ngIf="goals.length">
+                      <li *ngFor="let goal of goals">{{ goal.name }}</li>
+                    </ul>
+                    <span *ngIf="!goals.length">
+                      No goals set yet
+                    </span>
+                  </div>
+                </div>
+                <div *ngIf="edit_promolist_items">
+                  <ul *ngIf="goals.length">
+                    <li *ngFor="let goal of goals">
+                      <div *ngIf="!goal.edit">
+                        <span class="goalname">{{ goal.name }}</span>
+                        <i class="material-icons editbtn" (click)="deleteGoal(goal)">delete</i>
+                        <!--<i class="material-icons editbtn" (click)="editGoal(goal)">edit</i>-->
+                      </div>
+                      
+                      <div *ngIf="goal.edit">
+                        <input type="text" [(ngModel)]="goal.name">
+                        <i class="material-icons editbtn" (click)="saveGoal(goal)">save</i>
+                      </div>
+                    </li>
+                  </ul>
+                  <div *ngIf="!goals.length">
+                    No goals set yet
+                  </div>
+                  <input placeholder="Add new goal" type="text" [(ngModel)]="goalName">
+                  <button (click)="addGoal()">Add Goal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

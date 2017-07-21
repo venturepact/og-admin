@@ -1,0 +1,81 @@
+<div class="loader" *ngIf="loadingAppDetails "></div>
+<div *ngIf="!loadingAppDetails && companyAppDetails.length>0">
+  <div>
+    <b>Calculator Details</b>
+    <button [disabled]="disableCompany" (click)="exportCompanyDetails()">
+        <span class = "export-company-details">
+          View Sheet</span>
+    </button>
+  </div>
+  <table class="table" border="1" *ngIf="!loadingAppDetails && companyAppDetails.length>0">
+    <thead>
+    <tr>
+      <th>Link</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th>Latest Publish</th>
+      <th>Visits</th>
+      <th>Leads</th>
+      <th>Conversions</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let app of companyAppDetails">
+    <tr>
+      <td>
+        <div *ngIf="app.status=='DEV'">{{app.url}}</div>
+        <a *ngIf="app.status==='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
+      </td>
+      <td>{{app.status}}</td>
+      <td>{{app.createdAt}}</td>
+      <td>{{app.updatedAt}}</td>
+      <td>{{app.analytics?.visitorsCount}}</td>
+      <td>{{app.analytics?.leadsCount}}</td>
+      <td>{{app.analytics?.conversionRate}}%</td>
+      <td> <button [disabled]="app.disable" (click)="exportAppDetails(app,$event.target)">
+        <span class = "export">
+          View Sheet</span>
+      </button></td>
+      <td ><a *ngIf="app.spredsheetUrl" [href]="app.spredsheetUrl" target="_blank">View Existing Sheet</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="loader" *ngIf="loadingUserDetails"></div>
+<div *ngIf="!loadingUserDetails && userDetails.length>0">
+  <p><b>User Details</b></p>
+  <table class="table" border="1">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>Sign Up</th>
+      <th>Last login</th>
+      <th>Role</th>
+      <th>Active</th>
+      <th>Created by Admin</th>
+      <th>Sessions</th>
+    </tr>
+    </thead>
+
+    <tbody *ngFor="let user of userDetails">
+    <tr>
+      <td><a
+        [routerLink]="['/admin/user',user._id]"><i class="ui-tooltip material-icons" style="font-size: 22px;"
+                                                   data-original-title="Edit">mode_edit</i>{{user.username}}
+      </a>
+      </td>
+      <td>{{user.created_at}}</td>
+      <td>{{user.last_login}}</td>
+      <td>{{user.role}}</td>
+      <td>{{user.active}}</td>
+      <td>{{user.is_admin_created}}</td>
+      <td>
+        <div *ngIf="loadingIntercom" class="loadersmall"></div>
+        <div *ngIf="!loadingIntercom">{{user.session_count}}</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

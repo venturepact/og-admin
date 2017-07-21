@@ -1,0 +1,458 @@
+<div class="col-md-6 col-lg-6">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  toppad">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="col-sm-8">
+							<h4>Company Details</h4>
+						</div>
+						<div class="col-sm-2">
+							<h4>Edit:</h4>
+						</div>
+						<div class="col-sm-2">
+							<label class="switch">
+								<input type="checkbox" [(ngModel)]="edit_mode">
+								<div class="slider round"></div>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-lg-12" *ngIf = "loading">
+								<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+						</div>
+						<div class=" col-md-12 col-lg-12 " *ngIf = "!loading">
+							<table class="table table-bordered table-hover table-user-information" *ngIf = "!edit_mode">
+								<tbody>
+									<tr>
+										<td>
+											Name
+										</td>
+										<td *ngIf="!edit_mode">
+											{{company.name}}<span *ngIf="!company.parent_company"> (Parent Company)</span>
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Sub Domain
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.sub_domain}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											CNAME
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.cname.url}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Root Url
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.cname.root_url}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Error Url
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.cname.error_url}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Allow Referral
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.referral.is_referralcandy_visible}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Current Referral Program
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.current_referral_program}}
+										</td>
+
+									</tr>
+									<tr *ngIf="!company.parent_company">
+										<td>
+											Agency
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.agency}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Admin Created
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.is_admin_created}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Integration Enabled
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.integration}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Chargebee Customer Id
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.chargebee_customer_id}}
+
+									</tr>
+									<tr>
+										<td>
+											Chargebee Subscription Id
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.chargebee_subscription_id}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Stripe Customer Id
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.stripe_customer_id}}
+										</td>
+
+									</tr>
+									<tr>
+										<td>
+											Chargebee Plan Id
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.chargebee_plan_id}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Api key
+										</td>
+										<td *ngIf = "!edit_mode">
+											{{company.api}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Is Appsumo Created
+										</td>
+										<td *ngIf = "!edit_mode">
+										    {{company.isAppSumo}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+										Number of calculators
+										</td>
+										<td *ngIf = "!edit_mode">
+										<span *ngIf="company.current_limit_calculators== -1">Unlimited</span>
+										<span *ngIf="company.current_limit_calculators!= -1">{{company.current_limit_calculators}}</span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+										Number of Users
+										</td>
+										<td *ngIf = "!edit_mode">
+										<span *ngIf="company.current_limit_users== -1">Unlimited</span>
+										<span *ngIf="company.current_limit_users!= -1">{{company.current_limit_users}}</span>
+										</td>
+									</tr>
+                  <tr *ngIf="!company.parent_company">
+                    <td>
+                      Number of Companies
+                    </td>
+                    <td *ngIf = "!edit_mode">
+                      <span *ngIf="company.current_limit_companies== -1">Unlimited</span>
+                      <span *ngIf="company.current_limit_companies!= -1">{{company.current_limit_companies}}</span>
+                    </td>
+                  </tr>
+								</tbody>
+							</table>
+							<form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
+								<div class="row">
+									<div class="col-sm-4">
+										Company Name:
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" formControlName="companyname" type="text" [(ngModel)] = "updateCompany.name"/>
+									</div>
+									<div *ngIf="updateFormdetail.controls.companyname.touched  && !updateFormdetail.controls.companyname.valid || isSubmit && !updateFormdetail.controls.companyname.valid" class="alert alert-danger">
+										<p *ngIf="updateFormdetail.controls.companyname.errors.required">
+											<span class="mat-icon">
+				                                <i class="material-icons">report_problem</i>
+				                            </span>
+											Company Name is required.
+										</p>
+										<p *ngIf="updateFormdetail.controls.companyname.errors.minlength">
+											<span class="mat-icon">
+	                                            <i class="material-icons">report_problem</i>
+	                                        </span>
+											Min 4 character is required.
+										</p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-4">
+										Sub Domain
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" formControlName="domain"  [(ngModel)] = "updateCompany.sub_domain"/>
+										<div *ngIf="updateFormdetail.controls.domain.touched  && !updateFormdetail.controls.domain.valid || isSubmit && !updateFormdetail.controls.domain.valid" class="alert alert-danger">
+											<p *ngIf="updateFormdetail.controls.domain.errors.required">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Domain is required.
+											</p>
+											<p *ngIf="updateFormdetail.controls.domain.errors.minlength">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Min 4 character is required.
+											</p>
+											<p *ngIf="updateFormdetail.controls.domain.errors.pattern">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Invalid Url
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										CNAME
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" formControlName="cname"  [(ngModel)] = "updateCompany.cname.url"/>
+										<div *ngIf="updateFormdetail.controls.cname.touched  && !updateFormdetail.controls.cname.valid || isSubmit && !updateFormdetail.controls.cname.valid" class="alert alert-danger">
+
+											<p *ngIf="updateFormdetail.controls.cname.errors.pattern">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Invalid Url
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Root Url
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" formControlName="root_url"  [(ngModel)] = "updateCompany.cname.root_url"/>
+										<div *ngIf="updateFormdetail.controls.root_url.touched  && !updateFormdetail.controls.root_url.valid || isSubmit && !updateFormdetail.controls.root_url.valid" class="alert alert-danger">
+
+											<p *ngIf="updateFormdetail.controls.root_url.errors.pattern">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Invalid Url
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Error Url
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" formControlName="error_url"  [(ngModel)] = "updateCompany.cname.error_url"/>
+										<div *ngIf="updateFormdetail.controls.error_url.touched  && !updateFormdetail.controls.error_url.valid || isSubmit && !updateFormdetail.controls.error_url.valid" class="alert alert-danger">
+
+											<p *ngIf="updateFormdetail.controls.error_url.errors.pattern">
+												<span class="mat-icon">
+													<i class="material-icons">report_problem</i>
+												</span>
+												Invalid Url
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Allow Referral
+									</div>
+									<div class="col-sm-8">
+										<label class="switch">
+											<input type="checkbox" [(ngModel)]="updateCompany.referral.is_referralcandy_visible" formControlName="is_referralcandy_visible">
+											<div class="slider round"></div>
+										</label>
+									</div>
+								</div>
+								<div class="row" *ngIf="updateCompany.current_referral_program">
+									<div class="col-sm-4">
+										LeadDyno
+									</div>
+									<div class="col-sm-8">
+										<!--<label class="switch">-->
+											<input type="radio" style="width: auto" name="current_referral_program" value='LEADDYNO' [checked]="updateCompany.current_referral_program == 'LEADDYNO'" [(ngModel)]="updateCompany.current_referral_program" formControlName="current_referral_program">
+											<input class="form-control" style="width: 100%" formControlName="leaddyno_url" type="text" [(ngModel)] = "updateCompany.referral.leaddyno_url"/>
+											<!--<div class="slider round"></div>-->
+										<!--</label>-->
+									</div>
+								</div>
+								<div class="row"  *ngIf="updateCompany.current_referral_program">
+									<div class="col-sm-4">
+										Referral Candy
+									</div>
+									<div class="col-sm-8">
+                                        <input style="width: auto" type="radio" name="current_referral_program" value='REFERRALCANDY' [checked]="updateCompany.current_referral_program == 'REFERRALCANDY'" [(ngModel)]="updateCompany.current_referral_program" formControlName="current_referral_program">
+                                        <input style="width: 100%" class="form-control" name="referralcandy_url" type="text" formControlName="referralcandy_url" type="text" [(ngModel)] = "updateCompany.referral.referralcandy_url"/>
+										<small>Referral URL</small>
+										<input style="width: 100%" class="form-control" name="sharing_url" type="text" formControlName="sharing_url" type="text" [(ngModel)] = "updateCompany.referral.sharing_url"/>
+										<small>Sharing URL</small>
+										<!--<label class="switch">-->
+											<!--<div class="slider round"></div>-->
+										<!--</label>-->
+									</div>
+								</div>
+								<div class="row" *ngIf="!company.parent_company">
+									<div class="col-sm-4">
+										Agency
+									</div>
+									<div class="col-sm-8">
+										<label class="switch">
+											<input type="checkbox" [(ngModel)]="updateCompany.agency" formControlName="agency">
+											<div class="slider round"></div>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Admin Created
+									</div>
+									<div class="col-sm-8">
+										<label class="switch">
+											<input type="checkbox" [(ngModel)]="updateCompany.is_admin_created" formControlName="is_admin_created">
+											<div class="slider round"></div>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Integration Enabled
+									</div>
+									<div class="col-sm-8">
+										<label class="switch">
+											<input type="checkbox" [(ngModel)]="updateCompany.integration" formControlName="integration">
+											<div class="slider round"></div>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Chargebee Customer Id
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" [(ngModel)] = "updateCompany.chargebee_customer_id" formControlName="c_cust_id"/>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-4">
+										Chargebee Subscription Id
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" [(ngModel)] = "updateCompany.chargebee_subscription_id" formControlName= "c_sub_id"/>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-4">
+										Stripe Customer  Id
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" [(ngModel)] = "updateCompany.stripe_customer_id" formControlName = "s_cust_id"/>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-4">
+										Chargebee Plan Id
+									</div>
+									<div class="col-sm-8">
+										<select class="form-control"  [(ngModel)] = "updateCompany.chargebee_plan_id" formControlName="c_plan_id">
+											<option *ngFor="let plan of planList" value="{{plan.plan.id}}">{{plan.plan.name}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Is AppSumo
+									</div>
+									<div class="col-sm-8">
+										<label class="switch">
+											<input type="checkbox" [(ngModel)]="updateCompany.isAppSumo" formControlName="isAppSumo">
+											<div class="slider round"></div>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Calculators
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" [(ngModel)] = "updateCompany.current_limit_calculators" formControlName = "calculators"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Users
+									</div>
+									<div class="col-sm-8">
+										<input class="form-control" type="text" [(ngModel)] = "updateCompany.current_limit_users" formControlName = "users"/>
+									</div>
+								</div>
+                <div class="row" *ngIf="!company.parent_company">
+                  <div class="col-sm-4">
+                    Companies
+                  </div>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="text" [(ngModel)] = "updateCompany.current_limit_companies" formControlName = "companies"/>
+                  </div>
+                </div>
+								<div class="row" *ngIf="errorMsg != ''">
+									<div class="col-sm-12 alert alert-danger">
+										<span class="mat-icon">
+											<i class="material-icons">report_problem</i>
+										</span>
+										{{errorMsg}}
+									</div>
+								</div>
+									<button type="submit" id="btnSaveDetail" class="btn btn-blue btn-red btn-signUp"  >Update</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

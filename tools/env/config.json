@@ -1,0 +1,33 @@
+{
+  "dev": {
+    "API": "http://api.venturepact.biz/api/v1",
+    "APP_DOMAIN": "http://app.venturepact.biz",
+    "APP_EXTENSION":"venturepact.biz",
+    "PROTOCOL":"http://",
+    "PARENT_APP_DOMAIN":"venturepact.biz",
+    "INTERCOM_ID" : "om2goh5g"
+  },
+  "local": {
+    "API": "http://api.outgrow.us/api/v1",
+    "APP_DOMAIN": "http://app.outgrow.local",
+    "APP_EXTENSION":"outgrow.local",
+    "PROTOCOL":"http://",
+    "PARENT_APP_DOMAIN":"app.outgrow.local"
+  },
+  "prod": {
+    "API": "https://api.outgrow.co/api/v1",
+    "APP_DOMAIN": "https://app.outgrow.co",
+    "APP_EXTENSION":"outgrow.co",
+    "PROTOCOL":"https://",
+    "PARENT_APP_DOMAIN":"app.outgrow.co",
+    "INTERCOM_ID" : "r841gnag"
+  },
+  "staging": {
+    "API": "http://api.outgrow.us/api/v1",
+    "APP_DOMAIN": "http://app.outgrow.us",
+    "APP_EXTENSION":"outgrow.us",
+    "PROTOCOL":"http://",
+    "PARENT_APP_DOMAIN":"app.outgrow.us",
+    "INTERCOM_ID" : "om2goh5g"
+  }
+}

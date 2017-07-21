@@ -1,0 +1,60 @@
+<div *ngIf="company==null || company_users == null">
+  <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+</div>
+<br>
+<div class="np">
+    <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
+        <li role="presentation" [class.active]="" (click)="showTab('company')">
+            <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Company details </a>
+        </li>
+        <li role="presentation" [class.active]="" (click)="showTab('team')">
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">team details</a>
+        </li>
+        <li role="presentation" [class.active]="" (click)="showTab('membership')" >
+          <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Membership details</a>
+        </li>
+          <li role="presentation" [class.active]="" (click)="showTab('features')" >
+          <a href="#" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company features</a>
+        </li>
+        <li role="presentation" [class.active]="" (click)="showTab('integration')">
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Integrations</a>
+        </li>
+    </ul>
+</div>
+<div *ngIf="company!=null && company_users != null" class="single-company-container col-sm-10">
+  <div class="container col-md-12 company-cont">
+    <div class="row company">
+      <div>
+        <company-detail [company]="company" (childCompany)="company = $event"></company-detail>
+      </div>
+      <div>
+        <br>
+        <child-companies [companyId]="company.id"></child-companies>
+        <br/>
+      </div>
+    </div>
+    <div class="row hide team">
+        <team-detail [team]="company_users" [userLimit] = "company.current_limit_users" [companyId]="company.id"></team-detail>
+     </div>
+    <div class="row hide features">
+      <div class="col-md-12 col-sm-12">
+        <company-feature></company-feature>
+      </div>
+    </div>
+    <div class="row hide features">
+      <div class="col-md-12 col-sm-12">
+        <calculators-detail [company]="company"></calculators-detail>
+      </div>
+    </div>
+    <div class="row hide integrations">
+      <div class="col-md-12 col-sm-12">
+        <og-integration-detail [company]="company"></og-integration-detail>
+      </div>
+    </div>
+    <div class="row hide membership">
+      <div class="col-md-12 col-sm-12">
+        <membership-detail [company]="company"></membership-detail>
+      </div>
+    </div>
+  </div>
+</div>

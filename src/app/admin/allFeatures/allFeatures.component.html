@@ -1,0 +1,136 @@
+<div class="all-companies-container">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad np">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<div class="col-sm-8">
+								<h4>Features</h4>
+							</div>
+							<div class="col-sm-2">
+								<h4>Edit:</h4>
+							</div>
+							<div class="col-sm-2">
+								<label class="switch">
+									<input type="checkbox" [(ngModel)]="edit_mode">
+									<div class="slider round"></div>
+								</label>
+							</div>
+						</div>
+					</div>
+					
+					<div *ngIf="edit_mode" class="panel-body">
+						<div class="row">
+							<div class="panel-group" *ngIf = "loading">
+								<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+							</div>
+							<div class="panel-group" *ngIf = "!loading" [attr.id]="'accord'">
+								<span id="feature_span" *ngFor="let feature of features; let i = index ">
+									<div class="panel panel-default np feature-panel" > 
+										<div class="panel-heading list">
+											<h4 class="panel-title feature-panel-title">
+												<a class="no-left" data-toggle="collapse" [attr.data-parent]="'#accord' " [attr.href]="'#'+ feature._id">
+													{{feature.name | uppercase}}
+												</a>
+												<button class="pull-right" (click)="openModal(feature._id)">Edit</button>
+											</h4>
+										</div>
+										<div [attr.id]="feature._id" *ngIf="feature.sub_features.length > 0" class="panel-collapse">
+											<div class="panel-body">
+												<div  class=" frmgrp-padd form-group">
+													<label for="comment_desc">Sub Features:</label>
+													<span id="feature_span" *ngFor="let sub of feature.sub_features; let j = index ">
+														<div class="panel subf-panel panel-default np">
+															<div class="panel-heading list">
+																<h4 class="panel-title subf-panel-title">
+																	{{sub.name}}
+																	<button class="pull-right sub-feature" (click)="openModal(feature._id,sub._id)">Edit</button>
+																</h4>
+															</div>
+														</div>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modalll -->
+<div class="modal fade features-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Features</h4>
+      </div>
+      <div class="modal-body">
+		    <form class="form-horizontal" [formGroup]="featureAccessForm">
+		    		<div class="form-group">
+					    <label for="id" class="col-sm-2 control-label">Id:</label>
+					    <div class="col-sm-10">
+					      	<label for="id" class="col-sm-2 control-label">{{featureModel.id}}</label>
+					    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="name" class="col-sm-2 control-label">Name:</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="name" formControlName="name" placeholder="Feauture name" [(ngModel)]="featureModel.name">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="heading" class="col-sm-2 control-label">Heading:</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="heading" formControlName="heading" placeholder="Feature heading" [(ngModel)]="featureModel.heading">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="description" class="col-sm-2 control-label">Description:</label>
+				    <div class="col-sm-10">
+				      <textarea class="form-control" rows="2" id="description" formControlName="description" placeholder="Features Description"
+				      [(ngModel)]="featureModel.description"></textarea>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="media_type" class="col-sm-2 control-label">Media Type:</label>
+				    <div class="col-sm-10">
+					    <select class="form-control" formControlName="media_type">
+							  <option value="IMAGE" [selected]="featureModel.media_type == 'IMAGE'">IMAGE</option>
+								<option value="GIF" [selected]="featureModel.media_type == 'GIF'">GIF</option>
+							  <option value="VIDEO" [selected]="featureModel.media_type == 'VIDEO'">VIDEO</option>
+						</select>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="media_link" class="col-sm-2 control-label">Media Link:</label>
+				    <div class="col-sm-10">
+				      <input class="form-control" rows="2" id="media_link" formControlName="media_link" placeholder="Features Description"
+				      [(ngModel)]="featureModel.media_link">
+				    </div>
+				  </div>
+				 <!--  <div class="form-group">
+				    <label for="media_type" class="col-sm-2 control-label">Media Type:</label>
+				    <div class="col-sm-10">
+				    	<select class="form-control" [(ngModel)]="featureModel.media_type">
+						  <option value="featureModel.media_type">1</option>
+						  <option value="featureModel.media_type">2</option>
+						</select>
+				    </div>
+				  </div> -->
+			</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveFeatures($event)" [disabled]="!featureAccessForm.valid">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
