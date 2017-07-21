@@ -5,14 +5,11 @@ import { SetPasswordComponent } from './+invitedUser/setPassword/setPassword.com
 import { UserApprovalComponent } from './+invitedUser/userApproval/userApproval.component';
 import { ForgetPasswordComponent } from './+forgetPassword/forgetPassword.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
-import {SalesforceRedirectComponent} from './redirectUri/salesforce/salesforce-redirect.component';
-import {AweberRedirectComponent} from './redirectUri/aweber/aweber-redirect.component';
 import { SiteComponent } from './site.component';
 import { routes } from './../config/routes/index';
 import {SharedModule} from './../shared/modules/shared.module';
 import { ToolbarModule } from './components/toolbar/toolbar.module';
-import {IntegrationService} from './../shared/services/integration.service'; 
-import {SlackRedirectComponent} from './redirectUri/slack/slack-redirect.component';
+import {IntegrationService} from './../shared/services/integration.service';
 // import { ReferralCandyComponent } from './../shared/referralCandy/referralCandy.component';
 
 @NgModule({
@@ -22,11 +19,7 @@ import {SlackRedirectComponent} from './redirectUri/slack/slack-redirect.compone
     SetPasswordComponent,
     UserApprovalComponent,
     ForgetPasswordComponent,
-    VerifyEmailComponent,
-    SalesforceRedirectComponent,
-    AweberRedirectComponent,
-    SlackRedirectComponent
-
+    VerifyEmailComponent
   ],
   imports: [
     routes,
