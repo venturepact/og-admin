@@ -13,11 +13,6 @@ import {LogoutComponent} from '../../shared/logout/logout.component';
 import {LoginComponent} from '../../shared/login/index';
 import {FreemiumGuard} from '../../shared/authentication/freemium.guard';
 import {SetupNewPasswordGuard} from '../../shared/authentication/setupnew-password.guard';
-import {
-  ForgetPasswordComponent,
-  SetPasswordComponent,
-  VerifyUserComponent
-} from '../../site/index';
 
 export const SITE_ROUTES: Routes = [
 
@@ -29,24 +24,6 @@ export const SITE_ROUTES: Routes = [
         path: '',
         component: HomeComponent,
         canActivate: [LoginGuard]
-      },
-      {
-        path: 'verify/:token',
-        component: VerifyUserComponent
-      },
-      {
-        path: 'setNewPassword',
-        component: SetPasswordComponent,
-        canActivate: [SetupNewPasswordGuard]
-      },
-      {
-        path: 'setNewPassword/forgetPassword',
-        component: SetPasswordComponent,
-        canActivate: [SetupNewPasswordGuard]
-      },
-      {
-        path: 'forgetPassword',
-        component: ForgetPasswordComponent
       }
     ]
   },

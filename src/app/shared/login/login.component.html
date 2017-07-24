@@ -47,7 +47,6 @@
                                     <div class="label-floating form-group " [class.is-empty] = "model.password ==''">
                                         <label for="inputPassword" class="control-label">Password</label>
                                         <input id="inputPassword" type="password"  class="form-control" required formControlName="password" (focus)="hideErrorMessage()" tabindex="2">
-                                        <a href="javascript:void(0)" class="forgot-btn" (click)="forgetPassword()" tabindex="3">Forgot Password ?</a>
                                     </div>
                                     <div *ngIf="loginForm.controls.password.touched  && !loginForm.controls.password.valid" class="alert alert-danger">
                                         <p *ngIf="loginForm.controls.password.errors.required">
@@ -65,9 +64,6 @@
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 np text-center">
                                         <button (click)="callGA()" type="submit" [disabled]="!loginForm.valid" class="btn btn-red next-step btn-login" id='loginSubmit'>Login</button>
-                                        <p class="dont-acc-signup" *ngIf="isDomainExist" >     Logging in for the first time?
-                                            <a class="text-red" (click)="signUp()" tabindex="4"> Sign up</a> instead
-                                        </p>
                                     </div>
                                 </form>
                             </div>

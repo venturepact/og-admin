@@ -67,7 +67,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.storage = this.cookie != null ? JSON.parse(this.cookie) : '';
     if (this.cookie != null && exceptRoute && this.subDomainService.subDomain.is_sub_domain_url) {
-       console.log("1");
       this.subDomainService.subDomainExists()
         .then((result) => {
           // console.log('CALLING this.featureAuthService.getAllFeatureAccess',this.subDomainService.currentCompany);

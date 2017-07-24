@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { routes, APP_ROUTER_PROVIDERS } from './config/routes/index';
 import { SharedModule } from './shared/modules/shared.module';
 import { NotFoundComponent } from './shared/notfound/notfound.component';
-
-import {SignupComponent} from './site/components/+signup/index';
 import {LoginComponent} from './shared/login/login.component';
 import {LogoutComponent} from './shared/logout/logout.component';
 import {FeatureAuthService} from './shared/services/feature-access.service';
@@ -25,7 +23,6 @@ export function subDomainServiceFactory (_subDomainService: SubDomainService) {
     AppComponent,
     NotFoundComponent,
     HomeComponent,
-    SignupComponent,
     LoginComponent,
     LogoutComponent
   ],
