@@ -3,13 +3,11 @@ import {HomeComponent, SiteComponent} from './../../site/index';
 import {AuthGuard} from '../../shared/authentication/auth.guard';
 import {LoginGuard} from '../../shared/authentication/login.guard';
 import {AdminGuard} from '../../shared/authentication/admin.guard';
-import {SubdomainGuard} from '../../shared/authentication/subdomain.guard';
 import {HomeRouteGuard} from '../../shared/authentication/home-route.guard';
-import {CompanyProfileRouteGuard} from '../../shared/authentication/company-profile-route.guard';
 import {NotFoundComponent} from '../../shared/notfound/notfound.component';
 import {LogoutComponent} from '../../shared/logout/logout.component';
 import {LoginComponent} from '../../shared/login/index';
-import {FreemiumGuard} from '../../shared/authentication/freemium.guard';
+import {SubdomainGuard} from "../../shared/authentication/subdomain.guard";
 
 export const SITE_ROUTES: Routes = [
 
@@ -39,11 +37,6 @@ export const SITE_ROUTES: Routes = [
     component: LogoutComponent
   },
   {
-    path: 'signup',
-    loadChildren: 'app/site/components/+signup/signup.module#SignUpModule',
-    canActivate: [LoginGuard]
-  },
-  {
     path: 'admin',
     loadChildren: 'app/admin/admin.module#AdminModule',
     canActivate: [AdminGuard]
@@ -54,5 +47,4 @@ export const SITE_ROUTES: Routes = [
   },
 ];
 
-export const AUTH_PROVIDERS = [AuthGuard, LoginGuard, AdminGuard, HomeRouteGuard, SubdomainGuard,
-  FreemiumGuard];
+export const AUTH_PROVIDERS = [AuthGuard, LoginGuard, AdminGuard, HomeRouteGuard, SubdomainGuard];

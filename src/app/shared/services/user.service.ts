@@ -8,20 +8,16 @@ import { environment } from './../../../environments/environment';
 import { User } from './../models/user';
 import { BaseService } from './base.service';
 import { SubDomain } from './../interfaces/subdomain.interface';
-import { SubDomainService} from './subdomain.service';
 
 @Injectable()
 export class UserService extends BaseService {
   token: string;
   response:any;
   subDomain: SubDomain;
-  domainUrl : string = environment.APP_EXTENSION;
   constructor(
-    public _http: Http,
-    public subDomainService: SubDomainService
+    public _http: Http
   ) {
     super();
-    this.subDomain = subDomainService.subDomain;
   }
 
   getUser(id:number): Observable<User> {

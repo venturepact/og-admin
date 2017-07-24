@@ -24,7 +24,6 @@ import { PromotionChecklist } from '../../admin/promotion-checklist/promotion-ch
 import {SubAdminComponent} from '../../admin/sub-admin/all-admin/sub-admin.component';
 import {SingleadminComponent} from '../../admin/sub-admin/single-admin/single-admin.component';
 import {SubAdminLogDetailComponent} from "../../admin/sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
-// import { AboutComponent } from './../../admin/+about/index';
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -150,10 +149,6 @@ export const ADMIN_ROUTES: Routes = [
       },
     ]
   }
-  // },{
-  //   path: 'logout',
-  //   component: LogoutComponent
-  // }
 ];
 
 export const ADMIN_PROVIDERS = [AdminGuard, AdminLtdGuard];

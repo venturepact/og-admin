@@ -8,7 +8,6 @@ import {Title} from '@angular/platform-browser';
 import {MembershipService} from '../services/membership.service';
 import {CookieService} from '../services/cookie.service';
 import {CompanyService} from '../services/company.service';
-import {SubDomainService} from '../services/subdomain.service';
 import {LoggedInService} from '../services/logged-in.service';
 import {UserService} from '../services/user.service';
 
@@ -38,10 +37,7 @@ export class LoginComponent implements OnInit {
               public _userService: UserService,
               public router: Router,
               public loggedInSerivce: LoggedInService,
-              public subDomainService: SubDomainService,
-              public _companyService: CompanyService,
               public _cookieService: CookieService,
-              public _membershipService: MembershipService,
               public _script: Script,
               public titleService: Title,
               public route: ActivatedRoute) {
@@ -106,7 +102,9 @@ export class LoginComponent implements OnInit {
                 'token': response.token,
                 'user': response.user
               };
+              self._cookieService.createCookie('storage', JSON.stringify(storage), 3);
             } else {
+              console.log('asd');
               self.ErrorMsg = 'Please Enter Correct admin credentials';
               jQuery('#is-Error').addClass('show');
             }
@@ -114,7 +112,6 @@ export class LoginComponent implements OnInit {
             jQuery('#loginSubmit').html('Login');
             jQuery('#loginSubmit').attr('disabled', false);
             jQuery('#loginSubmit').attr('disabled', false);
-            self._cookieService.createCookie('storage', JSON.stringify(storage), 3);
             if (response.user.role === 'ADMIN') {
               window.location.href = window.location.origin + '/admin/companies';
             }
@@ -148,22 +145,12 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  signUp() {
-    jQuery('#leads').addClass('hide');
-    jQuery('#signUp').removeClass('hide');
-    this.router.navigate(['/signup']);
-  }
 
   closeLogin() {
     // Redirecting to main home page //
     this.router.navigate(['/']);
   }
 
-  forgetPassword() {
-    this.router.navigate(['/forgetPassword']);
-  }
-
   callGA() {
-    // _kmq.push(['record', 'Log In Click']);
   }
 }

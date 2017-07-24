@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { environment } from './../environments/environment';
-import { SubDomain } from './shared/interfaces/subdomain.interface';
-import { Script } from './shared/services/script.service';
-import { SubDomainService } from './shared/services/subdomain.service';
-import { CookieService } from './shared/services/cookie.service';
-import { CompanyService } from './shared/services/company.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {environment} from './../environments/environment';
+import {SubDomain} from './shared/interfaces/subdomain.interface';
+import {Script} from './shared/services/script.service';
+import {CookieService} from './shared/services/cookie.service';
+import {CompanyService} from './shared/services/company.service';
+import {SubDomainService} from "./shared/services/subdomain.service";
+
 declare var window: any;
 declare var jQuery: any;
+
 // declare var _refersion: Function;
 
 @Component({
@@ -40,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     var urlParts = url.split('/');
     //calc name
     var name = urlParts[3].split('?')[0];
-    if (['outgrow','rely', 'inquirer', 'venturepact'].indexOf(urlParts[2].split('.')[1]) == -1 && name ==="") {
+    if (['outgrow', 'rely', 'inquirer', 'venturepact'].indexOf(urlParts[2].split('.')[1]) == -1 && name === "") {
       this.url = encodeURIComponent(urlParts[2]);
       this.checkCName(this.url);
     }
@@ -73,10 +75,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.cookie != null) {
       // console.log("3");
       if (!this.subDomain.is_sub_domain_url && this.storage.user.role !== 'ADMIN' && routeObject[3] !== 'verifyEmail') {
-      //  this.subDomainService.redirectToFirstCompany(this.storage);
+        //  this.subDomainService.redirectToFirstCompany(this.storage);
       }
       else if (this.storage.user.role === 'ADMIN' && routeObject[3] !== 'admin') {
-         window.location.href = environment.PROTOCOL+environment.PARENT_APP_DOMAIN + '/admin';
+        window.location.href = environment.PROTOCOL + environment.PARENT_APP_DOMAIN + '/admin';
       }
       else if (this.subDomain.is_sub_domain_url && !routeObject[3]) {
         // console.log("6");
@@ -115,22 +117,21 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkCName(company :any){
-    let isCName  = this._companyService.checkCnameExist(company)
-     .subscribe(
-      (response: any) => {
-        if(response.root_url){
-          window.location = '//' + response.root_url ;
-          this.root_url = true ;
-        }else{
-          this.root_url = false;
-        }
-      },
-      (error: any) => {
-        console.log(error);
-      });
-    }
-
+  checkCName(company: any) {
+    let isCName = this._companyService.checkCnameExist(company)
+      .subscribe(
+        (response: any) => {
+          if (response.root_url) {
+            window.location = '//' + response.root_url;
+            this.root_url = true;
+          } else {
+            this.root_url = false;
+          }
+        },
+        (error: any) => {
+          console.log(error);
+        });
+  }
 
   ngOnDestroy() {
   }
