@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
     //Intercom
     let exceptRoute: Boolean = !this.subDomainService.exceptionRoutes();
     this.cookie = this._cookieService.readCookie('storage');
-    
+
     this.storage = this.cookie != null ? JSON.parse(this.cookie) : '';
     if (this.cookie != null && exceptRoute && this.subDomainService.subDomain.is_sub_domain_url) {
        console.log("1");
@@ -164,12 +164,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    window.Intercom('hide');
-    window.Intercom('shutdown');
-    this.featureSub.unsubscribe();
-    if (window.location.href.indexOf('/preview') >= 0) {
-      window.Intercom('update', {hide_default_launcher: false});
-    }
+
 
   }
 }

@@ -4,7 +4,6 @@ import { User, Email} from  './User';
 import { EmailValidator } from '../../../../shared/validators/email.validator';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {environment} from '../../../../../environments/environment';
-import {MarketingService} from '../../../../shared/services/marketing.service';
 import {Script} from '../../../../shared/services/script.service';
 import { Title } from '@angular/platform-browser';
 import {CompanyService} from '../../../../shared/services/company.service';
@@ -12,8 +11,6 @@ import {UserService} from '../../../../shared/services/user.service';
 import {CookieService} from '../../../../shared/services/cookie.service';
 import {SubDomainService} from '../../../../shared/services/subdomain.service';
 declare var jQuery:any;
-declare var ga:any;
-declare var window:any;
 declare var qp:any;
 declare var fbq: any;
 
@@ -25,8 +22,6 @@ declare var fbq: any;
 
 export class SignupDetailComponent implements OnInit {
   referralCode : String;
-  browser_ip : String;
-  user_agent : String;
   signupFormdetail :FormGroup;
   callSchedule : FormGroup;
   signUp :Boolean = false;
@@ -50,7 +45,6 @@ export class SignupDetailComponent implements OnInit {
               public _element :ElementRef,
               public _router:Router,
               public _cookieService:CookieService,
-              public _marketingService:MarketingService,
               public _script:Script,
               public titleService: Title,
               public route: ActivatedRoute,
@@ -74,16 +68,6 @@ export class SignupDetailComponent implements OnInit {
                 if(data!==null) {
                   this.populateForm(data);
                 }
-
-                this._script.load('marketing')
-                  .then((data) => {
-                    //console.log('Scripts Loaded', data);
-                    if(data.length && data[0].status == 'Loaded')
-                      _marketingService.initMarketingStuff();
-                  })
-                  .catch((error) => {
-                    //any error
-                  });
               }
 
   ngOnInit() {
@@ -152,9 +136,6 @@ export class SignupDetailComponent implements OnInit {
         (response :any )=> {
           if(response._id !== null ) {
 
-            /*=== Tracking snippet ===*/
-            window.Intercom('update', { 'email': data, 'ISLEAD': true });
-            /*========================*/
 
             //jQuery('#leads').addClass('hide');
             // this._router.navigate(['/signup']);
@@ -247,27 +228,6 @@ export class SignupDetailComponent implements OnInit {
                   };
                   this._cookieService.createCookie('status',JSON.stringify(status),3);
               }
-
-              /*=== Tracking snippet ===*/
-              window.Intercom('update', { 'email': this.model.emails.email, 'ISLEAD': false });
-              /*========================*/
-
-              /*----- Analytics Tracking code here -------*/
-              ga('markettingteam.send', 'event', 'Signup', 'Submit', 'SignUpPage');
-              // _kmq.push(['identify', user.emails.email]);
-              // _kmq.push(['record', 'Signed Up']);
-              if(window.location.href.indexOf('outgrow.co') >= 0) {
-                if (this.isAppSumo)
-                  fbq('trackCustom', 'AppsumoRegistration');
-                if (this.isAppsumoBlack)
-                  fbq('trackCustom', 'AppsumoBlackRegistration');
-                if (this.isDealfuel)
-                  fbq('trackCustom', 'DealfuelRegistration');
-                fbq('track', 'CompleteRegistration');
-                if ('undefined' !== typeof(qp)) qp('track', 'Generic')
-              }
-              /*------------------------------------------*/
-
               //this._router.navigate(['/templates']);
               this.redirectToDomain();
             },

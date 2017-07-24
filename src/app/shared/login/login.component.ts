@@ -5,7 +5,6 @@ import { EmailValidator } from './../validators/email.validator';
 import { environment } from './../../../environments/environment';
 import { User, Email} from  './user';
 import {Script} from '../services/script.service';
-import {MarketingService} from '../services/marketing.service';
 import {Title} from '@angular/platform-browser';
 import {MembershipService} from '../services/membership.service';
 import {CookieService} from '../services/cookie.service';
@@ -15,9 +14,6 @@ import {LoggedInService} from '../services/logged-in.service';
 import {UserService} from '../services/user.service';
 
 declare var jQuery: any;
-declare var ga: any;
-// declare var _kmq: any;
-declare var window: any;
 
 @Component({
 	selector: 'og-login',
@@ -25,7 +21,6 @@ declare var window: any;
   encapsulation: ViewEncapsulation.None,
 	styleUrls: ['./login.component.css', './../../../assets/css/sahil-hover.css', './../../../assets/css/custom-material.css'],
 })
-
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   error: Boolean = false;
@@ -50,7 +45,6 @@ export class LoginComponent implements OnInit {
     public _cookieService : CookieService,
     public _membershipService:MembershipService,
     public _script: Script,
-    public _marketingService: MarketingService,
     public titleService: Title,
     public route: ActivatedRoute) {
       this.route.queryParams.subscribe((params : Params) => {
@@ -59,15 +53,6 @@ export class LoginComponent implements OnInit {
         }
       });
       this.titleService.setTitle("Outgrow Home");
-        this._script.load('marketing')
-          .then((data) => {
-            //console.log('Scripts Loaded', data);
-            if(data.length && data[0].status == 'Loaded')
-              _marketingService.initMarketingStuff();
-          })
-          .catch((error) => {
-            //any error
-          });
     }
 
   ngOnInit() {
@@ -163,11 +148,6 @@ export class LoginComponent implements OnInit {
             } else {
               window.location.href = window.location.origin + '/dashboard';
             }
-            /*--- Tracking events goes here ---*/
-            ga('markettingteam.send', 'event', 'Login', 'Submit', 'LoginPage');
-            // _kmq.push(['identify', value.email]);
-            // _kmq.push(['record', 'Logged In']);
-            /*---------------------------------*/
           }
           else {
             window.location.href = window.location.origin + '/admin/companies';
@@ -214,20 +194,6 @@ export class LoginComponent implements OnInit {
   closeLogin() {
       // Redirecting to main home page //
     this.router.navigate(['/']);
-  }
-
-  resendEmail() {
-    //console.log('user id', this.userId);
-    this._userService.resendEmail(this.userId)
-      .subscribe(
-      (success: any) => {
-        jQuery('#sendMail').addClass('hide');
-        window.toastNotification('Email has been sent, Please check your email.');
-      },
-      (error: any) => {
-        //console.log('company Error', error);
-      }
-      );
   }
 
   forgetPassword() {

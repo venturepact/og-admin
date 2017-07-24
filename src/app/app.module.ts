@@ -14,7 +14,6 @@ import {FeatureAuthService} from './shared/services/feature-access.service';
 import {HomeComponent} from './site/+home/home.component';
 import {PipesModule} from './site/templates/pipes/pipes.module';
 import { SiteModule } from './site/site.module';
-import {MarketingService} from './shared/services/marketing.service';
 import {SubDomainService} from './shared/services/subdomain.service';
 
 export function subDomainServiceFactory (_subDomainService: SubDomainService) {
@@ -41,7 +40,6 @@ export function subDomainServiceFactory (_subDomainService: SubDomainService) {
   providers: [
     FeatureAuthService,
     APP_ROUTER_PROVIDERS,
-    MarketingService,
     {
       provide: APP_INITIALIZER,
       useFactory: subDomainServiceFactory,
