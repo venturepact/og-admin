@@ -6,7 +6,6 @@ export * from './subdomain.service';
 export * from './user.service';
 export * from './membership.service';
 export * from './settings.communication.service';
-export * from './feature-access.service';
 export * from './cookie.service';
 export * from './plan.service';
 export * from './script.service';

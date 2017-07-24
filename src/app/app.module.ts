@@ -8,7 +8,6 @@ import { SharedModule } from './shared/modules/shared.module';
 import { NotFoundComponent } from './shared/notfound/notfound.component';
 import {LoginComponent} from './shared/login/login.component';
 import {LogoutComponent} from './shared/logout/logout.component';
-import {FeatureAuthService} from './shared/services/feature-access.service';
 import {HomeComponent} from './site/+home/home.component';
 import {PipesModule} from './site/templates/pipes/pipes.module';
 import { SiteModule } from './site/site.module';
@@ -35,7 +34,6 @@ export function subDomainServiceFactory (_subDomainService: SubDomainService) {
     PipesModule
   ],
   providers: [
-    FeatureAuthService,
     APP_ROUTER_PROVIDERS,
     {
       provide: APP_INITIALIZER,

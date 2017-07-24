@@ -4,15 +4,12 @@ import {AuthGuard} from '../../shared/authentication/auth.guard';
 import {LoginGuard} from '../../shared/authentication/login.guard';
 import {AdminGuard} from '../../shared/authentication/admin.guard';
 import {SubdomainGuard} from '../../shared/authentication/subdomain.guard';
-import {AnalyticsGuard} from '../../shared/authentication/analytics.guard';
-import {FeatureAuthService} from '../../shared/services/feature-access.service';
 import {HomeRouteGuard} from '../../shared/authentication/home-route.guard';
 import {CompanyProfileRouteGuard} from '../../shared/authentication/company-profile-route.guard';
 import {NotFoundComponent} from '../../shared/notfound/notfound.component';
 import {LogoutComponent} from '../../shared/logout/logout.component';
 import {LoginComponent} from '../../shared/login/index';
 import {FreemiumGuard} from '../../shared/authentication/freemium.guard';
-import {SetupNewPasswordGuard} from '../../shared/authentication/setupnew-password.guard';
 
 export const SITE_ROUTES: Routes = [
 
@@ -57,4 +54,5 @@ export const SITE_ROUTES: Routes = [
   },
 ];
 
-export const AUTH_PROVIDERS = [AuthGuard, LoginGuard, AdminGuard, HomeRouteGuard, SubdomainGuard, CompanyProfileRouteGuard, AnalyticsGuard, FeatureAuthService, FreemiumGuard, SetupNewPasswordGuard];
+export const AUTH_PROVIDERS = [AuthGuard, LoginGuard, AdminGuard, HomeRouteGuard, SubdomainGuard,
+  FreemiumGuard];

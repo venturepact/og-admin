@@ -3,9 +3,7 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { environment } from './../environments/environment';
 import { SubDomain } from './shared/interfaces/subdomain.interface';
 import { Script } from './shared/services/script.service';
-import { FeatureAccess } from './shared/interfaces/features.interface';
 import { SubDomainService } from './shared/services/subdomain.service';
-import { FeatureAuthService } from './shared/services/feature-access.service';
 import { CookieService } from './shared/services/cookie.service';
 import { CompanyService } from './shared/services/company.service';
 declare var window: any;
@@ -30,7 +28,6 @@ export class AppComponent implements OnInit, OnDestroy {
   root_url :boolean;
   constructor(
     public subDomainService: SubDomainService,
-    public featureAuthService: FeatureAuthService,
     public _script: Script,
     public sanitizer: DomSanitizer,
     public _cookieService: CookieService,
@@ -61,25 +58,10 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('%cSTOP!.', ' color: red; font-size: xx-large');
     console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a feature, it is a scam and will give them access to your account.', 'color: grey; font-size: x-large');
 
-    //Intercom
     let exceptRoute: Boolean = !this.subDomainService.exceptionRoutes();
     this.cookie = this._cookieService.readCookie('storage');
 
     this.storage = this.cookie != null ? JSON.parse(this.cookie) : '';
-    if (this.cookie != null && exceptRoute && this.subDomainService.subDomain.is_sub_domain_url) {
-      this.subDomainService.subDomainExists()
-        .then((result) => {
-          // console.log('CALLING this.featureAuthService.getAllFeatureAccess',this.subDomainService.currentCompany);
-          if (this.storage.user.role === 'USER' && this.subDomainService.currentCompany !== undefined && this.subDomain) {
-            this.featureSub = this.featureAuthService.getAllFeatureAccess().subscribe((result) => {
-              this.featureAuthService.features = new FeatureAccess(result);
-            });
-          }
-        })
-        .catch((err) => {
-
-        })
-    }
 
     /** changes for meta tags */
     jQuery('meta[property="og:description"]').attr('content', 'venturepact');
@@ -91,32 +73,20 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.cookie != null) {
       // console.log("3");
       if (!this.subDomain.is_sub_domain_url && this.storage.user.role !== 'ADMIN' && routeObject[3] !== 'verifyEmail') {
-        // console.log('this is the culprit here');
-        this.subDomainService.redirectToFirstCompany(this.storage);
+      //  this.subDomainService.redirectToFirstCompany(this.storage);
       }
       else if (this.storage.user.role === 'ADMIN' && routeObject[3] !== 'admin') {
-        // console.log('now this is the culprit here');
-        // console.log("5");
-        // window.location.href = environment.PROTOCOL+environment.PARENT_APP_DOMAIN + '/admin';
+         window.location.href = environment.PROTOCOL+environment.PARENT_APP_DOMAIN + '/admin';
       }
       else if (this.subDomain.is_sub_domain_url && !routeObject[3]) {
         // console.log("6");
-        this.subDomainService.redirectToDashboard(this.storage);
+        //this.subDomainService.redirectToDashboard(this.storage);
       }
     } else if (!routeObject[3] && this.subDomain.is_sub_domain_url) {
       //console.log("7");
       url = 'app.' + environment.APP_EXTENSION + '/login';
       window.location.href = environment.PROTOCOL + url;
     }
-    // console.log("8");
-    this._script.load('leaddyno')
-      .then(data => {
-        // console.log("9",data);
-      })
-      .catch(error => {
-        // console.log("10",error);
-      })
-
     this.setUTMRefCookie();
   }
 
@@ -163,8 +133,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-
-
   }
 }
 
