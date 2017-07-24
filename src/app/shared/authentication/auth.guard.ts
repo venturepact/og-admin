@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate() {
-   return this.authenticate(); 
+   return this.authenticate();
   }
 
   authenticate(){

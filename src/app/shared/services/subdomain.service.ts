@@ -149,7 +149,6 @@ export class SubDomainService extends BaseService{
     if (isException){
       return;
     }
-    // console.log("11");
     window.location.href = environment.PROTOCOL + url;
   }
 
