@@ -9,7 +9,6 @@ import {NotFoundComponent} from './shared/notfound/notfound.component';
 import {LoginComponent} from './shared/login/login.component';
 import {LogoutComponent} from './shared/logout/logout.component';
 import {HomeComponent} from './site/+home/home.component';
-import {PipesModule} from './site/templates/pipes/pipes.module';
 import {SiteModule} from './site/site.module';
 
 @NgModule({
@@ -25,8 +24,7 @@ import {SiteModule} from './site/site.module';
     SharedModule,
     BrowserModule,
     CoreModule.forRoot(),
-    SiteModule,
-    PipesModule
+    SiteModule
   ],
   providers: [
     APP_ROUTER_PROVIDERS

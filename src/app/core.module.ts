@@ -7,6 +7,7 @@ import {MembershipService} from './shared/services/membership.service';
 import {CookieService} from './shared/services/cookie.service';
 import {CompanyService} from './shared/services/company.service';
 import {Script} from './shared/services/script.service';
+import {SubDomainService} from "./shared/services/subdomain.service";
 
 @NgModule({
   exports: [SharedModule]
@@ -18,7 +19,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [UserService, LoggedInService, SettingsCommunicationService,
-        MembershipService, CompanyService, CookieService, Script]
+        MembershipService, CompanyService, CookieService, Script, SubDomainService]
     };
   }
 

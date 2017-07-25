@@ -1,13 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {environment} from './../environments/environment';
-import {SubDomain} from './shared/interfaces/subdomain.interface';
 import {Script} from './shared/services/script.service';
 import {CookieService} from './shared/services/cookie.service';
+import {environment} from "../environments/environment";
 
 declare var window: any;
 declare var jQuery: any;
-
 
 @Component({
   selector: 'sd-app',
@@ -15,12 +12,8 @@ declare var jQuery: any;
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 
-  subDomain: SubDomain;
-  safeSubDomainUrl: SafeResourceUrl = '';
-  subDomainUrl: string = '';
-  featureSub: any;
   cookie: any;
   storage: any;
   url: any;
@@ -44,13 +37,15 @@ export class AppComponent implements OnInit, OnDestroy {
       return true;
     if (this.cookie != null) {
       if (this.storage.user.role === 'ADMIN' && routeObject[3] !== 'admin') {
-        //console.log('>>>>@@@@@@@@@app');
         window.location.href = environment.PROTOCOL + environment.PARENT_APP_DOMAIN + '/admin';
+      }
+    }
+
+    if (environment.production) {
+      console.log = function () {
       }
     }
   }
 
-  ngOnDestroy() {
-  }
 }
 
