@@ -4,12 +4,12 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {BaseService} from './base.service';
-import {SubDomainService} from './subdomain.service';
 import {UserBilling} from './../models/userBilling';
 import {Estimate} from './../models/estimate';
 import {Plans} from './../models/plans';
 import {Addon} from './../models/addons';
-import {environment} from '../../../environments/environment';
+import {SubDomainService} from "./subdomain.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class MembershipService extends BaseService {

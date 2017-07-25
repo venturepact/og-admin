@@ -1,38 +1,30 @@
-import { Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from './../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {environment} from './../../../environments/environment';
 import {UserService} from '../services/user.service';
 import {LoggedInService} from '../services/logged-in.service';
-import {SubDomainService} from '../services/subdomain.service';
 
-declare var jQuery:any;
-declare var ga:any;
+declare var jQuery: any;
+declare var ga: any;
+
 // declare var _kmq:any;
 
 @Component({
-	selector: 'og-logout',
-  template:''
+  selector: 'og-logout',
+  template: ''
 })
+export class LogoutComponent implements OnInit {
 
-export class LogoutComponent implements OnInit{
-
-  constructor(
-    public _userService:UserService,
-    public router: Router,
-    public loggedInService: LoggedInService,
-    public subDomainService: SubDomainService
-  ) {
+  constructor(public _userService: UserService,
+              public router: Router,
+              public loggedInService: LoggedInService) {
   }
 
   ngOnInit() {
     // console.log("inside logout component");
-    if(this._userService.logout()){
+    if (this._userService.logout()) {
       this.loggedInService.logout();
-      if(this.subDomainService.subDomain.is_sub_domain_url){
-        window.location.href = environment.APP_DOMAIN;
-      }else{
-        this.router.navigate(['/']);
-      }
+      this.router.navigate(['/']);
     }
   }
 

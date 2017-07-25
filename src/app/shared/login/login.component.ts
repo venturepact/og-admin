@@ -90,8 +90,6 @@ export class LoginComponent implements OnInit {
     //this.co = window.location.href.split('.outgrow')[0].split('//')[1];
     this.co = window.location.href.split('//')[1].split('.')[0];
     let companyName: String = null;
-    if (linkArray.length === 3 && linkArray[0] !== 'app')
-      companyName = linkArray[0];
 
     this._userService.login(value.email, value.password, companyName)
       .subscribe((response: any) => {

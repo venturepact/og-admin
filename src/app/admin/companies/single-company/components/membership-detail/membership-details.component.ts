@@ -1,9 +1,9 @@
 import { OnInit, Component, Input } from '@angular/core';
-import { MembershipService } from './../../../../../shared/services/membership.service';
 import { AdminService } from './../../../../../shared/services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { AdminCompany } from '../../../../../shared/models/company';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {MembershipService} from "../../../../../shared/services/membership.service";
 
 declare var jQuery: any;
 declare var moment: any;
@@ -63,7 +63,7 @@ export class MembershipDetailComponent implements OnInit {
       plan_traffic: [this.plan_traffic, Validators.compose([Validators.required, Validators.pattern('^-1$|^[0-9]{1,7}$')])],
       addon_leads : [this.addon_leads, Validators.compose([Validators.required, Validators.pattern('^-1$|^[0-9]{1,7}$')])],
       addon_traffic : [this.addon_traffic, Validators.compose([Validators.required, Validators.pattern('^-1$|^[0-9]{1,7}$')])],
-      reset_period : [this.reset_period, Validators.compose([Validators.required, Validators.pattern('^-1$|^[0-9]{1,7}$')])],      
+      reset_period : [this.reset_period, Validators.compose([Validators.required, Validators.pattern('^-1$|^[0-9]{1,7}$')])],
       plan_leads_check : [],
       plan_traffic_check : []
       //reset_current_usage:[]
@@ -83,7 +83,7 @@ export class MembershipDetailComponent implements OnInit {
     this.plan_traffic_check = this.plan_traffic === -1 ? true : false;
     this.reset_current_usage = this.company.reset_current_usage ? true : false;
     this.reset_period = this.company.reset_period;
-    
+
     //this.allow_reset = this.reset_current_usage === true ? "Yes" : "No";
 
   }

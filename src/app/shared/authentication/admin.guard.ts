@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
     if (this._cookieService.readCookie('storage') !== null && storage.user.role=="ADMIN") {
     	return true;
  	}
- 	this.router.navigate(['/login']);
+ //	this.router.navigate(['/login']);
     return false;
   }
 }
