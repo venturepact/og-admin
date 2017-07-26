@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 5555",
-    "d": "ng serve --port 5555 --disable-host-check",
+    "start": "ng serve --disable-host-check --port 5555",
+    "d": "ng serve --disable-host-check --port 5555",
     "wild": "ng serve --port 5555 --prod --aot --output-hashing none",
     "build": "ng build",
     "test": "ng test",

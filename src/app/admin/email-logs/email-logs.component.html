@@ -106,7 +106,7 @@
           <div class="sahil-material" *ngIf="selected">
             <!--<textarea [innerHTML]="selected?.body" [readonly]="true" rows="10" style="width:100%"></textarea>-->
             <div *ngFor="let key of generateKeys(selected)">
-                {{ key + '  :-  ' + selected[key] }}
+                <p><i>{{ key + '  :-  ' }}</i> <span [innerHTML]="selected[key]"></span></p>
             </div>
           </div>
         </div>
