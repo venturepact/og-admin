@@ -118,7 +118,7 @@
         <td>{{app.updatedAt}}</td>
         <td>
           {{app.name}}
-          <a [routerLink]="['/admin/company',app.company_id]">
+          <a [routerLink]="['/admin/company',app.company._id]">
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
