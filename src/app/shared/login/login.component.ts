@@ -81,17 +81,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(value?: any) {
     value = this.loginForm.value;
-    let self = this;
     jQuery('#loginSubmit').addClass('loading');
     jQuery('#loginSubmit').html('Please wait');
     jQuery('#loginSubmit').attr('disabled', true);
-    let link = window.location.hostname;
-    let linkArray = link.split('.');
-    //this.co = window.location.href.split('.outgrow')[0].split('//')[1];
-    this.co = window.location.href.split('//')[1].split('.')[0];
-    let companyName: String = null;
 
-    this._userService.login(value.email, value.password, companyName)
+    this._userService.login(value.email, value.password, null)
       .subscribe((response: any) => {
           if (response.token) {
             let storage: any;
@@ -100,10 +94,11 @@ export class LoginComponent implements OnInit {
                 'token': response.token,
                 'user': response.user
               };
-              self._cookieService.createCookie('storage', JSON.stringify(storage), 3);
+              this._cookieService.createCookie('storage', JSON.stringify(storage), 3);
             } else {
               console.log('asd');
-              self.ErrorMsg = 'Please Enter Correct admin credentials';
+              this.ErrorMsg = 'Please Enter Correct admin credentials';
+              jQuery('#is-Error').removeClass('hide');
               jQuery('#is-Error').addClass('show');
             }
             jQuery('#loginSubmit').removeClass('loading');
@@ -113,32 +108,30 @@ export class LoginComponent implements OnInit {
             if (response.user.role === 'ADMIN') {
               window.location.href = window.location.origin + '/admin/companies';
             }
-            else {
-            }
           }
         },
         (response: any) => {
-          self.resendEmailShow = false;
+          this.resendEmailShow = false;
           jQuery('#loginSubmit').removeClass('loading');
           jQuery('#loginSubmit').html('Login');
           jQuery('#loginSubmit').attr('disabled', false);
           jQuery('#loginSubmit').attr('disabled', false);
           jQuery('#is-Error').removeClass('hide');
           //self.isError = true;
-          self.ErrorMsg = response.error.message;
+          this.ErrorMsg = response.error.message;
           if (response.error.code === 'E_USER_NOT_FOUND') {
-            self.ErrorMsg = "Something isn't quite right. Please enter a correct email and password..";
+            this.ErrorMsg = "Something isn't quite right. Please enter a correct email and password..";
           }
           else if (response.error.code === 'E_USER_ACCOUNT_DISABLED') {
-            self.userId = response.error.err_errors;
-            self.ErrorMsg = 'Your account has been disabled. Please signup again!';
+            this.userId = response.error.err_errors;
+            this.ErrorMsg = 'Your account has been disabled. Please signup again!';
           }
           else if (response.error.code === 'E_USER_ACCOUNT_LEFT') {
-            self.ErrorMsg = response.error.message;
-            self.userId = response.error.err_errors;
+            this.ErrorMsg = response.error.message;
+            this.userId = response.error.err_errors;
           }
-          console.log("error message", self.ErrorMsg);
-          jQuery("#login-error-msg").html(self.ErrorMsg);
+          console.log("error message", this.ErrorMsg);
+          jQuery("#login-error-msg").html(this.ErrorMsg);
         }
       );
   }

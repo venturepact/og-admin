@@ -4,7 +4,7 @@
 #  git remote add server git@github.com:venturepact/og-build.git
 
 
-BRANCH="master"
+BRANCH="admin-rely"
 CONFIG_ENV=" --env=prod --prod --aot --output-hashing none"
 
 if [ "$1" = "admin" ]
