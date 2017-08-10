@@ -46,8 +46,24 @@
                     </div>
                 </a>
             </li>
-
-             <li *ngIf="sub_role == null" class="setting-nav" id="email-logs" (click)="showTab('email-logs')">
+            <!---
+            Code for Landon Calc
+            -->
+            <li *ngIf="sub_role == null" class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
+                <a [routerLink]="['londoner']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">public</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Londoner</h6>
+                        <span class="">manage your londoner calc</span>
+                    </div>
+                </a>
+            </li>
+            <!---
+            Code for Landon Calc
+            -->
+            <li *ngIf="sub_role == null" class="setting-nav" id="email-logs" (click)="showTab('email-logs')">
                 <a [routerLink]="['emailLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">email</i>
@@ -57,9 +73,9 @@
                         <span class="">Check all the Email Logs</span>
                     </div>
                 </a>
-             </li>
+            </li>
 
-              <li class="setting-nav" id="leads-tab" (click)="showTab('leads')">
+            <li class="setting-nav" id="leads-tab" (click)="showTab('leads')">
                 <a [routerLink]="['leads']" data-toggle="tab">
                         <span class="left-sidebar-icon">
                         <i class="material-icons">supervisor_account</i>
@@ -69,8 +85,8 @@
                     <span class="">All generated leads</span>
                   </div>
                 </a>
-              </li>
-              <li *ngIf="sub_role == null" class="setting-nav" id="couponcode-tab" (click)="showTab('couponcode-tab')">
+            </li>
+            <li *ngIf="sub_role == null" class="setting-nav" id="couponcode-tab" (click)="showTab('couponcode-tab')">
                 <a [routerLink]="['couponcode']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                         <i class="material-icons">local_activity</i>
@@ -80,8 +96,8 @@
                         <span class="">All created couponcodes</span>
                     </div>
                 </a>
-              </li>
-              <li *ngIf="sub_role == null" class="setting-nav" id="error-logs" (click)="showTab('error-logs')">
+            </li>
+            <li *ngIf="sub_role == null" class="setting-nav" id="error-logs" (click)="showTab('error-logs')">
                 <a [routerLink]="['errorLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">list</i>
@@ -91,8 +107,8 @@
                         <span class="">Check all the Error Logs</span>
                     </div>
                 </a>
-             </li>
-                <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
+            </li>
+            <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
                 <a [routerLink]="['locales-admin']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">list</i>
@@ -102,8 +118,8 @@
                         <span class="">Manage all the locales</span>
                     </div>
                 </a>
-             </li>
-              <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
+            </li>
+            <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
                 <a [routerLink]="['responseLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">list</i>
@@ -113,8 +129,8 @@
                         <span class="">Check all the Response Logs</span>
                     </div>
                 </a>
-             </li>
-              <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
+            </li>
+            <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
                 <a [routerLink]="['promotion-checklist']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">list</i>
@@ -124,8 +140,8 @@
                         <span class="">Create Edit promotion checklist items</span>
                     </div>
                 </a>
-             </li>
-             <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">
+            </li>
+            <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">
                 <a [routerLink]="['customJSApprovals']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">list</i>

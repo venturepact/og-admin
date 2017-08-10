@@ -13,17 +13,19 @@ import { CouponsComponent } from "./../../admin/coupons/coupons.component";
 import { SitesettingsComponent } from "./../../admin/sitesettings/sitesettings.component";
 import { PlansComponent } from "./../../admin/plans/plans.component";
 import { AllFeaturesComponent } from "./../../admin/allFeatures/allFeatures.component";
+import { LondonerComponent } from '../../admin/londoner/londoner.component';
 import { AdminGuard } from "./../../shared/authentication/admin.guard";
 import { AdminLtdGuard } from "./../../shared/authentication/admin-ltd.guard";
 import { BasicComponent } from "./../../admin/basic/basic.component";
 import { SuccessRateComponent } from "../../admin/success-rate/success-rate.component";
 import { LogComponent } from '../../admin/log/log.component';
 import { SearchCalcComponent } from "../../admin/search-calc/search-calc.component";
-import {CustomJsApprovalsComponent} from '../../admin/custom-js-approvals/custom-js-approvals.component'
+import { CustomJsApprovalsComponent } from '../../admin/custom-js-approvals/custom-js-approvals.component'
 import { PromotionChecklist } from '../../admin/promotion-checklist/promotion-checklist.component';
-import {SubAdminComponent} from '../../admin/sub-admin/all-admin/sub-admin.component';
-import {SingleadminComponent} from '../../admin/sub-admin/single-admin/single-admin.component';
-import {SubAdminLogDetailComponent} from "../../admin/sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
+import { SubAdminComponent } from '../../admin/sub-admin/all-admin/sub-admin.component';
+import { SingleadminComponent } from '../../admin/sub-admin/single-admin/single-admin.component';
+import { SubAdminLogDetailComponent } from "../../admin/sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
+
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -41,9 +43,9 @@ export const ADMIN_ROUTES: Routes = [
             canActivate: [AdminGuard, AdminLtdGuard],
           },
           {
-            path:'sub-admin',
-            component:SubAdminComponent,
-            canActivate:[AdminGuard]
+            path: 'sub-admin',
+            component: SubAdminComponent,
+            canActivate: [AdminGuard]
           },
           {
             path: 'users',
@@ -57,13 +59,13 @@ export const ADMIN_ROUTES: Routes = [
           },
           {
             path: 'subadmin/:id',
-            component:SingleadminComponent,
-            canActivate:[AdminGuard]
+            component: SingleadminComponent,
+            canActivate: [AdminGuard]
           },
           {
             path: 'subadmin/log/:id',
-            component:SubAdminLogDetailComponent,
-            canActivate:[AdminGuard]
+            component: SubAdminLogDetailComponent,
+            canActivate: [AdminGuard]
           },
           {
             path: 'companies',
@@ -144,6 +146,11 @@ export const ADMIN_ROUTES: Routes = [
             path: 'promotion-checklist',
             component: PromotionChecklist,
             canActivate: [AdminGuard]
+          },
+          {
+            path: 'londoner',
+            component: LondonerComponent,
+            canActivate: [AdminGuard, AdminLtdGuard]
           }
         ]
       },

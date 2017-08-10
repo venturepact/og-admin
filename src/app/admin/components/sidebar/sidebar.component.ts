@@ -48,6 +48,9 @@ export class SidebarComponent implements OnInit {
 		}else if (tab === 'locales-admin'){
 			jQuery('#locales-admin').addClass('active');
 		}
+		else if(tab === 'londoner'){
+			jQuery('#londonerSet').addClass('active');
+		}
 		
 		// else if (tab === 'customJSApprovals') {
 		// 		this._adminService.notifylogType('customJSApprovals')
