@@ -17,4 +17,10 @@ export class LondonerService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError)
   }
+
+  updateTime(data): Observable<any> {
+    return this._http.put(this._url + '/builder/email_time_update/' + data.id + '/' + data.timeVal, {})
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
 }

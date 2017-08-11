@@ -1,0 +1,9 @@
+.all-companies-container{
+  top:100px;
+  position: relative;
+  margin-left: 255px;
+}
+
+.dataTables_length{
+  display: inherit;
+}
