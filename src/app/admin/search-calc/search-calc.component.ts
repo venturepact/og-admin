@@ -46,7 +46,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   }
 
   ngOnInit() {
-    this.subscriptions.add(this.searchCalc.valueChanges.debounceTime(500).distinctUntilChanged()
+    this.subscriptions.add(this.searchCalc.valueChanges.debounceTime(1500).distinctUntilChanged()
       .switchMap(input => {
         super.searchData();
         return this.searchData();

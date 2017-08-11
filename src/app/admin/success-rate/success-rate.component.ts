@@ -75,7 +75,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     this.addFilter();
 
     this.loading = true;
-    this.subscriptions.add(this.input.valueChanges.debounceTime(500).distinctUntilChanged()
+    this.subscriptions.add(this.input.valueChanges.debounceTime(1500).distinctUntilChanged()
       .switchMap(data => {
         super.searchData();
         return this.searchData();

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Script} from './shared/services/script.service';
 import {CookieService} from './shared/services/cookie.service';
 import {environment} from "../environments/environment";
@@ -11,7 +11,6 @@ declare var jQuery: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
 
   cookie: any;
