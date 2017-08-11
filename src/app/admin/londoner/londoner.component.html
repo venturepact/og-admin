@@ -2,44 +2,51 @@
   <div *ngIf="loading" style="margin-left: 25%; margin-bottom: 40%; margin-top: 10%;">
     <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
   </div>
-  <label>
-        Search:<input type="search" placeholder="calc name or company name" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()"/>
+  <div  *ngIf="!loading">
+    <div style="margin-left: 15%;"><h3>Default Seting for all calculator is Number of question  x 30 second</h3></div>
+    <br><br>
+    <label style="margin-left: 2%;">
+        <h4><p style="display: inline;">Search</p><input type="search" style="padding-left: 2%;" placeholder="calc name or company name" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()" style="width: 500px;"/></h4>
   </label>
-  <div *ngIf="!loading">
-    <table>
-      <thead>
-        <tr>
-          <th>
-            Name
-          </th>
-          <th>
-            Subdomain
-          </th>
-          <th>
-            Current Plan
-          </th>
-          <th>
-            Calculator Url
-          </th>
-          <th>
-            Created
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor=" let data of calculator; let i = index;" style="margin-left: 8%;">
-          <td>{{ data.name }}</td>
-          <td>{{ data.company.sub_domain }}</td>
-          <td>{{ data.company.billing.chargebee_plan_id }}</td>
-          <td>{{ data.url }}</td>
-          <td>{{ data.createdAt.split('T')[0]}} </td>
-          <td> <input type="number" placeholder="Time In Second" [(ngModel)]="timeData[i]" /></td>
-          <td>
-            <a href="javascript:void(0)"><i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit" (click)="saveTime(i)">mode_edit</i></a>
-          </td>
-        </tr>
+    <div>
+      <table class="dataTable">
+        <thead>
+          <tr> 
+            <th>
+              <h3>Name</h3>
+            </th>
+            <th>
+              <h3>Subdomain</h3>
+            </th>
+            <th>
+              <h3>Current Plan</h3>
+            </th>
+            <th>
+              <h3 class="text-center">Calculator Url</h3>
+            </th>
+            <th>
+              <h3>Created</h3>
+            </th>
+            <th>
+              <h3>Time In Second</h3>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let data of calculator; let i = index;" style="margin-left: 8%;">
+            <td class= "th_set">{{ data.name }}</td>
+            <td class= "th_set">{{ data.company.sub_domain }}</td>
+            <td class= "th_set">{{ data.company.billing.chargebee_plan_id }}</td>
+            <td class= "th_set">{{ data.url }}</td>
+            <td class= "th_set">{{ data.createdAt.split('T')[0]}} </td>
+            <td class= "th_set"> <input type="number" placeholder="Time In Second" [(ngModel)]="timeData[i]" style="width: 80px;"/></td>
+            <td>
+              <a href="javascript:void(0)"><i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit" (click)="saveTime(i)">mode_edit</i></a>
+            </td>
+          </tr>
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

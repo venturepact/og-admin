@@ -7,3 +7,19 @@
 .dataTables_length{
   display: inherit;
 }
+
+.dataTable {
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+table thead tr th{
+  text-align: center;
+}
+
+.th_set{
+  padding: 8px 10px
+}
