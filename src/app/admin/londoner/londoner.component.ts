@@ -20,7 +20,7 @@ export class LondonerComponent extends Datatable implements OnInit {
   ngOnInit() {
     this._http.getSoundCloud()
       .subscribe(data => {
-        console.log('Data:  ', data);
+        //console.log('Data:  ', data);
         for (let d of data) {
           if (d.company) {
             this.calculator.push(d);
@@ -28,6 +28,7 @@ export class LondonerComponent extends Datatable implements OnInit {
           }
         }
         this.calculatorData = this.calculator;
+       // console.log('Length is: ', this.calculatorData.length);
         this.loading = false;
       }
       , err => console.log('Err: ', err))
@@ -43,9 +44,8 @@ export class LondonerComponent extends Datatable implements OnInit {
   }
 
   searchData() {
-
     if (this.search == '') {
-      console.log('Running e')
+      // console.log('Running e')
       this.timeData = [];
       this.calculator = this.calculatorData;
       for (let d of this.calculator) {
@@ -53,7 +53,7 @@ export class LondonerComponent extends Datatable implements OnInit {
       }
     }
     else {
-      console.log('Running t')
+      // console.log('Running t')
       this.calculator = [];
       this.timeData = [];
       for (let d of this.calculatorData) {
