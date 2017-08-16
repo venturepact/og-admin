@@ -35,7 +35,7 @@
                     </div>
                 </a>
             </li>
-            <li  class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
+            <li *ngIf="sub_role == null" class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
                 <a [routerLink]="['subdomains']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">public</i>
@@ -49,7 +49,7 @@
             <!---
             Code for Landon Calc
             -->
-            <li *ngIf="sub_role == null" class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
+            <li class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
                 <a [routerLink]="['londoner']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">public</i>
