@@ -2,16 +2,20 @@
   <div *ngIf="loading" style="margin-left: 25%; margin-bottom: 40%; margin-top: 10%;">
     <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
   </div>
-  <div  *ngIf="!loading">
-    <div style="margin-left: 15%;"><h3>Default Seting for all calculator is Number of question  x 30 second</h3></div>
+  <div *ngIf="!loading">
+    <div style="margin-left: 15%;">
+      <h3>Default Seting for all calculator is Number of question x 30 second</h3>
+    </div>
     <br><br>
+    <button *ngIf="nextClick" (click)="nextClickFun()" type="button">Next</button>
+    <button *ngIf="previousClick" (click)="previousClickFun()" type="button">Previous</button>
     <label style="margin-left: 2%;">
         <h4><p style="display: inline;">Search</p><input type="search" style="padding-left: 2%;" placeholder="calc name or company name" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()" style="width: 500px;"/></h4>
   </label>
     <div>
       <table class="dataTable">
         <thead>
-          <tr> 
+          <tr>
             <th>
               <h3>Name</h3>
             </th>
@@ -34,12 +38,12 @@
         </thead>
         <tbody>
           <tr *ngFor=" let data of calculator; let i = index;" style="margin-left: 8%;">
-            <td class= "th_set">{{ data.name }}</td>
-            <td class= "th_set">{{ data.company.sub_domain }}</td>
-            <td class= "th_set">{{ data.company.billing.chargebee_plan_id }}</td>
-            <td class= "th_set">{{ data.url }}</td>
-            <td class= "th_set">{{ data.createdAt.split('T')[0]}} </td>
-            <td class= "th_set"> <input type="number" placeholder="Time In Second" [(ngModel)]="timeData[i]" style="width: 80px;"/></td>
+            <td class="th_set">{{ data.name }}</td>
+            <td class="th_set">{{ data.company.sub_domain }}</td>
+            <td class="th_set">{{ data.company.billing.chargebee_plan_id }}</td>
+            <td class="th_set">{{ data.url }}</td>
+            <td class="th_set">{{ data.createdAt.split('T')[0]}} </td>
+            <td class="th_set"> <input type="number" placeholder="Time In Second" [(ngModel)]="timeData[i]" style="width: 80px;" /></td>
             <td>
               <a href="javascript:void(0)"><i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit" (click)="saveTime(i)">mode_edit</i></a>
             </td>

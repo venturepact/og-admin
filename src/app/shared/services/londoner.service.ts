@@ -12,8 +12,14 @@ export class LondonerService extends BaseService {
     super();
   }
 
-  getSoundCloud(): Observable<any> {
-    return this._http.get(this._url + '/builder/get_londoner_app')
+  getSoundCloud(data): Observable<any> {
+    return this._http.get(this._url + '/builder/get_londoner_app/' + data.limit + '/' + data.skip)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  getPreviousData(data): Observable<any> {
+    return this._http.get(this._url + '/builder/get_previous_records/' + data.limit )
       .map(this.extractData)
       .catch(this.handleError)
   }

@@ -9,29 +9,22 @@ import { Datatable } from './../../shared/interfaces/datatable.interface';
 })
 export class LondonerComponent extends Datatable implements OnInit {
   loading: boolean = true;
-  calculatorData: any;
+  calculatorData = [];
   calculator: any = [];
   timeData = [];
   search = '';
+  currentSkip = 0;
+  previousSkip = 0;
+  nextClick = false;
+  previousClick = false;
+  totlaRecord: any;
   constructor(private _http: LondonerService) {
     super();
   }
 
   ngOnInit() {
-    this._http.getSoundCloud()
-      .subscribe(data => {
-        //console.log('Data:  ', data);
-        for (let d of data) {
-          if (d.company) {
-            this.calculator.push(d);
-            (typeof d.time_to_email != 'undefined') ? this.timeData.push(d.time_to_email) : this.timeData.push(0);
-          }
-        }
-        this.calculatorData = this.calculator;
-       // console.log('Length is: ', this.calculatorData.length);
-        this.loading = false;
-      }
-      , err => console.log('Err: ', err))
+    this._http.getSoundCloud({ limit: 20, skip: this.currentSkip })
+      .subscribe(data => this.dataAlign(data), err => console.log('Err: ', err))
   }
 
   saveTime(i) {
@@ -63,5 +56,45 @@ export class LondonerComponent extends Datatable implements OnInit {
         }
       }
     }
+  }
+
+  nextClickFun() {
+    this.loading = true;
+    this._http.getSoundCloud({ limit: 20, skip: this.currentSkip })
+      .subscribe(data => { this.dataAlign(data); }, err => console.log('Retrive Next Error', err))
+  }
+  previousClickFun() {
+    this.loading = true;
+    this._http.getPreviousData({ limit: this.currentSkip - 20 })
+      .subscribe(data => {
+        this.currentSkip = this.currentSkip - 40;
+        this.dataAlign(data);
+        //console.log('1111Current Skip:  ', this.currentSkip);
+      }, err => console.log('Retrive Previous Error', err))
+  }
+  dataAlign(data) {
+   // console.log('Run Function:::');
+    this.calculator = [];
+    this.calculatorData = [];
+    this.timeData = [];
+    this.totlaRecord = data.count;
+    for (let d of data.data) {
+      if (d.company) {
+        (typeof d.time_to_email != 'undefined') ? this.timeData.push(d.time_to_email) : this.timeData.push(0);
+        this.calculator.push(d);
+      }
+    }
+    if (this.totlaRecord > (this.currentSkip) + 20) this.nextClick = true;
+    else this.nextClick = this.previousClick = false;
+
+    this.currentSkip = this.currentSkip + 20;
+    if (this.currentSkip <= 20) this.previousClick = false;
+    else this.previousClick = true;
+
+    //console.log('Length is: ', this.calculatorData);
+    this.loading = false;
+    this.calculatorData = this.calculator;
+
+    //console.log('Current Skip: ', this.currentSkip);
   }
 }
