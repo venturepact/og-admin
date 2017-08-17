@@ -23,7 +23,7 @@ export class LondonerComponent extends Datatable implements OnInit {
   }
 
   ngOnInit() {
-    this._http.getSoundCloud({ limit: 20, skip: this.currentSkip })
+    this._http.getSoundCloud({ limit: 50, skip: this.currentSkip })
       .subscribe(data => this.dataAlign(data), err => console.log('Err: ', err))
   }
 
@@ -60,14 +60,14 @@ export class LondonerComponent extends Datatable implements OnInit {
 
   nextClickFun() {
     this.loading = true;
-    this._http.getSoundCloud({ limit: 20, skip: this.currentSkip })
+    this._http.getSoundCloud({ limit: 50, skip: this.currentSkip })
       .subscribe(data => { this.dataAlign(data); }, err => console.log('Retrive Next Error', err))
   }
   previousClickFun() {
     this.loading = true;
-    this._http.getPreviousData({ limit: this.currentSkip - 20 })
+    this._http.getPreviousData({ limit: this.currentSkip - 50 })
       .subscribe(data => {
-        this.currentSkip = this.currentSkip - 40;
+        this.currentSkip = this.currentSkip - 100;
         this.dataAlign(data);
         //console.log('1111Current Skip:  ', this.currentSkip);
       }, err => console.log('Retrive Previous Error', err))
@@ -84,11 +84,11 @@ export class LondonerComponent extends Datatable implements OnInit {
         this.calculator.push(d);
       }
     }
-    if (this.totlaRecord > (this.currentSkip) + 20) this.nextClick = true;
+    if (this.totlaRecord > (this.currentSkip) + 50) this.nextClick = true;
     else this.nextClick = this.previousClick = false;
 
-    this.currentSkip = this.currentSkip + 20;
-    if (this.currentSkip <= 20) this.previousClick = false;
+    this.currentSkip = this.currentSkip + 50;
+    if (this.currentSkip <= 50) this.previousClick = false;
     else this.previousClick = true;
 
     //console.log('Length is: ', this.calculatorData);
