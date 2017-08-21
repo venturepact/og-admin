@@ -38,8 +38,10 @@ import {SubAdminComponent} from './sub-admin/all-admin/sub-admin.component';
 import {CalculatorAnalytics} from "../site/components/+analytics/services/calculator-analytics.service";
 import {SubAdminLogDetailComponent} from "./sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
 import {JSONCompare} from "../shared/services/helper-service/json-compare";
-import { LondonerComponent } from './londoner/londoner.component';
-import { LondonerService} from './../shared/services/londoner.service';
+import {LondonerComponent} from './londoner/londoner.component';
+import {LondonerService} from './../shared/services/londoner.service';
+import {FeatureAccess} from "../shared/interfaces/features.interface";
+import {FeatureAuthService} from "../shared/services/feature-access.service";
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
@@ -50,7 +52,7 @@ import { LondonerService} from './../shared/services/londoner.service';
     SuccessRateComponent, CompanyDetailsComponent, SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent,
     SubAdminComponent, SubAdminLogDetailComponent, PromotionChecklist, LondonerComponent],
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare, LondonerService]
+    JSONCompare, LondonerService, FeatureAuthService]
 })
 
 export class AdminModule {
