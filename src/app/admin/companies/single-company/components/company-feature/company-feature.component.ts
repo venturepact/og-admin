@@ -55,7 +55,7 @@ export class CompanyFeatureComponent implements OnInit {
       let obj = {
         _id: feature._id,
         active: feature.active
-      }
+      };
       data.push(obj);
       feature.sub_features.forEach(function (sub) {
         let obj2 = {
@@ -66,6 +66,14 @@ export class CompanyFeatureComponent implements OnInit {
       });
     });
     this.loading = true;
+    this._featureAuthService.updateCompanyFeatures(data, this.id)
+      .subscribe((result) => {
+        if (result.update) {
+          this.loading = false;
+        }
+      }, (error) => {
+        this.loading = false;
+      })
   }
 
   checkOne(parent, child, event) {
