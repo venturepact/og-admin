@@ -37,7 +37,6 @@ export class PlansComponent implements OnInit {
     this._planService.getPlans()
       .subscribe((result) => {
         this.plans = result;
-        console.log(Object.keys(this.plans));
         this.loading = false;
       })
   }
@@ -69,5 +68,9 @@ export class PlansComponent implements OnInit {
         this.siteSettingMsg = error.error.message;
       });
 
+  }
+
+  hello(plan) {
+    console.log(plan);
   }
 }
