@@ -22,7 +22,6 @@ export class SingleCompanyComponent implements AfterViewInit {
               public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      // console.log('user id',this.id);
     });
   }
 
@@ -75,12 +74,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       .subscribe(
         (response: any) => {
           this.company_users = response;
-          //console.log('Company UserCompany UserCompany User',response);
-        },
-        (response: any) => {
-          console.log('Company User', response);
-        }
-      );
+        });
   }
 
   getCompanyInfo(id: number) {
@@ -91,7 +85,6 @@ export class SingleCompanyComponent implements AfterViewInit {
           this.company['reset_period_list'] = response.reset_period_list;
         },
         (response: any) => {
-          console.log('getCompanyInfo Err', response);
         }
       );
   }
