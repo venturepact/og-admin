@@ -40,7 +40,6 @@ import {SubAdminLogDetailComponent} from "./sub-admin/sub-admin-log-detail/sub-a
 import {JSONCompare} from "../shared/services/helper-service/json-compare";
 import {LondonerComponent} from './londoner/londoner.component';
 import {LondonerService} from './../shared/services/londoner.service';
-import {FeatureAccess} from "../shared/interfaces/features.interface";
 import {FeatureAuthService} from "../shared/services/feature-access.service";
 
 @NgModule({

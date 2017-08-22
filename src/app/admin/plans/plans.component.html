@@ -62,28 +62,26 @@
     <!-- Start: Nav tabs -->
     <div class="np">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
-        <li role="presentation" [class.active]="i==0" *ngFor="let planCategory of keys(plans);let i =index">
-          <a href="#{{planCategory}}" class="hvr-sweep-to-right"
-             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory">{{planCategory}}</a>
+        <li role="presentation" [class.active]="i==0" *ngFor="let planCategory of keys(plans);
+                let i =index">
+          <a href="#{{planCategory}}" aria-controls="myProfile" role="tab" data-toggle="tab"
+             class="hvr-sweep-to-right">{{planCategory}}</a>
         </li>
       </ul>
     </div>
-
-    <div class="np">
-      <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
-        <li role="presentation" [class.active]="i==0" *ngFor="let plan of plans[selectedPlanCategory];let i =index">
-          <a href="#{{plan.plan._id}}" *ngIf="plan.plan?.name!='Student'"
-             aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">
-            {{plan.plan?.name}}
-          </a>
-        </li>
-      </ul>
-    </div>
+    <!--<div class="np">-->
+    <!--<ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">-->
+    <!--<li role="presentation" [class.active]="i==0" *ngFor="let plan of plans.selec;-->
+    <!--let i =index">-->
+    <!--<a href="#{{plan.plan._id}}" *ngIf="plan.plan.name!='Student'" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">{{plan.plan.name}}</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
     <!-- End: Nav tabs -->
     <!-- Start: tabs sub content -->
     <div class="tab-content tab-sub-content tab-sub-content-2">
       <!-- Start: tab my-profile -->
-      <div [class.active]="i==0" *ngFor="let plan of plans[selectedPlanCategory]; let i = index" role="tabpanel"
+      <div [class.active]="i==0" *ngFor="let plan of plans; let i = index" role="tabpanel"
            class="tab-pane sahil-material my-profile"
            id="{{plan.plan._id}}">
         <og-features [data]="plan"></og-features>
