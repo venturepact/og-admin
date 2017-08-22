@@ -11,6 +11,7 @@ import {Subscription} from "rxjs/Subscription";
   styleUrls: ['./integration-detail.component.css', '../membership-detail/membership-details.component.css']
 })
 export class IntegrationDetailComponent extends Datatable implements AfterViewInit {
+
   @Input() company: any;
   keysGetter = Object.keys;
   input = new FormControl();
@@ -33,7 +34,6 @@ export class IntegrationDetailComponent extends Datatable implements AfterViewIn
   ngAfterViewInit(): void {
     this._script.load('datatables')
       .then((data) => {
-        console.log(data);
       }).catch((error) => {
       console.log('Script not loaded', error);
     });
@@ -41,7 +41,10 @@ export class IntegrationDetailComponent extends Datatable implements AfterViewIn
     this.subscriptions.add(this.input.valueChanges.debounceTime(500).distinctUntilChanged()
       .switchMap(data => {
         super.searchData();
-        return this.adminService.getAppIntegrationLogs({company_id: this.company.id, search: this.search});
+        return this.adminService.getAppIntegrationLogs({
+          company_id: this.company.id,
+          search: this.search
+        });
       })
       .subscribe((response) => {
         this.integrationLogs = response;
