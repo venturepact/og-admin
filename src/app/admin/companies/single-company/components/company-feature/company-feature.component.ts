@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {FeatureAuthService} from "../../../../../shared/services/feature-access.service";
 
 declare var jQuery: any;
@@ -16,7 +16,7 @@ export class CompanyFeatureComponent implements OnInit {
   edit_mode: Boolean = false;
   loading: Boolean = false;
 
-  constructor(private route: ActivatedRoute, private _featureAuthService: FeatureAuthService) {
+  constructor(private _featureAuthService: FeatureAuthService, public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
