@@ -14,7 +14,12 @@ export class PlanService extends BaseService {
     constructor(public _http: Http) {
         super();
     }
-
+    getPlanTypes () {
+        const url = `${this._url}/plan/types`;;
+        return this._http.get(url, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
     getPlanFeatures(plan: String){
     	let getPlanUrl = this._url + '/planfeature/' + plan;
     	return this._http.get(getPlanUrl,this.options)
@@ -41,5 +46,12 @@ export class PlanService extends BaseService {
       return this._http.get(planUrl,this.options)
         .map(this.extractData)
         .catch(this.handleError);
+    }
+
+    createPlan(data: any) {
+        let url = `${this._url}/plans`;
+        return this._http.post(url, data, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 }
