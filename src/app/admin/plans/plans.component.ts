@@ -90,6 +90,8 @@ export class PlansComponent implements OnInit {
           alert('Fill in details');
           return;
       }
+      this.createPlanModel._id.trim();
+      this.createPlanModel.name.trim();
       this._planService.createPlan(this.createPlanModel)
           .subscribe(
               data => {
