@@ -1,3 +1,7 @@
+.ptb10 {
+    padding: 10px 0;
+}
+
 :host {
   display: block;
   padding: 0 16px;
