@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { PlanService } from './../../../shared/services/plan.service';
 declare var jQuery: any;
@@ -10,6 +10,7 @@ declare var jQuery: any;
 
 export class FeaturesComponent implements OnInit{
   @Input() data:any;
+  event = new EventEmitter();
   plan: any;
   loading: boolean = false;
   features: any[];
@@ -58,7 +59,19 @@ export class FeaturesComponent implements OnInit{
 			);
   }
 
-  updatePlan(){
+  deletePlan() {
+      this.loading = true;
+      console.log(this.plan._id);
+      this.planService.deletePlan(this.plan._id)
+          .subscribe(
+              response => {
+                  window.location.reload();
+              },
+              error => console.log(error)
+          );
+  }
+
+  updatePlan() {
     this.loading = true;
     jQuery('#msg' + this.plan.name).html('');
     let plan_features:any[] = [];

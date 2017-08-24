@@ -49,8 +49,15 @@ export class PlanService extends BaseService {
     }
 
     createPlan(data: any) {
-        let url = `${this._url}/plans`;
+        const url = `${this._url}/plans`;
         return this._http.post(url, data, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    deletePlan(id) {
+        const url  = `${this._url}/plan/${id}`;
+        return this._http.delete(url, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     }

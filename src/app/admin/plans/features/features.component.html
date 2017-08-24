@@ -2,6 +2,9 @@
 	<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
 </div>
 <div *ngIf="!loading">
+    <div class="row ptb10">
+        <button class="btn btn-danger" (click)="deletePlan()">DELETE PLAN</button>
+    </div>
 	<div class="panel-group">
 
 		<div class="col-sm-2">
