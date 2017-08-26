@@ -78,7 +78,7 @@
       </ul>
     </div>
 
-    <div class="np">
+    <div class="np" style="overflow-x: scroll;">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
         <li role="presentation" [class.active]="i==0" *ngFor="let plan of plans[selectedPlanCategory];let i =index">
           <a href="#{{plan.plan._id}}" *ngIf="plan.plan?.name!='Student'"
@@ -121,6 +121,10 @@
                 <div class="form-group">
                     <label for="plan_name">Name:</label>
                     <input type="text" class="form-control" id="plan_name" [(ngModel)]="createPlanModel.name">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" [(ngModel)]="createPlanModel.description"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="plan_type">Plan Type</label>
