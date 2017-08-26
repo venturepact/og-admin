@@ -15,6 +15,12 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
   data : Object = [];
   loading : boolean = false;
   companyType: string = 'all';
+  companyArray: Array<{}> = [
+    {name: "All", value: "all"},
+    {name: "Regular", value: "regular"},
+    {name: "appsumo", value: "appsumo"},
+    {name: "JVZOO", value: "JVZOO"}
+  ];
 
   constructor(
     public companyService: CompanyService,

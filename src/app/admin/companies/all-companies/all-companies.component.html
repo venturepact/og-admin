@@ -14,9 +14,7 @@
       </label>
       <label>Company Type
         <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "companyTypeChange($event)" class="">
-          <option value="all">All</option>
-          <option value="regular">Regular</option>
-          <option value="appsumo">App-Sumo</option>
+          <option value="all" *ngFor="let company of companyArray" [value]="company.value">{{company.name}}</option>
         </select>
       </label>
 		</div>
