@@ -13,11 +13,17 @@
         <label>
                     Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
             </label>
+        <label>Type
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "logTypeChange($event)" class="">
+          <option  value="email">Email</option>
+          <option value="deal">Deal</option>
+        </select>
+      </label>
       </div>
       <div *ngIf="loading">
         <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
       </div>
-      <table *ngIf="!loading" class="dataTable">
+      <table *ngIf="!loading && logType == 'email' " class="dataTable">
         <thead>
           <tr>
             <th>
@@ -79,6 +85,32 @@
           </tr>
         </tbody>
       </table>
+      <!-- For Deal Type  -->
+      <table *ngIf="!loading && logType == 'deal'"  class="dataTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Product Id</th>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Log</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of data">
+            <td>{{ log.user }} </td>
+            <td>{{ log.deal_product_id }} </td>
+            <td>{{ log.data.ctransaction }}</td>
+            <td>{{ log.createdAt }} </td>
+            <td>
+              <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item"><i class="ui-tooltip material-icons"
+               (click)="parseBody(log.data)" style="font-size: 22px;" data-original-title="Edit">visibility</i></a>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
       <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
       <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
         <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
@@ -100,13 +132,14 @@
           <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
           </button>
-          <h5 class="modal-title">Email Details</h5>
+		  <h5 class="modal-title" *ngIf="logType == 'email'">Email Details</h5>
+		   <h5 class="modal-title" *ngIf="logType == 'deal'">Deal Log Details</h5>
         </div>
         <div class="modal-body">
           <div class="sahil-material" *ngIf="selected">
             <!--<textarea [innerHTML]="selected?.body" [readonly]="true" rows="10" style="width:100%"></textarea>-->
             <div *ngFor="let key of generateKeys(selected)">
-                <p><i>{{ key + '  :-  ' }}</i> <span [innerHTML]="selected[key]"></span></p>
+              <p><i>{{ key + '  :-  ' }}</i> <span [innerHTML]="selected[key]"></span></p>
             </div>
           </div>
         </div>

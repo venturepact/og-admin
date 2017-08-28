@@ -256,6 +256,12 @@ export class UserService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  
+  getDealLogs(data:any) {
+    return this._http.post(this._url + '/admin/dealLog',data,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   resendEmail(data : any) :Observable <User> {
     let verifyUrl = this._url + '/resendVerificationEmail/'+ data;
