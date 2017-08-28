@@ -1,8 +1,6 @@
-import { element } from 'protractor';
 import { LocaleService } from './../../site/+builder/services/locale.service';
 import { Component, OnInit } from '@angular/core';
 import { Script } from '../../shared/services/script.service';
-import { AdminService } from '../../shared/services/admin.service';
 declare var jQuery: any;
 
 @Component({
