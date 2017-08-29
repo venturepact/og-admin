@@ -147,7 +147,6 @@ export class DealsComponent implements OnInit {
   }
 
   froalaInit(type) {
-    console.log('typeeeeeeeeeeeeeee', type);
     let editor: any;
     const self = this;
     setTimeout(function () {
