@@ -41,6 +41,8 @@ import {JSONCompare} from "../shared/services/helper-service/json-compare";
 import {LondonerComponent} from './londoner/londoner.component';
 import {LondonerService} from './../shared/services/londoner.service';
 import {FeatureAuthService} from "../shared/services/feature-access.service";
+import {PromoGoalsComponent} from "./sitesettings/promo-goals/promo-goals.component";
+import {DealsComponent} from "./sitesettings/deals/deals.component";
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
@@ -49,7 +51,7 @@ import {FeatureAuthService} from "../shared/services/feature-access.service";
   declarations: [AdminComponent, HomeComponent, SidebarComponent, BasicComponent, ToolbarComponent,
     AllUsersComponent, AllCompaniesComponent, EmailLogsComponent, LeadsComponent, CouponsComponent, SitesettingsComponent, AllFeaturesComponent,
     SuccessRateComponent, CompanyDetailsComponent, SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent,
-    SubAdminComponent, SubAdminLogDetailComponent, PromotionChecklist, LondonerComponent],
+    SubAdminComponent, SubAdminLogDetailComponent, PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent],
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
     JSONCompare, LondonerService, FeatureAuthService]
 })

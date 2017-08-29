@@ -7,7 +7,7 @@ export const ScriptStore: Scripts[] = [
   // //for plugins on builder page
   // { name: 'materialize', src: '../../../assets/js/materialize.js' },
   // { name: 'intro', src: '../../../assets/js/intro.js' },
-  // { name: 'wysiwyg', src: '../../../assets/js/wysiwyg.js' },
+  {name: 'wysiwyg', src: '../../../assets/js/wysiwyg.js'},
   // { name: 'link', src: '../../../assets/js/link.min.js' },
   // { name: 'code', src: '../../../assets/js/code_view.min.js' },
   // { name: 'colors', src: '../../../assets/js/colors.min.js' },
