@@ -1,0 +1,138 @@
+<div class="col-sm-12">
+  <div class="panel with-nav-tabs panel-custom">
+    <div class="panel-heading">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#appsumo" data-toggle="tab">Appsumo</a></li>
+        <li><a href="#appsumo-black" data-toggle="tab">Appsumo Black</a></li>
+        <li><a href="#dealfuel" data-toggle="tab">Dealfuel</a></li>
+        <li><a href="#webmaster" data-toggle="tab">Webmaster</a></li>
+        <li><a href="#affilates" data-toggle="tab">Affilates</a></li>
+        <li><a href="#trial" data-toggle="tab">Trial</a></li>
+      </ul>
+    </div>
+    <div class="panel-body">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="appsumo">
+          <h4>Message <i *ngIf="!loading && !editAppsumo" class="material-icons"
+                         (click)='editMessage("appsumo")'>edit</i></h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !editAppsumo && appsumoMessage" [innerHTML]="appsumoMessage"></div>
+          <div *ngIf="!loading && !editAppsumo && !appsumoMessage">No message set yet.</div>
+          <div *ngIf="!loading && editAppsumo">
+            <form class="appsumoMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('appsumo')"
+                  id="appsumoMessageForm" name="appsumoMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-appsumo" formControlName="message" name="message" rows="5"
+                          id="appsumoMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btnCancel"
+                      (click)='editAppsumo = !editAppsumo'>Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="appsumo-black">
+          <h4>Message <i *ngIf="!loading && !editAppsumo_black" class="material-icons"
+                         (click)='editMessage("appsumo_black")'>edit</i></h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !editAppsumo_black && appsumoblackMessage" [innerHTML]="appsumoblackMessage"></div>
+          <div *ngIf="!loading && !editAppsumo_black && !appsumoblackMessage">No message set yet.</div>
+          <div *ngIf="!loading && editAppsumo_black">
+            <form class="appsumoblackMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('appsumo_black')"
+                  id="appsumoblackMessageForm" name="appsumoblackMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-appsumo_black" formControlName="message" name="message" rows="5"
+                          id="appsumoblackMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btnCancel"
+                      (click)='editAppsumo_black = !editAppsumo_black'>Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="dealfuel">
+          <h4>Message <i *ngIf="!loading && !editdealfuel" class="material-icons"
+                         (click)='editMessage("dealfuel")'>edit</i></h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !editdealfuel && dealfuelMessage" [innerHTML]="dealfuelMessage"></div>
+          <div *ngIf="!loading && !editdealfuel && !dealfuelMessage">No message set yet.</div>
+          <div *ngIf="!loading && editdealfuel">
+            <form class="dealfuelMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('dealfuel')"
+                  id="dealfuelMessageForm" name="dealfuelMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-dealfuel" formControlName="message" name="message" rows="5"
+                          id="dealfuelMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btnCancel"
+                      (click)='editdealfuel = !editdealfuel'>Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="webmaster">
+          <h4>Message <i *ngIf="!loading && !editwebmaster" class="material-icons" (click)='editMessage("webmaster")'>edit</i>
+          </h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !editwebmaster && webmasterMessage" [innerHTML]="webmasterMessage"></div>
+          <div *ngIf="!loading && !editwebmaster && !webmasterMessage">No message set yet.</div>
+          <div *ngIf="!loading && editwebmaster">
+            <form class="webmasterMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('webmaster')"
+                  id="webmasterMessageForm" name="webmasterMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-webmaster" formControlName="message" name="message" rows="5"
+                          id="webmasterMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btnCancel"
+                      (click)='editwebmaster = !editwebmaster'>Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="affilates">
+          <h4>Message <i *ngIf="!loading && !editaffilates" class="material-icons" (click)='editMessage("affilates")'>edit</i>
+          </h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !editaffilates && affilatesMessage" [innerHTML]="affilatesMessage"></div>
+          <div *ngIf="!loading && !editaffilates && !affilatesMessage">No message set yet.</div>
+          <div *ngIf="!loading && editaffilates">
+            <form class="affilatesMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('affilates')"
+                  id="affilatesMessageForm" name="affilatesMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-affilates" formControlName="message" name="message" rows="5"
+                          id="affilatesMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btncancel"
+                      (click)='editaffilates = !editaffilates'>Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="trial">
+          <h4>Message <i *ngIf="!loading && !edittrial" class="material-icons" (click)='editMessage("trial")'>edit</i>
+          </h4>
+          <div *ngIf="loading"><img src="assets/images/logoAnim.gif" alt="loading..."></div>
+          <div *ngIf="!loading && !edittrial && trialMessage" [innerHTML]="trialMessage"></div>
+          <div *ngIf="!loading && !edittrial && !trialMessage">No message set yet.</div>
+          <div *ngIf="!loading && edittrial">
+            <form class="trialMessageForm" [formGroup]="messageForm" (ngSubmit)="saveMessage('trial')"
+                  id="trialMessageForm" name="trialMessageForm">
+              <div class="form-group">
+                <textarea class="form-control wysiwyg-trial" formControlName="message" name="message" rows="5"
+                          id="trialMessage"></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue btn-red btn-signUp btnSave">Save</button>
+              <button type="button" class="btn btn-blue btn-red btn-signUp btncancel" (click)='edittrial = !edittrial'>
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

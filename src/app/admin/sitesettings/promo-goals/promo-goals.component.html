@@ -1,0 +1,21 @@
+<div class="col-sm-12">
+  <div class="single category">
+    <h3 class="side-title">Goals</h3>
+    <ul class="list-unstyled">
+      <li *ngFor="let goal of goals index as i" [class.even]="i % 2 === 0"><a href="javascript:void(0)" title="">{{goal}}
+        <i (click)="deleteGoal(goal)" class="material-icons editbtn">delete</i></a></li>
+      <li>
+        <form class="promoGoalsForm" [formGroup]="promoGoalsForm" (ngSubmit)="saveGoal()" id="promoGoalsForm"
+              name="promoGoalsForm">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="promoGoal" id="promoGoal" name="promoGoal"
+                   placeholder="Goals">
+          </div>
+          <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+          <button [disabled]="!promoGoalsForm.valid" type="submit" class="btn btn-blue btn-red btn-signUp btnAdd">Add
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
