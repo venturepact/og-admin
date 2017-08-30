@@ -38,7 +38,6 @@ export class CompanyDetailComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     this.errorMsg = '';
     this.updateCompany = this.company;

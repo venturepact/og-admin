@@ -191,6 +191,14 @@
                       <span *ngIf="company.current_limit_companies!= -1">{{company.current_limit_companies}}</span>
                     </td>
                   </tr>
+                  <tr>
+                    <td>
+                      Template club
+                    </td>
+                    <td *ngIf="!edit_mode">
+                      <span>{{company.integration}}</span>
+                    </td>
+                  </tr>
 								</tbody>
 							</table>
 							<form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
