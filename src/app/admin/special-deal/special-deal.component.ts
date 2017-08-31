@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Script } from "../../shared/services/script.service";
+import { FormGroup, FormBuilder ,Validators } from '@angular/forms';
+
 import { Datatable } from "../../shared/interfaces/datatable.interface";
 import { AdminService } from "../../shared/services/admin.service";
 
+import { COUPON_PRODUCT } from './../../shared/constants/coupon.constants';
 @Component({
   selector: 'og-special-deal',
   templateUrl: './special-deal.component.html',
@@ -13,12 +16,16 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   loading: boolean = true;
   dealCouponsLogs: any = [];
   selectedCoupon: any;
-  constructor(private _script: Script, private adminService: AdminService) {
+  DealCouponForm : FormGroup ;
+  dealProduct = COUPON_PRODUCT;
+
+  constructor(private _script: Script, private adminService: AdminService, private fb : FormBuilder,) {
     super();
   }
 
   ngOnInit() {
     this.selectLog();
+    this.dealCouponForm();
   }
   selectLog() {
     this.loading = true;
@@ -98,4 +105,32 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   //   return '<span><i>' + key + '  :-  </i>' + value +'</span>'
   // }
 
+  dealCouponForm(){
+    	this.DealCouponForm = this.fb.group({
+           name : ['', Validators.compose([Validators.required])],
+           email : ['', Validators.compose([Validators.required])],
+           product : ['', Validators.compose([Validators.required])],
+           source: ['', Validators.compose([Validators.required])],
+           coupon: ''
+      });
+  }
+  
+  generateDealCoupon(){
+      let data = {
+        ccustemail: this.DealCouponForm.value.email,
+        ccustname: this.DealCouponForm.value.name,
+        cproditem: this.DealCouponForm.value.product,
+        source: this.DealCouponForm.value.source,
+        ctransaction: "SALE",
+        event_request: "Admin" 
+      }
+
+      this.adminService.generateDealCoupon(data)
+      .subscribe(response => {
+        this.DealCouponForm.controls['coupon'].setValue(response.coupon);
+      },
+      error=>{
+        console.log(error)
+      })
+  }
 }
