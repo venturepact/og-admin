@@ -375,4 +375,10 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  generateDealCoupon(data){
+    return this._http.post(this._url + '/webhook/deal/jvzoo', data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
 }
