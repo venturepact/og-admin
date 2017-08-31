@@ -21,7 +21,6 @@ import {AdminService} from "./../shared/services/admin.service";
 import {CompanyService} from "./../shared/services/company.service";
 import {UserService} from "./../shared/services/user.service";
 // importing modules
-import {SharedModule} from "./../shared/modules/shared.module";
 import {SingleCompanyModule} from "./companies/single-company/single-company.module";
 import {SingleUserModule} from "./users/single-user/single-user.module";
 import {SingleadminModule} from "./sub-admin/single-admin/single-admin.module";
@@ -39,19 +38,24 @@ import {CalculatorAnalytics} from "../site/components/+analytics/services/calcul
 import {SubAdminLogDetailComponent} from "./sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
 import {JSONCompare} from "../shared/services/helper-service/json-compare";
 import {LondonerComponent} from './londoner/londoner.component';
-import {LondonerService} from './../shared/services/londoner.service';
 import {FeatureAuthService} from "../shared/services/feature-access.service";
 import {PromoGoalsComponent} from "./sitesettings/promo-goals/promo-goals.component";
 import {DealsComponent} from "./sitesettings/deals/deals.component";
+import {SpecialDealComponent} from "./special-deal/special-deal.component";
+import {LondonerService} from "../shared/services/londoner.service";
+import {SharedModule} from "../shared/modules/shared.module";
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
     SingleUserModule, UtilitiesModule, SingleadminModule],
 
   declarations: [AdminComponent, HomeComponent, SidebarComponent, BasicComponent, ToolbarComponent,
-    AllUsersComponent, AllCompaniesComponent, EmailLogsComponent, LeadsComponent, CouponsComponent, SitesettingsComponent, AllFeaturesComponent,
-    SuccessRateComponent, CompanyDetailsComponent, SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent,
-    SubAdminComponent, SubAdminLogDetailComponent, PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent],
+    AllUsersComponent, AllCompaniesComponent, EmailLogsComponent, LeadsComponent, CouponsComponent,
+    SitesettingsComponent, AllFeaturesComponent, SuccessRateComponent, CompanyDetailsComponent,
+    SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
+    SubAdminLogDetailComponent, PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
+    SpecialDealComponent],
+
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
     JSONCompare, LondonerService, FeatureAuthService]
 })

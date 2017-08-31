@@ -6,13 +6,14 @@ import "rxjs/add/operator/catch";
 import {User} from "./../models/user";
 import {Observable, ReplaySubject} from "rxjs/Rx";
 import {BaseService} from "./base.service";
+
 @Injectable()
 export class AdminService extends BaseService {
   constructor(public _http: Http) {
     super();
   }
 
-  public getlogSubject = new ReplaySubject<String>(2);
+  public getLogSubject = new ReplaySubject<String>(2);
 
   getBasicGraph(data: any) {
     let getCompaniesUrl = this._url + '/admin/graph';
@@ -31,7 +32,6 @@ export class AdminService extends BaseService {
         'new_email': new_email
       }
     };
-    //console.log('email json', data);
     return this._http.put(this._url + '/admin/update/email/' + user_id, data, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -120,8 +120,6 @@ export class AdminService extends BaseService {
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
     };
-    //console.log(companyId,'companycompanycompanycompanycompany',company);
-    // console.log('detailsdetailsdetailsdetails',details);
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -129,14 +127,13 @@ export class AdminService extends BaseService {
 
 
   getCouponsCode(data: any) {
-    //console.log('datadatadata',data);
     return this._http.post(this._url + '/coupon/lists', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   createPromo(data: any) {
-    console.log(this.post_options(),">>>>>>>>>>>>>>>>>>");
+    console.log(this.post_options(), ">>>>>>>>>>>>>>>>>>");
     return this._http.post(this._url + '/coupon/create', data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -156,6 +153,12 @@ export class AdminService extends BaseService {
 
   editPromocode(couponId: string, data: any) {
     return this._http.put(this._url + '/coupon/update/' + couponId, data, this.put_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getSpecialCouponCodeLogs(params: any) {
+    return this._http.post(this._url + '/admin/special_deal_log', params, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -230,11 +233,11 @@ export class AdminService extends BaseService {
 
   notifylogType(type) {
     console.log(type);
-    this.getlogSubject.next(type);
+    this.getLogSubject.next(type);
   }
 
   getlogType(): Observable<any> {
-    return this.getlogSubject.asObservable();
+    return this.getLogSubject.asObservable();
   }
 
 
@@ -319,16 +322,18 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getAllAdminLogs(subadminId: String, data: any):Observable<any> {
-    return this._http.post(this._url + '/admin/subadminlog/' + subadminId,data,this.options)
+  getAllAdminLogs(subadminId: String, data: any): Observable<any> {
+    return this._http.post(this._url + '/admin/subadminlog/' + subadminId, data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
-  getLogById(logId: String):Observable<any> {
+
+  getLogById(logId: String): Observable<any> {
     return this._http.get(this._url + '/admin/subadminlog/' + logId, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
+
   getPromoCheckListItems(dataTableAttr: any): Observable<any> {
     return this._http.post(this._url + '/admin/promolists', dataTableAttr, this.post_options())
       .map(this.extractData)

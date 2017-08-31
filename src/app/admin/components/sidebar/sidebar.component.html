@@ -97,6 +97,17 @@
                     </div>
                 </a>
             </li>
+          <li *ngIf="sub_role == null" class="setting-nav" id="special_deals-tab" (click)="showTab('specialdeals-tab')">
+            <a [routerLink]="['specialDeals']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                        <i class="material-icons">local_activity</i>
+                    </span>
+              <div class="left-sidebar-title">
+                <h6 class="">Special Coupon code</h6>
+                <span class="">All created Special couponcodes</span>
+              </div>
+            </a>
+          </li>
             <li *ngIf="sub_role == null" class="setting-nav" id="error-logs" (click)="showTab('error-logs')">
                 <a [routerLink]="['errorLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
