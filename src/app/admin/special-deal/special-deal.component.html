@@ -12,8 +12,10 @@
       </label>
     </div>
     <div id="table-datatable_filter" class="dataTables_filter">
-      <label style="color: black">
-        Search:<input type="search" placeholder="By Name, Sub Domain, Plan" [(ngModel)]="search" aria-controls="table">
+      <label style="color: black;">
+        Search:<input type="search" style="width:400px" 
+          placeholder="By code, user,coupon ID,plan ID,redeemed_user"
+           [(ngModel)]="search" (keyup) = "searchData()" aria-controls="table">
       </label>
     </div>
 
@@ -42,16 +44,20 @@
         <th>
           Deal Product ID
         </th>
-
+        <th>
+          Details
+        </th>
       </tr>
       </thead>
-      <tbody *ngFor="let coupons of dealCouponsLogs">
+      <tbody *ngFor="let coupon of dealCouponsLogs;let i=index">
       <tr>
-        <td>{{coupons.code}}</td>
-        <td>{{coupons.coupon_id}}</td>
-        <td>{{coupons.plan_id}}</td>
-        <td>{{coupons.user}}</td>
-        <td>{{coupons.deal_product_id}}</td>
+        <td>{{coupon.code}}</td>
+        <td>{{coupon.coupon_id}}</td>
+        <td>{{coupon.plan_id}}</td>
+        <td>{{coupon.user || '-----'}}</td>
+        <td>{{coupon.deal_product_id}}</td>
+        <td><a href="javascript:void(0);" data-toggle="modal" data-target="#coupon-details"><i class="ui-tooltip material-icons"
+             (click)="selectCoupon(i)"  style="font-size: 22px;" data-original-title="Edit">visibility</i></a></td>
       </tr>
       </tbody>
     </table>
@@ -81,3 +87,29 @@
     </div>
   </div>
 </div>
+<div id="coupon-details" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content modal-bg">
+        <div class="modal-header">
+          <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+          </button>
+		  <h5 class="modal-title">Coupon Details</h5>
+        </div>
+        <div class="modal-body">
+          <div class="sahil-material" *ngIf="selectedCoupon">
+            <!-- {{ selectedCoupon | json }} -->
+            <div *ngFor="let key of generateKeys(selectedCoupon)">
+              <p><i>{{ key + '  :-  ' }}</i>{{ selectedCoupon[key] | json }}</p>
+            </div>  
+             <!-- <div [innerHTML]="beautifyCode(selectedCoupon)">
+            </div>  -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-basic" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
