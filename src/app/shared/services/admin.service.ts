@@ -163,6 +163,12 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
+  getCompanyCouponDetails(email) {
+    return this._http.get(this._url + '/admin/company_couponcode/' + email, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   editMessage(data: any, type: string) {
     return this._http.put(this._url + '/hellobar/' + type, data, this.put_options())
       .map(this.extractData)

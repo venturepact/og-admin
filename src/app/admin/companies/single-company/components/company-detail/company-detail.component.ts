@@ -29,10 +29,15 @@ export class CompanyDetailComponent implements OnInit {
   isSubmit: Boolean = false;
   errorMsg: any;
   planList: any;
+  companyCouponDetail: any = [];
+  selectedCompanyCoupon: any;
+  generateKeys = Object.keys;
+  stringify = JSON.stringify;
 
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
               public _membershipService: MembershipService) {
+
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -71,6 +76,7 @@ export class CompanyDetailComponent implements OnInit {
       sharing_url: [this.updateCompany.referral.sharing_url]
     });
     this.getPlanList();
+    this.getCompanyCoupon();
   }
 
   getPlanList() {
@@ -88,10 +94,18 @@ export class CompanyDetailComponent implements OnInit {
           this.updateCompany = new AdminCompany(response.company);
           this.leads = this.updateCompany.leads.total;
           this.traffic = this.updateCompany.traffic.frequency;
-        },
-        (response: any) => {
         }
       );
+  }
+
+  getCompanyCoupon() {
+    let email = this.company.chargebee_customer_id.slice(0,
+      this.company.chargebee_customer_id.lastIndexOf('.'));
+
+    this._adminService.getCompanyCouponDetails(email)
+      .subscribe(data => {
+        this.companyCouponDetail = data;
+      });
   }
 
   updateCompanyInfo() {
@@ -121,6 +135,4 @@ export class CompanyDetailComponent implements OnInit {
         );
     }
   }
-
-
 }
