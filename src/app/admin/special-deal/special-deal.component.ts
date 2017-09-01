@@ -115,11 +115,10 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
            email : ['', Validators.compose([Validators.required, EmailValidator.format])],
            product : ['', Validators.compose([Validators.required])],
            source: ['', Validators.compose([Validators.required])],
-           coupon: ''
       });
       this.modalEvent("dealCouponCreate")
   }
-  
+
   generateDealCoupon(){
       let data = {
         ccustemail: this.DealCouponForm.value.email,
@@ -127,14 +126,14 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
         cproditem: this.DealCouponForm.value.product,
         source: this.DealCouponForm.value.source,
         ctransaction: "SALE",
-        event_request: "Admin" 
+        event_request: "Admin"
       }
 
       this.adminService.generateDealCoupon(data)
       .subscribe(response => {
-          this.DealCouponForm.controls['coupon'].setValue(response.coupon);
+          this.dealCouponForm();
           this.isError = true;
-          this.modalError = response.message;
+          this.modalError = response.coupon || response.message;
       },
       error=>{
         console.log(error)
@@ -144,9 +143,10 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   modalEvent(modal){
     jQuery(`#${modal}`).on('shown.bs.modal', function (e) {
       this.isError = false;
-    })
+    });
 
     jQuery(`#${modal}`).on('hidden.bs.modal', function () {
+      console.log("hjkj");
         jQuery(this).find("input,textarea,select").val('').end();
     });
   }
