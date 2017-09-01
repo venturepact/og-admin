@@ -22,6 +22,7 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   dealProduct = COUPON_PRODUCT;
   isError:boolean = false;
   modalError:string = "";
+  buttonDisabled:boolean = true;
 
   constructor(private _script: Script, private adminService: AdminService, private fb : FormBuilder,) {
     super();
@@ -120,6 +121,7 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   }
 
   generateDealCoupon(){
+      jQuery('#dealCouponButton').attr("disabled",true);
       let data = {
         ccustemail: this.DealCouponForm.value.email,
         ccustname: this.DealCouponForm.value.name,

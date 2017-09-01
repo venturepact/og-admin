@@ -160,7 +160,7 @@
       <div class="modal-footer">
         <label *ngIf="isError" class="col-sm-5 control-label modal-message" for="error">*{{ modalError }}</label>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="generateDealCoupon()" [disabled]="!DealCouponForm.valid">Update</button>
+        <button id="dealCouponButton" type="button" class="btn btn-primary" (click)="generateDealCoupon()" [disabled]="!DealCouponForm.valid">Update</button>
       </div>
     </div>
   </div>
