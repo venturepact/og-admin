@@ -4,12 +4,14 @@ import { FormGroup, FormBuilder ,Validators } from '@angular/forms';
 
 import { Datatable } from "../../shared/interfaces/datatable.interface";
 import { AdminService } from "../../shared/services/admin.service";
-
+import { EmailValidator } from '../../shared/validators/email.validator';
 import { COUPON_PRODUCT } from './../../shared/constants/coupon.constants';
+
+declare var jQuery;
 @Component({
   selector: 'og-special-deal',
   templateUrl: './special-deal.component.html',
-  styleUrls: ['./../success-rate/success-rate.component.css']
+  styleUrls: ['./../success-rate/success-rate.component.css', './special-deal.component.css']
 })
 export class SpecialDealComponent extends Datatable implements OnInit, AfterViewInit {
 
@@ -18,6 +20,8 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   selectedCoupon: any;
   DealCouponForm : FormGroup ;
   dealProduct = COUPON_PRODUCT;
+  isError:boolean = false;
+  modalError:string = "";
 
   constructor(private _script: Script, private adminService: AdminService, private fb : FormBuilder,) {
     super();
@@ -108,11 +112,12 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
   dealCouponForm(){
     	this.DealCouponForm = this.fb.group({
            name : ['', Validators.compose([Validators.required])],
-           email : ['', Validators.compose([Validators.required])],
+           email : ['', Validators.compose([Validators.required, EmailValidator.format])],
            product : ['', Validators.compose([Validators.required])],
            source: ['', Validators.compose([Validators.required])],
            coupon: ''
       });
+      this.modalEvent("dealCouponCreate")
   }
   
   generateDealCoupon(){
@@ -127,10 +132,22 @@ export class SpecialDealComponent extends Datatable implements OnInit, AfterView
 
       this.adminService.generateDealCoupon(data)
       .subscribe(response => {
-        this.DealCouponForm.controls['coupon'].setValue(response.coupon);
+          this.DealCouponForm.controls['coupon'].setValue(response.coupon);
+          this.isError = true;
+          this.modalError = response.message;
       },
       error=>{
         console.log(error)
       })
+  }
+
+  modalEvent(modal){
+    jQuery(`#${modal}`).on('shown.bs.modal', function (e) {
+      this.isError = false;
+    })
+
+    jQuery(`#${modal}`).on('hidden.bs.modal', function () {
+        jQuery(this).find("input,textarea,select").val('').end();
+    });
   }
 }
