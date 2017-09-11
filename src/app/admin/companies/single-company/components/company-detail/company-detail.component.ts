@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, EventEmitter} from '@angular/core';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminCompany} from '../../../../../shared/models/company';
 import {CompanyService} from './../../../../../shared/services/company.service';
 import {MembershipService} from './../../../../../shared/services/membership.service';
@@ -36,11 +36,12 @@ export class CompanyDetailComponent implements OnInit {
 
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
-              public _membershipService: MembershipService) {
+              public _membershipService: MembershipService, private router: Router) {
 
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
+
   }
 
   ngOnInit() {
@@ -79,6 +80,10 @@ export class CompanyDetailComponent implements OnInit {
     this.getCompanyCoupon();
   }
 
+  navigate(company) {
+    this.router.navigate(['/admin/company/', company]);
+    window.location.reload();
+  }
   getPlanList() {
     this._membershipService.getPlanList()
       .subscribe((result) => {

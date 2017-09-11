@@ -27,6 +27,16 @@
               <table class="table table-bordered table-hover table-user-information" *ngIf="!edit_mode">
                 <tbody>
                 <tr>
+                  <td *ngIf="company.parent_company">
+                    Parent Company
+                  </td>
+                  <td *ngIf="!edit_mode && company.parent_company">
+                    <a (click)="navigate(company.parent_company)">
+                      {{company.parent_company}}</a>
+                  </td>
+                </tr>
+                <tr>
+
                   <td>
                     Name
                   </td>

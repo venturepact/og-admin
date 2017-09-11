@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, Output} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {AfterViewInit, Component, NgZone, Output} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from './../../../shared/services/company.service';
 import {AdminCompany} from '../../../shared/models/company';
+import {PlatformLocation} from "@angular/common";
 
 declare var jQuery: any;
 
@@ -19,10 +20,15 @@ export class SingleCompanyComponent implements AfterViewInit {
   @Output() company: any;
 
   constructor(public companyService: CompanyService,
-              public route: ActivatedRoute) {
+              public route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
+      console.log(this.id);
+      //this.router.navigate(['/admin/company/', this.id]);
+      this.getCompanyInfo(this.id);
+      this.getCompanyInfo(this.id);
     });
+
   }
 
   ngAfterViewInit() {
