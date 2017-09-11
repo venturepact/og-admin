@@ -61,4 +61,24 @@ export class PlanService extends BaseService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+    fetchPlanListFromAPIs (apiURL) {
+        const url = `${apiURL}/plan-list`;
+        return this._http.get(url, this.get_options())
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    fetchPlanDataFromAPI (apiURL, planIds) {
+        const url = `${apiURL}/plans/export`;
+        return this._http.post(url, planIds, this.post_options())
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    saveFetchedPlanData (data) {
+        return this._http.post(`${this._url}/plans/import`, data, this.post_options())
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 }
