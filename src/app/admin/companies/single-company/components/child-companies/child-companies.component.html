@@ -24,8 +24,10 @@
 								<tbody>
 									<tr *ngFor="let cc of childCompanies">
 										<td>
-                      {{cc.name}}
-										</td>
+                      <a (click)="navigateToCompany(cc._id)">
+                        {{cc.name}}
+                      </a>
+                    </td>
 										<td>
 											{{cc.sub_domain}}
 										</td>

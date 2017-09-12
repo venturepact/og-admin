@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {AdminService} from '../../../../../shared/services/admin.service';
+import {Router} from "@angular/router";
 
 declare var jQuery;
 declare var window;
@@ -8,14 +8,15 @@ declare var window;
 @Component({
   selector: 'child-companies',
   templateUrl: './child-companies.component.html',
-  styleUrls: ['./child-companies.component.css', './../../../../../../assets/css/sahil-hover.css', './../../../../../../assets/css/custom-material.css']
+  styleUrls: ['./child-companies.component.css', './../../../../../../assets/css/sahil-hover.css',
+    './../../../../../../assets/css/custom-material.css']
 })
 
 export class ChildCompaniesComponent implements OnInit {
   @Input() companyId: string;
   childCompanies: any = [];
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,5 +36,10 @@ export class ChildCompaniesComponent implements OnInit {
           getChildCompanies.unsubscribe();
         }
       );
+  }
+
+  navigateToCompany(companyId) {
+    this.router.navigate(['/admin/company', companyId]);
+    window.location.reload();
   }
 }
