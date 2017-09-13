@@ -4,9 +4,9 @@ import {AdminService} from '../../../../../shared/services/admin.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PlanService} from "../../../../../shared/services/plan.service";
 import {EmailValidator} from "../../../../../shared/validators/email.validator";
-
+import {UserService} from "../../../../../shared/services/user.service";
 declare var jQuery;
-declare var window;
+declare var window: any;
 
 @Component({
   selector: 'team-detail',
@@ -17,6 +17,7 @@ declare var window;
 export class TeamDetailComponent implements OnInit {
 
   @Input() team: any[];
+  @Input() company: any;
   @Input() userLimit: number;
   @Input() companyId: string;
   delUser: any = '';
@@ -24,7 +25,8 @@ export class TeamDetailComponent implements OnInit {
   formAddMember: FormGroup;
 
   constructor(private _router: Router, private _adminService: AdminService,
-              private _planService: PlanService) {
+              private _planService: PlanService, private userService: UserService) {
+    console.log(this.team);
   }
 
   ngOnInit(): void {
@@ -138,5 +140,21 @@ export class TeamDetailComponent implements OnInit {
       memberEmail: new FormControl('', [Validators.required, EmailValidator.format]),
       memberRole: new FormControl('MANAGER')
     });
+  }
+
+  approve(userid) {
+    this.userService.userApproval(this.company.sub_domain, userid, true).subscribe((data) => {
+      console.log(data, "xo");
+
+      for (let i = 0; i < this.team.length; i++) {
+        if (this.team[i]._id == userid) {
+          this.team[i].user_company.status = data.status;
+          this.team[i].user_company.active = true;
+
+        }
+      }
+      window.toastNotification("User approved");
+    })
+
   }
 }

@@ -52,6 +52,9 @@
                         <i class="material-icons">delete</i>
                       </a>
                     </td>
+                    <td *ngIf="t.user_company.status!='APPROVED'" style="cursor: pointer;">
+                      <a (click)="approve(t._id)">Approve</a>
+                    </td>
 									</tr>
 								</tbody>
 							</table>

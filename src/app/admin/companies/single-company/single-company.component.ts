@@ -79,6 +79,7 @@ export class SingleCompanyComponent implements AfterViewInit {
     this.companyService.getCompanyUsers(id)
       .subscribe(
         (response: any) => {
+          console.log(response, "papai");
           this.company_users = response;
         });
   }
@@ -89,6 +90,7 @@ export class SingleCompanyComponent implements AfterViewInit {
         (response: any) => {
           this.company = new AdminCompany(response.company);
           this.company['reset_period_list'] = response.reset_period_list;
+          console.log(this.company, "opopaop");
         },
         (response: any) => {
         }

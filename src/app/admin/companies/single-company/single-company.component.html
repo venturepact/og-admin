@@ -34,7 +34,8 @@
       </div>
     </div>
     <div class="row hide team">
-        <team-detail [team]="company_users" [userLimit] = "company.current_limit_users" [companyId]="company.id"></team-detail>
+      <team-detail [team]="company_users" [company]="company" [userLimit]="company.current_limit_users"
+                   [companyId]="company.id"></team-detail>
      </div>
     <div class="row hide features">
       <div class="col-md-12 col-sm-12">

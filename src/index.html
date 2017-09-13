@@ -97,8 +97,17 @@
         block = 1;
       }
     }
-
-  </script>
+    window.toastNotification = function (message) {
+      $(".toast span").text(message);
+      $(".toast").show();
+      $('.toast').animate({
+        bottom: '+90px',
+        easing: 'linear'
+      }, 1500);
+      $('.toast').css("bottom", "0px");
+      $('.toast').delay(1000).fadeOut(500);
+    }
+</script>
 
 <!-- fixes new  -->
 </body>

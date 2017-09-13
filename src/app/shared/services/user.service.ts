@@ -220,13 +220,24 @@ export class UserService extends BaseService {
       .catch(this.handleError);
   }
 
-  userApproval(companyId:any =null)  {
-    let storage:any = this.readCookie('storage');
-    storage = JSON.parse(storage);
-    let Cid = storage.company_id;
-    if(companyId)
-      Cid = companyId;
-    return this._http.put(this._url + '/users/'+storage.user._id+'/companies/'+Cid+'/join', this.put_options())
+  userApproval(companyId: any = null, userId: any = null, fromadmin: any = null) {
+    let userid;
+    let cid;
+    if (fromadmin) {
+      userid = userId;
+      cid = companyId;
+      console.log(cid);
+    } else {
+      let storage: any = this.readCookie('storage');
+      storage = JSON.parse(storage);
+      cid = storage.company_id;
+      userid = storage.user._id;
+      if (companyId)
+        cid = companyId;
+    }
+
+
+    return this._http.put(this._url + '/users/' + userid + '/companies/' + cid + '/join', this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
 
@@ -256,7 +267,7 @@ export class UserService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-  
+
   getDealLogs(data:any) {
     return this._http.post(this._url + '/admin/dealLog',data,this.get_options())
       .map(this.extractData)
