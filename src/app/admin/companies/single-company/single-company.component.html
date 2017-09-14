@@ -17,7 +17,10 @@
           <a href="#" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company features</a>
         </li>
         <li role="presentation" [class.active]="" (click)="showTab('integration')">
-          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Integrations</a>
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Integrations</a>
+        </li>
+        <li role="presentation" [class.active]="" (click)="showTab('logs')">
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company Logs</a>
         </li>
     </ul>
 </div>
@@ -55,6 +58,11 @@
     <div class="row hide membership">
       <div class="col-md-12 col-sm-12">
         <membership-detail [company]="company"></membership-detail>
+      </div>
+    </div>
+    <div class="row hide logs">
+      <div class="col-md-12 col-sm-12">
+        <company-log [company]="company"></company-log>
       </div>
     </div>
   </div>

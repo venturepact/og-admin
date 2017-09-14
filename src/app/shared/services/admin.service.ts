@@ -328,8 +328,15 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getAllAdminLogs(subadminId: String, data: any): Observable<any> {
-    return this._http.post(this._url + '/admin/subadminlog/' + subadminId, data, this.options)
+  getAllAdminLogs( company:any = null, data: any,subadminId: any = null,): Observable<any> {
+    let uri = '';
+    if(company){
+      uri = this._url + "/admin/subadminlog/"+company
+    }
+    // else if(subadminId){
+    //   uri = this._url + "/admin/subadminlog/"+subadminId
+    //   }
+    return this._http.post(uri, data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
