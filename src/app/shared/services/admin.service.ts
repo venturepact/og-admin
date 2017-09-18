@@ -374,7 +374,7 @@ export class AdminService extends BaseService {
   getAppPromotionScore(appId): Observable<any> {
     return this._http.get(this._url + '/apps/score/' + appId, this.get_options())
       .map(this.extractData)
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   updateAppsAnalytics() {
@@ -386,6 +386,18 @@ export class AdminService extends BaseService {
   generateDealCoupon(data){
     return this._http.post(this._url + '/webhook/deal/jvzoo', data, this.post_options())
       .map(this.extractData)
-      .catch(this.handleError)
+      .catch(this.handleError);
+  }
+
+  saveSuccessRateFilter(data) {
+    return this._http.post(this._url + '/admin/success_rate/save_filter', data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getSavedFilters() {
+    return this._http.get(this._url + '/admin/success_rate/get_filters', this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 }

@@ -1,4 +1,5 @@
-<div id="table" class="" [class.all-companies-container]="sub_role !== 'ADMIN_LTD'" [class.admin-ltd]="sub_role === 'ADMIN_LTD'">
+<div id="table" class="" [class.all-companies-container]="sub_role !== 'ADMIN_LTD'"
+     [class.admin-ltd]="sub_role === 'ADMIN_LTD'">
 
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
     <div class="dataTables_length" id="table-dataTables_length">
@@ -11,14 +12,14 @@
         entries
       </label>
     </div>
-    <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
+    <div (click)="showFilter()" class="filter-icon">
       <span class="glyphicon glyphicon-filter"></span>
       Filter
     </div>
     <div id="table-datatable_filter" class="dataTables_filter">
       <label style="color: black">
         Search:<input type="search" placeholder="By Name, Sub Domain, Plan" [(ngModel)]="search" aria-controls="table"
-                       [formControl]='input'>
+                      [formControl]='input'>
       </label>
     </div>
 
@@ -33,27 +34,28 @@
           <button (click)="removeFilter(i)">
             <span class="glyphicon glyphicon-minus"></span>
           </button>
-          <select (change)="setFilterProperty($event.target,i)" title="Select Operators">
+          <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"
+                  title="Select Operators">
             <option style="display: none"></option>
             <optgroup label="Company">
 
-              <option *ngFor="let property of filter.company_properties;" class="company"
-                      [value]="toStr(property)">
+              <option *ngFor="let property of filter.company;" class="company"
+                      [value]="property.name">
                 {{property.name}}
               </option>
             </optgroup>
 
             <optgroup label="App">
-              <option *ngFor="let property of filter.app_properties;" class="app" [value]="toStr(property)">
+              <option *ngFor="let property of filter.app;" class="app" [value]="property.name">
                 {{property.name}}
               </option>
             </optgroup>
 
           </select>
-
-          <select (change)="setFilterOperator($event.target.value,i)" title="Select Operators">
+          <select [(ngModel)]="filters[i].selected_operator" (change)="setFilterOperator($event.target.value,i)"
+                  title="Select Operators">
             <option style="display: none"></option>
-            <option *ngFor="let operator of filter.operators[filter.selected_property]">
+            <option *ngFor="let operator of filter.operators[filter.selected_property]" [value]="operator">
               {{operator}}
             </option>
           </select>
@@ -84,6 +86,7 @@
               <option>false</option>
             </select>
           </div>
+
         </div>
       </div>
 
@@ -92,6 +95,16 @@
           <span class="glyphicon glyphicon-plus"></span>
         </button>
         <button (click)="filterResults()">Fetch Results</button>
+        <button type="button" data-toggle="modal" data-target="#saveFilterModal">
+          Save Filter
+        </button>
+        <select [(ngModel)]="currentSelectedFilter" (change)="onSavedFilterChange($event)">
+          <option value="" disabled selected>Select your option</option>
+          <option *ngFor="let filter of savedFilters" [ngValue]="filter"
+          >
+            {{filter.name}}
+          </option>
+        </select>
       </div>
     </div>
 
@@ -294,5 +307,32 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>
+
+<div id="saveFilterModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Save Custom Filter</h4>
+      </div>
+      <div class="modal-body">
+        <div>Enter Filter Name:<input #filterName type="text"/></div>
+        <br>
+
+        <div>Enter Description:
+          <textarea #filterDescription rows="3" cols="30"></textarea></div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-blue" (click)="saveFilter(filterName,filterDescription)">Save Filter
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
