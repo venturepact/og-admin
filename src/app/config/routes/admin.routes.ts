@@ -24,7 +24,6 @@ import {CustomJsApprovalsComponent} from '../../admin/custom-js-approvals/custom
 import {PromotionChecklist} from '../../admin/promotion-checklist/promotion-checklist.component';
 import {SubAdminComponent} from '../../admin/sub-admin/all-admin/sub-admin.component';
 import {SingleadminComponent} from '../../admin/sub-admin/single-admin/single-admin.component';
-import {SubAdminLogDetailComponent} from "../../admin/sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
 import {SpecialDealComponent} from "../../admin/special-deal/special-deal.component";
 
 export const ADMIN_ROUTES: Routes = [
@@ -63,11 +62,7 @@ export const ADMIN_ROUTES: Routes = [
             component: SingleadminComponent,
             canActivate: [AdminGuard]
           },
-          {
-            path: 'subadmin/log/:id',
-            component: SubAdminLogDetailComponent,
-            canActivate: [AdminGuard]
-          },
+         
           {
             path: 'companies',
             component: AllCompaniesComponent,

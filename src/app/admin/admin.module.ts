@@ -35,7 +35,6 @@ import {CustomJsApprovalsComponent} from './custom-js-approvals/custom-js-approv
 import {PromotionChecklist} from './promotion-checklist/promotion-checklist.component';
 import {SubAdminComponent} from './sub-admin/all-admin/sub-admin.component';
 import {CalculatorAnalytics} from "../site/components/+analytics/services/calculator-analytics.service";
-import {SubAdminLogDetailComponent} from "./sub-admin/sub-admin-log-detail/sub-admin-log-detail.component";
 import {JSONCompare} from "../shared/services/helper-service/json-compare";
 import {LondonerComponent} from './londoner/londoner.component';
 import {FeatureAuthService} from "../shared/services/feature-access.service";
@@ -53,7 +52,7 @@ import {SharedModule} from "../shared/modules/shared.module";
     AllUsersComponent, AllCompaniesComponent, EmailLogsComponent, LeadsComponent, CouponsComponent,
     SitesettingsComponent, AllFeaturesComponent, SuccessRateComponent, CompanyDetailsComponent,
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
-    SubAdminLogDetailComponent, PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
+    PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
     SpecialDealComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,

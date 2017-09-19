@@ -28,7 +28,7 @@
   <div class="container col-md-12 company-cont">
     <div class="row company">
       <div>
-        <company-detail [company]="company" (childCompany)="company = $event"></company-detail>
+        <company-detail [company]="company" (childCompany)="updatecompany($event)"></company-detail>
       </div>
       <div>
         <br>

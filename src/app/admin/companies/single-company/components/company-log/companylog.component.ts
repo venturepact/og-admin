@@ -3,6 +3,8 @@ import {AdminService} from './../../../../../shared/services/admin.service';
 import {Datatable} from "../../../../../shared/interfaces/datatable.interface";
 import {Script} from "../../../../../shared/services/script.service";
 import {ActivatedRoute} from "@angular/router";
+import {JSONCompare} from "../../../../../shared/services/helper-service/json-compare";
+
 
 declare var jQuery: any;
 declare var moment: any;
@@ -18,9 +20,14 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
   subAdminId: String;
   loading: Boolean = true;
   subAdminLogs: any = [];
+  beforeChange: any = '';
+  afterChange: any = '';
+  user: any = '';
+  log: any = '';
+  comp: any = {};
   constructor(private _adminService: AdminService,
               private _script: Script,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,private _JSONCompare: JSONCompare) {
     super();
     this.route.params.subscribe(params => {
       this.subAdminId = params['id'];
@@ -31,7 +38,7 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
   }
 
   ngAfterViewInit() {
-      console.log(this.company,"papai");
+     
     this._script.load('datatables')
       .then((data) => {
         this.getCompanyLogs();
@@ -96,4 +103,29 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     let d = new Date(date);
     return d.toString().split('GMT')[0];
   }
+  getLogById(logId){
+    let self = this;
+    let getLogById = self._adminService.getLogById(logId)
+      .subscribe(
+        (success: any) => {
+          
+          this.log = success;
+          this.user = success.user.emails[0].email;
+          this.beforeChange = JSON.parse(success.before_change);
+          this.afterChange = JSON.parse(success.after_change);
+          var t0 = performance.now();
+          this._JSONCompare.compareJson(this.beforeChange,this.afterChange);  
+          var t1 = performance.now();
+          
+        },
+         (error: any) => {
+          console.log('getLogById() error', error);
+        }
+      );
+  }
+  generateKeys(obj){
+      return Object.keys(obj);
+  }
+
+  
 }

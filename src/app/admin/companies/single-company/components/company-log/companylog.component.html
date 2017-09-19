@@ -52,9 +52,9 @@
                         </td>
                         <td>
                         {{dateFormat(log.createdAt)}}
-                        </td>
+                        </td>     <!-- [routerLink] = "['/admin/subadmin/log/',log._id]"  -->
                         <td>
-                        <a [routerLink] = "['/admin/subadmin/log/',log._id]"><i class="material-icons">remove_red_eye</i></a>
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#modallog"><i class="material-icons" (click)="getLogById(log._id)">remove_red_eye</i></a>
                         </td>
                       </tr>
                     </tbody>
@@ -116,6 +116,79 @@
                 <!--<a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>-->
               <!--</div>-->
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modallog" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a title="close" href="#" data-dismiss="modal" aria-label="Close">
+            <i class="glyphicon glyphicon-remove pull-right"></i>
+          </a>
+          <h5 class="modal-title"> Log details</h5>
+        </div>
+        <div class="modal-body">
+          <div class="sahil-material">
+            <div class="row">
+              <div class="col-md-12">
+                Performed By User: {{user}}<br/>
+                Action: {{log.event}}<br/>
+                On Table: {{log.table}}<br/>
+                On Date: {{dateFormat(log.createdAt)}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="panel-title">
+                      <div class="col-sm-12 ">
+                        <h4>Before Change</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="panel-body">
+                    
+                    <pre >
+                         &#123;
+                      <span *ngFor="let item of generateKeys(beforeChange)">
+                          <span [innerHTML]="beforeChange[item]"></span>
+                      </span>
+                         &#125;
+                    </pre>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="panel-title">
+                      <div class="col-sm-12 ">
+                        <h4>After Change</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="panel-body">
+                    <pre >
+                         &#123;
+                      <span *ngFor="let item of generateKeys(afterChange)">
+                          <span [innerHTML]="afterChange[item]"></span>
+                      </span>
+                         &#125;
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="alert alert-danger" style="display: block" *ngIf="error != ''">
+            {{error}}
           </div>
         </div>
       </div>

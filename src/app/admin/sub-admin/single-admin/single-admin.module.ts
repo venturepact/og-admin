@@ -6,12 +6,10 @@ import {SingleadminComponent} from './single-admin.component';
 import {AccountDetailsComponent} from './components/account-details/account-details.component';
 
 import {SharedModule} from './../../../shared/modules/shared.module';
-import {SubAdminLogComponent} from "./components/subadmin-log/subadmin-log.component";
-
 
 @NgModule({
   imports: [SharedModule, RouterModule],
-  declarations: [ SingleadminComponent, AccountDetailsComponent, SubAdminLogComponent]
+  declarations: [ SingleadminComponent, AccountDetailsComponent]
 })
 
 export class SingleadminModule {}

@@ -120,6 +120,7 @@ export class AdminService extends BaseService {
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
     };
+   
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);

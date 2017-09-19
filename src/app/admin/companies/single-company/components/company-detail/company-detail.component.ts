@@ -5,7 +5,7 @@ import {AdminCompany} from '../../../../../shared/models/company';
 import {CompanyService} from './../../../../../shared/services/company.service';
 import {MembershipService} from './../../../../../shared/services/membership.service';
 import {AdminService} from './../../../../../shared/services/admin.service';
-
+declare var window:any;
 declare var jQuery: any;
 
 @Component({
@@ -123,6 +123,8 @@ export class CompanyDetailComponent implements OnInit {
       this._adminService.updateCompany(this.updateCompany, this.id)
         .subscribe(
           (response: any) => {
+            
+            //window.location.reload(true);
             this.company = new AdminCompany(response);
             this.loading = false;
             this.edit_mode = false;

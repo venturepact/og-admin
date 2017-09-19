@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FeatureAuthService} from "../../../../../shared/services/feature-access.service";
 
 declare var jQuery: any;
-
+declare var window:any;
 @Component({
   selector: 'company-feature',
   templateUrl: './company-feature.component.html',
@@ -70,6 +70,7 @@ export class CompanyFeatureComponent implements OnInit {
       .subscribe((result) => {
         if (result.update) {
           this.loading = false;
+          window.toastNotification("Feature update successfully");
         }
       }, (error) => {
         this.loading = false;
