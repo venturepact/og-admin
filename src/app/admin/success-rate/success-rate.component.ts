@@ -34,17 +34,19 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
   sortKey = '_id'; // default sort parameters
   sortOrder = -1; // -1 for ascending order
 
+  currentSelectedFilter: any = "";
   filters: Array<any> = []; // represents each filter
+  savedFilters: Array<any> = [];
   filtersPostData: Array<any> = [];
   stringOperators = ['contains', 'does not contain', 'equals', 'not equal to', 'starts with'];
   numberOperators = ['between', 'less than', 'greater than', 'equals'];
 
   filter = {
-    company_properties: [{name: 'name', type: 'string'}, {name: 'leads', type: 'number'},
+    company: [{name: 'name', type: 'string'}, {name: 'leads', type: 'number'},
       {name: 'visits', type: 'number'}, {name: 'sign_up', type: 'date'}, {name: 'plan', type: 'string'},
       {name: 'appsumo_created', type: 'bool'}],
 
-    app_properties: [{name: 'name', type: 'string'}, {name: 'status', type: 'string'},
+    app: [{name: 'name', type: 'string'}, {name: 'status', type: 'string'},
       {name: 'created_at', type: 'date'}, {name: 'latest_publish', type: 'date'}],
 
     operators: {
@@ -61,6 +63,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   public subscriptions: Subscription = new Subscription();
   public sub_role: String = null;
+
   constructor(public _script: Script, public adminService: AdminService,
               public _membershipService: MembershipService, public _cookieService: CookieService) {
     super();
@@ -103,13 +106,29 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     this.filtersPostData[index] = {};
   }
 
-  setFilterProperty(target, index) {
-    let selection = JSON.parse(target.value);
+  onSavedFilterChange() {
+    let filter = JSON.parse(this.currentSelectedFilter.filter_string);
+    this.filters = [];
+    filter.forEach((value, index) => {
+      this.addFilter();
+      this.filters[index].selected_property = value.property;
+      this.filters[index].select_property_type = value.type;
+      this.filters[index].selected_operator = value.operator;
 
-    this.filtersPostData[index]['property'] = selection.name;
-    this.filtersPostData[index]['type'] = target.options[target.options.selectedIndex].className;
-    this.filters[index].selected_property = selection.name;
-    this.filters[index].select_property_type = selection.type;
+      //set post data
+      this.filtersPostData[index]['property'] = value.property;
+      this.filtersPostData[index]['type'] = value.type;
+      this.filtersPostData[index]['operator'] = value.operator;
+    });
+
+  }
+
+  setFilterProperty(target, index) {
+
+    this.filtersPostData[index]['property'] = this.filters[index].selected_property;
+    let type = target.options[target.options.selectedIndex].className;
+    this.filtersPostData[index]['type'] = type;
+    this.filters[index].select_property_type = type;
 
     this.filters[index].selected_operator = ''; // reset operator value
   }
@@ -136,6 +155,17 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
   }
 
   getRequestParams(): any {
+    return {
+      limit: this.current_limit,
+      page: this.current_page - 1,
+      search_key: this.search,
+      sort_order: this.sortOrder,
+      sort_key: this.sortKey,
+      filter: this.parseFilterData()
+    };
+  }
+
+  parseFilterData() {
     // filter empty objects
     let filteredData = this.filtersPostData.filter(value => {
       return !(Object.keys(value).length === 0);
@@ -152,14 +182,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       groupedByData[filteredData[i].type].push(current);
     }
 
-    return {
-      limit: this.current_limit,
-      page: this.current_page - 1,
-      search_key: this.search,
-      sort_order: this.sortOrder,
-      sort_key: this.sortKey,
-      filter: groupedByData
-    };
+    return groupedByData;
   }
 
   filterResults() {
@@ -198,6 +221,13 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     company.showDetails = !company.showDetails;
   }
 
+  showFilter() {
+    this.showAdvancedFilter = !this.showAdvancedFilter;
+    this.adminService.getSavedFilters().subscribe(filters => {
+      this.savedFilters = filters;
+    })
+  }
+
   updateCompanySuccessRate(response: any) {
     this.trialStatusLoading = true;
 
@@ -231,6 +261,23 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
           }
         }));
     }
+  }
+
+  saveFilter(filterName, filterDescription) {
+    let filteredData = this.filtersPostData.filter(value => {
+      return !(Object.keys(value).length === 0);
+    });
+
+    let postData = {
+      name: filterName.value,
+      description: filterDescription.value,
+      filterString: JSON.stringify(filteredData)
+    };
+    this.adminService.saveSuccessRateFilter(postData).subscribe(response => {
+      jQuery("#saveFilterModal").modal("hide");
+      filterName.value = '';
+      filterDescription.value = '';
+    });
   }
 
   ngOnDestroy(): void {

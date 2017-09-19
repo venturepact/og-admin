@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     console.log('%cSTOP!.', ' color: red; font-size: xx-large');
-    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a feature, it is a scam and will give them access to your account.', 'color: grey; font-size: x-large');
+    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste onSavedFilterChange here to enable a feature, it is a scam and will give them access to your account.', 'color: grey; font-size: x-large');
 
     this.cookie = this._cookieService.readCookie('storage');
 
