@@ -18,13 +18,14 @@ declare var google: any;
 export class CompanylogComponent extends Datatable implements OnInit, AfterViewInit{
   @Input() company: any;
   subAdminId: String;
-  loading: Boolean = true;
+  loading: boolean = false;
   subAdminLogs: any = [];
   beforeChange: any = '';
   afterChange: any = '';
   user: any = '';
   log: any = '';
   comp: any = {};
+  logLoading :boolean = false;
   constructor(private _adminService: AdminService,
               private _script: Script,
               private route: ActivatedRoute,private _JSONCompare: JSONCompare) {
@@ -104,11 +105,13 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     return d.toString().split('GMT')[0];
   }
   getLogById(logId){
+    console.log('okkkkk');
+    this.logLoading = true;
     let self = this;
     let getLogById = self._adminService.getLogById(logId)
       .subscribe(
         (success: any) => {
-          
+          this.logLoading = false;
           this.log = success;
           this.user = success.user.emails[0].email;
           this.beforeChange = JSON.parse(success.before_change);

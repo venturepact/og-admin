@@ -129,18 +129,40 @@
             <i class="glyphicon glyphicon-remove pull-right"></i>
           </a>
           <h5 class="modal-title"> Log details</h5>
+          <div class="row text-center" *ngIf =" logLoading">
+              <div class="col-md-12">
+                <div class="panel-group" >
+                  <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+                </div>
+              </div>
+          </div>
         </div>
         <div class="modal-body">
           <div class="sahil-material">
-            <div class="row">
+            <div class="row" *ngIf = "!logLoading">
               <div class="col-md-12">
-                Performed By User: {{user}}<br/>
-                Action: {{log.event}}<br/>
-                On Table: {{log.table}}<br/>
-                On Date: {{dateFormat(log.createdAt)}}
+                <table class="logs">
+                  <tr>
+                    <td>Performed By User :</td>
+                    <td>{{user}}</td>
+                  </tr>
+                  <tr>
+                    <td>Action :</td>
+                    <td>{{log.event}}</td>
+                  </tr>
+                  <tr>
+                    <td>Table :</td>
+                    <td>{{log.table}}</td>
+                  </tr>
+                  <tr>
+                    <td>Date :</td>
+                    <td>{{dateFormat(log.createdAt)}}</td>
+                  </tr>
+                </table>
               </div>
             </div>
-            <div class="row">
+            
+            <div class="row" *ngIf = "!logLoading">
               <div class="col-md-6">
                 <div class="panel panel-info">
                   <div class="panel-heading">
