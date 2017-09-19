@@ -47,10 +47,10 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
         console.log('Script not loaded', error);
       });
 
-    jQuery('.modal').on('hidden.bs.modal', function () {
-      this.error = false;
-      this.errorMessage = '';
-    });
+    // jQuery('.modal').on('hidden.bs.modal', function () {
+    //   this.error = false;
+    //   this.errorMessage = '';
+    // });
   }
 
   getCompanyLogs(){
