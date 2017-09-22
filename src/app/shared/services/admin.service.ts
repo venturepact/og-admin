@@ -120,7 +120,7 @@ export class AdminService extends BaseService {
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
     };
-   
+
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -208,12 +208,6 @@ export class AdminService extends BaseService {
 
   getCompaniesTrialStatus(data): any {
     return this._http.post(this._url + '/admin/companies/get_companies_trialstats', data, this.options)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-
-  getUserDetailsFromIntercom(data): any {
-    return this._http.post(this._url + '/admin/get_user_from_intercom', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }

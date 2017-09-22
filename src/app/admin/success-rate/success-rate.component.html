@@ -40,14 +40,20 @@
             <optgroup label="Company">
 
               <option *ngFor="let property of filter.company;" class="company"
-                      [value]="property.name">
-                {{property.name}}
+                      [value]="property">
+                {{property}}
               </option>
             </optgroup>
 
             <optgroup label="App">
-              <option *ngFor="let property of filter.app;" class="app" [value]="property.name">
-                {{property.name}}
+              <option *ngFor="let property of filter.app;" class="app" [value]="property">
+                {{property}}
+              </option>
+            </optgroup>
+
+            <optgroup label="User">
+              <option *ngFor="let property of filter.user;" class="user" [value]="property">
+                {{property}}
               </option>
             </optgroup>
 
@@ -59,27 +65,27 @@
               {{operator}}
             </option>
           </select>
-
-          <div *ngIf="(filter.select_property_type==='date')"
+          <div *ngIf="(filter.types[filter.selected_property]==='date')"
                style="display: inline-block">
 
-            <og-date-picker *ngIf="!(filter.selected_operator==='between')"
+            <og-date-picker *ngIf="scriptLoaded && !(filter.selected_operator==='between')"
                             style="position:absolute;bottom:0" (date)="setDateStart($event,i)">
             </og-date-picker>
 
-            <og-date-range-picker style="position:absolute;bottom:0"
+            <og-date-range-picker *ngIf="scriptLoaded && filter.selected_operator==='between'"
+                                  style="position:absolute;bottom:0"
                                   (date)="setDateRange($event,i)">
             </og-date-range-picker>
           </div>
-
-          <div *ngIf="filter.select_property_type!='date' && filter.select_property_type!='bool'"
+          <div *ngIf="filter.types[filter.selected_property]!='date' && filter.types[filter.selected_property]!='bool'"
                style="display: inline-block">
             <input type="text" title="Enter value" (change)="setFilterValue($event.target.value,i)">
             <input *ngIf="filter.selected_operator==='between'" title="Enter value"
                    type="number" (change)="filtersPostData[i]['value'][1]=$event.target.value;">
           </div>
+          <div *ngIf="filter.selected_property=='appsumo_created' || filter.selected_property=='cancelled'"
+               style="display: inline-block">
 
-          <div *ngIf="filter.selected_property==='appsumo_created'" style="display: inline-block">
             <select (change)="setFilterValue($event.target.value,i)" title="Select">
               <option style="display: none"></option>
               <option>true</option>
@@ -128,22 +134,24 @@
         <th>
           Conversion rate
         </th>
-        <th>
-          Reset Current Usage
-        </th>
+        <th>Last Lead</th>
+        <th>Reset Current Usage</th>
         <th (click)="sort('createdAt')">
           <div class="sort-icon"><a href="javascript:void(0);">Sign Up</a></div>
         </th>
         <th>
           Trial
         </th>
-        <th (click)="sort('is_appsumo_created')">
-          <div class="sort-icon"><a href="javascript:void(0);">Appsumo created</a></div>
-        </th>
+        <th>Price</th>
         <th (click)="sort('billing.chargebee_plan_id')">
-          <div class="sort-icon"><a href="javascript:void(0);">Plan name</a></div>
+          <div class="sort-icon"><a href="javascript:void(0);">Plan</a></div>
         </th>
+        <th>Billing Unit</th>
+        <th>% cycle over</th>
+        <th>Deal Referred</th>
+        <th>Next payment</th>
         <th>
+          --
         </th>
         <th>
           Edit
@@ -157,7 +165,7 @@
           <a href="javascript:void(0);" (click)="toggleCompanyDetails(company)">{{company.name}}</a>
         </td>
         <td>
-          {{company.calculators}}/{{company.calcLimit}}
+          {{company.current_usage.calc}}/{{company.calcLimit}}
         </td>
         <td>
           {{company.visitors}}/{{company.visitsLimit}}
@@ -166,16 +174,18 @@
           {{company.leads}}/{{company.leadsLimit}}
         </td>
         <td>
-          {{company.conversionRate}}%
+          {{company.current_usage.total_conversion_rate}}%
         </td>
+        <td>{{momentJs(company.last_lead?.last_added).fromNow()}}</td>
         <td>{{company.reset_current_usage}}</td>
-        <td>{{company.created_at}}</td>
-        <td>
-          <div *ngIf="trialStatusLoading" class="loadersmall"></div>
-          <div *ngIf="!trialStatusLoading">{{company.trial_status}}</div>
-        </td>
-        <td>{{company.is_appsumo_created}}</td>
+        <td>{{momentJs(company.created_at).fromNow()}}</td>
+        <td>{{company.billing.chargebee_subscription_status}}</td>
+        <td>{{company.billing.plan_price}}</td>
         <td>{{company.plan}}</td>
+        <td>{{company.billing.subscription?.billing_unit}}</td>
+        <td>{{company.billing.subscription?.percent_cycle_over}}%</td>
+        <td>{{company.campaign}}</td>
+        <td>{{momentJs(company.billing.subscription?.end).fromNow()}}</td>
         <td>
           <a href="" data-toggle="modal" data-target="#companyDetailsModal"
              (click)="getPaymentsInfo(company._id)">

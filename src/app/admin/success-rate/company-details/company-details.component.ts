@@ -19,24 +19,19 @@ export class CompanyDetailsComponent implements OnInit {
   userDetails: Array<any> = [];
   loadingAppDetails: boolean = false;
   loadingUserDetails: boolean = false;
-  loadingIntercom: boolean = false;
   disableCompany: boolean;
+  momentJs: any;
 
-  constructor(public adminService: AdminService, public _calculatorAnalytics: CalculatorAnalytics) {
+  constructor(private adminService: AdminService, private _calculatorAnalytics: CalculatorAnalytics) {
+    this.momentJs = moment;
   }
 
   ngOnInit() {
     this.loadingAppDetails = true;
     this.loadingUserDetails = true;
-    this.loadingIntercom = true;
 
     this.adminService.getCompanyAppDetails(this.getParams()).subscribe((data) => {
       this.companyAppDetails = data.apps;
-
-      for (let i = 0; i < this.companyAppDetails.length; i++) {
-        this.companyAppDetails[i].createdAt = moment(this.companyAppDetails[i].createdAt).fromNow().trim();
-        this.companyAppDetails[i].updatedAt = moment(this.companyAppDetails[i].updatedAt).fromNow().trim();
-      }
       this.loadingAppDetails = false;
     }, err => this.loadingAppDetails = false);
 
@@ -54,21 +49,6 @@ export class CompanyDetailsComponent implements OnInit {
       for (let i = 0; i < this.userDetails.length; i++) {
         emails.push(this.userDetails[i].emails[0].email);
       }
-
-      this.adminService.getUserDetailsFromIntercom({emails: emails})
-        .subscribe((data) => {
-
-          for (let i = 0; i < this.userDetails.length; i++) {
-            this.userDetails[i].session_count = data[i].session_count;
-          }
-          this.loadingIntercom = false;
-        }, (err) => {
-          this.loadingIntercom = false;
-
-          for (let i = 0; i < this.userDetails.length; i++) {
-            this.userDetails[i].session_count = 'Not Found';
-          }
-        });
     }, err => this.loadingUserDetails = false);
   }
 
