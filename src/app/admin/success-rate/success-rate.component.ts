@@ -78,9 +78,9 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       percent_cycle_over: this.numberOperators, request_cancellation: ['equals', 'not equal to'],
       last_lead_generated: this.numberOperators, billing_unit: this.stringOperators, web_session: this.numberOperators
     },
-    selected_property: 'name', // initially select name
+    selected_property: '', // initially select name
     selected_operator: '',
-    select_property_type: 'company',
+    select_property_type: '',
     visible: true
   }; // model for a single filter
 

@@ -40,14 +40,7 @@ export class CompanyDetailsComponent implements OnInit {
       this.userDetails = data;
 
       for (let i = 0; i < this.userDetails.length; i++) {
-        this.userDetails[i].created_at = moment(this.userDetails[i].created_at).fromNow().trim();
-        this.userDetails[i].last_login = moment(this.userDetails[i].last_login).fromNow().trim();
         this.userDetails[i].username = this.userDetails[i].username.split('.')[0];
-      }
-
-      let emails = [];
-      for (let i = 0; i < this.userDetails.length; i++) {
-        emails.push(this.userDetails[i].emails[0].email);
       }
     }, err => this.loadingUserDetails = false);
   }
