@@ -80,7 +80,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     },
     selected_property: 'name', // initially select name
     selected_operator: '',
-    select_property_type: '',
+    select_property_type: 'company',
     visible: true
   }; // model for a single filter
 
