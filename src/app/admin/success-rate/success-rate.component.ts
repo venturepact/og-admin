@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {Script} from "../../shared/services/script.service";
 import {FormControl} from "@angular/forms";
@@ -14,7 +14,9 @@ declare var jQuery: any;
 @Component({
   selector: 'og-success-rate',
   templateUrl: './success-rate.component.html',
-  styleUrls: ['./success-rate.component.css']
+  styleUrls: ['./success-rate.component.css', './../search-calc/search-calc.component.css',
+    '../../site/components/+analytics/assets/css/daterangepicker.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SuccessRateComponent extends Datatable implements OnInit, AfterViewInit, OnDestroy {
 
@@ -110,6 +112,11 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       .subscribe((response) => {
         this.updateCompanySuccessRate(response);
       }, err => this.loading = false));
+
+    this.adminService.getSavedFilters().subscribe(filters => {
+      this.savedFilters = filters;
+    })
+
   }
 
   ngAfterViewInit() {
@@ -145,7 +152,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       this.filtersPostData[index]['type'] = value.type;
       this.filtersPostData[index]['operator'] = value.operator;
     });
-
+    this.showAdvancedFilter = true;
   }
 
   setFilterProperty(target, index) {
@@ -247,9 +254,6 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   showFilter() {
     this.showAdvancedFilter = !this.showAdvancedFilter;
-    this.adminService.getSavedFilters().subscribe(filters => {
-      this.savedFilters = filters;
-    })
   }
 
   updateCompanySuccessRate(response: any) {
