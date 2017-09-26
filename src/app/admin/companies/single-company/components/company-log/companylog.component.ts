@@ -105,7 +105,6 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     return d.toString().split('GMT')[0];
   }
   getLogById(logId){
-    console.log('okkkkk');
     this.logLoading = true;
     let self = this;
     let getLogById = self._adminService.getLogById(logId)
@@ -113,7 +112,13 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
         (success: any) => {
           this.logLoading = false;
           this.log = success;
-          this.user = success.user.emails[0].email;
+          if(success.user){
+            this.user = success.user.emails[0].email;
+          }
+          else{
+            this.user = 'Chargbee Admin';
+          }
+          
           this.beforeChange = JSON.parse(success.before_change);
           this.afterChange = JSON.parse(success.after_change);
           var t0 = performance.now();
