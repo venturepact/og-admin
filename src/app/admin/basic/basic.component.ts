@@ -27,11 +27,11 @@ export class BasicComponent implements OnInit, AfterViewInit {
   user_count: number = 0;
   company_count: number = 0;
   overviewChart: any;
-  scriploaded: boolean = false;
+  scriptLoaded: boolean = false;
   graphLoader: boolean = false;
   data: any;
 
-  constructor(public _adminService: AdminService, public script: Script,public _cookieService: CookieService,
+  constructor(public _adminService: AdminService, public script: Script, public _cookieService: CookieService,
               public router: Router,) {
 
   }
@@ -39,7 +39,7 @@ export class BasicComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this._cookieService.readCookie('storage')) {
       let storage = JSON.parse(this._cookieService.readCookie('storage'));
-      if(storage.user.sub_role !== null)
+      if (storage.user.sub_role !== null)
         this.router.navigate(['/admin/users']);
     }
   }
@@ -47,7 +47,7 @@ export class BasicComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.script.load('raphael', 'morrisCharts', 'daterangepicker', 'moment')
       .then((data) => {
-        this.scriploaded = true;
+        this.scriptLoaded = true;
         this.initializeGraph();
         this.getGraphData();
       })
@@ -135,8 +135,5 @@ export class BasicComponent implements OnInit, AfterViewInit {
       lineColors: ['#fb545b', '#269fd8', ' #2eb82e'],
     });
     this.overviewChart.setData(this.data.graph);
-
   }
-
-
 }

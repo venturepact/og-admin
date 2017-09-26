@@ -23,10 +23,10 @@ ul {
   margin-left: 0px;
 }
 
-img {
-  margin-right: 50%;
-  margin-left: 40%;
-}
+/*img {*/
+/*margin-right: 50%;*/
+/*margin-left: 40%;*/
+/*}*/
 
 .advanced-filter {
   clear: both;
@@ -119,6 +119,7 @@ thead th .desc {
   margin-left: 15px;
   margin-top: 10px;
 }
+
 
 
 

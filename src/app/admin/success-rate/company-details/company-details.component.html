@@ -28,8 +28,8 @@
         <a *ngIf="app.status==='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
       </td>
       <td>{{app.status}}</td>
-      <td>{{app.createdAt}}</td>
-      <td>{{app.updatedAt}}</td>
+      <td>{{momentJs(app.createdAt).fromNow()}}</td>
+      <td>{{momentJs(app.updatedAt).fromNow()}}</td>
       <td>{{app.analytics?.visitorsCount}}</td>
       <td>{{app.analytics?.leadsCount}}</td>
       <td>{{app.analytics?.conversionRate}}%</td>
@@ -66,14 +66,13 @@
                                                    data-original-title="Edit">mode_edit</i>{{user.username}}
       </a>
       </td>
-      <td>{{user.created_at}}</td>
-      <td>{{user.last_login}}</td>
+      <td>{{momentJs(user.created_at).fromNow()}}</td>
+      <td>{{momentJs(user.last_login).fromNow()}}</td>
       <td>{{user.role}}</td>
       <td>{{user.active}}</td>
       <td>{{user.is_admin_created}}</td>
       <td>
-        <div *ngIf="loadingIntercom" class="loadersmall"></div>
-        <div *ngIf="!loadingIntercom">{{user.session_count}}</div>
+        {{user.session_count}}
       </td>
     </tr>
     </tbody>

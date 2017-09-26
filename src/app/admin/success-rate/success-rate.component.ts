@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {Script} from "../../shared/services/script.service";
 import {FormControl} from "@angular/forms";
@@ -14,15 +14,17 @@ declare var jQuery: any;
 @Component({
   selector: 'og-success-rate',
   templateUrl: './success-rate.component.html',
-  styleUrls: ['./success-rate.component.css']
+  styleUrls: ['./success-rate.component.css', './../search-calc/search-calc.component.css',
+    '../../site/components/+analytics/assets/css/daterangepicker.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SuccessRateComponent extends Datatable implements OnInit, AfterViewInit, OnDestroy {
 
+  momentJs: any;
   loading = false;
   paymentLoading = false;
-  trialStatusLoading = false;
   showAdvancedFilter = false;
-  toStr = JSON.stringify;
+  scriptLoaded = false;
 
   company: Array<any> = [];
   input = new FormControl();
@@ -42,20 +44,43 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
   numberOperators = ['between', 'less than', 'greater than', 'equals'];
 
   filter = {
-    company: [{name: 'name', type: 'string'}, {name: 'leads', type: 'number'},
-      {name: 'visits', type: 'number'}, {name: 'sign_up', type: 'date'}, {name: 'plan', type: 'string'},
-      {name: 'appsumo_created', type: 'bool'}],
+    company: ['name', 'number_of_calculators', 'leads', 'last_lead_generated', 'visits', 'sign_up', 'plan', 'appsumo_created', 'conversion_rate',
+      'trial', 'next_payment', 'percent_cycle_over', 'request_cancellation', 'billing_unit'],
+    app: ['name', 'status', 'created_at', 'latest_publish'],
+    user: ['web_session'],
 
-    app: [{name: 'name', type: 'string'}, {name: 'status', type: 'string'},
-      {name: 'created_at', type: 'date'}, {name: 'latest_publish', type: 'date'}],
+    types: {
+      name: 'string',
+      number_of_calculators: 'number',
+      leads: 'number',
+      visits: 'number',
+      last_lead_generated: 'date',
+      sign_up: 'date',
+      plan: 'string',
+      appsumo_created: 'bool',
+      conversion_rate: 'number',
+      trial: 'string',
+      next_payment: 'date',
+      percent_cycle_over: 'number',
+      request_cancellation: 'bool',
+      status: 'string',
+      created_at: 'date',
+      latest_publish: 'date',
+      billing_unit: 'string',
+      web_session: 'number'
+    },
 
     operators: {
-      leads: this.numberOperators, visits: this.numberOperators, name: this.stringOperators,
+      leads: this.numberOperators, visits: this.numberOperators,
+      name: this.stringOperators, number_of_calculators: this.numberOperators,
       sign_up: this.numberOperators, appsumo_created: ['equals', 'not equal to'],
       plan: this.stringOperators, status: this.stringOperators,
-      created_at: this.numberOperators, latest_publish: this.numberOperators
+      created_at: this.numberOperators, latest_publish: this.numberOperators,
+      conversion_rate: this.numberOperators, trial: this.stringOperators, next_payment: this.numberOperators,
+      percent_cycle_over: this.numberOperators, request_cancellation: ['equals', 'not equal to'],
+      last_lead_generated: this.numberOperators, billing_unit: this.stringOperators, web_session: this.numberOperators
     },
-    selected_property: 'name', // initially select name
+    selected_property: '', // initially select name
     selected_operator: '',
     select_property_type: '',
     visible: true
@@ -68,6 +93,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
               public _membershipService: MembershipService, public _cookieService: CookieService) {
     super();
 
+    this.momentJs = moment;
     if (_cookieService.readCookie('storage')) {
       let storage = JSON.parse(_cookieService.readCookie('storage'));
       this.sub_role = storage.user.sub_role;
@@ -86,11 +112,17 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       .subscribe((response) => {
         this.updateCompanySuccessRate(response);
       }, err => this.loading = false));
+
+    this.adminService.getSavedFilters().subscribe(filters => {
+      this.savedFilters = filters;
+    })
+
   }
 
   ngAfterViewInit() {
     this._script.load('datatables', 'daterangepicker')
       .then((data) => {
+        this.scriptLoaded = true;
       }).catch((error) => {
       console.log('Script not loaded', error);
     });
@@ -120,15 +152,14 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
       this.filtersPostData[index]['type'] = value.type;
       this.filtersPostData[index]['operator'] = value.operator;
     });
-
+    this.showAdvancedFilter = true;
   }
 
   setFilterProperty(target, index) {
-
     this.filtersPostData[index]['property'] = this.filters[index].selected_property;
     let type = target.options[target.options.selectedIndex].className;
     this.filtersPostData[index]['type'] = type;
-    this.filters[index].select_property_type = type;
+    this.filters[index].selected_property_type = type;
 
     this.filters[index].selected_operator = ''; // reset operator value
   }
@@ -223,44 +254,12 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   showFilter() {
     this.showAdvancedFilter = !this.showAdvancedFilter;
-    this.adminService.getSavedFilters().subscribe(filters => {
-      this.savedFilters = filters;
-    })
   }
 
   updateCompanySuccessRate(response: any) {
-    this.trialStatusLoading = true;
-
     this.company = response.successRate;
-    let companyIds: Array<any> = [];
-
-    for (let i = 0; i < this.company.length; i++) {
-      this.company[i].created_at = moment(this.company[i].createdAt).fromNow().trim();
-      companyIds.push(this.company[i]._id);
-    }
     this.total_pages = Math.ceil(response.count / this.current_limit);
     this.loading = false;
-
-    if (this.company.length > 0) {
-
-      this.subscriptions.add(this.adminService.getCompaniesTrialStatus({company_ids: companyIds})
-        .subscribe(data => {
-          for (let i = 0; i < data.length; i++) {
-            let index = this.company.findIndex((value) => {
-              if (value._id === data[i].company_id) {
-                return true;
-              }
-            });
-            this.company[index].trial_status = data[i].trial_status;
-            this.trialStatusLoading = false;
-          }
-        }, (err) => {
-          this.trialStatusLoading = false;
-          for (let i = 0; i < this.company.length; i++) {
-            this.company[i].trial_status = 'error';
-          }
-        }));
-    }
   }
 
   saveFilter(filterName, filterDescription) {
@@ -314,6 +313,11 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
           console.log('Error in getting invoices', error);
         }
       );
+  }
+
+  // Check the obj has the keys in the order mentioned. Used for checking JSON results.
+  checkObjHasKeys(object, ...keys): boolean {
+    return keys.reduce((a, b) => ( a || {} )[b], object) !== undefined;
   }
 
   paging(num: number) {
