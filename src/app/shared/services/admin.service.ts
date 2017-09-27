@@ -9,11 +9,11 @@ import {BaseService} from "./base.service";
 
 @Injectable()
 export class AdminService extends BaseService {
+  public getLogSubject = new ReplaySubject<String>(2);
+
   constructor(public _http: Http) {
     super();
   }
-
-  public getLogSubject = new ReplaySubject<String>(2);
 
   getBasicGraph(data: any) {
     let getCompaniesUrl = this._url + '/admin/graph';
@@ -323,10 +323,10 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getAllAdminLogs( company:any = null, data: any,subadminId: any = null,): Observable<any> {
+  getAllAdminLogs(company: any = null, data: any, subadminId: any = null,): Observable<any> {
     let uri = '';
-    if(company){
-      uri = this._url + "/admin/subadminlog/"+company
+    if (company) {
+      uri = this._url + "/admin/subadminlog/" + company
     }
     // else if(subadminId){
     //   uri = this._url + "/admin/subadminlog/"+subadminId
@@ -378,7 +378,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  generateDealCoupon(data){
+  generateDealCoupon(data) {
     return this._http.post(this._url + '/webhook/deal/jvzoo', data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -392,6 +392,12 @@ export class AdminService extends BaseService {
 
   getSavedFilters() {
     return this._http.get(this._url + '/admin/success_rate/get_filters', this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getWebhookEventsByCompany(companyId) {
+    return this._http.get(this._url + '/admin/companies/get_events/' + companyId, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
