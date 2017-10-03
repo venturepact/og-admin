@@ -50,7 +50,8 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'error-logs') {
       this._adminService.notifylogType('errorLogs');
       jQuery('#error-logs').addClass('active');
-    } else if (tab === 'locales-admin') {
+    }
+    else if (tab === 'locales-admin') {
       jQuery('#locales-admin').addClass('active');
     }
     else if (tab === 'londoner') {
@@ -58,6 +59,9 @@ export class SidebarComponent implements OnInit {
     }
     else if (tab === 'specialdeals-tab') {
       jQuery('#special_deals-tab').addClass('active');
+    }
+    else if (tab === 'integration-log') {
+      jQuery('#integration-logs').addClass('active');
     }
 
     // else if (tab === 'customJSApprovals') {

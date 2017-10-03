@@ -25,6 +25,7 @@ import {PromotionChecklist} from '../../admin/promotion-checklist/promotion-chec
 import {SubAdminComponent} from '../../admin/sub-admin/all-admin/sub-admin.component';
 import {SingleadminComponent} from '../../admin/sub-admin/single-admin/single-admin.component';
 import {SpecialDealComponent} from "../../admin/special-deal/special-deal.component";
+import {IntegrationLogsComponent} from "../../admin/integration-logs/integration-logs.component";
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -62,7 +63,7 @@ export const ADMIN_ROUTES: Routes = [
             component: SingleadminComponent,
             canActivate: [AdminGuard]
           },
-         
+
           {
             path: 'companies',
             component: AllCompaniesComponent,
@@ -141,6 +142,11 @@ export const ADMIN_ROUTES: Routes = [
           {
             path: 'promotion-checklist',
             component: PromotionChecklist,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: 'integration-logs',
+            component: IntegrationLogsComponent,
             canActivate: [AdminGuard]
           },
           {

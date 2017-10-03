@@ -22,7 +22,6 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-
   updateEmail(old_email: any, new_email: any, user_id: string): Observable<User> {
     let storage: any = this.readCookie('storage');
     storage = JSON.parse(storage);
@@ -398,6 +397,12 @@ export class AdminService extends BaseService {
 
   getWebhookEventsByCompany(companyId) {
     return this._http.get(this._url + '/admin/companies/get_events/' + companyId, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getAllIntegrationLogs(data) {
+    return this._http.post(this._url + '/admin/companies/getAllIntegrationLogs', data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -43,6 +43,7 @@ import {DealsComponent} from "./sitesettings/deals/deals.component";
 import {SpecialDealComponent} from "./special-deal/special-deal.component";
 import {LondonerService} from "../shared/services/londoner.service";
 import {SharedModule} from "../shared/modules/shared.module";
+import {IntegrationLogsComponent} from './integration-logs/integration-logs.component';
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
@@ -53,7 +54,7 @@ import {SharedModule} from "../shared/modules/shared.module";
     SitesettingsComponent, AllFeaturesComponent, SuccessRateComponent, CompanyDetailsComponent,
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
-    SpecialDealComponent],
+    SpecialDealComponent, IntegrationLogsComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
     JSONCompare, LondonerService, FeatureAuthService]
