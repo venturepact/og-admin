@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  margin-left: 255px;
+}
+
+.dataTables_length {
+  display: block !important;
+}
+
+.dataTables_filter {
+  display: block !important;
+}
+
