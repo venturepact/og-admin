@@ -225,7 +225,6 @@ export class AdminService extends BaseService {
 
   getLog(data): Observable<any> {
 
-    console.log("In Observable", data);
     return this._http.post(this._url + '/admin/getLog', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
@@ -240,9 +239,14 @@ export class AdminService extends BaseService {
     return this.getLogSubject.asObservable();
   }
 
-
   getAppIntegrationLogs(data): any {
     return this._http.post(this._url + '/admin/companies/get_apps_integration_logs', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getIntegrationLogDetails(data): any {
+    return this._http.post(this._url + '/admin/getIntegrationLogDetails', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }

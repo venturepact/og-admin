@@ -1,3 +1,20 @@
-<p>
-  integration-log-details works!
-</p>
+<div class="loader" *ngIf="loading"></div>
+
+<table *ngIf="!loading" class="table" border="1">
+  <thead>
+  <tr>
+    <th>Integration</th>
+    <th>Details</th>
+    <th>--</th>
+  </tr>
+  </thead>
+
+  <tbody *ngFor="let key of keysGetter(log)">
+  <tr *ngIf="key!='app' && key!='showDetails'">
+    <td>{{key}}</td>
+    <td>{{log[key] | json}}</td>
+    <td><a (click)="showModal(key)"></a>View</td>
+  </tr>
+  </tbody>
+
+</table>

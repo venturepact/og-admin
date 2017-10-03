@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {Script} from "../../shared/services/script.service";
 import {AdminService} from "../../shared/services/admin.service";
@@ -6,8 +6,7 @@ import {AdminService} from "../../shared/services/admin.service";
 @Component({
   selector: 'app-integration-logs',
   templateUrl: './integration-logs.component.html',
-  styleUrls: ['./integration-logs.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./integration-logs.component.css', './../ionicons.min.css', './../ionicons.min.css','./../../../assets/css/sahil-hover.css', './../../../assets/css/custom-material.css']
 })
 export class IntegrationLogsComponent extends Datatable implements OnInit, AfterViewInit {
 
@@ -60,9 +59,11 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
   }
 
   getIntegrationLogs(): any {
+    this.loading = true;
     this.adminService.getAllIntegrationLogs(this.getParams()).subscribe((response: any) => {
       this.integrationLogs = response.logs;
       this.total_pages = Math.ceil(response.count / this.current_limit);
+      console.log(this.total_pages);
       this.loading = false;
     }, err => {
       this.loading = false

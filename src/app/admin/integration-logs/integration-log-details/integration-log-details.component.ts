@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AdminService} from "../../../shared/services/admin.service";
 
 @Component({
   selector: 'og-integration-log-details',
@@ -9,11 +10,20 @@ export class IntegrationLogDetailsComponent implements OnInit {
 
   @Input()
   log: any;
+  keysGetter = Object.keys;
+  logDetails: any;
 
-  constructor() {
+  constructor(private adminService: AdminService) {
   }
 
   ngOnInit() {
+  }
+
+  showModal(integratioName) {
+    let data = {};
+    this.adminService.getIntegrationLogDetails(data).subscribe(response => {
+      this.logDetails = response;
+    });
   }
 
 }
