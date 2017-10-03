@@ -35,6 +35,10 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
     this.getIntegrationLogs();
   }
 
+  showDetails(integrationLog) {
+    integrationLog.showDetails = !integrationLog.showDetails;
+  }
+
   paging(num: number) {
     super.paging(num);
     this.getIntegrationLogs();
