@@ -1,10 +1,19 @@
-<div class="container">
-
+<div class="logs-container">
+<div  id="table">
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+    <div class="dataTables_length" id="table-dataTables_length">
+				<label>Show 
+                <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)" class="">
+                    <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
+                </select>
+                entries
+            </label>
+		</div>
     <div id="table-datatable_filter" class="dataTables_filter">
-      <label style="color: black">
-      Search:<input type="search" placeholder="By Name, Title, Url" aria-controls="table">
-    </label>
+      <label>
+        Search:<input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table"
+                      (keyup)="searchData()">
+      </label>
     </div>
 
     <div *ngIf="loading">
@@ -52,4 +61,5 @@
          id="all-companies-datatable_next">Next</a>
     </div>
   </div>
+</div>
 </div>

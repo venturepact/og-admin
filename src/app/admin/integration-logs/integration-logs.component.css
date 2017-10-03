@@ -1,13 +1,28 @@
-.container {
-  position: relative;
-  margin-left: 255px;
+.logs-container {
+    top: 50px !important;
+    position: relative;
+    margin-left: 255px;
+    padding: 0px 20px;
+    width: calc(100% - 255px);
+    float: left;
+    margin-bottom: 50px;
+  
 }
 
-.dataTables_length {
-  display: block !important;
+.dataTables_length{
+  display: inherit;
 }
 
-.dataTables_filter {
-  display: block !important;
+
+.dataTables_filter{
+  display: inherit;
 }
 
+input {
+  width: 250px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 0 0 8px;
+}
