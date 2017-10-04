@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AdminService} from "../../../shared/services/admin.service";
 
+declare var jQuery: any;
+
 @Component({
   selector: 'og-integration-log-details',
   templateUrl: './integration-log-details.component.html',
@@ -10,6 +12,8 @@ export class IntegrationLogDetailsComponent implements OnInit {
 
   @Input()
   log: any;
+  @Input()
+  app: any;
   keysGetter = Object.keys;
   logDetails: any;
 
@@ -20,7 +24,8 @@ export class IntegrationLogDetailsComponent implements OnInit {
   }
 
   showModal(integratioName) {
-    let data = {};
+    jQuery("#log-detail").modal('show');
+    let data = {integration: integratioName};
     this.adminService.getIntegrationLogDetails(data).subscribe(response => {
       this.logDetails = response;
     });

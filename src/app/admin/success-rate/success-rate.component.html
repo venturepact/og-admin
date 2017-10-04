@@ -141,7 +141,7 @@
         <th>
           Trial
         </th>
-        <th>Price</th>
+        <th>Price per cycle</th>
         <th (click)="sort('billing.chargebee_plan_id')">
           <div class="sort-icon"><a href="javascript:void(0);">Plan</a></div>
         </th>
@@ -177,7 +177,7 @@
         </td>
         <td>{{momentJs(company.last_lead?.last_added).fromNow()}}</td>
         <td>{{company.reset_current_usage}}</td>
-        <td>{{momentJs(company.created_at).fromNow()}}</td>
+        <td>{{momentJs(company.createdAt).fromNow()}}</td>
         <td>{{company.billing.chargebee_subscription_status}}</td>
         <td>{{company.billing.plan_price}}</td>
         <td>{{company.plan}}</td>

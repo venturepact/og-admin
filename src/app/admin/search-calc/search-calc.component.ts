@@ -22,6 +22,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   loading = false;
   scriptLoaded = false;
   selectedFilter: any;
+  onlyLive: boolean = false;
   showAdvancedFilter = false;
   analyticsUpdateStatus = "";
   value: any;
@@ -85,6 +86,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
       limit: this.current_limit,
       search_key: this.search,
       page: this.current_page - 1,
+      only_live: this.onlyLive,
       filter: this.selectedFilter,
       created_at_filter: this.createdAtFilter,
       sort_key: this.sortKey,
