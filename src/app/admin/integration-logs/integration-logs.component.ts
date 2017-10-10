@@ -13,6 +13,28 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
   loading: boolean = false;
   scriptLoaded: boolean = false;
   integrationLogs: Array<any> = [];
+  calcName: String;
+  companyName: String;
+  selectedIntegration: String;
+  configuration: string = '';
+  keysGetter: any = Object.keys;
+
+  integrations: any = {
+    SALESFORCE: 'salesforce',
+    SLACK: 'slack',
+    MARKETO: 'marketo',
+    MAILCHIMP: 'mailchimp',
+    GET_RESPONSE: 'getresponse',
+    ACTIVE_CAMPAIGN: 'active_campaign',
+    AWEBER: 'aweber',
+    HUBSPOT: 'hubspot',
+    EMMA: 'emma',
+    DRIP: 'drip',
+    PARDOT: 'pardot',
+    CAMPAIGNMONITOR: 'campaignmonitor',
+    INTERCOM: 'intercom',
+    SENDLANE: 'sendlane'
+  };
 
   constructor(private scriptService: Script, private adminService: AdminService) {
     super();
@@ -32,6 +54,13 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
         console.log('script load error', error);
       });
     this.getIntegrationLogs();
+  }
+
+  resetFilters() {
+    this.calcName = '';
+    this.companyName = '';
+    this.selectedIntegration = '';
+    this.configuration = '';
   }
 
   showDetails(integrationLog) {
@@ -58,7 +87,7 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
     this.getIntegrationLogs();
   }
 
-  getIntegrationLogs(): any {
+  getIntegrationLogs() {
     this.loading = true;
     this.adminService.getAllIntegrationLogs(this.getParams()).subscribe((response: any) => {
       this.integrationLogs = response.logs;
@@ -74,6 +103,12 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
     return {
       limit: this.current_limit,
       page: this.current_page - 1,
+      filter: {
+        app: this.calcName,
+        company: this.companyName,
+        configuration: this.configuration,
+        integration: this.selectedIntegration
+      }
     };
   }
 

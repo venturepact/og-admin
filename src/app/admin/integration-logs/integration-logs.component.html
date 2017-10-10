@@ -3,17 +3,23 @@
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
     <div class="dataTables_length" id="table-dataTables_length">
 				<label>Show
-                <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)" class="">
+          <select name="table-dataTables_length" (change)="limitChange($event)">
                     <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
                 </select>
                 entries
             </label>
-		</div>
-    <div id="table-datatable_filter" class="dataTables_filter">
-      <label>
-        Search:<input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table"
-                      (keyup)="searchData()">
-      </label>
+      <br>
+      <input type="search" placeholder="calc name" [(ngModel)]="calcName">
+      <input type="search" placeholder="company name" [(ngModel)]="companyName">
+      <select [(ngModel)]="configuration">
+        <option selected [value]="true">Configured</option>
+        <option [value]="false">Not Configured</option>
+      </select>
+      <select [(ngModel)]="selectedIntegration">
+        <option *ngFor="let key of keysGetter(integrations)" [value]="key">{{key}}</option>
+      </select>
+      <button (click)="getIntegrationLogs()">Search</button>
+      <button (click)="resetFilters()">Reset Filters</button>
     </div>
 
     <div *ngIf="loading">
@@ -25,10 +31,6 @@
       <tr>
         <th> Calculator Title</th>
         <th>Company</th>
-        <!--<th>CRM</th>-->
-        <!--<th>Status</th>-->
-        <!--<th>First Activated On</th>-->
-        <!--<th>Actions</th>-->
       </tr>
       </thead>
       <tbody *ngFor="let integrationLog of integrationLogs">
@@ -39,13 +41,9 @@
         </td>
       <tr *ngIf="integrationLog.showDetails">
         <td colspan="11">
-          <og-integration-log-details [app]=[log]="integrationLog"></og-integration-log-details>
+          <og-integration-log-details [log]="integrationLog"></og-integration-log-details>
         </td>
       </tr>
-      <!--<td></td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
-
       </tbody>
     </table>
 

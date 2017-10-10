@@ -16,6 +16,7 @@ export class IntegrationLogDetailsComponent implements OnInit {
   app: any;
   keysGetter = Object.keys;
   logDetails: any;
+  loading: boolean = false;
 
   constructor(private adminService: AdminService) {
   }
@@ -25,7 +26,7 @@ export class IntegrationLogDetailsComponent implements OnInit {
 
   showModal(integratioName) {
     jQuery("#log-detail").modal('show');
-    let data = {integration: integratioName};
+    let data = {integration: integratioName, app: this.log.app._id};
     this.adminService.getIntegrationLogDetails(data).subscribe(response => {
       this.logDetails = response;
     });
