@@ -37,9 +37,9 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   public subscriptions: Subscription = new Subscription();
   public sub_role: String = null;
 
-  constructor(public adminService: AdminService, public scriptService: Script, public _cookieService: CookieService) {
+  constructor(private adminService: AdminService, private scriptService: Script,
+              private _cookieService: CookieService) {
     super();
-
     if (_cookieService.readCookie('storage')) {
       let storage = JSON.parse(_cookieService.readCookie('storage'));
       this.sub_role = storage.user.sub_role;

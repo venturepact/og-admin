@@ -6,7 +6,7 @@ import {AdminService} from "../../shared/services/admin.service";
 @Component({
   selector: 'app-integration-logs',
   templateUrl: './integration-logs.component.html',
-  styleUrls: ['./integration-logs.component.css', './../ionicons.min.css', './../ionicons.min.css','./../../../assets/css/sahil-hover.css', './../../../assets/css/custom-material.css']
+  styleUrls: ['./integration-logs.component.css', './../ionicons.min.css', './../ionicons.min.css', './../../../assets/css/sahil-hover.css', './../../../assets/css/custom-material.css']
 })
 export class IntegrationLogsComponent extends Datatable implements OnInit, AfterViewInit {
 
@@ -48,7 +48,6 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
     this.scriptService.load('datatables')
       .then((data) => {
         this.scriptLoaded = true;
-        console.log(data);
       })
       .catch((error) => {
         console.log('script load error', error);
@@ -92,7 +91,6 @@ export class IntegrationLogsComponent extends Datatable implements OnInit, After
     this.adminService.getAllIntegrationLogs(this.getParams()).subscribe((response: any) => {
       this.integrationLogs = response.logs;
       this.total_pages = Math.ceil(response.count / this.current_limit);
-      console.log(this.total_pages);
       this.loading = false;
     }, err => {
       this.loading = false
