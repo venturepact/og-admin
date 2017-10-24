@@ -41,7 +41,6 @@ export class CompanyDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-
   }
 
   ngOnInit() {
@@ -123,7 +122,7 @@ export class CompanyDetailComponent implements OnInit {
       this._adminService.updateCompany(this.updateCompany, this.id)
         .subscribe(
           (response: any) => {
-            
+
             //window.location.reload(true);
             this.company = new AdminCompany(response);
             this.loading = false;
