@@ -178,12 +178,12 @@ export class PlansComponent implements OnInit {
           );
   }
 
-    handleEvent(e) {
-        console.log('Inside handle event', e);
-      if (e.event === 'DELETED') {
-        console.log(e);
-      }
+  handleEvent(e) {
+    console.log('Inside handle event', e);
+    if (e.event === 'DELETED') {
+      console.log(e);
     }
+  }
 
   getSiteSettings() {
     this._adminService.getSiteSettings()
