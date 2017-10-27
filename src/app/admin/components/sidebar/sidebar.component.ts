@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AdminService} from '../../../shared/services/admin.service';
-import {CookieService} from "../../../shared/services/cookie.service";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AdminService } from '../../../shared/services/admin.service';
+import { CookieService } from "../../../shared/services/cookie.service";
 
 declare var jQuery: any;
 
@@ -63,7 +63,9 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'integration-log') {
       jQuery('#integration-logs').addClass('active');
     }
-
+    else if (tab == 'premaidcalc') {
+      jQuery('premaidset').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');

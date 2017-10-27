@@ -1,0 +1,28 @@
+<div class="all-companies-container">
+    <div *ngIf="loading" style="margin-left: 25%; margin-bottom: 40%; margin-top: 10%;">
+        <div>
+            <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+        </div>
+    </div>
+    <div *ngIf="!loading">
+        <table class="dataTable">
+            <thead>
+                <th>
+                    <h3>Name</h3>
+                </th>
+                <th>
+                    <h3>Tag</h3>
+                </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let calcs of premaidListArray; let i = index;" style="margin-left: 8%;">
+                    <td class="th_set">{{ calcs.name }}</td>
+                    <td><input type="text" [(ngModel)]="premaidListArray[i].tag" placeholder="type tag(like marketing, financial etc.)"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-left: 8%;">
+            <button type="btn" (click)="saveTag()">{{btnText}}</button>
+        </div>
+    </div>
+</div>
