@@ -55,7 +55,7 @@ export class PlansComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.addon_leads = 'helo';
+    this.addon_leads = '';
     this.loading = true;
     this.getSiteSettings();
     this._planService.getPlans()
