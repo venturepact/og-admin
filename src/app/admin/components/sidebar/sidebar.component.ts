@@ -66,6 +66,9 @@ export class SidebarComponent implements OnInit {
     else if (tab == 'premaidcalc') {
       jQuery('premaidset').addClass('active');
     }
+    else if(tab == 'premade-calcs'){
+      jQuery('#premade-calcs').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');

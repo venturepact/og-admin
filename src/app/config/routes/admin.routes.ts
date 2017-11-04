@@ -27,6 +27,7 @@ import { SingleadminComponent } from '../../admin/sub-admin/single-admin/single-
 import { SpecialDealComponent } from "../../admin/special-deal/special-deal.component";
 import { IntegrationLogsComponent } from "../../admin/integration-logs/integration-logs.component";
 import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
+import { PremadeCalcsComponent } from './../../admin/premade-calcs/premade-calcs.component'
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -161,8 +162,13 @@ export const ADMIN_ROUTES: Routes = [
             canActivate: [AdminGuard]
           },
           {
-            path: 'premaidcalc',
+            path: '#premaidcalc',
             component: PremaidComponent,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: 'premade_calculators',
+            component: PremadeCalcsComponent,
             canActivate: [AdminGuard]
           }
         ]

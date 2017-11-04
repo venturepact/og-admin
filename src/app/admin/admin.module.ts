@@ -1,3 +1,4 @@
+import { PremadeCalcService } from './../shared/services/premade-calc.service';
 import { LocaleService } from './../site/+builder/services/locale.service';
 import { LocalesAdminComponent } from './locale/locale-admin.component';
 import { NgModule } from "@angular/core";
@@ -47,7 +48,7 @@ import { PremaidService } from '../shared/services/premaid.service';
 import { SharedModule } from "../shared/modules/shared.module";
 import { IntegrationLogsComponent } from './integration-logs/integration-logs.component';
 import { IntegrationLogDetailsComponent } from './integration-logs/integration-log-details/integration-log-details.component';
-
+import { PremadeCalcsComponent } from './premade-calcs/premade-calcs.component';
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
     SingleUserModule, UtilitiesModule, SingleadminModule],
@@ -57,10 +58,10 @@ import { IntegrationLogDetailsComponent } from './integration-logs/integration-l
     SitesettingsComponent, AllFeaturesComponent, SuccessRateComponent, CompanyDetailsComponent,
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
-    SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent],
+    SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent, PremadeCalcsComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare, LondonerService, FeatureAuthService, PremaidService]
+    JSONCompare, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
 })
 
 export class AdminModule {

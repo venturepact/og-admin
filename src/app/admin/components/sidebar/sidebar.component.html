@@ -178,6 +178,17 @@
               </div>
             </a>
           </li>
+          <li *ngIf="sub_role == null" class="setting-nav" id="premade-calcs" (click)="showTab('premade-calcs')">
+                <a [routerLink]="['premade_calculators']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Premade Calculators</h6>
+                        <span class="">Check all the Premade Calculators</span>
+                    </div>
+                </a>
+            </li>
             <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">
                 <a [routerLink]="['customJSApprovals']" data-toggle="tab">
                     <span class="left-sidebar-icon">
