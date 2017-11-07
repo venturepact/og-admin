@@ -99,6 +99,7 @@ export class AdminCompany {
   public reset_period: Number;
   public parent_company: String;
   public cname : CName;
+  public child_intercom_id: String;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
 
@@ -137,6 +138,7 @@ export class AdminCompany {
       this.referral = new Referral(company.referral);
       this.parent_company = company.parent_company;
       this.cname = new CName(company.cname);
+      this.child_intercom_id = company.child_intercom_id;
       //this.referralcandy_url = company.referral.referralcandy_url;
       //this.leaddyno_url = company.referral.leaddyno_url;
     }
