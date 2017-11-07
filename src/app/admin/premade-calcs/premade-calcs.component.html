@@ -36,7 +36,7 @@
         <div *ngIf="!loading && calculators.length==0">
           No Record Found...
         </div>
-        <div>
+        <div *ngIf="rejectedCalcs.length>0">
           <div> Rejected Calculators:</div>
           <div class="alert alert-danger custom-alert" *ngIf="rejectedCalcs.length>0">
             <div *ngFor="let calc of rejectedCalcs">

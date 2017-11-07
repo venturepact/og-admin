@@ -2,6 +2,7 @@ import { Datatable } from './../../shared/interfaces/datatable.interface';
 import { PremadeCalcService } from './../../shared/services/premade-calc.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,Validators,FormBuilder} from '@angular/forms';
+declare var jQuery:any;
 @Component({
   selector: 'app-premade-calcs',
   templateUrl: './premade-calcs.component.html',
@@ -58,14 +59,25 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       this.errorMessage='Not Valid urls..';
     }
   }
-  requestToAdd(calculators){
+  requestToAdd(calculators,multi=false){
     console.log("calculators",calculators);
     if(calculators.length>0){
       this.$subscription=this._calculatorService.addPremadeCalc(calculators).subscribe((response)=>{
         let rejects = response['not_created'].map(obj=>{
           return obj['live_url'];
         })
-       this.rejectedCalcs=[...this.rejectedCalcs,...rejects];
+        this.rejectedCalcs=[...this.rejectedCalcs,...rejects]; 
+        if(!multi && rejects.length>0){
+          this.errorMessage='This calculator does not exists';
+        }
+        if(!multi && response['created'].length==1){ 
+          this.rejectedCalcs=[];
+          jQuery("#add-calc").modal('hide');
+          this.errorMessage='';
+        };
+        this.calculatorForm.reset();
+      },error=>{
+        this.errorMessage=error.message;
       })
       this.errorMessage='';
     }else{
@@ -103,7 +115,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         return acc;
       },[]);
       this.errorMessage='';
-      this.requestToAdd(calculators);
+      this.requestToAdd(calculators,true);
     }else{
       this.errorMessage="No data in this file";
     }
