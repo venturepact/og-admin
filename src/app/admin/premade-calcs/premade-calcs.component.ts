@@ -15,6 +15,10 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   rejectedCalcs:any=[];
   $subscription;
   errorMessage='';
+  industries=['Auto','Education','Finance','Health & Fitness'
+              ,'Legal','Marketing & Advertising','Publishing'
+              ,'Quintessential','Real Estate & Construction','Technology'
+              ,'Travel','TV and Entertainment'];
   constructor(private _fb:FormBuilder,private _calculatorService:PremadeCalcService) {
     super();
    }
@@ -77,7 +81,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         };
         this.calculatorForm.reset();
       },error=>{
-        this.errorMessage=error.message;
+        console.log(">>>>>>>>",error);
+        this.errorMessage=error.error.message;
       })
       this.errorMessage='';
     }else{
