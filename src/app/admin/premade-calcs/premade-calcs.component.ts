@@ -47,7 +47,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   getFields(){
     return {
       title:['',Validators.required],
-      live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/)])],
+      live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/)])],
       media:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$/)])],
       type:['',Validators.required],
       description:['',Validators.required],
@@ -132,13 +132,14 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   extractData(value){
       if(!value) return {};
       let obj={};
+      value=value.replace(/^(http|https|ftp)?(:\/\/)/igm,'');
       let arr=value.split('/');
       obj['calcName']=arr[1];
       obj['subdomain']=arr[0] ? arr[0].split('.')[0]: null;
       return obj;
   }
   testliveUrl(url){
-    return (/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/.test(url));
+    return (/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/.test(url));
   }
   
   dateFormat(date: any) {
