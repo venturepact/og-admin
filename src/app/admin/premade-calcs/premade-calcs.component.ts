@@ -93,14 +93,18 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     let files:FileList=event.target.files;
     console.log(">>>",files);
     if(files && files.length > 0) {
-      let file : File = files.item(0); 
-      let reader: FileReader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = (e) => {
-          let csv: string = reader.result;
-          this.csvToCalculators(csv);
-      }
-      this.errorMessage='';
+      let file : File = files.item(0);
+      console.log("sd",file);
+      if(file.type=='text/csv'){
+        let reader: FileReader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = (e) => {
+            let csv: string = reader.result;
+            this.csvToCalculators(csv);
+        }
+        this.errorMessage='';
+      }else this.errorMessage='Only Csv files are allowed...';
+      
     }else this.errorMessage='No file selected..';
 
   }
