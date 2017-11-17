@@ -65,7 +65,7 @@
                   Industry
                 </th>
                 <th>
-                  Edit
+                  Delete
                 </th>
               </tr>
             </thead>
@@ -87,7 +87,7 @@
                   {{calculator.industry}}
                 </td>
                 <td>
-                  <a href = "javascript:void(0);" ><i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit">mode_edit</i></a>
+                  <a href = "javascript:void(0);" (click)="removeCalculator(calculator._id)"><i class="material-icons">delete</i></a>
                 </td>
               </tr>
             </tbody>

@@ -22,5 +22,9 @@ export class PremadeCalcService extends BaseService {
                .map(this.extractData)
                .catch(this.handleError);
     }
-
+    removeCalculator(id){
+        return this._http.delete(this._url+'/admin/removeCalculator/'+id)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 }

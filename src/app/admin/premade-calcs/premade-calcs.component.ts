@@ -64,7 +64,6 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     }
   }
   requestToAdd(calculators,multi=false){
-    console.log("calculators",calculators);
     if(calculators.length>0){
       this.$subscription=this._calculatorService.addPremadeCalc(calculators).subscribe((response)=>{
         let rejects = response['not_created'].map(obj=>{
@@ -80,6 +79,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
           this.errorMessage='';
         };
         this.calculatorForm.reset();
+        this.getCalculators();
       },error=>{
         console.log(">>>>>>>>",error);
         this.errorMessage=error.error.message;
@@ -91,10 +91,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   }
   fileChange(event){
     let files:FileList=event.target.files;
-    console.log(">>>",files);
     if(files && files.length > 0) {
       let file : File = files.item(0);
-      console.log("sd",file);
       if(file.type=='text/csv'){
         let reader: FileReader = new FileReader();
         reader.readAsText(file);
@@ -112,17 +110,20 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     let lines=csv.split('\n');
     if(lines.length > 0){
       let calculators= lines.reduce((acc,line)=>{
-        let row=line.split(',');
-        if(!this.testliveUrl(row[1])){
-          this.rejectedCalcs.push(row[1]);
+          let row=line.split(',');
+          if(row[1] && !this.testliveUrl(row[1])){
+            this.rejectedCalcs.push(row[1]);
+            return acc;
+          }
+          if(!row[1]) return acc; 
+          let obj={title:row[0],live_url:row[1],media:row[2],type:row[3],industry:row[4],description:row[5]};
+          obj=Object.assign(obj,this.extractData(obj['live_url']));
+          if(obj['subdomain'] && obj['calcName']) acc.push(obj);
+          else if(obj && Object.keys(obj).length>1) {
+            this.rejectedCalcs.push(row[1]);
+          } 
           return acc;
-        } 
-        let obj={title:row[0],live_url:row[1],media:row[2],type:row[3],industry:row[4],description:row[5]};
-        obj=Object.assign(obj,this.extractData(obj['live_url']));
-        if(obj['subdomain'] && obj['calcName']) acc.push(obj);
-        else this.rejectedCalcs.push(row[1]);  
-        return acc;
-      },[]);
+        },[]);
       this.errorMessage='';
       this.requestToAdd(calculators,true);
     }else{
@@ -170,5 +171,10 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   searchData() {
     super.searchData();
     this.getCalculators();
+  }
+  removeCalculator(id){
+    this._calculatorService.removeCalculator(id).subscribe((data)=>{
+      this.getCalculators();
+    })
   }
 }
