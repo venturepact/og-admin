@@ -1,16 +1,21 @@
 <div class="premadeCalculators-container">
   <div class="row">
-    <div class="col-md-4">
-      <a class="btn btn-default pull-left" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Download Sample Csv</a>
-    </div>
-    <div class="col-md-4">
-      <input type="file" (change)="fileChange($event)" placeholder="Add Multiple Calculators" accept=".csv">
-    </div>
-
-    <div class="col-md-4">
-      <a href="javascript:void(0);" class="btn btn-default pull-left" id="btnCalc" data-toggle="modal" data-target="#add-calc">Add Calculator</a>
+    <div class="col-md-12">
+      <div class="col-md-2 pull-right" style="padding:5px;">
+          <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc">Add Calculator</a>      
+      </div>
+      <div class="col-md-3 pull-right" style="padding:5px;">
+          <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>          
+      </div>
+      <div style="padding:5px;" class="col-md-7 pull-right">
+          <div class="pull-right">
+            <span class="pull-left" style="margin-right:10px;">Upload CSV for Bulk Upload: </span>
+            <span class="pull-left"><input type="file" (change)="fileChange($event)" accept=".csv"></span>    
+          </div>
+        </div> 
     </div>
   </div>
+  <div class="row">&nbsp;</div>
   <div class="row">
     <div class="alert alert-danger custom-alert" *ngIf="errorMessage!=''">{{errorMessage}}</div>
   </div>
