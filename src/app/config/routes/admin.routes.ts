@@ -28,6 +28,7 @@ import { SpecialDealComponent } from "../../admin/special-deal/special-deal.comp
 import { IntegrationLogsComponent } from "../../admin/integration-logs/integration-logs.component";
 import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
 import { PremadeCalcsComponent } from './../../admin/premade-calcs/premade-calcs.component'
+import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -80,6 +81,11 @@ export const ADMIN_ROUTES: Routes = [
             path: 'plans',
             component: PlansComponent,
             canActivate: [AdminGuard, AdminLtdGuard],
+          },
+          {
+            path: 'company_plans',
+            component: CompanyPlansComponent,
+            canActivate: [AdminGuard, AdminLtdGuard]
           },
           {
             path: 'features',

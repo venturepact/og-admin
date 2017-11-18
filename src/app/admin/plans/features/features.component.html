@@ -171,13 +171,8 @@
 		</span>
 	</div>
 	<div class="col-sm-12">
-    <div>
-      <label>
-        <input type="checkbox" class="custom-check" [checked]="updateCompanies"
-               (change)="updateCompanies = !updateCompanies">Update Companies<br>
-      </label>
-    </div>
-		<button [attr.id]="'btnSubmit' + plan.name" class="primary" (click)="updatePlan()">Submit</button>
+
+    <button [attr.id]="'btnSubmit' + plan.name" class="primary" (click)="updatePlan()">Submit</button>
 		<span [attr.id]="'msg'+ plan.name">
 		</span>
 	</div>

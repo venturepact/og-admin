@@ -69,6 +69,9 @@ export class SidebarComponent implements OnInit {
     else if(tab == 'premade-calcs'){
       jQuery('#premade-calcs').addClass('active');
     }
+    else if (tab === 'company_plans') {
+      jQuery('#company_plans').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {FeaturesComponent} from './features/features.component';
 import {PlansComponent} from './plans.component';
-import {PlanService} from  './../../shared/services/plan.service';
-
-import {SharedModule} from './../../shared/modules/shared.module';
+import {SharedModule} from "../../shared/modules/shared.module";
+import {PlanService} from "../../shared/services/plan.service";
+import {CompanyPlansComponent} from "./company-plans/company-plans.component";
 
 @NgModule({
 
@@ -12,9 +12,8 @@ import {SharedModule} from './../../shared/modules/shared.module';
   	SharedModule,
   	RouterModule
   	],
-  declarations: [FeaturesComponent, PlansComponent],
+  declarations: [FeaturesComponent, PlansComponent, CompanyPlansComponent],
   providers: [PlanService]
-
 })
 
 export class PlanModule {}

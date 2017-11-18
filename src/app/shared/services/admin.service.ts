@@ -232,7 +232,6 @@ export class AdminService extends BaseService {
   }
 
   notifylogType(type) {
-    console.log(type);
     this.getLogSubject.next(type);
   }
 

@@ -51,9 +51,7 @@ export class FeaturesComponent implements OnInit{
   	this.planService.getPlanFeatures(this.plan._id)
 			.subscribe(
 				(response:any)=>{
-						// console.log(this.plan,response);
 						this.features	 = response;
-            // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",this.features);
 				},
 				(response:any)=>{
 						console.log('error_'+this.plan +"_plan",response);

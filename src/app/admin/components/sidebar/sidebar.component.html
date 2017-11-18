@@ -1,56 +1,67 @@
 <div class="left-sidebar col-md-3 col-sm-3 col-xs-3 np mobile-left-sidebar">
-    <div id="" class="tabbable tabs-left">
-        <ul>
-            <li class="setting-nav active" id="userSet" (click)="showTab('users')">
-                <a [routerLink]="['users']" data-toggle="tab">
+  <div id="" class="tabbable tabs-left">
+    <ul>
+      <li class="setting-nav active" id="userSet" (click)="showTab('users')">
+        <a [routerLink]="['users']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">face</i>
                   </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Users</h6>
-                        <span class="">See the account, membership, team and other details of all users of outgrow</span>
-                    </div>
-                </a>
-            </li>
-            <li class="setting-nav" id="compSet" (click)="showTab('companies')">
-                <a [routerLink]="['companies']" data-toggle="tab">
+          <div class="left-sidebar-title">
+            <h6 class="">Users</h6>
+            <span class="">See the account, membership, team and other details of all users of outgrow</span>
+          </div>
+        </a>
+      </li>
+      <li class="setting-nav" id="compSet" (click)="showTab('companies')">
+        <a [routerLink]="['companies']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">bubble_chart</i>
                   </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Companies</h6>
-                        <span class="">See the account, membership, team and other details of all companies of outgrow</span>
-                    </div>
-                </a>
-            </li>
+          <div class="left-sidebar-title">
+            <h6 class="">Companies</h6>
+            <span class="">See the account, membership, team and other details of all companies of outgrow</span>
+          </div>
+        </a>
+      </li>
 
-            <li *ngIf="sub_role == null" class="setting-nav" id="plnSet" (click)="showTab('plans')">
-                <a [routerLink]="['plans']" data-toggle="tab">
+      <li *ngIf="sub_role == null" class="setting-nav" id="plnSet" (click)="showTab('plans')">
+        <a [routerLink]="['plans']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">view_carousel</i>
                   </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Plans</h6>
-                        <span class="">Manage all features of diffrent plans and also control users, templates and no of calculators. </span>
-                    </div>
-                </a>
-            </li>
-            <li *ngIf="sub_role == null" class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
-                <a [routerLink]="['subdomains']" data-toggle="tab">
+          <div class="left-sidebar-title">
+            <h6 class="">Plans</h6>
+            <span class="">Manage all features of diffrent plans and also control users, templates and no of calculators. </span>
+          </div>
+        </a>
+      </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="company_plans" (click)="showTab('company_plans')">
+        <a [routerLink]="['company_plans']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">view_carousel</i>
+                  </span>
+          <div class="left-sidebar-title">
+            <h6>Company Plans</h6>
+            <span>Manage all features of different Company Feature plans </span>
+          </div>
+        </a>
+      </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
+        <a [routerLink]="['subdomains']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">public</i>
                   </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Sub Domains</h6>
-                        <span class="">manage the reserved and premium subdomains</span>
-                    </div>
-                </a>
-            </li>
-            <!---
-            Code for Landon Calc
-            -->
-            <li class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
-                <a [routerLink]="['londoner']" data-toggle="tab">
+          <div class="left-sidebar-title">
+            <h6 class="">Sub Domains</h6>
+            <span class="">manage the reserved and premium subdomains</span>
+          </div>
+        </a>
+      </li>
+      <!---
+      Code for Landon Calc
+      -->
+      <li class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
+        <a [routerLink]="['londoner']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">public</i>
                   </span>
@@ -77,7 +88,7 @@
                     </div>
                 </a>
             </li> -->
-            
+
             <li *ngIf="sub_role == null" class="setting-nav" id="email-logs" (click)="showTab('email-logs')">
                 <a [routerLink]="['emailLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
@@ -189,17 +200,17 @@
                     </div>
                 </a>
             </li>
-            <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">
-                <a [routerLink]="['customJSApprovals']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">customJS Approvals</h6>
-                        <span class="">Check all the Pending requests for custom Javascript insertions</span>
-                    </div>
-                </a>
-             </li>-->
+      <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">-->
+      <!--<a [routerLink]="['customJSApprovals']" data-toggle="tab">-->
+      <!--<span class="left-sidebar-icon">-->
+      <!--<i class="material-icons">list</i>-->
+      <!--</span>-->
+      <!--<div class="left-sidebar-title">-->
+      <!--<h6 class="">customJS Approvals</h6>-->
+      <!--<span class="">Check all the Pending requests for custom Javascript insertions</span>-->
+      <!--</div>-->
+      <!--</a>-->
+      <!--</li>-->
         </ul>
     </div>
 </div>

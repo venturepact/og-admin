@@ -49,6 +49,7 @@ import { SharedModule } from "../shared/modules/shared.module";
 import { IntegrationLogsComponent } from './integration-logs/integration-logs.component';
 import { IntegrationLogDetailsComponent } from './integration-logs/integration-log-details/integration-log-details.component';
 import { PremadeCalcsComponent } from './premade-calcs/premade-calcs.component';
+
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
     SingleUserModule, UtilitiesModule, SingleadminModule],
@@ -58,7 +59,8 @@ import { PremadeCalcsComponent } from './premade-calcs/premade-calcs.component';
     SitesettingsComponent, AllFeaturesComponent, SuccessRateComponent, CompanyDetailsComponent,
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
-    SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent, PremadeCalcsComponent],
+    SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent
+    , PremadeCalcsComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
     JSONCompare, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
