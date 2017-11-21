@@ -29,7 +29,7 @@ export class CompanyPlansComponent implements OnInit {
       this.planTypes = response;
       this.loading = false;
     });
-
+    this.fetchPlanFeature('business');
   }
 
   fetchPlanFeature(planId) {
@@ -65,8 +65,6 @@ export class CompanyPlansComponent implements OnInit {
       this.featureUpdate.delete(parentFeature._id);
     }
     this.featureUpdate.set(parentFeature._id, parentFeature);
-
-
   }
 
   updateCompanyPlan() {
@@ -88,7 +86,6 @@ export class CompanyPlansComponent implements OnInit {
 
     this._planService.updateCompanyFeatures(this.selectedPlan, request)
       .subscribe(response => {
-        console.log('qwe', response);
       })
   }
 
