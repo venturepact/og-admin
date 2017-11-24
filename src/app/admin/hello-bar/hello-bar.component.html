@@ -1,0 +1,158 @@
+<div class="all-companies-container">
+  <button *ngIf="createHelloBar" (click)="createHelloBar=!createHelloBar">back</button>
+
+  <div *ngIf="!createHelloBar">
+
+    <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+      <div class="dataTables_length" id="table-dataTables_length">
+        <label style="color: black">Show
+          <select name="table-dataTables_length" aria-controls="all-companies-datatable"
+                  (change)="limitChange($event)"
+                  class="">
+            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+          </select>
+          entries
+        </label>
+      </div>
+
+      <div id="table-datatable_filter" class="dataTables_filter">
+        <button (click)="createHelloBar =! createHelloBar">Create New Hello Bar</button>
+      </div>
+
+      <div *ngIf="loading">
+        <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+      </div>
+
+      <!--<div *ngIf="showAdvancedFilter" class="advanced-filter">-->
+      <!--<div class="row filter-params-container" style="position:relative"-->
+      <!--*ngFor="let filter of filters;let i = index;">-->
+      <!--<div class="" [ngClass]="{'hidden':!(filter.visible)}">-->
+      <!--<button (click)="removeFilter(i)">-->
+      <!--<span class="glyphicon glyphicon-minus"></span>-->
+      <!--</button>-->
+      <!--<select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"-->
+      <!--title="Select Operators">-->
+      <!--<option style="display: none"></option>-->
+      <!--<optgroup label="Company">-->
+
+      <!--<option *ngFor="let property of filter.company;" class="company"-->
+      <!--[value]="property">-->
+      <!--{{property}}-->
+      <!--</option>-->
+      <!--</optgroup>-->
+
+      <!--<optgroup label="App">-->
+      <!--<option *ngFor="let property of filter.app;" class="app" [value]="property">-->
+      <!--{{property}}-->
+      <!--</option>-->
+      <!--</optgroup>-->
+
+      <!--<optgroup label="User">-->
+      <!--<option *ngFor="let property of filter.user;" class="user" [value]="property">-->
+      <!--{{property}}-->
+      <!--</option>-->
+      <!--</optgroup>-->
+
+      <!--</select>-->
+      <!--<select [(ngModel)]="filters[i].selected_operator" (change)="setFilterOperator($event.target.value,i)"-->
+      <!--title="Select Operators">-->
+      <!--<option style="display: none"></option>-->
+      <!--<option *ngFor="let operator of filter.operators[filter.selected_property]" [value]="operator">-->
+      <!--{{operator}}-->
+      <!--</option>-->
+      <!--</select>-->
+      <!--<div *ngIf="(filter.types[filter.selected_property]==='date')"-->
+      <!--style="display: inline-block">-->
+
+      <!--<og-date-picker *ngIf="scriptLoaded && !(filter.selected_operator==='between')"-->
+      <!--style="position:absolute;bottom:0" (date)="setDateStart($event,i)">-->
+      <!--</og-date-picker>-->
+
+      <!--<og-date-range-picker *ngIf="scriptLoaded && filter.selected_operator==='between'"-->
+      <!--style="position:absolute;bottom:0"-->
+      <!--(date)="setDateRange($event,i)">-->
+      <!--</og-date-range-picker>-->
+      <!--</div>-->
+      <!--<div *ngIf="filter.types[filter.selected_property]!='date' && filter.types[filter.selected_property]!='bool'"-->
+      <!--style="display: inline-block">-->
+      <!--<input type="text" title="Enter value" (change)="setFilterValue($event.target.value,i)">-->
+      <!--<input *ngIf="filter.selected_operator==='between'" title="Enter value"-->
+      <!--type="number" (change)="filtersPostData[i]['value'][1]=$event.target.value;">-->
+      <!--</div>-->
+      <!--<div *ngIf="filter.selected_property=='appsumo_created' || filter.selected_property=='cancelled'"-->
+      <!--style="display: inline-block">-->
+
+      <!--<select (change)="setFilterValue($event.target.value,i)" title="Select">-->
+      <!--<option style="display: none"></option>-->
+      <!--<option>true</option>-->
+      <!--<option>false</option>-->
+      <!--</select>-->
+      <!--</div>-->
+
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="apply-filter-container">-->
+      <!--<button (click)="addFilter()">-->
+      <!--<span class="glyphicon glyphicon-plus"></span>-->
+      <!--</button>-->
+      <!--<button (click)="filterResults()">Fetch Results</button>-->
+      <!--<button type="button" data-toggle="modal" data-target="#saveFilterModal">-->
+      <!--Save Filter-->
+      <!--</button>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
+        <thead>
+
+        <tr class="company-row">
+          <th>TITLE</th>
+          <th>STATUS</th>
+          <th>PRIORITY</th>
+          <th>CLICK THROUGH</th>
+          <th>PUBLISHED ON</th>
+          <th>ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let company of company">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="dataTables_info" id="table-datatable_info" role="status"
+           aria-live="polite"></div>
+      <div class="dataTables_paginate paging_simple_numbers"
+           id="all-companies-datatable_paginate">
+        <a class="paginate_button previous " aria-controls="all-companies-datatable"
+           data-dt-idx="0" tabindex="0"
+           (click)="previous()"
+           id="all-companies-datatable_previous">Previous</a>
+        <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
+                 aria-controls="all-companies-datatable"
+                 (click)="paging(1)" tabindex="0">1</a></span>
+        <span *ngIf="current_page >= 5">...</span>
+        <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
+                 aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
+                 *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
+        <span *ngIf="current_page <= total_pages - 5">...</span>
+        <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
+                 [ngClass]="total_pages==current_page?'current':''"
+                 aria-controls="all-companies-datatable"
+                 (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
+        <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
+           (click)="next()"
+           id="all-companies-datatable_next">Next</a>
+      </div>
+    </div>
+  </div>
+  <edit-hello-bar *ngIf="createHelloBar"></edit-hello-bar>
+</div>

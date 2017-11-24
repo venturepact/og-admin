@@ -410,4 +410,16 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  getHellobar(data) {
+    return this._http.post(this._url + '/admin/getAllHellobars', data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  saveHellobar(data) {
+    return this._http.put(this._url + '/admin/saveHellobar', data, this.put_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
 }

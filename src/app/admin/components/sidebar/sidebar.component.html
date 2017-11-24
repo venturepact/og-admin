@@ -145,6 +145,17 @@
                     </div>
                 </a>
             </li>
+      <li class="setting-nav" id="hello-bar" (click)="showTab('hello-bar')">
+        <a [routerLink]="['hello-bar']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+          <div class="left-sidebar-title">
+            <h6 class="">HELLO BAR</h6>
+            <span>Creates Hello bar with custom filters</span>
+          </div>
+        </a>
+      </li>
             <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
                 <a [routerLink]="['locales-admin']" data-toggle="tab">
                     <span class="left-sidebar-icon">

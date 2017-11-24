@@ -29,6 +29,7 @@ import { IntegrationLogsComponent } from "../../admin/integration-logs/integrati
 import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
 import { PremadeCalcsComponent } from './../../admin/premade-calcs/premade-calcs.component'
 import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
+import {HelloBarComponent} from "../../admin/hello-bar/hello-bar.component";
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -66,7 +67,6 @@ export const ADMIN_ROUTES: Routes = [
             component: SingleadminComponent,
             canActivate: [AdminGuard]
           },
-
           {
             path: 'companies',
             component: AllCompaniesComponent,
@@ -161,6 +161,10 @@ export const ADMIN_ROUTES: Routes = [
             path: 'londoner',
             component: LondonerComponent,
             canActivate: [AdminGuard, AdminLtdGuard]
+          },
+          {
+            path: 'hello-bar',
+            component: HelloBarComponent
           },
           {
             path: 'specialDeals',
