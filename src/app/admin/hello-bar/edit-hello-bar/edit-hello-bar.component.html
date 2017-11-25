@@ -25,7 +25,7 @@
       <div *ngIf="scriptLoaded && (cond.selected_attribute==='signed_up' ||
       cond.selected_attribute==='payment_due_date')">
         {{cond.selected_value}}
-        <og-date-picker [strtDate]="cond.selected_value" (date)="setDateCondition(cond,$event)"></og-date-picker>
+        <og-date-picker (date)="setDateCondition(cond,$event)"></og-date-picker>
       </div>
       <div>
 
