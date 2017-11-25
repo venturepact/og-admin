@@ -16,92 +16,12 @@
       </div>
 
       <div id="table-datatable_filter" class="dataTables_filter">
-        <button (click)="createHelloBar =! createHelloBar">Create New Hello Bar</button>
+        <button (click)="createNewHellobar()">Create New Hello Bar</button>
       </div>
 
       <div *ngIf="loading">
         <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
       </div>
-
-      <!--<div *ngIf="showAdvancedFilter" class="advanced-filter">-->
-      <!--<div class="row filter-params-container" style="position:relative"-->
-      <!--*ngFor="let filter of filters;let i = index;">-->
-      <!--<div class="" [ngClass]="{'hidden':!(filter.visible)}">-->
-      <!--<button (click)="removeFilter(i)">-->
-      <!--<span class="glyphicon glyphicon-minus"></span>-->
-      <!--</button>-->
-      <!--<select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"-->
-      <!--title="Select Operators">-->
-      <!--<option style="display: none"></option>-->
-      <!--<optgroup label="Company">-->
-
-      <!--<option *ngFor="let property of filter.company;" class="company"-->
-      <!--[value]="property">-->
-      <!--{{property}}-->
-      <!--</option>-->
-      <!--</optgroup>-->
-
-      <!--<optgroup label="App">-->
-      <!--<option *ngFor="let property of filter.app;" class="app" [value]="property">-->
-      <!--{{property}}-->
-      <!--</option>-->
-      <!--</optgroup>-->
-
-      <!--<optgroup label="User">-->
-      <!--<option *ngFor="let property of filter.user;" class="user" [value]="property">-->
-      <!--{{property}}-->
-      <!--</option>-->
-      <!--</optgroup>-->
-
-      <!--</select>-->
-      <!--<select [(ngModel)]="filters[i].selected_operator" (change)="setFilterOperator($event.target.value,i)"-->
-      <!--title="Select Operators">-->
-      <!--<option style="display: none"></option>-->
-      <!--<option *ngFor="let operator of filter.operators[filter.selected_property]" [value]="operator">-->
-      <!--{{operator}}-->
-      <!--</option>-->
-      <!--</select>-->
-      <!--<div *ngIf="(filter.types[filter.selected_property]==='date')"-->
-      <!--style="display: inline-block">-->
-
-      <!--<og-date-picker *ngIf="scriptLoaded && !(filter.selected_operator==='between')"-->
-      <!--style="position:absolute;bottom:0" (date)="setDateStart($event,i)">-->
-      <!--</og-date-picker>-->
-
-      <!--<og-date-range-picker *ngIf="scriptLoaded && filter.selected_operator==='between'"-->
-      <!--style="position:absolute;bottom:0"-->
-      <!--(date)="setDateRange($event,i)">-->
-      <!--</og-date-range-picker>-->
-      <!--</div>-->
-      <!--<div *ngIf="filter.types[filter.selected_property]!='date' && filter.types[filter.selected_property]!='bool'"-->
-      <!--style="display: inline-block">-->
-      <!--<input type="text" title="Enter value" (change)="setFilterValue($event.target.value,i)">-->
-      <!--<input *ngIf="filter.selected_operator==='between'" title="Enter value"-->
-      <!--type="number" (change)="filtersPostData[i]['value'][1]=$event.target.value;">-->
-      <!--</div>-->
-      <!--<div *ngIf="filter.selected_property=='appsumo_created' || filter.selected_property=='cancelled'"-->
-      <!--style="display: inline-block">-->
-
-      <!--<select (change)="setFilterValue($event.target.value,i)" title="Select">-->
-      <!--<option style="display: none"></option>-->
-      <!--<option>true</option>-->
-      <!--<option>false</option>-->
-      <!--</select>-->
-      <!--</div>-->
-
-      <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="apply-filter-container">-->
-      <!--<button (click)="addFilter()">-->
-      <!--<span class="glyphicon glyphicon-plus"></span>-->
-      <!--</button>-->
-      <!--<button (click)="filterResults()">Fetch Results</button>-->
-      <!--<button type="button" data-toggle="modal" data-target="#saveFilterModal">-->
-      <!--Save Filter-->
-      <!--</button>-->
-      <!--</div>-->
-      <!--</div>-->
 
       <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
         <thead>
@@ -115,14 +35,18 @@
           <th>ACTIONS</th>
         </tr>
         </thead>
-        <tbody *ngFor="let company of company">
+        <tbody *ngFor="let hellobar of hellobarData">
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td style="padding: 2px">
+            <div><h4>{{hellobar.message}}</h4>
+              <p style="font-size: 12px">{{hellobar.description}}</p>
+            </div>
+          </td>
+          <td>{{hellobar.status}}</td>
+          <td>{{hellobar.priority}}</td>
+          <td>{{hellobar.clickThrough}}</td>
+          <td>{{momentJs(hellobar.updatedAt).fromNow()}}</td>
+          <td><a (click)="editHellobar(hellobar)">edit</a></td>
 
           <td></td>
         </tr>
@@ -154,5 +78,6 @@
       </div>
     </div>
   </div>
-  <edit-hello-bar *ngIf="createHelloBar"></edit-hello-bar>
+
+  <edit-hello-bar *ngIf="createHelloBar" [selectedHellobar]="selectedHellobar"></edit-hello-bar>
 </div>

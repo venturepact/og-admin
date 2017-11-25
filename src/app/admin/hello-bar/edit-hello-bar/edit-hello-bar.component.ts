@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Script} from "../../../shared/services/script.service";
 import {AdminService} from "../../../shared/services/admin.service";
 import {PlanService} from "../../../shared/services/plan.service";
@@ -11,6 +11,10 @@ import {PlanService} from "../../../shared/services/plan.service";
     , '../../search-calc/search-calc.component.css']
 })
 export class EditHelloBarComponent implements OnInit {
+
+  @Input()
+  selectedHellobar: any;
+
   scriptLoaded: boolean = false;
   plans: Array<String> = [];
 
@@ -63,7 +67,31 @@ export class EditHelloBarComponent implements OnInit {
       }).catch((error) => {
       console.log('Script not loaded', error);
     });
-    this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
+    console.log(this.selectedHellobar);
+    if (this.selectedHellobar == null) {
+      this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
+      console.log(this.conditions);
+    }
+    else {
+      this.hellobarId = this.selectedHellobar._id;
+      this.hellobarMessage = this.selectedHellobar.message;
+      this.ctaText = this.selectedHellobar.cta.ctaText;
+      this.ctaLink = this.selectedHellobar.cta.ctaLink;
+      this.ctaPlan = this.selectedHellobar.cta.plan;
+      this.stopDate = this.selectedHellobar.updatedAt;
+      this.conditions = [];
+      this.selectedHellobar.conditions.forEach(condition => {
+        this.conditions.push({
+          attributes: ['plan', 'status', 'payment_due_date', 'signed_up', 'payment_info_added'],
+          selected_attribute: condition.attribute,
+          selected_operator: condition.operator,
+          selected_value: new Date(condition.value),
+          logic_gate: condition.logicGate
+        })
+      });
+      console.log('only for the waek', this.conditions);
+
+    }
   }
 
   addCondition() {
@@ -91,6 +119,11 @@ export class EditHelloBarComponent implements OnInit {
     }).subscribe(response => {
       this.hellobarId = response._id;
     });
+  }
+
+  setDateCondition(condition, event) {
+    console.log(condition, event)
+    condition.selected_value = event.start_date
   }
 
   reset() {

@@ -16,7 +16,7 @@
 
         <select style="margin: 5px" title="select operator" [(ngModel)]="cond.selected_operator">
           <option style="display: none"></option>
-          <option *ngFor="let operator of operators[cond.selected_attribute]" value="operator">
+          <option *ngFor="let operator of operators[cond.selected_attribute]">
             {{operator}}
           </option>
 
@@ -24,7 +24,8 @@
       </div>
       <div *ngIf="scriptLoaded && (cond.selected_attribute==='signed_up' ||
       cond.selected_attribute==='payment_due_date')">
-        <og-date-picker></og-date-picker>
+        {{cond.selected_value}}
+        <og-date-picker [strtDate]="cond.selected_value" (date)="setDateCondition(cond,$event)"></og-date-picker>
       </div>
       <div>
 

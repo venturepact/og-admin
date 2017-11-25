@@ -171,7 +171,7 @@ export class AdminService extends BaseService {
   }
 
   editMessage(data: any, type: string) {
-    return this._http.put(this._url + '/hellobar/' + type, data, this.put_options())
+    return this._http.put(this._url + '/selectedHellobar/' + type, data, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
