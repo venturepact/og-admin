@@ -41,12 +41,14 @@ export class CompanyDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-
   }
 
   ngOnInit() {
     this.errorMsg = '';
     this.updateCompany = this.company;
+    if(!this.updateCompany.child_intercom_id) {
+      this.updateCompany.child_intercom_id = '';
+    }
     this.updateFormdetail = this.fb.group({
       companyname: [this.updateCompany.name, Validators.compose([Validators.required, Validators.minLength(4)])],
       domain: [this.updateCompany.sub_domain, Validators.compose([
@@ -74,7 +76,8 @@ export class CompanyDetailComponent implements OnInit {
       leaddyno_url: [this.updateCompany.referral.leaddyno_url],
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
-      sharing_url: [this.updateCompany.referral.sharing_url]
+      sharing_url: [this.updateCompany.referral.sharing_url],
+      child_intercom_id: [this.updateCompany.child_intercom_id || '']
     });
     this.getPlanList();
     this.getCompanyCoupon();
@@ -123,7 +126,7 @@ export class CompanyDetailComponent implements OnInit {
       this._adminService.updateCompany(this.updateCompany, this.id)
         .subscribe(
           (response: any) => {
-            
+
             //window.location.reload(true);
             this.company = new AdminCompany(response);
             this.loading = false;

@@ -12,8 +12,7 @@
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
     <div class="dataTables_length" id="table-dataTables_length">
       <label style="color: black">Show
-        <select name="table-dataTables_length" aria-controls="all-companies-datatable"
-                (change)="limitChange($event)">
+        <select name="table-dataTables_length" (change)="limitChange($event)">
           <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
         </select>
         entries
@@ -24,12 +23,17 @@
       <span class="glyphicon glyphicon-filter"></span>
       Filter
     </div>
+    <div class="right-section">
+      <div id="table-datatable_filter" class="dataTables_filter">
+        <label style="color: black">
+          Search:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" [formControl]='searchCalc'>
+        </label>
+      </div>
+      <div class="check-box-outer">
+        <label>Only Live<input (change)="onlyLive=!onlyLive" type="checkbox" class="check-box">
+        </label>
+      </div>
 
-    <div id="table-datatable_filter" class="dataTables_filter">
-      <label style="color: black">
-        Search:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" aria-controls="table"
-                      [formControl]='searchCalc'>
-      </label>
     </div>
 
     <div *ngIf="showAdvancedFilter" class="advanced-filter">
@@ -41,6 +45,7 @@
           <og-date-range-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)">
           </og-date-range-picker>
         </div>
+
       </div>
       <div class="row" style="margin-top: 10px">
         <div class="col-sm-4" style="margin-left: 15px">

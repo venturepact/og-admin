@@ -144,6 +144,19 @@ thead th .desc {
   display: block !important;
 }
 
+.check-box {
+  width: initial !important;
+  float: left !important;
+}
+
+.right-section {
+  float: right;
+}
+
+.check-box-outer {
+  float: right;
+  margin: 3px 10px;
+}
 .advanced-filter {
   clear: both;
   margin-top: 20px;

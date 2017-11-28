@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {FormControl} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {AdminService} from "../../shared/services/admin.service";
 import {Script} from "../../shared/services/script.service";
 import {CookieService} from "../../shared/services/cookie.service";
+import {Subscription} from "rxjs/Subscription";
 
 declare var moment;
 declare var jQuery;
@@ -22,6 +22,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   loading = false;
   scriptLoaded = false;
   selectedFilter: any;
+  onlyLive: boolean = false;
   showAdvancedFilter = false;
   analyticsUpdateStatus = "";
   value: any;
@@ -36,9 +37,9 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   public subscriptions: Subscription = new Subscription();
   public sub_role: String = null;
 
-  constructor(public adminService: AdminService, public scriptService: Script, public _cookieService: CookieService) {
+  constructor(private adminService: AdminService, private scriptService: Script,
+              private _cookieService: CookieService) {
     super();
-
     if (_cookieService.readCookie('storage')) {
       let storage = JSON.parse(_cookieService.readCookie('storage'));
       this.sub_role = storage.user.sub_role;
@@ -85,6 +86,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
       limit: this.current_limit,
       search_key: this.search,
       page: this.current_page - 1,
+      only_live: this.onlyLive,
       filter: this.selectedFilter,
       created_at_filter: this.createdAtFilter,
       sort_key: this.sortKey,

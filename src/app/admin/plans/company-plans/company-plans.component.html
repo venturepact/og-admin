@@ -1,0 +1,68 @@
+<div *ngIf="loading" class="col-md-10">
+  <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+</div>
+<div *ngIf="!loading" class="col-md-12 all-plans-container" id="my-account">
+  <div class="col-md-12 col-sm-12 col-xs-12 np">
+    <!-- Start: Nav tabs -->
+    <div class="np">
+      <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
+        <li role="presentation" [class.active]="i==0" *ngFor="let planCategory of keys(planTypes);let i = index">
+          <a href="#{{planCategory}}" class="hvr-sweep-to-right"
+             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory">{{planCategory}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="np" style="overflow-x: scroll;">
+      <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
+        <li role="presentation" [class.active]="i==0" *ngFor="let plan of planTypes[selectedPlanCategory];let i =index">
+          <a (click)="fetchPlanFeature(plan._id)" href="#{{plan._id}}" *ngIf="plan?.name!='Student'"
+             aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">
+            {{plan?.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- End: Nav tabs -->
+    <div class="tab-content tab-sub-content tab-sub-content-2">
+      <h4>Functional Features</h4>
+      <div class="panel-group">
+		<span id="feature_span" *ngFor="let feature of planFeatures; let i = index">
+			<div class="panel panel-default np">
+				<div class="panel-heading list">
+					<h4>
+						<input type="checkbox" (change)="updateParentFeature(feature)" [(ngModel)]="feature.active" class="no-left"
+                   name="feature">
+						<a class="no-left" data-toggle="collapse">
+							{{feature.name | uppercase}}
+						</a>
+					</h4>
+				</div>
+				<div class="panel-collapse">
+					<div class="panel-body">
+            <!-- #######################Sub Featuress#####################################  -->
+						<div *ngIf="feature.sub_features.length !==0" class="form-group">
+							<label for="comment_desc">Sub Features:</label>
+							<span id="feature_span" *ngFor="let sub of feature.sub_features;let j = index">
+								<div class="panel panel-default np">
+									<div class="panel-heading list">
+										<h4>
+											<input type="checkbox" (change)="updateChildFeature(sub,feature)" [(ngModel)]="sub.active"
+                             class="no-left"/>
+											{{sub.name}}
+										</h4>
+									</div>
+								</div>
+							</span>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</span>
+      </div>
+    </div>
+    <button type="submit" (click)="updateCompanyPlan()">Update Company Plan</button>
+  </div>
+</div>

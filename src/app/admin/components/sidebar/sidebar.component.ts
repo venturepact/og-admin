@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AdminService} from '../../../shared/services/admin.service';
-import {CookieService} from "../../../shared/services/cookie.service";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AdminService } from '../../../shared/services/admin.service';
+import { CookieService } from "../../../shared/services/cookie.service";
 
 declare var jQuery: any;
 
@@ -50,7 +50,8 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'error-logs') {
       this._adminService.notifylogType('errorLogs');
       jQuery('#error-logs').addClass('active');
-    } else if (tab === 'locales-admin') {
+    }
+    else if (tab === 'locales-admin') {
       jQuery('#locales-admin').addClass('active');
     }
     else if (tab === 'londoner') {
@@ -59,7 +60,21 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'specialdeals-tab') {
       jQuery('#special_deals-tab').addClass('active');
     }
-
+    else if (tab === 'integration-log') {
+      jQuery('#integration-logs').addClass('active');
+    }
+    else if (tab == 'premaidcalc') {
+      jQuery('premaidset').addClass('active');
+    }
+    else if(tab == 'premade-calcs'){
+      jQuery('#premade-calcs').addClass('active');
+    }
+    else if (tab === 'company_plans') {
+      jQuery('#company_plans').addClass('active');
+    }
+    else if (tab === 'hello-bar') {
+      jQuery('#hello-bar').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');

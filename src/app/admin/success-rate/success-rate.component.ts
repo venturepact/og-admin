@@ -2,11 +2,13 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@a
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {Script} from "../../shared/services/script.service";
 import {FormControl} from "@angular/forms";
-import "rxjs/Rx";
 import {AdminService} from "../../shared/services/admin.service";
 import {MembershipService} from "../../shared/services/membership.service";
-import {Subscription} from "rxjs";
+import {Subscription} from "rxjs/Subscription";
 import {CookieService} from "../../shared/services/cookie.service";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/operator/switchMap";
 
 declare var moment: any;
 declare var jQuery: any;

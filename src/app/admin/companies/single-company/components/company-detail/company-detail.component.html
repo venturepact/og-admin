@@ -209,6 +209,14 @@
                     <span>{{company.integration}}</span>
                   </td>
                 </tr>
+                <tr>
+                  <td>
+                    Child Intercom ID
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{company.child_intercom_id || 'Not set'}}</span>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -469,7 +477,7 @@
                     Calculators
                   </div>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" [(ngModel)]="updateCompany.current_limit_calculators"
+                    <input class="form-control" type="number" [(ngModel)]="updateCompany.current_limit_calculators"
                            formControlName="calculators"/>
                   </div>
                 </div>
@@ -478,7 +486,7 @@
                     Users
                   </div>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" [(ngModel)]="updateCompany.current_limit_users"
+                    <input class="form-control" type="number" [(ngModel)]="updateCompany.current_limit_users"
                            formControlName="users"/>
                   </div>
                 </div>
@@ -487,10 +495,21 @@
                     Companies
                   </div>
                   <div class="col-sm-8">
-                    <input class="form-control" type="text" [(ngModel)]="updateCompany.current_limit_companies"
+                    <input class="form-control" type="number" [(ngModel)]="updateCompany.current_limit_companies"
                            formControlName="companies"/>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Child Intercom ID
+                  </div>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="text" [(ngModel)]="updateCompany.child_intercom_id"
+                           formControlName="child_intercom_id" [attr.disabled]="!updateCompany.agency || updateCompany.parent_company"/>
+                  </div>
+                </div>
+
                 <div class="row" *ngIf="errorMsg != ''">
                   <div class="col-sm-12 alert alert-danger">
 										<span class="mat-icon">

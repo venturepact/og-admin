@@ -1,0 +1,85 @@
+<div class="container">
+  <div>Conditions</div>
+  <div *ngFor="let cond of conditions;let i = index;">
+    <div style="display:inline-flex">
+      <div>
+        <select *ngIf="i!=0" [(ngModel)]="cond.logic_gate">
+          <option>and</option>
+          <option>or</option>
+        </select>
+        <select [(ngModel)]="cond.selected_attribute" title="select attribute">
+          <option style="display: none"></option>
+          <option *ngFor="let attr of cond.attributes">
+            {{attr}}
+          </option>
+        </select>
+
+        <select style="margin: 5px" title="select operator" [(ngModel)]="cond.selected_operator">
+          <option style="display: none"></option>
+          <option *ngFor="let operator of operators[cond.selected_attribute]">
+            {{operator}}
+          </option>
+
+        </select>
+      </div>
+      <div *ngIf="scriptLoaded && (cond.selected_attribute==='signed_up' ||
+      cond.selected_attribute==='payment_due_date')">
+        {{cond.selected_value}}
+        <og-date-picker (date)="setDateCondition(cond,$event)"></og-date-picker>
+      </div>
+      <div>
+
+        <select *ngIf="!(cond.selected_attribute==='signed_up' ||
+        cond.selected_attribute==='payment_due_date')" [(ngModel)]="cond.selected_value" title="select value">
+          <option *ngFor="let value of values[cond.selected_attribute]" [ngValue]="value">{{value}}</option>
+        </select>
+        <button (click)="addCondition()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button (click)="removeCondition(i)">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+        <br>
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+  <button (click)="saveHellobar('DRAFT')">Save</button>
+  <button (click)="reset()">Reset</button>
+</div>
+<br>
+
+<div class="container">
+  <div>Message</div>
+  <div><input type="text" [(ngModel)]="hellobarMessage"></div>
+</div>
+<br>
+
+<div class="container">
+  <div style="margin: 10px">CTA</div>
+  <div><input type="text" [(ngModel)]="ctaText"></div>
+  <div>
+    <label>Link to</label>
+    <select [(ngModel)]="ctaLink">
+      <option disabled value="">One Click Upgrade for</option>
+      <option value="pricing">Pricing Page</option>
+      <option value="intercom">Intercom Messaging popup</option>
+    </select>
+
+    <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='pricing'">
+      <option *ngFor="let plan of values.plan">{{plan}}</option>
+    </select>
+  </div>
+</div>
+
+<div class="container">
+  <div style="margin: 10px">Stop Date</div>
+  <og-date-picker style="float: left" *ngIf="scriptLoaded" (date)="setStopDate($event.start_date)"></og-date-picker>
+
+</div>
+
+<div style="margin-top: 20px;float: right">
+  <button (click)="saveHellobar('DRAFT')">Save Draft</button>
+  <button (click)="saveHellobar('LIVE')">Go Live</button>
+</div>

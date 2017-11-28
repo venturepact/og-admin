@@ -1,30 +1,35 @@
-import {LocalesAdminComponent} from './../../admin/locale/locale-admin.component';
-import {Routes} from "@angular/router";
-import {AdminComponent} from "./../../admin/admin.component";
-import {HomeComponent} from "./../../admin/home/index";
-import {SubDomainComponent} from "./../../admin/subdomain/subdomain.component";
-import {AllUsersComponent} from "./../../admin/users/all-users/all-users.component";
-import {SingleUserComponent} from "./../../admin/users/single-user/single-user.component";
-import {AllCompaniesComponent} from "./../../admin/companies/all-companies/all-companies.component";
-import {SingleCompanyComponent} from "./../../admin/companies/single-company/single-company.component";
-import {EmailLogsComponent} from "./../../admin/email-logs/email-logs.component";
-import {LeadsComponent} from "./../../admin/leads/leads.component";
-import {CouponsComponent} from "./../../admin/coupons/coupons.component";
-import {SitesettingsComponent} from "./../../admin/sitesettings/sitesettings.component";
-import {PlansComponent} from "./../../admin/plans/plans.component";
-import {AllFeaturesComponent} from "./../../admin/allFeatures/allFeatures.component";
-import {LondonerComponent} from '../../admin/londoner/londoner.component';
-import {AdminGuard} from "./../../shared/authentication/admin.guard";
-import {AdminLtdGuard} from "./../../shared/authentication/admin-ltd.guard";
-import {BasicComponent} from "./../../admin/basic/basic.component";
-import {SuccessRateComponent} from "../../admin/success-rate/success-rate.component";
-import {LogComponent} from '../../admin/log/log.component';
-import {SearchCalcComponent} from "../../admin/search-calc/search-calc.component";
-import {CustomJsApprovalsComponent} from '../../admin/custom-js-approvals/custom-js-approvals.component'
-import {PromotionChecklist} from '../../admin/promotion-checklist/promotion-checklist.component';
-import {SubAdminComponent} from '../../admin/sub-admin/all-admin/sub-admin.component';
-import {SingleadminComponent} from '../../admin/sub-admin/single-admin/single-admin.component';
-import {SpecialDealComponent} from "../../admin/special-deal/special-deal.component";
+import { LocalesAdminComponent } from './../../admin/locale/locale-admin.component';
+import { Routes } from "@angular/router";
+import { AdminComponent } from "./../../admin/admin.component";
+import { HomeComponent } from "./../../admin/home/index";
+import { SubDomainComponent } from "./../../admin/subdomain/subdomain.component";
+import { AllUsersComponent } from "./../../admin/users/all-users/all-users.component";
+import { SingleUserComponent } from "./../../admin/users/single-user/single-user.component";
+import { AllCompaniesComponent } from "./../../admin/companies/all-companies/all-companies.component";
+import { SingleCompanyComponent } from "./../../admin/companies/single-company/single-company.component";
+import { EmailLogsComponent } from "./../../admin/email-logs/email-logs.component";
+import { LeadsComponent } from "./../../admin/leads/leads.component";
+import { CouponsComponent } from "./../../admin/coupons/coupons.component";
+import { SitesettingsComponent } from "./../../admin/sitesettings/sitesettings.component";
+import { PlansComponent } from "./../../admin/plans/plans.component";
+import { AllFeaturesComponent } from "./../../admin/allFeatures/allFeatures.component";
+import { LondonerComponent } from '../../admin/londoner/londoner.component';
+import { AdminGuard } from "./../../shared/authentication/admin.guard";
+import { AdminLtdGuard } from "./../../shared/authentication/admin-ltd.guard";
+import { BasicComponent } from "./../../admin/basic/basic.component";
+import { SuccessRateComponent } from "../../admin/success-rate/success-rate.component";
+import { LogComponent } from '../../admin/log/log.component';
+import { SearchCalcComponent } from "../../admin/search-calc/search-calc.component";
+import { CustomJsApprovalsComponent } from '../../admin/custom-js-approvals/custom-js-approvals.component'
+import { PromotionChecklist } from '../../admin/promotion-checklist/promotion-checklist.component';
+import { SubAdminComponent } from '../../admin/sub-admin/all-admin/sub-admin.component';
+import { SingleadminComponent } from '../../admin/sub-admin/single-admin/single-admin.component';
+import { SpecialDealComponent } from "../../admin/special-deal/special-deal.component";
+import { IntegrationLogsComponent } from "../../admin/integration-logs/integration-logs.component";
+import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
+import { PremadeCalcsComponent } from './../../admin/premade-calcs/premade-calcs.component'
+import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
+import {HelloBarComponent} from "../../admin/hello-bar/hello-bar.component";
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -62,7 +67,6 @@ export const ADMIN_ROUTES: Routes = [
             component: SingleadminComponent,
             canActivate: [AdminGuard]
           },
-         
           {
             path: 'companies',
             component: AllCompaniesComponent,
@@ -77,6 +81,11 @@ export const ADMIN_ROUTES: Routes = [
             path: 'plans',
             component: PlansComponent,
             canActivate: [AdminGuard, AdminLtdGuard],
+          },
+          {
+            path: 'company_plans',
+            component: CompanyPlansComponent,
+            canActivate: [AdminGuard, AdminLtdGuard]
           },
           {
             path: 'features',
@@ -144,13 +153,32 @@ export const ADMIN_ROUTES: Routes = [
             canActivate: [AdminGuard]
           },
           {
+            path: 'integration-logs',
+            component: IntegrationLogsComponent,
+            canActivate: [AdminGuard]
+          },
+          {
             path: 'londoner',
             component: LondonerComponent,
             canActivate: [AdminGuard, AdminLtdGuard]
           },
           {
+            path: 'hello-bar',
+            component: HelloBarComponent
+          },
+          {
             path: 'specialDeals',
             component: SpecialDealComponent,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: '#premaidcalc',
+            component: PremaidComponent,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: 'premade_calculators',
+            component: PremadeCalcsComponent,
             canActivate: [AdminGuard]
           }
         ]

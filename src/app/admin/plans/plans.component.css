@@ -16,7 +16,6 @@ ul {
   top:100px;
 }
 
-
 /* custom material css start (sahil) */
 .sahil-material .form-control {
     height: 38px;
@@ -36,10 +35,11 @@ ul {
 }
 .sahil-material .form-group label.control-label.seo-static-label{
     text-transform: uppercase !important;
-    font-size: 10px !important; 
+  font-size: 10px !important;
     color: #8e989f !important;
 }
-.sahil-material .form-group.label-floating label.control-label, 
+
+.sahil-material .form-group.label-floating label.control-label,
 .sahil-material .form-group.label-placeholder label.control-label {
     top: -7px;
     font-size: 14px;
@@ -47,21 +47,21 @@ ul {
     color: #8e989f;
 }
 .sahil-material .form-group.label-floating:not(.is-empty) label.control-label {
-    top: -20px; 
+  top: -20px;
     font-family: montserratregular;
-    font-size: 11px; 
+  font-size: 11px;
     text-transform: uppercase;
     color: #8e989f !important;
 }
 .sahil-material .form-group.label-floating.is-focused label.control-label {
-    top: -20px; 
-    font-size: 11px; 
+  top: -20px;
+  font-size: 11px;
     font-family: montserratregular;
     color: #8e989f !important;
 }
 .sahil-material .form-group.is-focused label,
 .sahil-material .form-group.is-focused label.control-label {
-    font-size: 11px; 
+  font-size: 11px;
     font-family: montserratregular;
     color: #8e989f !important;
     text-transform: uppercase;
@@ -73,7 +73,7 @@ ul {
     background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#d7dbdd, #D2D2D2);
     background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#d7dbdd, #d7dbdd);
     background-image: linear-gradient(#009688, #009688), linear-gradient(#d7dbdd, #d7dbdd);
-    
+
 }
 .sahil-material .form-group.is-focused .form-control {
     outline: none;
@@ -103,7 +103,6 @@ ul {
 }
 .panel{
 
- 
 }
 
 .settingBox{

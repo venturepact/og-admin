@@ -16,6 +16,7 @@
 										<td>Score</td>
 										<td>Template</td>
 										<td>Status</td>
+                    <td>Webhook Event</td>
 									</tr>
 								</thead>
 								<tbody>
@@ -27,12 +28,12 @@
 											{{link_maker(calc.url)}}
 										</td>
 										<td>{{calc.name}}</td>
-										<td>{{ calc.score }}</td>
+                    <td>{{calc.score}}</td>
 										<td>{{calc.template}}</td>
 										<td *ngIf="calc.liveApp==null && (calc.status=='DEV' || calc.status=='LIVE')">DEV</td>
 										<td *ngIf="calc.liveApp!=null && (calc.status=='DEV' || calc.status=='LIVE')">LIVE</td>
 										<td *ngIf="!(calc.status=='DEV' || calc.status=='LIVE')">{{calc.status}}</td>
-
+                    <td><a data-toggle="modal" data-target="#event-details">Show</a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -42,4 +43,28 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div id="event-details" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Event Details</h5>
+      </div>
+      <div class="modal-body">
+        <div class="sahil-material">
+          <div *ngFor="let key of generateKeys(event)">
+            <p><i>{{ key + ' :- ' }}</i>{{ event[key] | json }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-basic" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -299,7 +299,7 @@ export class CompanyService extends BaseService {
   }
 
   getHellobarMessage() {
-    return this._http.get(this._url + '/hellobar', this.options)
+    return this._http.get(this._url + '/selectedHellobar', this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }

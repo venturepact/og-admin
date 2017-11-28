@@ -25,6 +25,8 @@ export class FeaturesComponent implements OnInit{
   isTemplateInfinity: boolean = false;
   isVisitsInfinity: boolean = false;
   isLeadsInfinity: boolean = false;
+  updateCompanies: boolean = false;
+
   constructor(public planService:PlanService, public router: Router){
 
   }
@@ -49,9 +51,7 @@ export class FeaturesComponent implements OnInit{
   	this.planService.getPlanFeatures(this.plan._id)
 			.subscribe(
 				(response:any)=>{
-						// console.log(this.plan,response);
 						this.features	 = response;
-            // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",this.features);
 				},
 				(response:any)=>{
 						console.log('error_'+this.plan +"_plan",response);
@@ -81,14 +81,14 @@ export class FeaturesComponent implements OnInit{
         "id" : feature._id,
         "active" : feature.active,
         "is_limited" : feature.is_limited
-      }
+      };
       plan_features.push(obj);
 
       feature.sub_features.forEach((feature)=>{
           let sub = {
             "id" : feature._id,
             "active" : feature.active
-          }
+          };
           plan_features.push(sub);
       });
 
@@ -103,11 +103,12 @@ export class FeaturesComponent implements OnInit{
       cycles : this.coupons,
       features_update : features_update,
       features : plan_features,
-      users : this.isUserInfinity?-1:this.users_s,
-      calculators : this.isCalcInfinity?-1:this.calculator_s,
-      templates : this.isTemplateInfinity?-1:this.templates_s,
-      visits : this.isVisitsInfinity?-1:this.visits_s,
-      leads : this.isLeadsInfinity?-1:this.leads_s
+      users: this.isUserInfinity ? -1 : this.users_s,
+      calculators: this.isCalcInfinity ? -1 : this.calculator_s,
+      templates: this.isTemplateInfinity ? -1 : this.templates_s,
+      visits: this.isVisitsInfinity ? -1 : this.visits_s,
+      leads: this.isLeadsInfinity ? -1 : this.leads_s,
+      updateCompanies: this.updateCompanies
     };
     this.planService.updatePlanFeatures(this.plan._id,updateData)
      .subscribe(
@@ -121,8 +122,6 @@ export class FeaturesComponent implements OnInit{
          this.templates_s = this.plan.templates;
          this.visits_s = this.plan.visits;
          this.leads_s = this.plan.leads;
-        //  console.log("users_s",this.users_s);
-        //  console.log("after update", result);
          jQuery('#msg' + this.plan.id).html('successfully Updated');
        },
        (result: any)=>{
@@ -130,10 +129,9 @@ export class FeaturesComponent implements OnInit{
          this.loading = false;
          jQuery('#btnSubmit' + this.plan.name).html('Submit').attr('disabled',false);
          jQuery('#msg' + this.plan.name).html('error occured :' + result);
-       }
-       );
+       });
   }
- 
+
   subfeatureCheck(index: number){
       let feature = this.features[index];
        this.features[index].sub_features.forEach((subfeature)=>{

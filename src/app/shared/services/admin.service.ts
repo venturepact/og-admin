@@ -4,16 +4,17 @@ import "rxjs/add/operator/map";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 import {User} from "./../models/user";
-import {Observable, ReplaySubject} from "rxjs/Rx";
 import {BaseService} from "./base.service";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AdminService extends BaseService {
+  public getLogSubject = new ReplaySubject<String>(2);
+
   constructor(public _http: Http) {
     super();
   }
-
-  public getLogSubject = new ReplaySubject<String>(2);
 
   getBasicGraph(data: any) {
     let getCompaniesUrl = this._url + '/admin/graph';
@@ -21,7 +22,6 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-
 
   updateEmail(old_email: any, new_email: any, user_id: string): Observable<User> {
     let storage: any = this.readCookie('storage');
@@ -119,6 +119,7 @@ export class AdminService extends BaseService {
         'leaddyno_url': company.referral.leaddyno_url,
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
+      'child_intercom_id': company.child_intercom_id
     };
 
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
@@ -171,7 +172,7 @@ export class AdminService extends BaseService {
   }
 
   editMessage(data: any, type: string) {
-    return this._http.put(this._url + '/hellobar/' + type, data, this.put_options())
+    return this._http.put(this._url + '/selectedHellobar/' + type, data, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -226,14 +227,12 @@ export class AdminService extends BaseService {
 
   getLog(data): Observable<any> {
 
-    console.log("In Observable", data);
     return this._http.post(this._url + '/admin/getLog', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   notifylogType(type) {
-    console.log(type);
     this.getLogSubject.next(type);
   }
 
@@ -241,9 +240,14 @@ export class AdminService extends BaseService {
     return this.getLogSubject.asObservable();
   }
 
-
   getAppIntegrationLogs(data): any {
     return this._http.post(this._url + '/admin/companies/get_apps_integration_logs', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getIntegrationLogDetails(data): any {
+    return this._http.post(this._url + '/admin/getIntegrationLogDetails', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -323,10 +327,10 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getAllAdminLogs( company:any = null, data: any,subadminId: any = null,): Observable<any> {
+  getAllAdminLogs(company: any = null, data: any, subadminId: any = null,): Observable<any> {
     let uri = '';
-    if(company){
-      uri = this._url + "/admin/subadminlog/"+company
+    if (company) {
+      uri = this._url + "/admin/subadminlog/" + company
     }
     // else if(subadminId){
     //   uri = this._url + "/admin/subadminlog/"+subadminId
@@ -378,7 +382,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  generateDealCoupon(data){
+  generateDealCoupon(data) {
     return this._http.post(this._url + '/webhook/deal/jvzoo', data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -394,5 +398,29 @@ export class AdminService extends BaseService {
     return this._http.get(this._url + '/admin/success_rate/get_filters', this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
+  }
+
+  getWebhookEventsByCompany(companyId) {
+    return this._http.get(this._url + '/admin/companies/get_events/' + companyId, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getAllIntegrationLogs(data) {
+    return this._http.post(this._url + '/admin/companies/getAllIntegrationLogs', data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getHellobar(data) {
+    return this._http.post(this._url + '/admin/getAllHellobars', data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  saveHellobar(data) {
+    return this._http.put(this._url + '/admin/saveHellobar', data, this.put_options())
+      .map(this.extractData)
+      .catch(this.handleError)
   }
 }

@@ -112,14 +112,14 @@
 							</div>
 						</div>
 						<div class="col-sm-5 ">
-							<label>Active: 
+              <label>Active:
 			      				<input type="checkbox" class="np" [(ngModel)] ="coupon.coupon_active" >
 			      			</label>
 						</div>
 						<hr>
 						<br>
 					</div>
-					
+
 
 				</div>
 			</div>
@@ -171,7 +171,8 @@
 		</span>
 	</div>
 	<div class="col-sm-12">
-		<button [attr.id]="'btnSubmit' + plan.name" class="primary" (click)="updatePlan()">Submit</button>
+
+    <button [attr.id]="'btnSubmit' + plan.name" class="primary" (click)="updatePlan()">Submit</button>
 		<span [attr.id]="'msg'+ plan.name">
 		</span>
 	</div>

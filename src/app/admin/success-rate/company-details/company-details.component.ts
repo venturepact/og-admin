@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {AdminService} from "../../../shared/services/admin.service";
 import {CalculatorAnalytics} from "../../../site/components/+analytics/services/calculator-analytics.service";
+import {Script} from "../../../shared/services/script.service";
 
 declare var moment: any;
 declare var jQuery: any;
@@ -22,13 +23,18 @@ export class CompanyDetailsComponent implements OnInit {
   disableCompany: boolean;
   momentJs: any;
 
-  constructor(private adminService: AdminService, private _calculatorAnalytics: CalculatorAnalytics) {
+  constructor(private adminService: AdminService, private _calculatorAnalytics: CalculatorAnalytics
+    , private scriptStore: Script) {
     this.momentJs = moment;
   }
 
   ngOnInit() {
     this.loadingAppDetails = true;
     this.loadingUserDetails = true;
+
+    this.scriptStore.load('bootBox').then(data => {
+
+    });
 
     this.adminService.getCompanyAppDetails(this.getParams()).subscribe((data) => {
       this.companyAppDetails = data.apps;
