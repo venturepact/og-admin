@@ -10,7 +10,7 @@ CONFIG_ENV=" --env=prod --prod --aot --build-optimizer --output-hashing none"
 if [ "$1" = "admin" ]
 then
     BRANCH="admin"
-    CONFIG_ENV=" --prod --env=$1 --aot --build-optimizer --output-hashing none"
+    CONFIG_ENV=" --prod --env=$1 --aot --output-hashing none"
 fi
 
 #node --max_old_space_size=7200 ./node_modules/.bin/ng build $CONFIG_ENV --no-sourcemap

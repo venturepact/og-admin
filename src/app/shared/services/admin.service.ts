@@ -4,8 +4,9 @@ import "rxjs/add/operator/map";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 import {User} from "./../models/user";
-import {Observable, ReplaySubject} from "rxjs/Rx";
 import {BaseService} from "./base.service";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AdminService extends BaseService {

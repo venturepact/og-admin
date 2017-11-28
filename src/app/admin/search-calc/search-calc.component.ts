@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {FormControl} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {AdminService} from "../../shared/services/admin.service";
 import {Script} from "../../shared/services/script.service";
 import {CookieService} from "../../shared/services/cookie.service";
+import {Subscription} from "rxjs/Subscription";
 
 declare var moment;
 declare var jQuery;
