@@ -39,7 +39,7 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
   }
 
   ngAfterViewInit() {
-     
+
     this._script.load('datatables')
       .then((data) => {
         this.getCompanyLogs();
@@ -128,5 +128,5 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
       return Object.keys(obj);
   }
 
-  
+
 }
