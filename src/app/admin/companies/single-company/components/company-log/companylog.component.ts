@@ -39,7 +39,7 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
   }
 
   ngAfterViewInit() {
-     
+
     this._script.load('datatables')
       .then((data) => {
         this.getCompanyLogs();
@@ -112,19 +112,25 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
         (success: any) => {
           this.logLoading = false;
           this.log = success;
-          if(success.user){
-            this.user = success.user.emails[0].email;
+          try {
+            if (success.user) {
+              this.user = success.user.emails[0].email;
+            }
+            else {
+              this.user = 'Chargbee Admin';
+            }
+          } catch (e) {
+            console.log("Error ", e);
           }
-          else{
-            this.user = 'Chargbee Admin';
-          }
-          
+
+
           this.beforeChange = JSON.parse(success.before_change);
           this.afterChange = JSON.parse(success.after_change);
+          console.log(this.beforeChange, this.afterChange);
           var t0 = performance.now();
-          this._JSONCompare.compareJson(this.beforeChange,this.afterChange);  
+          this._JSONCompare.compareJson(this.beforeChange, this.afterChange);
           var t1 = performance.now();
-          
+
         },
          (error: any) => {
           console.log('getLogById() error', error);
@@ -135,5 +141,5 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
       return Object.keys(obj);
   }
 
-  
+
 }
