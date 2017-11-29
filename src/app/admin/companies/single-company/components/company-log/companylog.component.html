@@ -34,6 +34,9 @@
                         Action Performed
                         </th>
                         <th>
+                          Change From
+                        </th>
+                        <th>
                         Table Name
                         </th>
                         <th>
@@ -43,9 +46,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let log of subAdminLogs">
+                      <tr *ngFor="let log of subAdminLogs;let i = index">
                         <td>
                         {{log.event}}
+                        </td>
+                        <td>
+                         {{log.change_from}}
                         </td>
                         <td>
                         {{log.table}}
@@ -54,7 +60,7 @@
                         {{dateFormat(log.createdAt)}}
                         </td>     <!-- [routerLink] = "['/admin/subadmin/log/',log._id]"  -->
                         <td>
-                        <a style="cursor:pointer" data-toggle="modal" data-target="#modallog"><i class="material-icons" (click)="getLogById(log._id)">remove_red_eye</i></a>
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#modallog"><i class="material-icons" (click)="getLogById(i)">remove_red_eye</i></a>
                         </td>
                       </tr>
                     </tbody>

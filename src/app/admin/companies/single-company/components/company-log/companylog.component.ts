@@ -66,7 +66,9 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     let getAllAdminLogs = self._adminService.getAllAdminLogs(this.company.id, obj)
       .subscribe(
         (success: any) => {
+
           self.subAdminLogs = success.log;
+          console.log(this.subAdminLogs);
           this.total_pages = Math.ceil(success.count / this.current_limit);
           self.loading = false;
         },
@@ -105,31 +107,22 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     return d.toString().split('GMT')[0];
   }
   getLogById(logId){
-    this.logLoading = true;
     let self = this;
-    let getLogById = self._adminService.getLogById(logId)
-      .subscribe(
-        (success: any) => {
-          this.logLoading = false;
-          this.log = success;
-          if(success.user){
-            this.user = success.user.emails[0].email;
-          }
-          else{
-            this.user = 'Chargbee Admin';
-          }
-          
-          this.beforeChange = JSON.parse(success.before_change);
-          this.afterChange = JSON.parse(success.after_change);
-          var t0 = performance.now();
-          this._JSONCompare.compareJson(this.beforeChange,this.afterChange);  
-          var t1 = performance.now();
-          
-        },
-         (error: any) => {
-          console.log('getLogById() error', error);
-        }
-      );
+    let success = this.subAdminLogs[logId];
+    this.log = success;
+    if(success.user){
+      this.user = success.user.emails[0].email;
+    }
+    else{
+      this.user = 'Chargbee Admin';
+    }
+    
+    this.beforeChange = JSON.parse(success.before_change);
+    this.afterChange = JSON.parse(success.after_change);
+    var t0 = performance.now();
+    this._JSONCompare.compareJson(this.beforeChange,this.afterChange);  
+    var t1 = performance.now();
+
   }
   generateKeys(obj){
       return Object.keys(obj);
