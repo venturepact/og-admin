@@ -24,7 +24,6 @@
       </div>
       <div *ngIf="cond.selected_attribute==='signed_up' ||
       cond.selected_attribute==='payment_due_date'">
-        {{cond.selected_value}}
         <input type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'"
                (change)="cond.selected_value=$event.target.value"/>
       </div>
@@ -76,7 +75,7 @@
 
 <div class="container">
   <div style="margin: 10px">Stop Date</div>
-  <input type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value;setx($event)"/>
+  <input type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value"/>
 
 </div>
 

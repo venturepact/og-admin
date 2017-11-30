@@ -49,7 +49,6 @@ export class EditHelloBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stopDate = new Date('0020-02-12');
     this.planService.getPlanTypes().subscribe(data => {
       data.default.forEach(plan => {
         this.plans.push(plan._id + '_y');
@@ -68,7 +67,7 @@ export class EditHelloBarComponent implements OnInit {
       this.ctaText = this.selectedHellobar.cta.ctaText;
       this.ctaLink = this.selectedHellobar.cta.ctaLink;
       this.ctaPlan = this.selectedHellobar.cta.plan;
-      this.stopDate = this.selectedHellobar.updatedAt;
+      this.stopDate = this.selectedHellobar.stopDate;
       this.conditions = [];
       this.selectedHellobar.conditions.forEach(condition => {
         this.conditions.push({
@@ -82,11 +81,6 @@ export class EditHelloBarComponent implements OnInit {
     }
   }
 
-  setx(event, condition) {
-    console.log(event);
-    condition.selected_value = event;
-  }
-
   addCondition() {
     this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
   }
@@ -95,10 +89,6 @@ export class EditHelloBarComponent implements OnInit {
     this.conditions.splice(index, 1);
   }
 
-  setStopDate(date) {
-    console.log(date, this.stopDate);
-    // this.stopDate = date;
-  }
 
   saveHellobar(status) {
     console.log(this.conditions);
