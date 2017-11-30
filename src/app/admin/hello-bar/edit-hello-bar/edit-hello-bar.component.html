@@ -22,10 +22,11 @@
 
         </select>
       </div>
-      <div *ngIf="scriptLoaded && (cond.selected_attribute==='signed_up' ||
-      cond.selected_attribute==='payment_due_date')">
+      <div *ngIf="cond.selected_attribute==='signed_up' ||
+      cond.selected_attribute==='payment_due_date'">
         {{cond.selected_value}}
-        <og-date-picker (date)="setDateCondition(cond,$event)"></og-date-picker>
+        <input type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'"
+               (change)="cond.selected_value=$event.target.value"/>
       </div>
       <div>
 
@@ -75,7 +76,7 @@
 
 <div class="container">
   <div style="margin: 10px">Stop Date</div>
-  <og-date-picker style="float: left" *ngIf="scriptLoaded" (date)="setStopDate($event.start_date)"></og-date-picker>
+  <input type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value;setx($event)"/>
 
 </div>
 

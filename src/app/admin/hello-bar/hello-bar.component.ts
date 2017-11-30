@@ -51,6 +51,11 @@ export class HelloBarComponent extends Datatable implements OnInit {
     this.createHelloBar = true;
   }
 
+  goBack() {
+    this.createHelloBar = false;
+    this.getHellobar();
+  }
+
   createNewHellobar() {
     this.createHelloBar = true;
     this.selectedHellobar = null;

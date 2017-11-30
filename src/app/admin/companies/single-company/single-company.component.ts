@@ -20,11 +20,9 @@ export class SingleCompanyComponent implements AfterViewInit {
   @Output() company: any;
 
   constructor(public companyService: CompanyService,
-              public route: ActivatedRoute, private router: Router) {
+              public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      console.log(this.id);
-      //this.router.navigate(['/admin/company/', this.id]);
       this.getCompanyInfo(this.id);
       this.getCompanyInfo(this.id);
     });
@@ -92,7 +90,7 @@ export class SingleCompanyComponent implements AfterViewInit {
     this.companyService.getCompanyUsers(id)
       .subscribe(
         (response: any) => {
-          
+
           this.company_users = response;
         });
   }
@@ -103,7 +101,7 @@ export class SingleCompanyComponent implements AfterViewInit {
         (response: any) => {
           this.company = new AdminCompany(response.company);
           this.company['reset_period_list'] = response.reset_period_list;
-         
+
         },
         (response: any) => {
         }

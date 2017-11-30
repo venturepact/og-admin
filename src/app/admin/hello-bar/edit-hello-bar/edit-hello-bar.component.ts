@@ -15,9 +15,7 @@ export class EditHelloBarComponent implements OnInit {
   @Input()
   selectedHellobar: any;
 
-  scriptLoaded: boolean = false;
   plans: Array<String> = [];
-
   values = {
     plan: this.plans,
     status: ['future', 'in_trial', 'active', 'non_renewing', 'cancelled'],
@@ -51,6 +49,7 @@ export class EditHelloBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.stopDate = new Date('0020-02-12');
     this.planService.getPlanTypes().subscribe(data => {
       data.default.forEach(plan => {
         this.plans.push(plan._id + '_y');
@@ -60,17 +59,8 @@ export class EditHelloBarComponent implements OnInit {
         this.plans.push(plan._id);
       });
     });
-
-    this._script.load('daterangepicker')
-      .then((data) => {
-        this.scriptLoaded = true;
-      }).catch((error) => {
-      console.log('Script not loaded', error);
-    });
-    console.log(this.selectedHellobar);
     if (this.selectedHellobar == null) {
       this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
-      console.log(this.conditions);
     }
     else {
       this.hellobarId = this.selectedHellobar._id;
@@ -85,13 +75,16 @@ export class EditHelloBarComponent implements OnInit {
           attributes: ['plan', 'status', 'payment_due_date', 'signed_up', 'payment_info_added'],
           selected_attribute: condition.attribute,
           selected_operator: condition.operator,
-          selected_value: new Date(condition.value),
+          selected_value: condition.value,
           logic_gate: condition.logicGate
         })
       });
-      console.log('only for the waek', this.conditions);
-
     }
+  }
+
+  setx(event, condition) {
+    console.log(event);
+    condition.selected_value = event;
   }
 
   addCondition() {
@@ -103,10 +96,12 @@ export class EditHelloBarComponent implements OnInit {
   }
 
   setStopDate(date) {
-    this.stopDate = date;
+    console.log(date, this.stopDate);
+    // this.stopDate = date;
   }
 
   saveHellobar(status) {
+    console.log(this.conditions);
     this.adminService.saveHellobar({
       _id: this.hellobarId,
       conditions: this.conditions,
