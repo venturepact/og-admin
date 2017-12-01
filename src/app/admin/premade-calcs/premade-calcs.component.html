@@ -67,6 +67,9 @@
                   Type
                 </th>
                 <th>
+                  Template
+                </th>
+                <th>
                   Industry
                 </th>
                 <th>
@@ -89,6 +92,9 @@
                   {{calculator.type}}
                 </td>
                 <td>
+                  {{calculator?.template}}
+                </td>
+                <td>
                   {{calculator.industry}}
                 </td>
                 <td>
@@ -106,7 +112,8 @@
             <span><a class="paginate_button" [ngClass] = "num==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(num)"  tabindex="0" *ngFor = "let num of arrayOf(total_pages)">{{num}}</a></span>
             <span *ngIf="current_page <= total_pages - 5">...</span>
             <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass] = "total_pages==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(total_pages)"  tabindex="0">{{total_pages}}</a></span>
-            <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
+            <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
+              [disabled]="current_page == total_pages" (click)="next()"  id="all-companies-datatable_next">Next</button>
           </div>
         </div>
       </div> 
@@ -127,7 +134,7 @@
       </div>
       <div class="modal-body">
         <div class="">
-          <div class="alert alert-danger custom-alert" *ngIf="errorMessage!=''">{{errorMessage}}</div>
+          <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
           <form id="addCalculatorForm" [formGroup]="calculatorForm">
             <div class="form-group label-floating">
               <label class="control-label" for="title">Name</label>
@@ -146,6 +153,12 @@
               <select class="form-control" id="type" name="type" formControlName="type">
                   <option [value]="'standard'" selected>Standard</option>
                   <option [value]="'premium'">Premium</option>                  
+              </select>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="template">Template</label>
+              <select class="form-control" id="template" name="type" formControlName="template">
+                  <option *ngFor="let template of templates" [value]="template[0]">{{template[1]}}</option>
               </select>
             </div>
             <div class="form-group label-floating">

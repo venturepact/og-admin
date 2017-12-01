@@ -19,6 +19,15 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
               ,'Legal','Marketing & Advertising','Publishing'
               ,'Quintessential','Real Estate & Construction','Technology'
               ,'Travel','TV and Entertainment'];
+  templates= [
+    ['one-page-card','Chicago'],
+    ['sound-cloud','Londoner'],
+    ['template-seven','Seattle'],
+    ['inline-temp','Greek'],
+    ['experian','Tokyo'],
+    ['template-five','Madrid'],
+    ['template-six','Stockholm']
+  ];
   constructor(private _fb:FormBuilder,private _calculatorService:PremadeCalcService) {
     super();
    }
@@ -36,7 +45,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       };
      this._calculatorService.getCalculators(obj).subscribe((response)=>{
       this.loading=false;
-      this.calculators=response;
+      this.total_pages = Math.ceil(response.count / this.current_limit);
+      this.calculators=response.calculators;
       this.errorMessage='';
     },error=>{
       this.loading=false;
@@ -51,7 +61,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       media:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$/)])],
       type:['',Validators.required],
       description:['',Validators.required],
-      industry:['',Validators.required]
+      industry:['',Validators.required],
+      template:['',Validators.required]
     }
   }
   addCalculator(data){
@@ -66,12 +77,15 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   requestToAdd(calculators,multi=false){
     if(calculators.length>0){
       this.$subscription=this._calculatorService.addPremadeCalc(calculators).subscribe((response)=>{
+        console.log(response['not_created'])
         let rejects = response['not_created'].map(obj=>{
           return obj['live_url'];
         })
-        this.rejectedCalcs=[...this.rejectedCalcs,...rejects]; 
+        this.rejectedCalcs=[...this.rejectedCalcs,...rejects];
         if(!multi && rejects.length>0){
           this.errorMessage='This calculator does not exists';
+          this.calculatorForm.get('live_url').setValue('');
+          return ;
         }
         if(!multi && response['created'].length==1){ 
           this.rejectedCalcs=[];
@@ -81,7 +95,6 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         this.calculatorForm.reset();
         this.getCalculators();
       },error=>{
-        console.log(">>>>>>>>",error);
         this.errorMessage=error.error.message;
       })
       this.errorMessage='';
