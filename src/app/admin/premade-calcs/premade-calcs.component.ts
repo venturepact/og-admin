@@ -103,6 +103,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     }
   }
   fileChange(event){
+    this.rejectedCalcs=[];
     let files:FileList=event.target.files;
     if(files && files.length > 0) {
       let file : File = files.item(0);
@@ -129,7 +130,16 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
             return acc;
           }
           if(!row[1]) return acc; 
-          let obj={title:row[0],live_url:row[1],media:row[2],type:row[3],industry:row[4],description:row[5]};
+          let template=this.getTemplateType(row[4]);
+          let obj={
+                title:row[0],
+                live_url:row[1],
+                media:row[2],
+                type:row[3],
+                template:template?template[0]:'one-page-card',
+                industry:row[5],
+                description:row[6]
+          };
           obj=Object.assign(obj,this.extractData(obj['live_url']));
           if(obj['subdomain'] && obj['calcName']) acc.push(obj);
           else if(obj && Object.keys(obj).length>1) {
@@ -138,6 +148,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
           return acc;
         },[]);
       this.errorMessage='';
+      console.log(calculators);
       this.requestToAdd(calculators,true);
     }else{
       this.errorMessage="No data in this file";
@@ -188,6 +199,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   removeCalculator(id){
     this._calculatorService.removeCalculator(id).subscribe((data)=>{
       this.getCalculators();
+    })
+  }
+  getTemplateType(name){
+    return this.templates.find((value,index)=>{
+        return value[1]==name;
     })
   }
 }
