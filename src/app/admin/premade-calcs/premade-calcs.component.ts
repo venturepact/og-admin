@@ -62,7 +62,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       type:['',Validators.required],
       description:['',Validators.required],
       industry:['',Validators.required],
-      template:['',Validators.required]
+      template:['',Validators.required],
+      tier:['',Validators.required]
     }
   }
   addCalculator(data){
@@ -130,15 +131,16 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
             return acc;
           }
           if(!row[1]) return acc; 
-          let template=this.getTemplateType(row[4]);
+          let template=this.getTemplateType(row[4],1);
           let obj={
                 title:row[0],
                 live_url:row[1],
                 media:row[2],
-                type:row[3],
-                template:template?template[0]:'one-page-card',
-                industry:row[5],
-                description:row[6]
+                type:(typeof(row[3]) == 'string' || row[3])?(row[3].trim()?row[3]:'Calculator'):'Calculator',
+                template:template,
+                industry:(typeof(row[5]) == 'string' || row[5])?(row[5].trim()?row[5]:'Auto'):'Auto',
+                tier:(typeof(row[6]) == 'string' || row[6])?(row[6].trim()?row[6]:'standard'):'standard',
+                description:row[7]
           };
           obj=Object.assign(obj,this.extractData(obj['live_url']));
           if(obj['subdomain'] && obj['calcName']) acc.push(obj);
@@ -201,9 +203,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       this.getCalculators();
     })
   }
-  getTemplateType(name){
-    return this.templates.find((value,index)=>{
-        return value[1]==name;
+  getTemplateType(name,index){
+    if(!name) return this.templates[0][index?0:1];
+    let item = this.templates.find((value)=>{
+        return value[index]==name;
     })
+    return item[index?0:1];
   }
 }
