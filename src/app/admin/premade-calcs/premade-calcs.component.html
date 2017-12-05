@@ -156,8 +156,8 @@
               <input class="form-control" id="media" type="text" name="media" formControlName="media">
             </div>
             <div class="form-group label-floating">
-              <label class="control-label" for="type">Type</label>
-              <select class="form-control" id="type" name="type" formControlName="type">
+              <label class="control-label" for="tier">Tier</label>
+              <select class="form-control" id="tier" name="tier" formControlName="tier">
                   <option [value]="'standard'" selected>Standard</option>
                   <option [value]="'premium'">Premium</option>                  
               </select>
@@ -166,6 +166,12 @@
               <label class="control-label" for="template">Template</label>
               <select class="form-control" id="template" name="type" formControlName="template">
                   <option *ngFor="let template of templates" [value]="template[0]">{{template[1]}}</option>
+              </select>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="type">type</label>
+              <select class="form-control" id="type" name="type" formControlName="type">
+                  <option *ngFor="let type of ['Outcome Quiz','Calculator','Graded Quiz']" [value]="type">{{type}}</option>
               </select>
             </div>
             <div class="form-group label-floating">
