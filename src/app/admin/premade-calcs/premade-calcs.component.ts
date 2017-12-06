@@ -20,10 +20,10 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
               ,'Quintessential','Real Estate & Construction','Technology'
               ,'Travel','TV and Entertainment'];
   templates= [
-    ['one-page-card','Chicago'],
-    ['sound-cloud','Londoner'],
+    ['one-page-card-new','Chicago'],
+    ['sound-cloud-v3','Londoner'],
     ['template-seven','Seattle'],
-    ['inline-temp','Greek'],
+    ['inline-temp-new','Greek'],
     ['experian','Tokyo'],
     ['template-five','Madrid'],
     ['template-six','Stockholm']
