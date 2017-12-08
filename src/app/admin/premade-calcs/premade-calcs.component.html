@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-2 pull-right" style="padding:5px;">
-          <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc">Add Calculator</a>      
+          <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc" (click)="calculatorForm.reset();edit=false;">Add Calculator</a>      
       </div>
       <div class="col-md-3 pull-right" style="padding:5px;">
           <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>          
@@ -75,14 +75,16 @@
                 <th>
                   Industry
                 </th>
-                
+                <th>
+                  Edit 
+                </th>
                 <th>
                   Delete
                 </th>
               </tr>
             </thead>
             <tbody class="custom-tbody">
-              <tr *ngFor="let calculator of calculators">
+              <tr *ngFor="let calculator of calculators;let i=index;">
                 <td>
                   {{calculator.title}}
                 </td>
@@ -105,6 +107,9 @@
                   {{calculator.industry}}
                 </td>
                 <td>
+                    <a href = "javascript:void(0);" data-toggle="modal" data-target="#add-calc" (click)="editCalculator(i);"><i class="material-icons">edit</i></a>                    
+                </td>
+                <td>  
                   <a href = "javascript:void(0);" (click)="removeCalculator(calculator._id)"><i class="material-icons">delete</i></a>
                 </td>
               </tr>
@@ -185,9 +190,12 @@
               <textarea class="form-control" id="description" 
                   type="text" name="description" rows="5" formControlName="description"></textarea>
             </div>
-            <button (click)="addCalculator(calculatorForm.value)" 
+            <button *ngIf="!edit" (click)="addCalculator(calculatorForm.value)" 
               class="btn btn btn-red-outline btn-add-user btn-hover" id="addCalulator"
               [disabled]="!calculatorForm.valid">Add</button>
+            <button *ngIf="edit" (click)="updateCalculator(calculatorForm.value)" 
+            class="btn btn btn-red-outline btn-add-user btn-hover" id="updateCalulator"
+            [disabled]="!calculatorForm.valid">Update</button>
           </form>
         </div>
       </div>
