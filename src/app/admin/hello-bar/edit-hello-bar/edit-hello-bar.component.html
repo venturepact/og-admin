@@ -62,13 +62,13 @@
   <div>
     <label>Link to</label>
     <select [(ngModel)]="ctaLink">
-      <option disabled value="">One Click Upgrade for</option>
+      <option value="upgrade">One Click Upgrade for</option>
       <option value="pricing">Pricing Page</option>
       <option value="intercom">Intercom Messaging popup</option>
     </select>
 
-    <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='pricing'">
-      <option *ngFor="let plan of values.plan">{{plan}}</option>
+    <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='upgrade'">
+      <option *ngFor="let plan of values.one_click_upgrade_plans">{{plan}}</option>
     </select>
   </div>
 </div>
