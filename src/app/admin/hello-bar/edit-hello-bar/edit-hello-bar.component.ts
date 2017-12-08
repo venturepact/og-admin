@@ -37,7 +37,7 @@ export class EditHelloBarComponent implements OnInit {
     selected_attribute: '',
     selected_operator: '',
     selected_value: '',
-    logic_gate: ''
+    logic_gate: 'and'
   };
 
   hellobarMessage: string = '';

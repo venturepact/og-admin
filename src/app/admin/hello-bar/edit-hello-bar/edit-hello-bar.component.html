@@ -4,8 +4,7 @@
     <div style="display:inline-flex">
       <div>
         <select *ngIf="i!=0" [(ngModel)]="cond.logic_gate">
-          <option>and</option>
-          <option>or</option>
+          <option value="and">and</option>
         </select>
         <select [(ngModel)]="cond.selected_attribute" title="select attribute">
           <option style="display: none"></option>
