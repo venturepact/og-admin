@@ -68,7 +68,7 @@
     </select>
 
     <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='upgrade'">
-      <option *ngFor="let plan of values.plan">{{plan}}</option>
+      <option *ngFor="let plan of values.one_click_upgrade_plans">{{plan}}</option>
     </select>
   </div>
 </div>

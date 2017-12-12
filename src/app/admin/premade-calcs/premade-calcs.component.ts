@@ -10,6 +10,8 @@ declare var jQuery:any;
 })
 export class PremadeCalcsComponent extends Datatable implements OnInit {
   loading: boolean;
+  edit:boolean;
+  selectedItem:any;
   calculatorForm: FormGroup;
   calculators:any=[];
   rejectedCalcs:any=[];
@@ -20,10 +22,10 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
               ,'Quintessential','Real Estate & Construction','Technology'
               ,'Travel','TV and Entertainment'];
   templates= [
-    ['one-page-card','Chicago'],
-    ['sound-cloud','Londoner'],
+    ['one-page-card-new','Chicago'],
+    ['sound-cloud-v3','Londoner'],
     ['template-seven','Seattle'],
-    ['inline-temp','Greek'],
+    ['inline-temp-new','Greek'],
     ['experian','Tokyo'],
     ['template-five','Madrid'],
     ['template-six','Stockholm']
@@ -33,7 +35,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
    }
 
   ngOnInit() {
-    this.calculatorForm= this._fb.group(this.getFields());
+    this.calculatorForm=this._calculatorService.getForm();
     this.getCalculators();
   }
   getCalculators(){
@@ -54,17 +56,6 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       console.log("Error: ",error); 
     })
   }
-  getFields(){
-    return {
-      title:['',Validators.required],
-      live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/)])],
-      media:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$/)])],
-      type:['',Validators.required],
-      description:['',Validators.required],
-      industry:['',Validators.required],
-      template:['',Validators.required]
-    }
-  }
   addCalculator(data){
     let calculatorData=Object.assign(data,this.extractData(data['live_url']));
     if(calculatorData['subdomain'] && calculatorData['calcName']){
@@ -73,6 +64,29 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     }else{
       this.errorMessage='Not Valid urls..';
     }
+  }
+  updateCalculator(data){
+
+    this.$subscription=this._calculatorService.updateCalculator(Object.assign({},this.selectedItem,data,this.extractData(data['live_url'])))
+                        .subscribe((response)=>{
+                            console.log("Response",response);
+                            if(Object.keys(response).length==0){
+                              this.calculatorRejected();
+                              return ;                              
+                            }
+                            else
+                              this.calculatorAdded();
+                            this.getCalculators();
+                        });
+
+  }
+  calculatorRejected(){
+    this.errorMessage='This calculator does not exists';
+    this.calculatorForm.get('live_url').setValue('');
+  }
+  calculatorAdded(){
+    jQuery("#add-calc").modal('hide');
+    this.errorMessage='';
   }
   requestToAdd(calculators,multi=false){
     if(calculators.length>0){
@@ -83,14 +97,12 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         })
         this.rejectedCalcs=[...this.rejectedCalcs,...rejects];
         if(!multi && rejects.length>0){
-          this.errorMessage='This calculator does not exists';
-          this.calculatorForm.get('live_url').setValue('');
+          this.calculatorRejected();
           return ;
         }
-        if(!multi && response['created'].length==1){ 
+        if(!multi && response['created'].length==1){
+          this.calculatorAdded(); 
           this.rejectedCalcs=[];
-          jQuery("#add-calc").modal('hide');
-          this.errorMessage='';
         };
         this.calculatorForm.reset();
         this.getCalculators();
@@ -103,6 +115,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     }
   }
   fileChange(event){
+    this.rejectedCalcs=[];
     let files:FileList=event.target.files;
     if(files && files.length > 0) {
       let file : File = files.item(0);
@@ -129,7 +142,17 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
             return acc;
           }
           if(!row[1]) return acc; 
-          let obj={title:row[0],live_url:row[1],media:row[2],type:row[3],industry:row[4],description:row[5]};
+          let template=this.getTemplateType(row[4],1);
+          let obj={
+                title:row[0],
+                live_url:row[1],
+                media:row[2],
+                type:(typeof(row[3]) == 'string' || row[3])?(row[3].trim()?row[3]:'Calculator'):'Calculator',
+                template:template,
+                industry:(typeof(row[5]) == 'string' || row[5])?(row[5].trim()?row[5]:'Auto'):'Auto',
+                tier:(typeof(row[6]) == 'string' || row[6])?(row[6].trim()?row[6]:'standard'):'standard',
+                description:row[7]
+          };
           obj=Object.assign(obj,this.extractData(obj['live_url']));
           if(obj['subdomain'] && obj['calcName']) acc.push(obj);
           else if(obj && Object.keys(obj).length>1) {
@@ -138,6 +161,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
           return acc;
         },[]);
       this.errorMessage='';
+      console.log(calculators);
       this.requestToAdd(calculators,true);
     }else{
       this.errorMessage="No data in this file";
@@ -189,5 +213,19 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this._calculatorService.removeCalculator(id).subscribe((data)=>{
       this.getCalculators();
     })
+  }
+  getTemplateType(name,index){
+    if(!name) return this.templates[0][index?0:1];
+    let item = this.templates.find((value)=>{
+        return value[index]==name;
+    })
+    return item[index?0:1];
+  }
+  editCalculator(index){
+    console.log(this.calculators[index]);
+    this.selectedItem=this.calculators[index];
+    this._calculatorService.setForm(this.selectedItem);
+    this.edit=true;
+    this.errorMessage='';
   }
 }

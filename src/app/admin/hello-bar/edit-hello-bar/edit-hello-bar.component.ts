@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {Script} from "../../../shared/services/script.service";
 import {AdminService} from "../../../shared/services/admin.service";
 import {PlanService} from "../../../shared/services/plan.service";
+import {parseLazyRoute} from "@angular/compiler/src/aot/lazy_routes";
 
 @Component({
   selector: 'edit-hello-bar',
@@ -18,10 +19,12 @@ export class EditHelloBarComponent implements OnInit {
   plans: Array<String> = [];
   values = {
     plan: this.plans,
+    one_click_upgrade_plans: ['freelancer_m', 'freelancer_y', 'essentials_m', 'essentials_y', 'business_m', 'business_y',
+      'essentials_y_jv', 'essentials_m_jv'],
     status: ['future', 'in_trial', 'active', 'non_renewing', 'cancelled'],
     payment_info_added: ['no_card','valid', 'expiring', 'expired']
   };
-  stringOperators: Array<string> = ['contains', 'does not contain', 'equals', 'not equal to'];
+  stringOperators: Array<string> = ['equals', 'not equal to'];
   numberOperators: Array<string> = ['less than', 'greater than', 'equals'];
   operators = {
     plan: this.stringOperators, signed_up: this.numberOperators,
@@ -55,7 +58,17 @@ export class EditHelloBarComponent implements OnInit {
         this.plans.push(plan._id + '_m');
       });
       data.special.forEach(plan => {
-        this.plans.push(plan._id);
+        if (plan._id === 'appsumo') {
+          this.plans.push('appsumo_d');
+        } else if (plan._id === 'appsumoblack') {
+          this.plans.push('appsumo_d_black');
+        } else if (plan._id === 'webmaster') {
+          this.plans.push('webmaster_d');
+        } else if (plan._id === 'dealfuel') {
+          this.plans.push('dealfuel_d');
+        } else {
+          this.plans.push(plan._id);
+        }
       });
     });
     if (this.selectedHellobar == null) {

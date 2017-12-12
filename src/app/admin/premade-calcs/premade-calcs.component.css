@@ -116,3 +116,11 @@ ul {
     line-height: 18px;
     font-weight: 500;
 }
+tbody.custom-tbody td
+{
+    max-width: 150px!important;
+    word-break: break-word;
+    font-size: 13px;
+    margin: 0;
+
+}

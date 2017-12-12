@@ -13,6 +13,12 @@ then
     CONFIG_ENV=" --prod --env=$1 --aot --build-optimizer --output-hashing none"
 fi
 
+if [ "$1" = "biz" ]
+then
+    BRANCH="admin-biz"
+    CONFIG_ENV=" --prod --env=$1 --aot --build-optimizer --output-hashing none"
+fi
+
 node --max_old_space_size=7200 ./node_modules/.bin/ng build $CONFIG_ENV
 #ng build $CONFIG_ENV --no-sourcemap
 
