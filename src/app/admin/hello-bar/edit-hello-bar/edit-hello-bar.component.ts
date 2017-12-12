@@ -19,7 +19,7 @@ export class EditHelloBarComponent implements OnInit {
   values = {
     plan: this.plans,
     status: ['future', 'in_trial', 'active', 'non_renewing', 'cancelled'],
-    payment_info_added: ['valid', 'expiring', 'expired']
+    payment_info_added: ['no_card','valid', 'expiring', 'expired']
   };
   stringOperators: Array<string> = ['contains', 'does not contain', 'equals', 'not equal to'];
   numberOperators: Array<string> = ['less than', 'greater than', 'equals'];
@@ -43,7 +43,7 @@ export class EditHelloBarComponent implements OnInit {
   ctaPlan: string = '';
   stopDate: Date;
   hellobarId: string;
-
+  priority: number = 10;
   constructor(private _script: Script, private adminService: AdminService,
               private planService: PlanService) {
   }
@@ -68,6 +68,7 @@ export class EditHelloBarComponent implements OnInit {
       this.ctaLink = this.selectedHellobar.cta.ctaLink;
       this.ctaPlan = this.selectedHellobar.cta.plan;
       this.stopDate = this.selectedHellobar.stopDate;
+      this.priority = this.selectedHellobar.priority;
       this.conditions = [];
       this.selectedHellobar.conditions.forEach(condition => {
         this.conditions.push({
@@ -97,6 +98,7 @@ export class EditHelloBarComponent implements OnInit {
       conditions: this.conditions,
       message: this.hellobarMessage,
       stopDate: this.stopDate,
+      priority: this.priority,
       ctaText: this.ctaText,
       ctaLink: this.ctaLink,
       plan: this.ctaPlan,
