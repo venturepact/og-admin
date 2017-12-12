@@ -75,7 +75,12 @@
 <div class="container">
   <div style="margin: 10px">Stop Date</div>
   <input type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value"/>
-
+  <div style="margin: 10px">Priority</div>
+  <select name="priority" [(ngModel)] = "priority">
+    <ng-container *ngFor="let i of [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]">
+      <option value="{{i}}">{{i}} {{(i == 10) ? 'Lowest' : ((i == 1) ? 'Highest' : '')}}</option>
+    </ng-container>
+  </select>
 </div>
 
 <div style="margin-top: 20px;float: right">
