@@ -84,6 +84,6 @@
 </div>
 
 <div style="margin-top: 20px;float: right">
-  <button (click)="saveHellobar('DRAFT')">Save Draft</button>
-  <button (click)="saveHellobar('LIVE')">Go Live</button>
+  <button (click)="saveHellobar('DRAFT',$event.target)">Save Draft</button>
+  <button (click)="saveHellobar('LIVE',$event.target)">Go Live</button>
 </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Script} from "../../../shared/services/script.service";
 import {AdminService} from "../../../shared/services/admin.service";
 import {PlanService} from "../../../shared/services/plan.service";
@@ -15,6 +15,8 @@ export class EditHelloBarComponent implements OnInit {
 
   @Input()
   selectedHellobar: any;
+  @Output()
+  @Output() gotoDashboard: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   plans: Array<String> = [];
   values = {
@@ -104,7 +106,8 @@ export class EditHelloBarComponent implements OnInit {
   }
 
 
-  saveHellobar(status) {
+  saveHellobar(status, button) {
+    button.innerHTML = 'Saving';
     console.log(this.conditions);
     this.adminService.saveHellobar({
       _id: this.hellobarId,
@@ -118,6 +121,8 @@ export class EditHelloBarComponent implements OnInit {
       status: status
     }).subscribe(response => {
       this.hellobarId = response._id;
+      button.innerHTML = 'Save' + status;
+      this.gotoDashboard.emit(true);
     });
   }
 

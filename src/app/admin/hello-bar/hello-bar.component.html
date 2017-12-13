@@ -79,5 +79,6 @@
     </div>
   </div>
 
-  <edit-hello-bar *ngIf="createHelloBar" [selectedHellobar]="selectedHellobar"></edit-hello-bar>
+  <edit-hello-bar *ngIf="createHelloBar" (gotoDashboard)="showHellobar()"
+                  [selectedHellobar]="selectedHellobar"></edit-hello-bar>
 </div>
