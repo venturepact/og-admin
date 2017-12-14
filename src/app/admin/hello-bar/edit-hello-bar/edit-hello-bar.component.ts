@@ -49,6 +49,7 @@ export class EditHelloBarComponent implements OnInit {
   stopDate: Date;
   hellobarId: string;
   priority: number = 10;
+  tickerDate: Date;
   ticker: string = 'no_ticker';
   constructor(private _script: Script, private adminService: AdminService,
               private planService: PlanService) {
@@ -84,6 +85,7 @@ export class EditHelloBarComponent implements OnInit {
       this.ctaLink = this.selectedHellobar.cta.ctaLink;
       this.ctaPlan = this.selectedHellobar.cta.plan;
       this.stopDate = this.selectedHellobar.stopDate;
+      this.tickerDate = this.selectedHellobar.ticker_date;
       this.priority = this.selectedHellobar.priority;
       this.ticker = this.selectedHellobar.ticker;
       this.conditions = [];
@@ -117,6 +119,7 @@ export class EditHelloBarComponent implements OnInit {
       conditions: this.conditions,
       message: this.hellobarMessage,
       stopDate: this.stopDate,
+      ticker_date: this.tickerDate,
       priority: this.priority,
       ticker: this.ticker,
       ctaText: this.ctaText,

@@ -61,12 +61,15 @@
           <div class="col-md-3 mr20">
             <select class="form-control" name="ticker" style="width: 100%;" [(ngModel)]="ticker">
               <option value="no_ticker">No ticker</option>
+              <option value="ticker">Ticker</option>
               <option value="on_trial_end">When trial ends</option>
               <option value="stop_date">Add stop date</option>
             </select>
           </div>
-          <div class="col-md-4 mr20">
-            &nbsp;
+          <div class="col-md-3 mr20">
+            <ng-container *ngIf="ticker==='ticker'">
+              <input class="form-control" type="date" [ngModel]="tickerDate | date:'yyyy-MM-dd'" (change)="tickerDate = $event.target.value"/>
+            </ng-container>
           </div>
         </div>
       </div>
