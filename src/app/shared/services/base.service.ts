@@ -25,6 +25,10 @@ export class BaseService {
     return new RequestOptions({ headers: this.headers, method: 'post' });
   }
 
+  protected delete_options() {
+    return new RequestOptions({headers: this.headers, method: 'delete'});
+  }
+
   protected get_options(){
     this.storage = this.readCookie('storage');
     if (this.storage) {
