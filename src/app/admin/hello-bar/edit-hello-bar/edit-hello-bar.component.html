@@ -24,7 +24,7 @@
           </div>
           <div class="col-md-3 mr20">
             <ng-container *ngIf="cond.selected_attribute==='signed_up' || cond.selected_attribute==='payment_due_date'">
-              <input class="form-control" type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'"
+              <input class="form-control" type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'" min="{{today}}"
                      (change)="cond.selected_value=$event.target.value"/>
             </ng-container>
             <select class="form-control"
@@ -56,7 +56,7 @@
       <div class="panel-body">
         <div class="form-group row">
           <div class="col-md-3 mr20">
-            <textarea title="Message" [(ngModel)]="hellobarMessage" class="form-control"></textarea>
+            <textarea title="Message" [(ngModel)]="hellobarMessage" maxlength="100" class="form-control"></textarea>
           </div>
           <div class="col-md-3 mr20">
             <select class="form-control" name="ticker" style="width: 100%;" [(ngModel)]="ticker">
@@ -68,7 +68,7 @@
           </div>
           <div class="col-md-3 mr20">
             <ng-container *ngIf="ticker==='ticker'">
-              <input class="form-control" type="date" [ngModel]="tickerDate | date:'yyyy-MM-dd'" (change)="tickerDate = $event.target.value"/>
+              <input class="form-control" type="date" [ngModel]="tickerDate | date:'yyyy-MM-dd'" min="{{today}}" (change)="this.tickerDate = $event.target.value"/>
             </ng-container>
           </div>
         </div>
@@ -107,7 +107,7 @@
       <div class="panel-body">
         <div class="form-group row">
           <div class="col-md-3 mr20">
-            <input class="form-control" type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value"/>
+            <input class="form-control" type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" min="{{today}}" (change)="stopDate = $event.target.value"/>
           </div>
           <div class="col-md-3 mr20">
             <select name="priority" [(ngModel)] = "priority" class="form-control" style="width: 100%;">
