@@ -96,4 +96,19 @@ export class PlanService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  getPlanPremades(plan){
+    return this._http.get(`${this._url}/plans/getPremadePlans/${plan}`,this.get_options())
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+  updatePlanPremades(data){
+    return this._http.post(`${this._url}/plans/updatePremadePlans`,data,this.post_options())
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+  getAvailableTemplates(){
+    return this._http.get(`${this._url}/admin/getAvailableTemplates`,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

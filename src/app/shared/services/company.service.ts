@@ -321,4 +321,15 @@ export class CompanyService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  getCompanyPremades(company){
+    return this._http.post(`${this._url}/company/premade_calcs`,company,this.post_options())
+        .map(this.extractData)
+        .catch(this.handleError)
+  }
+  updateCompanyPremades(data){
+    return this._http.post(`${this._url}/company/update_premades`,data,this.post_options())
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
 }

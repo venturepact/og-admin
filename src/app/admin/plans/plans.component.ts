@@ -16,7 +16,8 @@ export class PlansComponent implements OnInit {
   plans: any;
   planTypes: Array<any>;
   planNames: Array<any>;
-
+  selectedPlan:any;
+  manage='features';
   loading = false;
   addon_leads: String = '';
   addon_traffic: String = '';
