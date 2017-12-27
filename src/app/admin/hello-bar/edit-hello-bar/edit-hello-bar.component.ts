@@ -3,7 +3,7 @@ import {Script} from "../../../shared/services/script.service";
 import {AdminService} from "../../../shared/services/admin.service";
 import {PlanService} from "../../../shared/services/plan.service";
 import {parseLazyRoute} from "@angular/compiler/src/aot/lazy_routes";
-
+declare var moment: any;
 @Component({
   selector: 'edit-hello-bar',
   templateUrl: './edit-hello-bar.component.html',
@@ -17,7 +17,7 @@ export class EditHelloBarComponent implements OnInit {
   selectedHellobar: any;
   @Output()
   @Output() gotoDashboard: EventEmitter<Boolean> = new EventEmitter<Boolean>();
-
+  today: Date;
   plans: Array<String> = [];
   values = {
     plan: this.plans,
@@ -56,6 +56,7 @@ export class EditHelloBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.today = moment(new Date).format('YYYY-MM-DD');
     this.planService.getPlanTypes().subscribe(data => {
       data.default.forEach(plan => {
         this.plans.push(plan._id + '_y');
