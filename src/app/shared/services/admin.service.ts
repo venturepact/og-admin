@@ -10,6 +10,7 @@ import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AdminService extends BaseService {
+
   public getLogSubject = new ReplaySubject<String>(2);
 
   constructor(public _http: Http) {
@@ -420,6 +421,12 @@ export class AdminService extends BaseService {
 
   saveHellobar(data) {
     return this._http.put(this._url + '/admin/saveHellobar', data, this.put_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  deleteHellobar(hellobarId) {
+    return this._http.delete(this._url + '/admin/' + hellobarId, this.delete_options())
       .map(this.extractData)
       .catch(this.handleError)
   }

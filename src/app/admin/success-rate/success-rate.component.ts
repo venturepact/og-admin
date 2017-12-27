@@ -200,9 +200,8 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   parseFilterData() {
     // filter empty objects
-    let filteredData = this.filtersPostData.filter(value => {
-      return !(Object.keys(value).length === 0);
-    });
+    let filteredData = this.filtersPostData.filter(value =>
+      value.propery && value.type && value.operator && value.value);
 
     // group by types - {app:[],company:[]}
     let groupedByData = {};

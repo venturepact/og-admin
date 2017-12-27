@@ -51,6 +51,12 @@ export class HelloBarComponent extends Datatable implements OnInit {
     this.createHelloBar = true;
   }
 
+  deletehellobar(hellobar) {
+    this.adminService.deleteHellobar(hellobar._id).subscribe(data => {
+      this.getHellobar();
+    });
+  }
+
   goBack() {
     this.createHelloBar = false;
     this.getHellobar();
@@ -59,6 +65,11 @@ export class HelloBarComponent extends Datatable implements OnInit {
   createNewHellobar() {
     this.createHelloBar = true;
     this.selectedHellobar = null;
+  }
+
+  showHellobar() {
+    this.getHellobar();
+    this.createHelloBar = false;
   }
 
   getHellobar() {

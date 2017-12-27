@@ -1,5 +1,11 @@
 .container {
-  background: beige;
+  /*background: beige;*/
   margin-left: 15px;
   margin-top: 10px;
+}
+.panel-heading {
+  padding: 10px 10px;
+}
+.panel-body, .panel-footer {
+  background: #FFFFFF;
 }

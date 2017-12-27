@@ -30,7 +30,7 @@
           <th>TITLE</th>
           <th>STATUS</th>
           <th>PRIORITY</th>
-          <th>CLICK THROUGH</th>
+          <th>CLICK</th>
           <th>PUBLISHED ON</th>
           <th>ACTIONS</th>
         </tr>
@@ -46,7 +46,8 @@
           <td>{{hellobar.priority}}</td>
           <td>{{hellobar.clickThrough}}</td>
           <td>{{momentJs(hellobar.updatedAt).fromNow()}}</td>
-          <td><a (click)="editHellobar(hellobar)">edit</a></td>
+          <td><a (click)="editHellobar(hellobar)"><i class="material-icons">edit</i></a></td>
+          <td><a (click)="deletehellobar(hellobar)"><i class="material-icons">delete</i></a></td>
 
           <td></td>
         </tr>
@@ -79,5 +80,6 @@
     </div>
   </div>
 
-  <edit-hello-bar *ngIf="createHelloBar" [selectedHellobar]="selectedHellobar"></edit-hello-bar>
+  <edit-hello-bar *ngIf="createHelloBar" (gotoDashboard)="showHellobar()"
+                  [selectedHellobar]="selectedHellobar"></edit-hello-bar>
 </div>
