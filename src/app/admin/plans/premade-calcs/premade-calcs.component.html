@@ -1,0 +1,36 @@
+<div *ngIf="loading">
+    <div>
+        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+    </div>
+</div>
+<div class="container" *ngIf="!loading">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Premade Calculators</div>
+            <div class="panel-body">
+                <div class="row" *ngFor="let template of templates">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{template.name}}</div>
+                        <div class="panel-body">
+                            <div class="todolist not-done">
+                                <ul id="sortable" class="list-unstyled">
+                                    <ng-container *ngFor="let calc of premades_calcs?.premades;let i=index">
+                                        <li class="ui-state-default" *ngIf="template.selector == calc.template">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" [(ngModel)]="calc.active" name="feature" />{{calc.title}}</label>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button (click)="updateCalcs()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

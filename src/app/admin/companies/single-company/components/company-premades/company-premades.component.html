@@ -1,0 +1,58 @@
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad np">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="col-sm-8">
+							<h4>Premade Calculators</h4>
+						</div>
+						<div class="col-sm-2">
+							<h4>Edit:</h4>
+						</div>
+						<div class="col-sm-2">
+							<label class="switch">
+								<input type="checkbox" [(ngModel)]="edit_mode">
+								<div class="slider round"></div>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="panel-group" *ngIf="loading">
+					<div>
+						<img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+					</div>
+				</div>
+				<div class="panel-group" *ngIf="!loading">
+					<div *ngIf="edit_mode" class="panel-body">
+
+						<div class="row" *ngFor="let template of templates">
+							<div class="panel panel-default">
+								<div class="panel-heading panel-heading-inner">{{template.name}}</div>
+								<div class="panel-body panel-body-inner">
+									<div class="todolist not-done">
+										<ul id="sortable" class="list-unstyled">
+											<ng-container *ngFor="let premade_calc of data?.premades; let i = index">
+												<li class="ui-state-default" *ngIf="template.selector == premade_calc.template">
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" [(ngModel)]="premade_calc.active" name="feature" />{{premade_calc.title}}
+														</label>
+													</div>
+												</li>
+											</ng-container>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel-footer" *ngIf="edit_mode">
+						<button (click)="updateCompanyPremades()">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
