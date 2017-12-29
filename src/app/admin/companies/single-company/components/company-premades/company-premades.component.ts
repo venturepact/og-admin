@@ -44,6 +44,7 @@ export class CompanyPremadesComponent implements OnInit {
     this.companyService.updateCompanyPremades({company:this.company,premades:this.data.premades})
     .subscribe((data)=>{
       this.getCompanyPremades();
+      setTimeout(this.disableTemplates.bind(this),500);
     })
   }
   getAvailableTemplates(){
