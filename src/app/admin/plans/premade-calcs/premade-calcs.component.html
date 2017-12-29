@@ -8,9 +8,18 @@
         <div class="panel panel-default">
             <div class="panel-heading">Premade Calculators</div>
             <div class="panel-body">
-                <div class="row" *ngFor="let template of templates">
+                <div class="row" *ngFor="let template of templates;let x=index">
                     <div class="panel panel-default">
-                        <div class="panel-heading">{{template.name}}</div>
+                        <div class="panel-heading">
+                            <div class="checkbox">
+                                <label>
+                                    <span style="position: relative;right: 10px;">{{ !template.available ? 'Select All' : 'Deselect All' }}</span>
+                                    <input type="checkbox" [(ngModel)]="template.available"
+                                    (click)="selectAll($event.target.checked,template.selector)"  
+                                    [id]="'feature'+x" />{{template.name}}
+                                </label>
+                            </div>
+                        </div>
                         <div class="panel-body">
                             <div class="todolist not-done">
                                 <ul id="sortable" class="list-unstyled">
@@ -18,7 +27,8 @@
                                         <li class="ui-state-default" *ngIf="template.selector == calc.template">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" [(ngModel)]="calc.active" name="feature" />{{calc.title}}</label>
+                                                    <input type="checkbox" (change)="checkForParentStatus(x,template.selector)" 
+                                                    [(ngModel)]="calc.active" name="feature" />{{calc.title}}</label>
                                             </div>
                                         </li>
                                     </ng-container>

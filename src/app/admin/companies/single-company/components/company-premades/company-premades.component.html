@@ -12,7 +12,7 @@
 						</div>
 						<div class="col-sm-2">
 							<label class="switch">
-								<input type="checkbox" [(ngModel)]="edit_mode">
+								<input type="checkbox" (click)="disableTemplates()" [(ngModel)]="edit_mode">
 								<div class="slider round"></div>
 							</label>
 						</div>
@@ -26,9 +26,17 @@
 				<div class="panel-group" *ngIf="!loading">
 					<div *ngIf="edit_mode" class="panel-body">
 
-						<div class="row" *ngFor="let template of templates">
-							<div class="panel panel-default">
-								<div class="panel-heading panel-heading-inner">{{template.name}}</div>
+						<div [id]="'template'+x" class="row" *ngFor="let template of templates;let x=index">
+							<div class="panel panel-default" >
+								<div class="panel-heading panel-heading-inner">
+									<div class="checkbox">
+										<label>
+											<span style="position: relative;right: 10px;">{{ !template.available ? 'Select All' : 'Deselect All' }}</span><input type="checkbox" [(ngModel)]="template.available"
+											(click)="selectAll($event.target.checked,template.selector)"  
+											[id]="'feature'+x" />{{template.name}}
+										</label>
+									</div>
+								</div>
 								<div class="panel-body panel-body-inner">
 									<div class="todolist not-done">
 										<ul id="sortable" class="list-unstyled">
@@ -36,7 +44,8 @@
 												<li class="ui-state-default" *ngIf="template.selector == premade_calc.template">
 													<div class="checkbox">
 														<label>
-															<input type="checkbox" [(ngModel)]="premade_calc.active" name="feature" />{{premade_calc.title}}
+															<input type="checkbox" (change)="checkForParentStatus(x,template.selector)" 
+															[(ngModel)]="premade_calc.active" [name]="'feature'+i" />{{premade_calc.title}}
 														</label>
 													</div>
 												</li>
