@@ -37,8 +37,9 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   public subscriptions: Subscription = new Subscription();
   public sub_role: String = null;
 
-  constructor(private adminService: AdminService, private scriptService: Script,
-              private _cookieService: CookieService) {
+  constructor(private adminService: AdminService,
+     private scriptService: Script,
+     private _cookieService: CookieService) {
     super();
     if (_cookieService.readCookie('storage')) {
       let storage = JSON.parse(_cookieService.readCookie('storage'));
@@ -160,5 +161,8 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   searchData() {
     this.loading = true;
     return this.adminService.getApps(this.getParams());
+  }
+  isTemplates(field){
+    return ['Recommendation', 'Numerical', 'Graded', 'Poll'].includes(field);
   }
 }

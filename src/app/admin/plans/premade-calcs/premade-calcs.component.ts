@@ -38,13 +38,17 @@ export class PremadeCalcsComponent implements OnInit {
     })
   }
   getAvailableTemplates(){
-    this.adminService.getAvailableTemplates().subscribe((data)=>{
-      console.log("getPremades",data);
-      this.templates=data;
-      this.templates.forEach((obj,index)=>{
-        this.checkForParentStatus(index,obj.selector);
-      })
-    }) 
+    this.templates=this.adminService.availableTemplates;
+    this.templates.forEach((obj,index)=>{
+      this.checkForParentStatus(index,obj.selector);
+    })
+    // this.adminService.getAvailableTemplates().subscribe((data)=>{
+    //   console.log("getPremades",data);
+    //   this.templates=data;
+    //   this.templates.forEach((obj,index)=>{
+    //     this.checkForParentStatus(index,obj.selector);
+    //   })
+    // }) 
   }
   checkForParentStatus(parentIndex,selector){
     let filteredArray = this.premades_calcs.premades.filter(obj=>{

@@ -48,9 +48,10 @@ export class CompanyPremadesComponent implements OnInit {
     })
   }
   getAvailableTemplates(){
-    this.adminService.getAvailableTemplates().subscribe((data)=>{
-      this.templates=data;
-    }) 
+    // this.adminService.getAvailableTemplates().subscribe((data)=>{
+    //   this.templates=data;
+    // }) 
+    this.templates = this.adminService.availableTemplates;
   }
 
   selectAll(value,selector){
