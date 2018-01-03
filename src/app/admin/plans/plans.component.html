@@ -78,7 +78,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12 np">
     <!-- Start: Nav tabs -->
     <div class="np">
-        <button (click)="manage='features'">Manage Features</button>
+        <button (click)="manage='features';selectedPlan=plans[selectedPlanCategory][0]">Manage Features</button>
         <button (click)="manage='premade_calcs';selectedPlan=plans[selectedPlanCategory][0]">Manage Premade Calculators</button>
     </div>
     
@@ -87,7 +87,7 @@
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
         <li role="presentation" [class.active]="i==0" *ngFor="let planCategory of keys(plans);let i =index">
           <a href="#{{planCategory}}" class="hvr-sweep-to-right"
-             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory;selectedPlan=plans[selectedPlanCategory][0]['plan']">{{planCategory}}</a>
+             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory;selectedPlan=plans[selectedPlanCategory][0]">{{planCategory}}</a>
         </li>
       </ul>
     </div>
