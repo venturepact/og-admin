@@ -22,7 +22,7 @@ export class PlansComponent implements OnInit {
   addon_leads: String = '';
   addon_traffic: String = '';
   siteSettingMsg: String = '';
-  selectedPlanCategory: String = 'default';
+  selectedPlanCategory: string = 'default';
   keys = Object.keys;
   createPlanModel = {
     _id: 'new_plan',
@@ -63,6 +63,8 @@ export class PlansComponent implements OnInit {
       .subscribe((result) => {
         this.plans = result;
         this.loading = false;
+        this.selectedPlan=this.plans[this.selectedPlanCategory][0];
+        
         const planOb = [];
         for (let planType in this.plans) {
           this.plans[planType].forEach(plan => planOb.push({id: plan.plan._id, text: plan.plan.name}));

@@ -98,3 +98,12 @@ li.ui-state-default:last-child{
   position: relative !important;
   width: 50px;
 }
+span.tag-beta {
+  background: #279ed6;
+  /* font-size: 8px; */
+  font-family: montserratbold;
+  padding: 1px 5px;
+  border-radius: 6px;
+  color: #fff;
+  vertical-align: middle;
+}

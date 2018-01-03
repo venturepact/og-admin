@@ -2,6 +2,7 @@ import {Component, OnInit, Input, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 import { PlanService } from './../../../shared/services/plan.service';
 declare var jQuery: any;
+declare var window:any;
 @Component({
   selector: 'og-features',
   templateUrl: './features.component.html',
@@ -32,19 +33,28 @@ export class FeaturesComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.plan = this.data.plan;
-    this.features = this.data.features;
-    this.coupons = this.data.cycles;
-    this.users_s = this.plan.users;
-    this.calculator_s = this.plan.calculators;
-    this.templates_s  = this.plan.templates;
-    this.visits_s = this.plan.visits;
-    this.leads_s = this.plan.leads;
-    this.isUserInfinity = this.users_s>=0?false:true;
-    this.isCalcInfinity = this.calculator_s>=0?false:true;
-    this.isTemplateInfinity = this.templates_s>=0?false:true;
-    this.isVisitsInfinity = this.visits_s>=0?false:true;
-    this.isLeadsInfinity = this.leads_s>=0?false:true;
+    
+  }
+  ngOnChanges(){
+    console.log("jfkjdgg",this.data);
+    this.initialize(this.data);
+  }
+  initialize(data){
+    if(data){
+      this.plan = this.data.plan;
+      this.features = this.data.features;
+      this.coupons = this.data.cycles;
+      this.users_s = this.plan.users;
+      this.calculator_s = this.plan.calculators;
+      this.templates_s  = this.plan.templates;
+      this.visits_s = this.plan.visits;
+      this.leads_s = this.plan.leads;
+      this.isUserInfinity = this.users_s>=0?false:true;
+      this.isCalcInfinity = this.calculator_s>=0?false:true;
+      this.isTemplateInfinity = this.templates_s>=0?false:true;
+      this.isVisitsInfinity = this.visits_s>=0?false:true;
+      this.isLeadsInfinity = this.leads_s>=0?false:true;
+    }
   }
 
   getPlanFeatures(){
@@ -123,6 +133,7 @@ export class FeaturesComponent implements OnInit{
          this.visits_s = this.plan.visits;
          this.leads_s = this.plan.leads;
          jQuery('#msg' + this.plan.id).html('successfully Updated');
+         window.toastNotification('Features Updated');
        },
        (result: any)=>{
          console.log("err update");

@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Premade Calculators</div>
             <div class="panel-body">
-                <div class="row" *ngFor="let template of templates;let x=index">
+                <div [id]="'template'+x" class="row" *ngFor="let template of templates;let x=index">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="checkbox">
@@ -17,6 +17,9 @@
                                     <input type="checkbox" [(ngModel)]="template.available"
                                     (click)="selectAll($event.target.checked,template.selector)"  
                                     [id]="'feature'+x" />{{template.name}}
+                                    <span [id]="'disable'+x" class="tag-beta"
+                                    style="position: relative;left: 10px;display:none;font-size:12px!important;">
+                                    Layout associated with this template is locked </span>
                                 </label>
                             </div>
                         </div>

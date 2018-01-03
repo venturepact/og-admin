@@ -23,7 +23,7 @@ export class CompanyPremadesComponent implements OnInit {
 
     this.companyService.getCompanyTemplates().subscribe(data=>{
       this.availableTemplates=data;     
-      this.disableTemplates(); 
+      this.disableTemplates(this.availableTemplates,this.templates); 
     })
   }
   getCompanyPremades(){
@@ -44,7 +44,7 @@ export class CompanyPremadesComponent implements OnInit {
     this.companyService.updateCompanyPremades({company:this.company,premades:this.data.premades})
     .subscribe((data)=>{
       this.getCompanyPremades();
-      setTimeout(this.disableTemplates.bind(this),500);
+      setTimeout(this.disableTemplates.bind(this,this.availableTemplates,this.templates),500);
     })
   }
   getAvailableTemplates(){
@@ -73,16 +73,18 @@ export class CompanyPremadesComponent implements OnInit {
     })
     this.templates[parentIndex].available=result;
   }
-  disableTemplates(){
-    if(this.templates.length > 0){
-      this.availableTemplates.forEach((obj)=>{
-        let index = this.templates.findIndex(ele=> (ele.name == obj.feature.name));
+  disableTemplates(availableTemplates,actualTemplates){
+    if(actualTemplates.length > 0){
+      availableTemplates.forEach((obj)=>{
+        let index = actualTemplates.findIndex(ele=> (ele.name == obj.feature.name));
         if(!obj.active){
           setTimeout(()=> {
             jQuery("#template"+index+" :input").attr("disabled", true);
+            jQuery('#disable'+index).show();
           }, 500);
         }else{
           jQuery("#template"+index+" :input").attr("disabled", false);
+          jQuery('#disable'+index).hide();
         } 
       })
     }

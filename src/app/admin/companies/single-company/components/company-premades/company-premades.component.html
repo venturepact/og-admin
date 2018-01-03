@@ -12,7 +12,7 @@
 						</div>
 						<div class="col-sm-2">
 							<label class="switch">
-								<input type="checkbox" (click)="disableTemplates()" [(ngModel)]="edit_mode">
+								<input type="checkbox" (click)="disableTemplates(availableTemplates,templates)" [(ngModel)]="edit_mode">
 								<div class="slider round"></div>
 							</label>
 						</div>
@@ -34,6 +34,9 @@
 											<span style="position: relative;right: 10px;">{{ !template.available ? 'Select All' : 'Deselect All' }}</span><input type="checkbox" [(ngModel)]="template.available"
 											(click)="selectAll($event.target.checked,template.selector)"  
 											[id]="'feature'+x" />{{template.name}}
+											<span [id]="'disable'+x" class="tag-beta"
+											 style="position: relative;left: 10px;display:none;font-size:12px!important;">
+											 Layout associated with this template is locked </span>
 										</label>
 									</div>
 								</div>
