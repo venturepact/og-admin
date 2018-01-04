@@ -77,24 +77,24 @@
 <div *ngIf="!loading" class="col-md-12 all-plans-container" id="my-account">
   <div class="col-md-12 col-sm-12 col-xs-12 np">
     <!-- Start: Nav tabs -->
-    <div class="np">
-        <button (click)="manage='features';selectedPlan=plans[selectedPlanCategory][0]">Manage Features</button>
-        <button (click)="manage='premade_calcs';selectedPlan=plans[selectedPlanCategory][0]">Manage Premade Calculators</button>
+    <div class="np2">
+        <button class="btn btn-info btn-lg" (click)="manage='features';selectedPlan=setPlan(selectedPlanCategory);">Manage Features</button>
+        <button class="btn btn-info btn-lg" (click)="manage='premade_calcs';selectedPlan=setPlan(selectedPlanCategory);">Manage Premade Calculators</button>
     </div>
     
     
     <div class="np">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
-        <li role="presentation" [class.active]="i==0" *ngFor="let planCategory of keys(plans);let i =index">
+        <li role="presentation" [class.active]="selectedPlanCategory==planCategory" *ngFor="let planCategory of keys(plans);let i =index">
           <a href="#{{planCategory}}" class="hvr-sweep-to-right"
-             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory;selectedPlan=plans[selectedPlanCategory][0]">{{planCategory}}</a>
+             aria-controls="myProfile" role="tab" data-toggle="tab" (click)="selectedPlanCategory=planCategory;selectedPlan=setPlan(selectedPlanCategory);">{{planCategory}}</a>
         </li>
       </ul>
     </div>
 
     <div class="np" style="overflow-x: scroll;">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
-        <li role="presentation" [class.active]="i==0" *ngFor="let plan of plans[selectedPlanCategory];let i =index">
+        <li role="presentation" [class.active]="selectedPlan.plan._id==plan.plan._id" *ngFor="let plan of plans[selectedPlanCategory];let i =index">
           <a href="#{{plan.plan._id}}" (click)="selectedPlan=plan" *ngIf="plan.plan?.name!='Student'"
              aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">
             {{plan.plan?.name}}

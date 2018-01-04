@@ -63,7 +63,7 @@ export class PlansComponent implements OnInit {
       .subscribe((result) => {
         this.plans = result;
         this.loading = false;
-        this.selectedPlan=this.plans[this.selectedPlanCategory][0];
+        this.selectedPlan=this.setPlan(this.selectedPlanCategory);
         
         const planOb = [];
         for (let planType in this.plans) {
@@ -219,5 +219,10 @@ export class PlansComponent implements OnInit {
         this.siteSettingMsg = error.error.message;
       });
 
+  }
+  setPlan(category){
+    if(category == 'default')
+      return this.plans[category][1];
+    return this.plans[category][0];
   }
 }
