@@ -1,4 +1,4 @@
-import { PremadeLayoutManager } from './../../../../../shared/classes-interfaces/premade-layout-manager';
+import { PremadeLayoutManager } from './../../../../../shared/classes/premade-layout-manager';
 import { Component, OnInit, Input } from '@angular/core';
 import { CompanyService } from '../../../../../shared/services/index';
 import { AdminService } from '../../../../../shared/services/admin.service';

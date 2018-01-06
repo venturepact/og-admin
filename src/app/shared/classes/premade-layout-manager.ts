@@ -76,4 +76,22 @@ export class PremadeLayoutManager {
           }
         });    
     }
+    changeStatus(templates,calcs,previous){
+      templates.forEach((element,index) => {
+        if((previous.length > 0) && (previous[index].active != element.active)){
+            calcs = this.setCalculatorStatus(element.feature._id,calcs,element.active)     
+        }
+      });
+      return JSON.parse(JSON.stringify(templates));;
+    }
+    setCalculatorStatus(selector,calcs,status){
+        console.log(selector,status);
+        let template = this.getModifiedTemplateName(selector);
+        calcs.forEach((obj)=>{
+          if(template == obj.template){
+            obj.active=status;
+          }
+        })
+        return calcs;
+    }
 }

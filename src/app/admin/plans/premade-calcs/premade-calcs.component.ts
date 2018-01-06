@@ -1,4 +1,4 @@
-import { PremadeLayoutManager } from './../../../shared/classes-interfaces/premade-layout-manager';
+import { PremadeLayoutManager } from './../../../shared/classes/premade-layout-manager';
 import { Observable } from 'rxjs/Observable';
 import { AdminService } from './../../../shared/services/admin.service';
 import { PlanService } from './../../../shared/services/plan.service';
