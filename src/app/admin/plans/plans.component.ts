@@ -222,7 +222,10 @@ export class PlansComponent implements OnInit {
   }
   setPlan(category){
     if(category == 'default')
-      return this.plans[category][1];
-    return this.plans[category][0];
+      return JSON.parse(JSON.stringify(this.plans[category][1]));
+    return JSON.parse(JSON.stringify(this.plans[category][0]));
+  }
+  copyPlan(plan){
+    return JSON.parse(JSON.stringify(plan));
   }
 }

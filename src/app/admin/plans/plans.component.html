@@ -78,8 +78,8 @@
   <div class="col-md-12 col-sm-12 col-xs-12 np">
     <!-- Start: Nav tabs -->
     <div class="np2">
-        <button class="btn btn-info btn-lg" (click)="manage='features';selectedPlan=setPlan(selectedPlanCategory);">Manage Features</button>
-        <button class="btn btn-info btn-lg" (click)="manage='premade_calcs';selectedPlan=setPlan(selectedPlanCategory);">Manage Premade Calculators</button>
+        <button class="btn btn-info btn-lg" (click)="manage='features';">Manage Features</button>
+        <button class="btn btn-info btn-lg" (click)="manage='premade_calcs';">Manage Premade Calculators</button>
     </div>
     
     
@@ -95,7 +95,7 @@
     <div class="np" style="overflow-x: scroll;">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
         <li role="presentation" [class.active]="selectedPlan.plan._id==plan.plan._id" *ngFor="let plan of plans[selectedPlanCategory];let i =index">
-          <a href="#{{plan.plan._id}}" (click)="selectedPlan=plan" *ngIf="plan.plan?.name!='Student'"
+          <a href="#{{plan.plan._id}}" (click)="selectedPlan=copyPlan(plan)" *ngIf="plan.plan?.name!='Student'"
              aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">
             {{plan.plan?.name}}
           </a>
@@ -106,7 +106,7 @@
     <!-- Start: tabs sub content -->
     <div class="tab-content tab-sub-content tab-sub-content-2">
       <!-- Start: tab my-profile -->
-        <div *ngIf="manage=='features'">
+        <div [class.hide]="manage!='features'">
             <!-- {{selectedPlanCategory}}
             {{plans[selectedPlanCategory].length}}
             <div  [class.active]="i==0" *ngFor="let plan of plans[selectedPlanCategory]; let i = index" role="tabpanel"
@@ -119,7 +119,7 @@
             
             <!-- </div> -->
         </div>
-      <div *ngIf="manage=='premade_calcs'">
+      <div [class.hide]="manage!='premade_calcs'">
         <premade-calcs [data]="selectedPlan"></premade-calcs>
       </div>
     </div>

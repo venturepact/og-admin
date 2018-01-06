@@ -11,6 +11,7 @@ declare var window:any;
 
 export class FeaturesComponent implements OnInit{
   @Input() data:any;
+  selectedPlanCategory: string;
   event = new EventEmitter();
   plan: any;
   loading: boolean = false;
@@ -54,6 +55,19 @@ export class FeaturesComponent implements OnInit{
       this.isTemplateInfinity = this.templates_s>=0?false:true;
       this.isVisitsInfinity = this.visits_s>=0?false:true;
       this.isLeadsInfinity = this.leads_s>=0?false:true;
+      this.features.forEach((feature)=>{
+        if(feature.feature['_id'] == 'templates'){
+            this.planService.planTemplates.next({updated:false,templates:[]});
+          
+          // if(['starter','business','freelancer','essentials','enterprise','business_jv','essentials_jv'].includes(this.plan._id)){
+          //   this.planService.planTemplates.next({updated:false,templates:feature['sub_features']});
+          // }else{
+          //   this.planService.planTemplates.next({updated:false,templates:[]});
+            
+          // }
+        }
+      })
+      
     }
   }
 
@@ -108,6 +122,9 @@ export class FeaturesComponent implements OnInit{
         "name" : feature.feature.name
       };
       features_update.push(obj2);
+      if(feature.feature['_id'] == 'templates'){
+        this.planService.planTemplates.next({updated:true,templates:feature['sub_features']});
+      }
     });
     let updateData = {
       cycles : this.coupons,
@@ -124,14 +141,15 @@ export class FeaturesComponent implements OnInit{
      .subscribe(
        (result: any)=>{
          this.loading = false;
-         this.features = result.features;
-         this.coupons = result.cycles;
-         this.plan = result.plan;
-         this.users_s = this.plan.users;
-         this.calculator_s = this.plan.calculators;
-         this.templates_s = this.plan.templates;
-         this.visits_s = this.plan.visits;
-         this.leads_s = this.plan.leads;
+        //  this.features = result.features['default'][1].features;
+        //  console.log("djjdjddf",this.features);
+        //  this.coupons = result.features['default'][1].cycles;
+        //  this.plan = result.features['default'][1].plan;
+        //  this.users_s = this.plan.users;
+        //  this.calculator_s = this.plan.calculators;
+        //  this.templates_s = this.plan.templates;
+        //  this.visits_s = this.plan.visits;
+        //  this.leads_s = this.plan.leads;
          jQuery('#msg' + this.plan.id).html('successfully Updated');
          window.toastNotification('Features Updated');
        },

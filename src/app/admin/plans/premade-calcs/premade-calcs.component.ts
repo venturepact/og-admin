@@ -1,4 +1,4 @@
-import { PremadeLayoutManager } from './../../../shared/classes/premade-layout-manager';
+import { PremadeLayoutManager } from './../../../shared/classes-interfaces/premade-layout-manager';
 import { Observable } from 'rxjs/Observable';
 import { AdminService } from './../../../shared/services/admin.service';
 import { PlanService } from './../../../shared/services/plan.service';
@@ -19,24 +19,42 @@ export class PremadeCalcsComponent extends PremadeLayoutManager implements OnIni
   premades_calcs:any=[];
   templates=[];
   availableTemplates=[];
+  modifiedTemplates=[];
   constructor(private planService:PlanService,
     private adminService:AdminService) { 
       super();
     }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
+  
   ngOnChanges(changes:SimpleChanges){ 
-    if(this.data && this.data.plan) { 
-      this.data = JSON.parse(JSON.stringify(this.data));
-      this.getPlanPremades(this.data.plan._id);
-    }
+    this.initializeComponent();
+    this.planService.getPlanTemplates().subscribe((data)=>{
+      if(data.updated && this.data && this.data.plan){
+        this.modifiedTemplates=JSON.parse(JSON.stringify(data.templates)); 
+        if(this.modifiedTemplates && this.modifiedTemplates.length>0 && this.premades_calcs && this.premades_calcs.premades){
+            this.availableTemplates = this.changeStatus(this.modifiedTemplates,this.premades_calcs.premades,this.availableTemplates);
+            this.updateCalcs();
+            this.syncCheckBoxes(this.availableTemplates,this.premades_calcs);
+        }
+      }
+      
+    });
+  }
+  initializeComponent(){
+    this.availableTemplates=[];
+    this.modifiedTemplates=[];
+    this.data = JSON.parse(JSON.stringify(this.data));
+    this.availableTemplates = this.getAvailableTemplates(this.data);
+    this.getPlanPremades(this.data.plan._id);  
   }
   getPlanPremades(planId){
     this.loading=true;
     this.planService.getPlanPremades(planId).subscribe((data)=>{
       this.loading=false;
       this.premades_calcs=data;
-      this.availableTemplates = this.getAvailableTemplates(this.data);
       if(this.availableTemplates.length>0){
         this.syncCheckBoxes(this.availableTemplates,this.premades_calcs);
       }

@@ -1,4 +1,4 @@
-import { PremadeLayoutManager } from './../../../../../shared/classes/premade-layout-manager';
+import { PremadeLayoutManager } from './../../../../../shared/classes-interfaces/premade-layout-manager';
 import { Component, OnInit, Input } from '@angular/core';
 import { CompanyService } from '../../../../../shared/services/index';
 import { AdminService } from '../../../../../shared/services/admin.service';
@@ -15,7 +15,7 @@ export class CompanyPremadesComponent extends PremadeLayoutManager implements On
   loading:boolean=true;
   data:any;
   availableTemplates=[];
-
+  previousTemplates=[];
   constructor(private companyService:CompanyService,private adminService:AdminService) {
     super();
    }
@@ -23,8 +23,10 @@ export class CompanyPremadesComponent extends PremadeLayoutManager implements On
   ngOnInit() {
 
     this.companyService.getCompanyTemplates().subscribe(data=>{
-      this.availableTemplates=data; 
+      this.availableTemplates=JSON.parse(JSON.stringify(data)); 
       if(this.availableTemplates.length>0 && this.data && this.data.premades){
+        this.previousTemplates = this.changeStatus(this.availableTemplates,this.data.premades,this.previousTemplates);
+        this.updateCompanyPremades();
         this.syncCheckBoxes(this.availableTemplates,this.data);
       }    
     })

@@ -17,6 +17,9 @@
                                     <input type="checkbox" [(ngModel)]="template.feature.visibility"
                                     (click)="selectAll($event,template,premades_calcs?.premades)"  
                                     [id]="'feature'+x" />{{template.feature.name}}
+                                    <span *ngIf="!template.active" class="tag-beta"
+                                    style="position: relative;left: 10px;font-size:12px!important;">
+                                    Layout associated with this template is locked </span>
                                 </label>
                             </div>
                         </div>
