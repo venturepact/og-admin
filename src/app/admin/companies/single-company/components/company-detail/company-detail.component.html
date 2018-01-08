@@ -176,6 +176,14 @@
                 </tr>
                 <tr>
                   <td>
+                    Deal referred
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    {{company.deal_refered ? company.deal_refered : (company.isAppSumo ? 'APPSUMO' : 'NONE')}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Number of calculators
                   </td>
                   <td *ngIf="!edit_mode">

@@ -28,7 +28,7 @@ export class Company {
   public addon: Addon;
   public current_usage: CurrentUsage;
   public parent_company : String;
-  public cname : CName; 
+  public cname : CName;
 
 
 
@@ -69,7 +69,7 @@ export class AdminCompany {
   public createdAt: Date;
   public name: String;
   public sub_domain: String;
-  public root_url : String ; 
+  public root_url : String ;
   public error_url : String ;
   public agency: Boolean;
   public leads: Leads;
@@ -95,6 +95,7 @@ export class AdminCompany {
   public api: String;
   public reset_current_usage : Boolean;
   public isAppSumo : Boolean;
+  public deal_refered: String;
   public referral: Referral;
   public reset_period: Number;
   public parent_company: String;
@@ -134,6 +135,7 @@ export class AdminCompany {
       this.reset_current_usage = company.reset_current_usage ? company.reset_current_usage : false;
       this.reset_period = company.reset_period;
       this.isAppSumo = company.is_appsumo_created;
+      this.deal_refered = company.deal_refered;
       this.current_referral_program = company.current_referral_program;
       this.referral = new Referral(company.referral);
       this.parent_company = company.parent_company;
