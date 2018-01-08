@@ -66,6 +66,9 @@
               <option value="on_trial_end">When trial ends</option>
               <option value="stop_date">Add stop date</option>
             </select>
+            <label class="contains" *ngIf="ticker == 'no_ticker' || ticker == 'stop_date'">No date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'ticker'">Specified date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'on_trial_end'">Subscription trial ending date will be shown with message</label>
           </div>
           <div class="col-md-3 mr20">
             <ng-container *ngIf="ticker==='ticker'">
