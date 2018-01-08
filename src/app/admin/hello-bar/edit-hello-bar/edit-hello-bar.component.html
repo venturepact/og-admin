@@ -29,9 +29,10 @@
             </ng-container>
             <select class="form-control"
                     *ngIf="!(cond.selected_attribute==='signed_up' || cond.selected_attribute==='payment_due_date')"
-                    [(ngModel)]="cond.selected_value" title="select value">
+                    [(ngModel)]="cond.selected_value" title="select value" [multiple] = "cond.selected_operator == 'contains'">
               <option *ngFor="let value of values[cond.selected_attribute]" [ngValue]="value">{{value}}</option>
             </select>
+            <label class="contains" *ngIf="cond.selected_operator == 'contains'">Press ctrl + click value to select multiple</label>
           </div>
         </div>
       </div>

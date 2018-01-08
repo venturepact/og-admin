@@ -26,7 +26,7 @@ export class EditHelloBarComponent implements OnInit {
     status: ['future', 'in_trial', 'active', 'non_renewing', 'cancelled'],
     payment_info_added: ['no_card','valid', 'expiring', 'expired']
   };
-  stringOperators: Array<string> = ['equals', 'not equal to'];
+  stringOperators: Array<string> = ['equals', 'contains', 'not equal to'];
   numberOperators: Array<string> = ['less than', 'greater than', 'equals'];
   operators = {
     plan: this.stringOperators, signed_up: this.numberOperators,
@@ -72,12 +72,13 @@ export class EditHelloBarComponent implements OnInit {
         } else if (plan._id === 'dealfuel') {
           this.plans.push('dealfuel_d');
         } else {
-          this.plans.push(plan._id);
+          this.plans.push(plan._id + '_d');
         }
       });
     });
     if (this.selectedHellobar == null) {
       this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
+      console.log('this.conditions', this.conditions);
     }
     else {
       this.hellobarId = this.selectedHellobar._id;
@@ -95,11 +96,12 @@ export class EditHelloBarComponent implements OnInit {
           attributes: ['plan', 'status', 'payment_due_date', 'signed_up', 'payment_info_added'],
           selected_attribute: condition.attribute,
           selected_operator: condition.operator,
-          selected_value: condition.value,
+          selected_value: condition.value.split(','),
           logic_gate: condition.logicGate
-        })
+        });
       });
     }
+
   }
 
   addCondition() {
@@ -113,8 +115,6 @@ export class EditHelloBarComponent implements OnInit {
 
   saveHellobar(status, button) {
     button.innerHTML = 'Saving...';
-    console.log('this.ticker', this.ticker);
-    console.log(this.conditions);
     this.adminService.saveHellobar({
       _id: this.hellobarId,
       conditions: this.conditions,
