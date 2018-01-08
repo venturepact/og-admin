@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
@@ -11,6 +12,8 @@ import {BaseService} from './base.service';
 
 @Injectable()
 export class PlanService extends BaseService {
+  planTemplates:BehaviorSubject<any> = new BehaviorSubject<any>([])
+
   constructor(public _http: Http) {
     super();
   }
@@ -106,5 +109,7 @@ export class PlanService extends BaseService {
         .map(this.extractData)
         .catch(this.handleError);
   }
-  
+  getPlanTemplates(){
+    return this.planTemplates.asObservable();
+  }
 }

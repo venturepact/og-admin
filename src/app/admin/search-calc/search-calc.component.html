@@ -49,20 +49,30 @@
       </div>
       <div class="row" style="margin-top: 10px">
         <div class="col-sm-4" style="margin-left: 15px">
-          <select title="select" [(ngModel)]="selectedFilter">
+          <select title="select" (change)="selectedFilter['value']=''" [(ngModel)]="selectedFilter">
             <optgroup label="Company">
               <option [ngValue]="{type:'company',field:'sub_domain', value: value}">Sub Domain</option>
             </optgroup>
             <optgroup label="App">
               <option [ngValue]="{type:'app',field:'header', value: value}">Header</option>
               <option [ngValue]="{type:'app',field:'sub_header', value: value}">SubHeader</option>
+              <option [ngValue]="{type:'app',field:'Recommendation', value: ''}">Outcome Quiz</option>
+              <option [ngValue]="{type:'app',field:'Numerical', value: ''}">Calculator</option>
+              <option [ngValue]="{type:'app',field:'Graded', value: ''}">Graded Quiz</option>
+              <option [ngValue]="{type:'app',field:'Poll', value: ''}">Poll</option>
             </optgroup>
+          </select> 
+        </div>
+        <div *ngIf="!isTemplates(selectedFilter ? selectedFilter.field : 'sub_domain');else templates">
+          <input type="text" placeholder="enter value" [(ngModel)]="selectedFilter['value']">
+        </div>
+        <ng-template #templates>
+          <select  [(ngModel)]="selectedFilter['value']">
+            <option [value]="'all'">All</option>
+            <option *ngFor="let template of adminService.availableTemplates"
+             [value]="template.selector">{{template.name}}</option>
           </select>
-        </div>
-        <div>
-          <input type="text" placeholder="enter value" [(ngModel)]="value"
-                 (change)="selectedFilter['value']=$event.target.value">
-        </div>
+        </ng-template>
       </div>
 
       <button class="apply-filter-container" (click)="filterResults()">Fetch Results</button>

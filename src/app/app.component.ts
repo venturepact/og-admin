@@ -23,6 +23,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._script.load('bootBox').then(data => {
+      
+          });
     console.log('%cSTOP!.', ' color: red; font-size: xx-large');
     console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a feature, it is a scam and will give them access to your account.', 'color: grey; font-size: x-large');
 

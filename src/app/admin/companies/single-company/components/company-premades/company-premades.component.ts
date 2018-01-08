@@ -1,48 +1,54 @@
+import { PremadeLayoutManager } from './../../../../../shared/classes/premade-layout-manager';
 import { Component, OnInit, Input } from '@angular/core';
 import { CompanyService } from '../../../../../shared/services/index';
 import { AdminService } from '../../../../../shared/services/admin.service';
-
+declare var jQuery:any;
+declare var bootbox:any;
 @Component({
   selector: 'company-premades',
   templateUrl: './company-premades.component.html',
   styleUrls: ['./company-premades.component.css']
 })
-export class CompanyPremadesComponent implements OnInit {
+export class CompanyPremadesComponent extends PremadeLayoutManager implements OnInit  {
   @Input() company:any;
   edit_mode:boolean=false;
   loading:boolean=true;
   data:any;
-  templates=[];
+  availableTemplates=[];
+  previousTemplates=[];
   constructor(private companyService:CompanyService,private adminService:AdminService) {
+    super();
    }
 
   ngOnInit() {
-    this.getAvailableTemplates();
-  }
-  getCompanyPremades(){
-    this.loading=true;
-    this.companyService.getCompanyPremades(this.company)
-    .subscribe((data)=>{
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",data);
-      this.data = data;
-      this.loading=false;
+
+    this.companyService.getCompanyTemplates().subscribe(data=>{
+      this.availableTemplates=JSON.parse(JSON.stringify(data)); 
+      if(this.availableTemplates.length>0 && this.data && this.data.premades){
+        this.previousTemplates = this.changeStatus(this.availableTemplates,this.data.premades,this.previousTemplates);
+        this.updateCompanyPremades();
+        this.syncCheckBoxes(this.availableTemplates,this.data);
+      }    
     })
   }
   ngAfterViewInit(){
     this.getCompanyPremades();    
   }
+  getCompanyPremades(){
+    this.loading=true;
+    this.companyService.getCompanyPremades(this.company)
+    .subscribe((data)=>{
+      this.data = data;
+      this.loading=false;
+      if(this.availableTemplates.length>0){
+        this.syncCheckBoxes(this.availableTemplates,this.data);
+      } 
+    })
+  }
   updateCompanyPremades(){
-    console.log(">>>>>>>>>>>>>>>>>",this.data);
     this.companyService.updateCompanyPremades({company:this.company,premades:this.data.premades})
     .subscribe((data)=>{
-      console.log(">>>>>>>>>>>>>>>>>>>",data);
       this.getCompanyPremades();
     })
   }
-  getAvailableTemplates(){
-    this.adminService.getAvailableTemplates().subscribe((data)=>{
-      this.templates=data;
-    }) 
-  }
-
 }

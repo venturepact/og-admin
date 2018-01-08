@@ -12,7 +12,7 @@
 						</div>
 						<div class="col-sm-2">
 							<label class="switch">
-								<input type="checkbox" [(ngModel)]="edit_mode">
+								<input type="checkbox"  [(ngModel)]="edit_mode">
 								<div class="slider round"></div>
 							</label>
 						</div>
@@ -26,17 +26,30 @@
 				<div class="panel-group" *ngIf="!loading">
 					<div *ngIf="edit_mode" class="panel-body">
 
-						<div class="row" *ngFor="let template of templates">
-							<div class="panel panel-default">
-								<div class="panel-heading panel-heading-inner">{{template.name}}</div>
+						<div [id]="'template'+x" class="row" *ngFor="let template of availableTemplates;let x=index">
+							<div class="panel panel-default" >
+								<div class="panel-heading panel-heading-inner">
+									<div class="checkbox">
+										<label>
+											<span style="position: relative;right: 10px;">{{ !template.feature.visibility ? 'Select All' : 'Deselect All' }}</span>
+											<input type="checkbox" [(ngModel)]="template.feature.visibility"
+											(click)="selectAll($event,template,data?.premades)"  
+											[id]="'feature'+x" />{{template.feature.name}}
+											<span *ngIf="!template.active" class="tag-beta"
+											style="position: relative;left: 10px;font-size:12px!important;">
+											Layout associated with this template is locked </span>
+										</label>
+									</div>
+								</div>
 								<div class="panel-body panel-body-inner">
 									<div class="todolist not-done">
 										<ul id="sortable" class="list-unstyled">
 											<ng-container *ngFor="let premade_calc of data?.premades; let i = index">
-												<li class="ui-state-default" *ngIf="template.selector == premade_calc.template">
+												<li class="ui-state-default" *ngIf="getModifiedTemplateName(template.feature._id) == premade_calc.template">
 													<div class="checkbox">
 														<label>
-															<input type="checkbox" [(ngModel)]="premade_calc.active" name="feature" />{{premade_calc.title}}
+															<input type="checkbox" (click)="syncSingleCheckBox($event,template,data?.premades)"
+															[(ngModel)]="premade_calc.active" [name]="'feature'+i" />{{premade_calc.title}}
 														</label>
 													</div>
 												</li>

@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +15,7 @@ import { User } from './../models/user';
 export class CompanyService extends BaseService {
   token: string;
   response: any;
+  companyTemplates:BehaviorSubject<any>= new BehaviorSubject<any>([]);
   // currentCompany: CurrentCompany;
   constructor(public _http: Http) {
     super();
@@ -331,5 +333,8 @@ export class CompanyService extends BaseService {
     return this._http.post(`${this._url}/company/update_premades`,data,this.post_options())
         .map(this.extractData)
         .catch(this.handleError);
+  }
+  getCompanyTemplates(){
+    return this.companyTemplates.asObservable();
   }
 }

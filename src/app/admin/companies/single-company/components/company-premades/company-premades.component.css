@@ -74,7 +74,7 @@ border-radius: 50%;
 
 
 .panel-heading-inner {
-  padding: 10px 10px;
+  padding: 5px 0px;
 }
 .panel-body-inner, .panel-footer-inner {
   background: #FFFFFF;
@@ -97,4 +97,13 @@ li.ui-state-default:last-child{
 .checkbox input[type=checkbox] {
   position: relative !important;
   width: 50px;
+}
+span.tag-beta {
+  background: #279ed6;
+  /* font-size: 8px; */
+  font-family: montserratbold;
+  padding: 1px 5px;
+  border-radius: 6px;
+  color: #fff;
+  vertical-align: middle;
 }

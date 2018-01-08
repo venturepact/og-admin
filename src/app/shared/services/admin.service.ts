@@ -12,9 +12,12 @@ import {Observable} from "rxjs/Observable";
 export class AdminService extends BaseService {
 
   public getLogSubject = new ReplaySubject<String>(2);
-
+  public availableTemplates = [];
   constructor(public _http: Http) {
     super();
+    this.getAvailableTemplates().subscribe((data)=>{
+      this.availableTemplates=data;
+    })
   }
 
   getBasicGraph(data: any) {
