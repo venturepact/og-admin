@@ -56,7 +56,8 @@ export class PremadeLayoutManager {
         bootbox.dialog({
           closeButton: false,
           message: `<button type="button" class="bootbox-close-button close" data-dismiss="modal"
-                                 aria-hidden="true" style="margin-top: -10px;">×</button>
+                                 aria-hidden="true" style="margin-top: -10px;">
+                                 <i class="material-icons">close</i></button>
                               <div class="bootbox-body-left">
                                     <div class="mat-icon">
                                       <i class="material-icons">error</i>

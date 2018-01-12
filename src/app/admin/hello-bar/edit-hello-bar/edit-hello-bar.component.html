@@ -29,9 +29,10 @@
             </ng-container>
             <select class="form-control"
                     *ngIf="!(cond.selected_attribute==='signed_up' || cond.selected_attribute==='payment_due_date')"
-                    [(ngModel)]="cond.selected_value" title="select value">
+                    [(ngModel)]="cond.selected_value" title="select value" [multiple] = "cond.selected_operator == 'contains'">
               <option *ngFor="let value of values[cond.selected_attribute]" [ngValue]="value">{{value}}</option>
             </select>
+            <label class="contains" *ngIf="cond.selected_operator == 'contains'">Press ctrl + click value to select multiple</label>
           </div>
         </div>
       </div>
@@ -65,6 +66,9 @@
               <option value="on_trial_end">When trial ends</option>
               <option value="stop_date">Add stop date</option>
             </select>
+            <label class="contains" *ngIf="ticker == 'no_ticker' || ticker == 'stop_date'">No date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'ticker'">Specified date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'on_trial_end'">Subscription trial ending date will be shown with message</label>
           </div>
           <div class="col-md-3 mr20">
             <ng-container *ngIf="ticker==='ticker'">

@@ -9,3 +9,8 @@
 .panel-body, .panel-footer {
   background: #FFFFFF;
 }
+.contains {
+  font-size: 10px;
+  color: #9f191f;
+  margin-top: 5px;
+}
