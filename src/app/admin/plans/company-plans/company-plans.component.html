@@ -15,7 +15,7 @@
 
     <div class="np" style="overflow-x: scroll;">
       <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
-        <li role="presentation" [class.active]="i==0" *ngFor="let plan of planTypes[selectedPlanCategory];let i =index">
+        <li role="presentation" [class.active]="selectedPlan==plan._id" *ngFor="let plan of planTypes[selectedPlanCategory];let i =index">
           <a (click)="fetchPlanFeature(plan._id)" href="#{{plan._id}}" *ngIf="plan?.name!='Student'"
              aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">
             {{plan?.name}}
