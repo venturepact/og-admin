@@ -169,7 +169,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         },[]);
       this.errorMessage='';
       console.log(calculators);
-     // this.requestToAdd(calculators,true);
+      this.requestToAdd(calculators,true);
     }else{
       this.errorMessage="No data in this file";
     }
