@@ -10,7 +10,7 @@ import {environment} from "../../../../environments/environment";
 })
 export class CompanyPlansComponent implements OnInit {
 
-  loading: boolean = false;
+  loading: boolean = true;
   planFeatures: any;
   planTypes: Array<any>;
   featureUpdate: Map<String, Object> = new Map<String, Object>();
@@ -33,9 +33,11 @@ export class CompanyPlansComponent implements OnInit {
   }
 
   fetchPlanFeature(planId) {
+    this.loading=true;
     this.selectedPlan = planId;
     this._planService.getAllCompanyFeaure(planId)
       .subscribe((result) => {
+        this.loading =false;
         this.planFeatures = result;
         this.loading = false;
       });
