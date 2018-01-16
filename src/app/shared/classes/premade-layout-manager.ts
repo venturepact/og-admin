@@ -7,13 +7,13 @@ export class PremadeLayoutManager {
            templates[index].feature.visibility=this.checkForParentStatus(obj.feature._id,premade_calcs.premades);
         }) 
     }
-    syncSingleCheckBox(event,template,premade_calcs){
+    syncSingleCheckBox(event,template,premade_calcs,calc={}){
         if(!template.active){
           this.popUp();
           event.preventDefault();
           return ;
         }
-        template.feature.visibility = this.checkForParentStatus(template.feature._id,premade_calcs);
+        template.feature.visibility = this.checkForParentStatus(template.feature._id,premade_calcs,calc);
     }
     getModifiedTemplateName(selector){
         let template = selector.replace(/_/g,'-');
@@ -39,13 +39,16 @@ export class PremadeLayoutManager {
         });
       }
       
-      checkForParentStatus(selector,premade_calcs){
+      checkForParentStatus(selector,premade_calcs,calc:any={}){
         let template = this.getModifiedTemplateName(selector)
         let filteredArray = premade_calcs.filter(obj=>{
           return (obj.template == template);
         });
         if(filteredArray.length == 0){
           return false;
+        }
+        if(typeof calc.active != 'undefined'){
+          calc.active = !calc.active;
         }
         let result = filteredArray.every(obj=>{
           return obj.active;
