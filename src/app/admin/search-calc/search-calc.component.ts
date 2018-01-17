@@ -162,6 +162,11 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
     this.loading = true;
     return this.adminService.getApps(this.getParams());
   }
+
+  fetchLiveCalc() {
+    this.onlyLive = !this.onlyLive;
+    this.searchApps()
+  }
   isTemplates(field){
     return ['Recommendation', 'Numerical', 'Graded', 'Poll'].includes(field);
   }

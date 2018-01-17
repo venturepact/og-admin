@@ -30,7 +30,7 @@
         </label>
       </div>
       <div class="check-box-outer">
-        <label>Only Live<input (change)="onlyLive=!onlyLive" type="checkbox" class="check-box">
+        <label>Only Live<input (change)="fetchLiveCalc()" type="checkbox" class="check-box">
         </label>
       </div>
 
@@ -61,7 +61,7 @@
               <option [ngValue]="{type:'app',field:'Graded', value: ''}">Graded Quiz</option>
               <option [ngValue]="{type:'app',field:'Poll', value: ''}">Poll</option>
             </optgroup>
-          </select> 
+          </select>
         </div>
         <div *ngIf="!isTemplates(selectedFilter ? selectedFilter.field : 'sub_domain');else templates">
           <input type="text" placeholder="enter value" [(ngModel)]="selectedFilter['value']">
