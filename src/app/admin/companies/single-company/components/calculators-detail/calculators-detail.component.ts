@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CompanyService} from "../../../../../shared/services/company.service";
 import {AdminService} from "../../../../../shared/services/admin.service";
 import {Script} from "../../../../../shared/services/script.service";
+import {environment} from "../../../../../../environments/environment";
 
 declare var jQuery: any;
 
@@ -65,6 +66,9 @@ export class CalculatorDetailComponent implements AfterViewInit {
     let subdomain = this.company.sub_domain;
     let location = window.location.href;
     let domain = location.split('//')[1];
+    if (environment.production) {
+      domain = 'admin.outgrow.us';
+    }
     domain = domain.split('/')[0];
     domain = subdomain + '.' + domain.split('.')[1] + '.' + domain.split('.')[2] + '/' + link;
     return domain;
