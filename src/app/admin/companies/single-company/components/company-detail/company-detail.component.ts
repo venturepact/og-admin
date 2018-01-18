@@ -20,6 +20,7 @@ export class CompanyDetailComponent implements OnInit {
   @Input() company: any = '';
   childCompany = new EventEmitter<any>();
   updateCompany: any = ''; //AdminCompany = new AdminCompany({});
+  change_immediate: string;
   leads: any = '';
   traffic: any = '';
   id: any;
@@ -46,6 +47,8 @@ export class CompanyDetailComponent implements OnInit {
   ngOnInit() {
     this.errorMsg = '';
     this.updateCompany = this.company;
+    this.updateCompany['change_immediate'] = false;
+    this.change_immediate = this.company.chargebee_plan_id;
     if(!this.updateCompany.child_intercom_id) {
       this.updateCompany.child_intercom_id = '';
     }
@@ -77,7 +80,8 @@ export class CompanyDetailComponent implements OnInit {
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
-      child_intercom_id: [this.updateCompany.child_intercom_id || '']
+      child_intercom_id: [this.updateCompany.child_intercom_id || ''],
+      change_immediate: [false]
     });
     this.getPlanList();
     this.getCompanyCoupon();

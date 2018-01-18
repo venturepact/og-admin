@@ -99,8 +99,7 @@ export class AdminService extends BaseService {
   }
 
   updateCompany(company: any, companyId: string) {
-    let details: any = {};
-    details = {
+    let details: any = {
       'name': company.name,
       'sub_domain': company.sub_domain,
       'cname': company.cname,
@@ -123,9 +122,9 @@ export class AdminService extends BaseService {
         'leaddyno_url': company.referral.leaddyno_url,
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
-      'child_intercom_id': company.child_intercom_id
+      'child_intercom_id': company.child_intercom_id,
+      'change_immediate': company.change_immediate
     };
-
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);

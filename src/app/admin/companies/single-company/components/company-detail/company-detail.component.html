@@ -469,6 +469,17 @@
                     </select>
                   </div>
                 </div>
+                <div class="row" *ngIf="change_immediate != updateCompany.chargebee_plan_id">
+                  <div class="col-sm-4">
+                    Change Plan immediately
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.change_immediate" formControlName="change_immediate">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-sm-4">
                     Is AppSumo
