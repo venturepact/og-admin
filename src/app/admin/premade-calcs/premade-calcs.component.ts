@@ -2,6 +2,7 @@ import { Datatable } from './../../shared/interfaces/datatable.interface';
 import { PremadeCalcService } from './../../shared/services/premade-calc.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,Validators,FormBuilder} from '@angular/forms';
+import { AdminService } from '../../shared/services/admin.service';
 declare var jQuery:any;
 @Component({
   selector: 'app-premade-calcs',
@@ -21,16 +22,20 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
               ,'Legal','Marketing & Advertising','Publishing'
               ,'Quintessential','Real Estate & Construction','Technology'
               ,'Travel','TV and Entertainment'];
-  templates= [
-    ['one-page-card-new','Chicago'],
-    ['sound-cloud-v3','Londoner'],
-    ['template-seven','Seattle'],
-    ['inline-temp-new','Greek'],
-    ['experian','Tokyo'],
-    ['template-five','Madrid'],
-    ['template-six','Stockholm']
-  ];
-  constructor(private _fb:FormBuilder,private _calculatorService:PremadeCalcService) {
+  templates = [];
+  // templates= [
+  //   ['one-page-card-new','Chicago'],
+  //   ['sound-cloud-v3','Londoner'],
+  //   ['template-seven','Seattle'],
+  //   ['inline-temp-new','Greek'],
+  //   ['experian','Tokyo'],
+  //   ['template-five','Madrid'],
+  //   ['template-six','Stockholm'],
+  //   ['template-eight',]
+  // ];
+  constructor(private _fb:FormBuilder,
+    private _calculatorService:PremadeCalcService,
+  private _adminService:AdminService) {
     super();
    }
 
@@ -50,6 +55,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       this.total_pages = Math.ceil(response.count / this.current_limit);
       this.calculators=response.calculators;
       this.errorMessage='';
+      this.templates = this._adminService.availableTemplates;
+    
     },error=>{
       this.loading=false;
       this.errorMessage=error.message;
@@ -142,7 +149,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
             return acc;
           }
           if(!row[1]) return acc; 
-          let template=this.getTemplateType(row[4],1);
+          let template=this.getTemplateType(row[4],'name');
           let obj={
                 title:row[0],
                 live_url:row[1],
@@ -214,12 +221,15 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       this.getCalculators();
     })
   }
-  getTemplateType(name,index){
-    if(!name) return this.templates[0][index?0:1];
+  getTemplateType(name,prop){
+    if(!name) return this.templates[0][(prop=='selector')?'name':'selector'];
     let item = this.templates.find((value)=>{
-        return value[index]==name;
+        if(prop == 'name'){
+          return value[prop] == `The ${name}`
+        }
+        return value[prop]==name;
     })
-    return item[index?0:1];
+    return item[(prop=='selector')?'name':'selector'];
   }
   editCalculator(index){
     console.log(this.calculators[index]);

@@ -437,4 +437,16 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  saveAutoLoginToken(data: Object): Observable<any> {
+    return this._http.post(this._url + '/admin/saveAutoLoginToken', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  removeAutoLoginToken(data: Object): Observable<any> {
+    return this._http.put(this._url + '/admin/removeAutoLoginToken', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
 }

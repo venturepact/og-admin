@@ -332,3 +332,7 @@
 /*.promolist .goalname { padding-right: 2em; }*/
 
 /*.promolist .editbtn { cursor: pointer; font-size: 17px; }*/
+.editbtn {
+  vertical-align: middle;
+  margin-left: 10px;
+}
