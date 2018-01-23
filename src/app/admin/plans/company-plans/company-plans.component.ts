@@ -44,29 +44,21 @@ export class CompanyPlansComponent implements OnInit {
   }
 
   updateParentFeature(parentFeature) {
-    console.log(parentFeature);
     if (!parentFeature.active) {
       parentFeature.sub_features.forEach(feat => {
         feat.active = false;
+        this.updateChildFeature(parentFeature.sub_features, parentFeature);
       });
     }
-    if (this.featureUpdate.has(parentFeature._id)) {
-      this.featureUpdate.delete(parentFeature._id);
-    }
     this.featureUpdate.set(parentFeature._id, parentFeature);
-    //  this.featureUpdate.push(parentFeature);
-
   }
 
   updateChildFeature(childFeature, parentFeature) {
-    console.log(childFeature, parentFeature);
     if (childFeature.active) {
       parentFeature.active = true;
+      this.updateParentFeature(parentFeature);
     }
-    if (this.featureUpdate.has(parentFeature._id)) {
-      this.featureUpdate.delete(parentFeature._id);
-    }
-    this.featureUpdate.set(parentFeature._id, parentFeature);
+    this.featureUpdate.set(childFeature._id, childFeature);
   }
 
   updateCompanyPlan() {
@@ -76,13 +68,6 @@ export class CompanyPlansComponent implements OnInit {
       request.push({
         _id: value._id,
         active: value.active
-      });
-
-      value.sub_features.forEach(feat => {
-        request.push({
-          _id: feat._id,
-          active: feat.active
-        });
       });
     });
 
