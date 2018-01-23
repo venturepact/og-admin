@@ -3,7 +3,7 @@ import {PlanService} from "../../../shared/services/plan.service";
 import {environment} from "../../../../environments/environment";
 
 @Component({
-  selector: 'app-company-plans',
+  selector: 'og-company-plans',
   templateUrl: './company-plans.component.html',
   styleUrls: ['../plans.component.css', './../custom-material.css'
     , './../features/features.component.css']
@@ -33,11 +33,11 @@ export class CompanyPlansComponent implements OnInit {
   }
 
   fetchPlanFeature(planId) {
-    this.loading=true;
+    this.loading = true;
     this.selectedPlan = planId;
     this._planService.getAllCompanyFeaure(planId)
       .subscribe((result) => {
-        this.loading =false;
+        this.loading = false;
         this.planFeatures = result;
         this.loading = false;
       });
@@ -90,5 +90,4 @@ export class CompanyPlansComponent implements OnInit {
       .subscribe(response => {
       })
   }
-
 }
