@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {PlanService} from "../../../shared/services/plan.service";
-import {environment} from "../../../../environments/environment";
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'og-company-plans',
@@ -11,6 +11,7 @@ import {environment} from "../../../../environments/environment";
 export class CompanyPlansComponent implements OnInit {
 
   loading: boolean = true;
+  buttonLoading: boolean = false;
   planFeatures: any;
   planTypes: Array<any>;
   featureUpdate: Map<String, Object> = new Map<String, Object>();
@@ -19,11 +20,11 @@ export class CompanyPlansComponent implements OnInit {
   selectedPlan: String;
   keys = Object.keys;
 
-  constructor(private _planService: PlanService) {
+  constructor(private _planService: PlanService
+    , @Inject(DOCUMENT) private document: any) {
   }
 
   ngOnInit() {
-
     this.loading = true;
     this._planService.getPlanTypes().subscribe(response => {
       this.planTypes = response;
@@ -39,7 +40,6 @@ export class CompanyPlansComponent implements OnInit {
       .subscribe((result) => {
         this.loading = false;
         this.planFeatures = result;
-        this.loading = false;
       });
   }
 
@@ -62,6 +62,7 @@ export class CompanyPlansComponent implements OnInit {
   }
 
   updateCompanyPlan() {
+    this.buttonLoading = true;
     let request = [];
 
     this.featureUpdate.forEach((value: any, key: String) => {
@@ -73,6 +74,11 @@ export class CompanyPlansComponent implements OnInit {
 
     this._planService.updateCompanyFeatures(this.selectedPlan, request)
       .subscribe(response => {
+        this.buttonLoading = false;
+        this.fetchPlanFeature(this.selectedPlan);
+      }, err => {
+        this.buttonLoading = false;
+        this.document.querySelector('#submit-btn').innerText = 'Failed';
       })
   }
 }

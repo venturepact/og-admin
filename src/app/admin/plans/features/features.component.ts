@@ -34,7 +34,7 @@ export class FeaturesComponent implements OnInit{
   }
 
   ngOnInit(){
-    
+
   }
   ngOnChanges(){
     console.log("jfkjdgg",this.data);
@@ -58,16 +58,16 @@ export class FeaturesComponent implements OnInit{
       this.features.forEach((feature)=>{
         if(feature.feature['_id'] == 'templates'){
             this.planService.planTemplates.next({updated:false,templates:[]});
-          
+
           // if(['starter','business','freelancer','essentials','enterprise','business_jv','essentials_jv'].includes(this.plan._id)){
           //   this.planService.planTemplates.next({updated:false,templates:feature['sub_features']});
           // }else{
           //   this.planService.planTemplates.next({updated:false,templates:[]});
-            
+
           // }
         }
       })
-      
+
     }
   }
 
