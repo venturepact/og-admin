@@ -56,23 +56,41 @@
             <optgroup label="App">
               <option [ngValue]="{type:'app',field:'header', value: value}">Header</option>
               <option [ngValue]="{type:'app',field:'sub_header', value: value}">SubHeader</option>
-              <option [ngValue]="{type:'app',field:'Recommendation', value: ''}">Outcome Quiz</option>
-              <option [ngValue]="{type:'app',field:'Numerical', value: ''}">Calculator</option>
-              <option [ngValue]="{type:'app',field:'Graded', value: ''}">Graded Quiz</option>
-              <option [ngValue]="{type:'app',field:'Poll', value: ''}">Poll</option>
             </optgroup>
+
+            <optgroup label="Recommendation">
+              <option [ngValue]="{type:'Recommendation',field:'all'}">All</option>
+              <option *ngFor="let template of adminService.availableTemplates"
+                      [ngValue]="{type:'Recommendation',field:template.selector}">{{template.name}}
+              </option>
+            </optgroup>
+
+            <optgroup label="Numerical">
+              <option [ngValue]="{type:'Numerical',field:'all'}">All</option>
+              <option *ngFor="let template of adminService.availableTemplates"
+                      [ngValue]="{type:'Numerical',field:template.selector}">{{template.name}}
+              </option>
+            </optgroup>
+
+            <optgroup label="Graded">
+              <option [ngValue]="{type:'Graded',field:'all'}">All</option>
+              <option *ngFor="let template of adminService.availableTemplates"
+                      [ngValue]="{type:'Graded',field:template.selector}">{{template.name}}
+              </option>
+            </optgroup>
+
+            <optgroup label="Poll">
+              <option [ngValue]="{type:'Poll',field:'all'}">All</option>
+              <option *ngFor="let template of adminService.availableTemplates"
+                      [ngValue]="{type: 'Poll',field: template.selector}">{{template.name}}
+              </option>
+            </optgroup>
+
           </select>
         </div>
-        <div *ngIf="!isTemplates(selectedFilter ? selectedFilter.field : 'sub_domain');else templates">
+        <div *ngIf="notTemplate(selectedFilter?.type)">
           <input type="text" placeholder="enter value" [(ngModel)]="selectedFilter['value']">
         </div>
-        <ng-template #templates>
-          <select  [(ngModel)]="selectedFilter['value']">
-            <option [value]="'all'">All</option>
-            <option *ngFor="let template of adminService.availableTemplates"
-             [value]="template.selector">{{template.name}}</option>
-          </select>
-        </ng-template>
       </div>
 
       <button class="apply-filter-container" (click)="filterResults()">Fetch Results</button>

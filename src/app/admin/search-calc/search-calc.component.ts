@@ -35,7 +35,7 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
 
   searchCalc = new FormControl();
   public subscriptions: Subscription = new Subscription();
-  public sub_role: String = null;
+  public sub_role: string = null;
 
   constructor(private adminService: AdminService,
      private scriptService: Script,
@@ -60,8 +60,8 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   }
 
   ngAfterViewInit(): void {
-    this.scriptService.load('daterangepicker', 'datatables')
-      .then((data) => {
+    this.scriptService.load('daterangepicker'
+      , 'datatables').then((data) => {
         this.scriptLoaded = true;
       })
       .catch((error) => {
@@ -167,7 +167,8 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
     this.onlyLive = !this.onlyLive;
     this.searchApps()
   }
-  isTemplates(field){
-    return ['Recommendation', 'Numerical', 'Graded', 'Poll'].includes(field);
+
+  notTemplate(field) {
+    return ['app', 'company'].includes(field);
   }
 }
