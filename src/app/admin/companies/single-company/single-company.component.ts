@@ -2,7 +2,6 @@ import {AfterViewInit, Component, NgZone, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from './../../../shared/services/company.service';
 import {AdminCompany} from '../../../shared/models/company';
-import {PlatformLocation} from "@angular/common";
 
 declare var jQuery: any;
 
@@ -101,7 +100,6 @@ export class SingleCompanyComponent implements AfterViewInit {
         (response: any) => {
           this.company = new AdminCompany(response.company);
           this.company['reset_period_list'] = response.reset_period_list;
-
         },
         (response: any) => {
         }

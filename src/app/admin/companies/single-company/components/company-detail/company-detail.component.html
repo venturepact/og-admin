@@ -92,6 +92,14 @@
                 </tr>
                 <tr>
                   <td>
+                    Remove leads After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    {{company.remove_leads_after_saving}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Current Referral Program
                   </td>
                   <td *ngIf="!edit_mode">
@@ -357,6 +365,20 @@
                     </label>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Remove leads After Sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_leads_after_saving"
+                             formControlName="remove_leads_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
                 <div class="row" *ngIf="updateCompany.current_referral_program">
                   <div class="col-sm-4">
                     LeadDyno
