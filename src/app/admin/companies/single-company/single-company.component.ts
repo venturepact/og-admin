@@ -1,8 +1,9 @@
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 import {AfterViewInit, Component, NgZone, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from './../../../shared/services/company.service';
 import {AdminCompany} from '../../../shared/models/company';
-import {PlatformLocation} from "@angular/common";
 
 declare var jQuery: any;
 
@@ -18,20 +19,21 @@ export class SingleCompanyComponent implements AfterViewInit {
   id: number;
   currentTab: any;
   @Output() company: any;
+  custom_features:any;
 
   constructor(public companyService: CompanyService,
               public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getCompanyInfo(this.id);
-      this.getCompanyInfo(this.id);
     });
 
   }
 
   ngAfterViewInit() {
-    this.getCompanyUser(this.id);
+    
     this.getCompanyInfo(this.id);
+    this.getCompanyUser(this.id);
   }
 
   showTab(tab: any) {
@@ -96,16 +98,26 @@ export class SingleCompanyComponent implements AfterViewInit {
   }
 
   getCompanyInfo(id: number) {
-    this.companyService.getCompanyInfo(id)
-      .subscribe(
-        (response: any) => {
-          this.company = new AdminCompany(response.company);
-          this.company['reset_period_list'] = response.reset_period_list;
+    Observable.forkJoin([
+      this.companyService.getCompanyInfo(this.id),
+      this.companyService.getCustomFeatures(this.id)])
+      .subscribe((data:any)=>{
+        this.company = new AdminCompany(data[0].company);
+        this.company['reset_period_list'] = data[0].reset_period_list;
+        this.custom_features = data[1];
+      },error=>{
+        console.log("error");
+    });
+    // this.companyService.getCompanyInfo(id)
+    //   .subscribe(
+    //     (response: any) => {
+    //       this.company = new AdminCompany(response.company);
+    //       this.company['reset_period_list'] = response.reset_period_list;
 
-        },
-        (response: any) => {
-        }
-      );
+    //     },
+    //     (response: any) => {
+    //     }
+    //   );
   }
   updatecompany(data){
     this.company = data;

@@ -32,7 +32,7 @@ export class CompanyFeatureComponent implements OnInit {
   getCompanyFeatures() {
     this._featureAuthService.getCompanyFeatures(this.id).subscribe((response) => {
         this.features = response;
-        this.emitAvailableTemplates();
+        this.emitAvailableTemplates(this.features,'GETTER');
       },
       (error) => {
         console.log(error);
@@ -76,7 +76,7 @@ export class CompanyFeatureComponent implements OnInit {
         if (result.update) {
           this.loading = false;
 
-        this.emitAvailableTemplates();
+        this.emitAvailableTemplates(this.features);
           window.toastNotification("Feature update successfully");
         }
       }, (error) => {
@@ -90,11 +90,12 @@ export class CompanyFeatureComponent implements OnInit {
     });
     this.features[parent].sub_features[child].active = event.target.checked;
   }
-  emitAvailableTemplates(){
-    console.log(this.features);
-    for(let i=0;i<this.features.length;i++){
-      if(this.features[i].feature['_id'] == 'templates'){
-        this.companyService.companyTemplates.next(this.features[i].sub_features);
+  emitAvailableTemplates(features=[],op='UPDATION'){
+    console.log(features);
+    if(features.length==0) return;
+    for(let i=0;i<features.length;i++){
+      if(features[i].feature['_id'] == 'templates'){
+          this.companyService.companyTemplates.next({templates:features[i].sub_features,op});
         // break;
       } 
     }

@@ -23,10 +23,12 @@ export class CompanyPremadesComponent extends PremadeLayoutManager implements On
   ngOnInit() {
 
     this.companyService.getCompanyTemplates().subscribe(data=>{
-      this.availableTemplates=JSON.parse(JSON.stringify(data)); 
+      this.availableTemplates=data.templates ? JSON.parse(JSON.stringify(data.templates)) : []; 
       if(this.availableTemplates.length>0 && this.data && this.data.premades){
         this.previousTemplates = this.changeStatus(this.availableTemplates,this.data.premades,this.previousTemplates);
-        this.updateCompanyPremades();
+        if(data['op']=='UPDATION'){
+          this.updateCompanyPremades();
+        }
         this.syncCheckBoxes(this.availableTemplates,this.data);
       }    
     })

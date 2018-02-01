@@ -225,6 +225,14 @@
                     <span>{{company.child_intercom_id || 'Not set'}}</span>
                   </td>
                 </tr>
+                <tr>
+                  <td>
+                    Company Logo
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{ customFeatures['extras']['company_logo']['active'] }}</span>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -526,6 +534,19 @@
                   <div class="col-sm-8">
                     <input class="form-control" type="text" [(ngModel)]="updateCompany.child_intercom_id"
                            formControlName="child_intercom_id" [attr.disabled]="!updateCompany.agency || updateCompany.parent_company"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    company logo
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="customFeatures['extras']['company_logo']['active']"
+                             formControlName="company_logo">
+                      <div class="slider round"></div>
+                    </label>
                   </div>
                 </div>
 

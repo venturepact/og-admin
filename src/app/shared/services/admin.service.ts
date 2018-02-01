@@ -449,4 +449,10 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError)
   }
+  updateCustomFeatures(data){
+    console.log("<><><><><><><>",data);
+    return this._http.post(`${this._url}/admin/update/custom_feature`,data,this.post_options())
+          .map(this.extractData)
+          .catch(this.handleError);
+  }
 }
