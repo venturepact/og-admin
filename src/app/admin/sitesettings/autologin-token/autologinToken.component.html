@@ -1,4 +1,4 @@
-<div class="col-sm-12" *ngIf="isTokenExist">
+<!-- <div class="col-sm-12" *ngIf="isTokenExist">
     <div class="single category">
       <h3 class="side-title">Autologin Token List</h3>
         <div class="row-data" *ngFor="let logintoken of dealToken">
@@ -8,13 +8,75 @@
           </div>  
         </div>
     </div>
-</div>
+</div> -->
 
 
-<div class="col-sm-12">
+<!-- <div class="col-sm-12">
     <h3 class="side-title">Add Autologin Token</h3>
     <input type="text" class="form-control"  id="dealname" name="dealname" placeholder="Deal name">
     <p class="form-control"name="autoLogintoken">{{token}} </p>
     <button type="button" class="btn btn-blue btn-red btn-signUp btnCancel" (click)="genearteToken()">Generate</button>
     <button type="submit" class="btn btn-blue btn-red btn-signUp btnAdd" (click)="saveToken()">Save</button>      
+</div> -->
+
+<div class="col-md-12" *ngIf="isTokenExist">
+  <div class="add-bth-outer">
+    	<button type="" (click)="openModal()" class="btn btn btn-red btn-add-user btn-hover pull-right" ><i class="material-icons">add</i> add token</button>
+  </div>
+  <div class="table-str-outer">
+    <div class="row-style  head" >
+      <div class="col-style">#</div>
+      <div class="col-style">Token Name</div>
+      <div class="col-style">Token</div>
+      <div class="col-style">Actions</div>
+    </div>
+    <div class="row-style" *ngFor="let logintoken of dealToken; let i = index">
+        <div class="col-style">{{i+1}}</div>
+        <div class="col-style">{{logintoken.dealname}}</div>
+        <div class="col-style">{{logintoken.token}}  </div>
+        <div class="col-style">
+          <a href="javascript:void(0);" id="copy-token" (click)="copyToken(logintoken)"><i class="material-icons">content_copy</i></a>
+          <!-- <a href="javascript:void(0);" (click)="editToken(logintoken)" ><i class="material-icons ">mode_edit</i></a> -->
+          <a href="javascript:void(0);" (click)="deleteToken(logintoken)" ><i class="material-icons ">delete</i></a>
+        </div> 
+    </div>
+    <div class="row-style"></div>
+  </div>
 </div>
+
+
+
+<!-- Modal -->
+	<!-- Start: add new user Modal -->
+	<div id="autoLoginModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content modal-bg">
+				<div class="modal-header">
+					<button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+					<h5 class="modal-title">Create new auto login token</h5>
+				</div>
+				<div class="modal-body">
+					<div class="sahil-material">
+						<!-- <div class="alert alert-danger custom-alert" *ngIf="error" id="success-addCompany">{{errorMessage}}</div> -->
+						  <div class="form-group label-floating deal-name">
+                <label class="control-label" for="tokenname">Deal Name</label>
+                <input type="text" class="form-control"  id="dealname" name="dealname">
+							</div>
+              <div class="token-outer">
+                <span>Token Id</span>
+                <input type="text" class="form-control"  id="dealtoken" disabled [value]="token" >
+                <!-- <p id="dealtoken">{{token}}</p> -->
+              </div>
+              <button type="" (click)="saveToken()" class="btn btn btn-red btn-add-user btn-hover pull-right">Save</button>
+              <button type="" (click)="genearteToken()" class="btn btn btn-red btn-add-user btn-hover pull-right mr10" id="adminAddUser">Generate</button>
+					</div>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End:Upgrde Plan Modal -->

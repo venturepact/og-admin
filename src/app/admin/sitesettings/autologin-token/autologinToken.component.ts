@@ -1,9 +1,12 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {AdminService} from '../../../shared/services/admin.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Script} from '../../../shared/services/script.service';
+import { environment } from '../../../../environments/environment';
 
 declare var jQuery: any;
 declare var window :any;
+declare var Clipboard: any;
 
 @Component({
   selector: 'og-autologin-token',
@@ -15,11 +18,22 @@ export class AutologinTokenComponent implements OnInit {
   dealToken :any=[];
   isTokenExist:Boolean = false;
 
-  constructor(public _adminService: AdminService) {
+  constructor(public _adminService: AdminService, public _script : Script) {
   }
 
   ngOnInit() {
     this. getAutoLoginToken();
+  }
+
+  ngAfterViewInit() {
+    this._script.load('ClipBoard')
+      .then((data) => {
+        console.log('Clipboard loaded');
+      })
+      .catch((error) => {
+        console.log('script load error', error);
+      });
+
   }
 
   genearteToken(){
@@ -30,6 +44,12 @@ export class AutologinTokenComponent implements OnInit {
       let tokens = Math.floor(Math.random() * variables.length);
       this.token += variables.substring(tokens,tokens+1);
     }
+  }
+
+  openModal(){
+    jQuery('#dealname').val('');
+    jQuery('#dealtoken').val('');;
+    jQuery('#autoLoginModal').modal('show');;
   }
 
   saveToken(){
@@ -48,6 +68,7 @@ export class AutologinTokenComponent implements OnInit {
           this.token = '';
           jQuery('.btnAdd').attr('disabled', false).html('Save');
           this. getAutoLoginToken();
+          jQuery('#autoLoginModal').modal('hide');
         },
         (error: any) => {
           console.log('error', error);
@@ -86,16 +107,34 @@ export class AutologinTokenComponent implements OnInit {
 
   deleteToken(token:any) {
     const self = this;
-    const deleteGoal = self._adminService.removeAutoLoginToken({token}).subscribe(
+    const delToken = self._adminService.removeAutoLoginToken({token}).subscribe(
       (success: any) => {
-        jQuery("#"+token.token).remove();
-        deleteGoal.unsubscribe();
+        this.getAutoLoginToken();
+        window.toastNotification('Record deleted successfully');
+        delToken.unsubscribe();
       },
       (error: any) => {
         console.log('error', error);
-        deleteGoal.unsubscribe();
+        delToken.unsubscribe();
       }
     );
+  }
+
+  editToken(token:any){
+    jQuery('#autoLoginModal').modal('show');
+    jQuery('#dealname').val(token.dealname);
+    jQuery('.deal-name').addClass('is-focused');
+    jQuery('#dealtoken').val(token.token);
+  }
+
+  copyToken(token:any){
+    new Clipboard('#copy-token', {
+      text: function(trigger) {
+        let link = environment.APP_DOMAIN +'/login?verifyToken='+token.token+'&email=your_email_address'
+        return link ;
+      }
+    });
+    window.toastNotification('Token copied');
   }
 
 }

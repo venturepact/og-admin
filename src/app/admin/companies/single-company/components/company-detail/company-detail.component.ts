@@ -80,6 +80,7 @@ export class CompanyDetailComponent implements OnInit {
       isAppSumo: [this.updateCompany.isAppSumo],
       leaddyno_url: [this.updateCompany.referral.leaddyno_url],
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
+      remove_leads_after_saving: [this.updateCompany.remove_leads_after_saving],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
@@ -94,6 +95,7 @@ export class CompanyDetailComponent implements OnInit {
     this.router.navigate(['/admin/company/', company]);
     window.location.reload();
   }
+
   getPlanList() {
     this._membershipService.getPlanList()
       .subscribe((result) => {
@@ -135,7 +137,6 @@ export class CompanyDetailComponent implements OnInit {
         this._adminService.updateCustomFeatures({customFeatures:this.customFeatures,update:'extras'})
       ]).subscribe(
           (response: any) => {
-
             //window.location.reload(true);
             this.company = new AdminCompany(response[0]);
             this.customFeatures=response[1];
