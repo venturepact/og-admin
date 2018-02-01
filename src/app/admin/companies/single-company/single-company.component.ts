@@ -98,7 +98,6 @@ export class SingleCompanyComponent implements AfterViewInit {
   }
 
   getCompanyInfo(id: number) {
-<<<<<<< HEAD
     Observable.forkJoin([
       this.companyService.getCompanyInfo(this.id),
       this.companyService.getCustomFeatures(this.id)])
@@ -119,17 +118,6 @@ export class SingleCompanyComponent implements AfterViewInit {
     //     (response: any) => {
     //     }
     //   );
-=======
-    this.companyService.getCompanyInfo(id)
-      .subscribe(
-        (response: any) => {
-          this.company = new AdminCompany(response.company);
-          this.company['reset_period_list'] = response.reset_period_list;
-        },
-        (response: any) => {
-        }
-      );
->>>>>>> 6bcfe3244337c8f8d29056c055f3e698980dda15
   }
   updatecompany(data){
     this.company = data;
