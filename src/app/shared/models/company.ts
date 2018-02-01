@@ -102,6 +102,7 @@ export class AdminCompany {
   public parent_company: String;
   public cname: CName;
   public child_intercom_id: String;
+  public remove_leads_after_saving: boolean;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
 
