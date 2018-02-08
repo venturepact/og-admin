@@ -123,7 +123,8 @@ export class AdminService extends BaseService {
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
       'child_intercom_id': company.child_intercom_id,
-      'change_immediate': company.change_immediate
+      'change_immediate': company.change_immediate,
+      'remove_leads_after_saving': company.remove_leads_after_saving
     };
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
@@ -448,5 +449,11 @@ export class AdminService extends BaseService {
     return this._http.put(this._url + '/admin/removeAutoLoginToken', data, this.options)
       .map(this.extractData)
       .catch(this.handleError)
+  }
+  updateCustomFeatures(data){
+    console.log("<><><><><><><>",data);
+    return this._http.post(`${this._url}/admin/update/custom_feature`,data,this.post_options())
+          .map(this.extractData)
+          .catch(this.handleError);
   }
 }

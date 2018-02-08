@@ -337,4 +337,9 @@ export class CompanyService extends BaseService {
   getCompanyTemplates(){
     return this.companyTemplates.asObservable();
   }
+  getCustomFeatures(company_id){
+    return this._http.get(`${this._url}/company/${company_id}/custom_features`)
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
 }
