@@ -350,11 +350,11 @@
 #autoLoginModal .modal-content.modal-bg{-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;}
 #autoLoginModal.modal .form-group{ margin-top: 10px;}
 #autoLoginModal.modal .form-group:nth-child(1){ margin-top: 0px;}
-#autoLoginModal.modal .modal-body{ padding:15px 25px;}
+#autoLoginModal.modal .modal-body{ padding:15px 25px; float: left; width:100%; border:none; }
 #autoLoginModal.modal .modal-dialog{ width: 500px;}
 #autoLoginModal.modal .modal-header{color: #fb5f66;}
 #autoLoginModal.modal .modal-header h5{ font-size: 20px; text-transform: uppercase;}
-.token-outer{ float: left; width: 100%; min-height: 30px; padding: 10px 0; border-bottom:1px solid #e2e2e2;}
+.token-outer{ float: left; width: 100%; min-height: 30px; padding: 10px 0;}
 .token-outer span{ float: left; width:100%; font-size: 10px; color: #8e989f;text-transform: uppercase;}
 .token-outer p{ float: left; width: 100%; font-size: 14px; color: #62696d; margin-bottom: 0;}
 #autoLoginModal.modal .btn-red{ padding:7px 20px;}
