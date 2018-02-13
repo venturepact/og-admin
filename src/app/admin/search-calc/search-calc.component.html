@@ -1,5 +1,4 @@
-<div id="table" class="" [class.all-companies-container]="sub_role !== 'ADMIN_LTD'"
-     [class.admin-ltd]="sub_role === 'ADMIN_LTD'">
+<div id="table" class="" [class.all-companies-container]="sub_role !== 'ADMIN_LTD'" [class.admin-ltd]="sub_role === 'ADMIN_LTD'">
 
   <div style="float: right;margin: 10px;">
     <label style="float: right;
@@ -26,11 +25,13 @@
     <div class="right-section">
       <div id="table-datatable_filter" class="dataTables_filter">
         <label style="color: black">
-          Search:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" [formControl]='searchCalc'>
+          Search:
+          <input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" [formControl]='searchCalc'>
         </label>
       </div>
       <div class="check-box-outer">
-        <label>Only Live<input (change)="fetchLiveCalc()" type="checkbox" class="check-box">
+        <label>Only Live
+          <input (change)="fetchLiveCalc()" type="checkbox" class="check-box">
         </label>
       </div>
 
@@ -38,21 +39,19 @@
 
     <div *ngIf="showAdvancedFilter" class="advanced-filter">
 
-      <div class="row filter-params-container" style="position:relative"
-           *ngFor="let filter of filters;let i = index;">
+      <div class="row filter-params-container" style="position:relative" *ngFor="let filter of filters;let i = index;">
 
         <div [ngClass]="{'hidden':!(filter.visible)}">
           <button style="float: left;" (click)="removeFilter(i)">
             <span class="glyphicon glyphicon-minus"></span>
           </button>
 
-          <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"
-                  title="Select Operators" style="float:left;">
+          <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)" title="Select Operators"
+            style="float:left;">
             <option style="display: none"></option>
             <optgroup label="Company">
 
-              <option *ngFor="let property of filter.company;" class="company"
-                      [value]="property">
+              <option *ngFor="let property of filter.company;" class="company" [value]="property">
                 {{property}}
               </option>
             </optgroup>
@@ -71,27 +70,17 @@
           </select>
 
 
-          <input [(ngModel)]="filters[i].selected_value"
-                 *ngIf="['company','app'].includes(filters[i].selected_property_category) && (filters[i].selected_property_type==='number' || filters[i].selected_property_type==='string')"
-                 type="text"/>
+          <input [(ngModel)]="filters[i].selected_value" *ngIf="['company','app'].includes(filters[i].selected_property_category) && (filters[i].selected_property_type==='number' || filters[i].selected_property_type==='string')"
+            type="text" />
 
-          <div *ngIf="filters[i].selected_property_category==='template'"
-               style="width: 300px; margin-bottom: 20px;float: left;margin-left: 10px">
-            <ng-select [multiple]="true"
-                       [items]="[{id: 'all', text: 'all'}].concat(templates)"
-                       (selected)="selected($event,i,'template')"
-                       (removed)="removed($event.id,i,'template')"
-                       placeholder="Select a template">
+          <div *ngIf="filters[i].selected_property_category==='template'" style="width: 300px; margin-bottom: 20px;float: left;margin-left: 10px">
+            <ng-select [multiple]="true" [items]="[{id: 'all', text: 'all'}].concat(templates)" (selected)="selected($event,i,'template')"
+              (removed)="removed($event.id,i,'template')" placeholder="Select a template">
 
             </ng-select>
           </div>
-          <div *ngIf="filters[i].selected_property_category==='template'"
-               style="width: 300px;float: left; margin-left: 10px">
-            <ng-select
-              [multiple]="true"
-              [items]="['all'].concat(templateTypes)"
-              (selected)="selected($event,i,'templateType')"
-              (removed)="removed($event.id,i,'templateType')"
+          <div *ngIf="filters[i].selected_property_category==='template'" style="width: 300px;float: left; margin-left: 10px">
+            <ng-select [multiple]="true" [items]="['all'].concat(templateTypes)" (selected)="selected($event,i,'templateType')" (removed)="removed($event.id,i,'templateType')"
               placeholder="Select a template type">
 
             </ng-select>
@@ -111,91 +100,147 @@
     </div>
 
     <div *ngIf="loading">
-      <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+      <div>
+        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+      </div>
     </div>
 
     <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
       <thead>
-      <tr>
-        <th>Calculator Url</th>
-        <th>Status</th>
-        <th (click)="sort('leadsCount')">
-          <div class="sort-icon"><a href="javascript:void(0);">Leads</a></div>
-        </th>
-        <th (click)="sort('visitorsCount')">
-          <div class="sort-icon"><a href="javascript:void(0);">Visits</a></div>
-        </th>
-        <th (click)="sort('conversionRate')">
-          <div class="sort-icon"><a href="javascript:void(0);">Conversion Rate</a></div>
-        </th>
-        <th>AnalyticsLastUpdate</th>
-        <th (click)="sort('createdAt')">
-          <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
-        </th>
-        <th (click)="sort('updatedAt')">
-          <div class="sort-icon"><a href="javascript:void(0);">Latest Publish</a></div>
-        </th>
-        <th>Company</th>
-      </tr>
+        <tr>
+          <th>Calculator Url</th>
+          <th>Status</th>
+          <th (click)="sort('leadsCount')">
+            <div class="sort-icon">
+              <a href="javascript:void(0);">Leads</a>
+            </div>
+          </th>
+          <th (click)="sort('visitorsCount')">
+            <div class="sort-icon">
+              <a href="javascript:void(0);">Visits</a>
+            </div>
+          </th>
+          <th (click)="sort('conversionRate')">
+            <div class="sort-icon">
+              <a href="javascript:void(0);">Conversion Rate</a>
+            </div>
+          </th>
+          <th>AnalyticsLastUpdate</th>
+          <th (click)="sort('createdAt')">
+            <div class="sort-icon">
+              <a href="javascript:void(0);">Created At</a>
+            </div>
+          </th>
+          <th (click)="sort('updatedAt')">
+            <div class="sort-icon">
+              <a href="javascript:void(0);">Latest Publish</a>
+            </div>
+          </th>
+          <th>Company</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let app of apps">
-        <td>
-          <div *ngIf="app.status=='DEV'">{{app.url}}</div>
-          <a *ngIf="app.status=='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
-        </td>
-        <td>{{app.status}}</td>
-        <td>
-          <div *ngIf="app.analytics?.leadsCount">{{app.analytics?.leadsCount}}</div>
-          <div *ngIf="!app.analytics?.leadsCount">0</div>
-        </td>
-        <td>
-          <div *ngIf="app.analytics?.visitorsCount">{{app.analytics?.visitorsCount}}</div>
-          <div *ngIf="!app.analytics?.visitorsCount">0</div>
-        </td>
-        <td>
-          <div *ngIf="app.analytics?.conversionRate">{{app.analytics?.conversionRate}}%</div>
-          <div *ngIf="!app.analytics?.conversionRate">0%</div>
-        </td>
-        <td>
-          {{app.analytics?.updatedAt}}
-        </td>
-        <td>{{app.createdAt}}</td>
-        <td>{{app.updatedAt}}</td>
-        <td>
-          {{app.name}}
-          <a [routerLink]="['/admin/company',app.company._id]">
-            <i class="ui-tooltip material-icons" style="font-size: 22px;"
-               data-original-title="Edit">
-              mode_edit</i></a>
-        </td>
-      </tr>
+        <tr *ngFor="let app of apps">
+          <td>
+            <div *ngIf="app.status=='DEV'">{{app.url}}</div>
+            <a *ngIf="app.status=='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
+          </td>
+          <td>{{app.status}}</td>
+          <td>
+            <div *ngIf="app.analytics?.leadsCount">{{app.analytics?.leadsCount}}</div>
+            <div *ngIf="!app.analytics?.leadsCount">0</div>
+          </td>
+          <td>
+            <div *ngIf="app.analytics?.visitorsCount">{{app.analytics?.visitorsCount}}</div>
+            <div *ngIf="!app.analytics?.visitorsCount">0</div>
+          </td>
+          <td>
+            <div *ngIf="app.analytics?.conversionRate">{{app.analytics?.conversionRate}}%</div>
+            <div *ngIf="!app.analytics?.conversionRate">0%</div>
+          </td>
+          <td>
+            {{app.analytics?.updatedAt}}
+          </td>
+          <td>{{app.createdAt}}</td>
+          <td>{{app.updatedAt}}</td>
+          <td>
+            {{app.name}}
+            <a [routerLink]="['/admin/company',app.company._id]">
+              <i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit">
+                mode_edit</i>
+            </a>
+            <a href="javascript:void(0)" (click)="duplicateClac(app._id)">
+             Copy To
+            </a>
+          </td>
+        </tr>
       </tbody>
     </table>
 
     <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
     <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
-      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0"
-         tabindex="0"
-         (click)="previous()"
-         id="all-companies-datatable_previous">Previous</a>
-      <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
-               aria-controls="all-companies-datatable"
-               (click)="paging(1)" tabindex="0">1</a></span>
+      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+        id="all-companies-datatable_previous">Previous</a>
+      <span>
+        <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+          tabindex="0">1</a>
+      </span>
       <span *ngIf="current_page >= 5">...</span>
-      <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
-               aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
-               *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
+      <span>
+        <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+          tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+      </span>
       <span *ngIf="current_page <= total_pages - 5">...</span>
-      <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
-               [ngClass]="total_pages==current_page?'current':''"
-               aria-controls="all-companies-datatable"
-               (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
-      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
-         (click)="next()"
-         id="all-companies-datatable_next">Next</a>
+      <span>
+        <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
+          (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+      </span>
+      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
     </div>
   </div>
 </div>
 
-
+<!-- duplicate model -->
+<div class="modal fade" id="assignCompany" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h3 class="modal-title">Create Duplicate of {{app.name}}</h3>
+        <h5>Type the company sub_domain in which you want to duplicate the {{app.}}</h5>
+      </div>
+      <div *ngIf="searchCompany" class="modal-body">
+        <div>
+            <input type="textbox" placeholder="enter company subdomain" ([ngModel])="subDomain">
+        </div>
+        <div>
+          <button class="btn btn-primary">Find</button>
+        </div>
+      </div>
+      <div *ngIf="selectCompany._id" class="modal-body">
+        <div *ngIf="!agencySelect" class="alert alert-danger custom-alert">
+          <i class="material-icons">report_problem</i>
+          <span id="server-error-msg">Please select the account where you want to add the clone of {{agencyCalcName}} {{agencyCalcType}}</span>
+        </div>
+        <div *ngIf="agencySelect && childLimitExced" class="alert alert-danger custom-alert">
+          <i class="material-icons">report_problem</i>
+          <span id="server-error-msg">Limit is execd of selected company</span>
+        </div>
+        <div>
+          <label class="check-icon">
+            <input id="f-option" type="radio" [value]="companyDetails.name" [checked]="companyDetails.check" (click)="companyDetails.check = !companyDetails.check; makeFalse(company._id)"
+            />
+            <label for="f-option{{i}}">
+              <span>{{companyDetails.name}}</span>
+            </label>44
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-red" (click)="selectCompany()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>

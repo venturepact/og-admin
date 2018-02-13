@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
-import {Datatable} from "../../shared/interfaces/datatable.interface";
-import {AdminService} from "../../shared/services/admin.service";
-import {FormControl} from "@angular/forms";
-import {CookieService, Script} from "../../shared/services";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Datatable } from "../../shared/interfaces/datatable.interface";
+import { AdminService } from "../../shared/services/admin.service";
+import { FormControl } from "@angular/forms";
+import { CookieService, Script } from "../../shared/services";
 
 declare var moment;
 declare var jQuery;
@@ -30,11 +30,11 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   sortKey = '_id'; // default sort parameters
   sortOrder = -1; // -1 for ascending order
 
-  templates: Array<any> = [{id: 'template-eight', text: 'The Venice'},
-    {id: 'template-seven', text: 'The Seattle'}, {id: 'one-page-card-new', text: 'The Chicago'},
-    {id: 'sound-cloud-v3', text: 'The Londoner'}, {id: 'inline-temp-new', text: 'The Greek'},
-    {id: 'experian', text: 'The Tokyo'}, {id: 'template-five', text: 'The Madrid'},
-    {id: 'template-six', text: 'The Stockholm'}];
+  templates: Array<any> = [{ id: 'template-eight', text: 'The Venice' },
+  { id: 'template-seven', text: 'The Seattle' }, { id: 'one-page-card-new', text: 'The Chicago' },
+  { id: 'sound-cloud-v3', text: 'The Londoner' }, { id: 'inline-temp-new', text: 'The Greek' },
+  { id: 'experian', text: 'The Tokyo' }, { id: 'template-five', text: 'The Madrid' },
+  { id: 'template-six', text: 'The Stockholm' }];
 
   templateTypes: Array<string> = ['Recommendation', 'Numerical', 'Graded', 'Poll'];
 
@@ -58,8 +58,8 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   public sub_role: string = null;
 
   constructor(private adminService: AdminService,
-              private scriptService: Script,
-              private _cookieService: CookieService) {
+    private scriptService: Script,
+    private _cookieService: CookieService) {
 
     super();
     if (_cookieService.readCookie('storage')) {
@@ -80,7 +80,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
         this.showApps(data);
       }, err => {
         this.loading = false
-    });
+      });
     this.searchApps();
   }
 
@@ -247,5 +247,9 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
   setFilterOperator(value, index) {
     this.filters[index].selected_operator = value;
+  }
+
+  duplicateClac(appId: any) {
+    
   }
 }
