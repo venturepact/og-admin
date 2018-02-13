@@ -124,7 +124,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
             });
 
           }
-          if (val.value.templateType.includes('all')) {
+          if (val.value.templateType && val.value.templateType.includes('all')) {
 
             val.value.templateType = [];
             this.templateTypes.forEach(type => {
