@@ -241,6 +241,14 @@
                     <span>{{ customFeatures['extras']['company_logo']['active'] }}</span>
                   </td>
                 </tr>
+                <!-- <tr>
+                  <td>
+                    GDPR
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{ customFeatures['extras']['GDPR'] || false }}</span>
+                  </td>
+                </tr> -->
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -571,6 +579,18 @@
                     </label>
                   </div>
                 </div>
+                <!-- <div class="row">
+                  <div class="col-sm-4">
+                    GDPR
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="customFeatures['extras']['GDPR']"
+                             formControlName="gdpr">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div> -->
 
                 <div class="row" *ngIf="errorMsg != ''">
                   <div class="col-sm-12 alert alert-danger">

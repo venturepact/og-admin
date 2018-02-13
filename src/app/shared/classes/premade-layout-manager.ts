@@ -1,7 +1,13 @@
+import { AUTH_PROVIDERS } from './../../config/routes/site.routes';
+import { ChangeDetectorRef } from "@angular/core";
+
 declare var bootbox: any;
 
 export class PremadeLayoutManager {
+  
+  constructor(private cd?:ChangeDetectorRef){
 
+  }
   syncCheckBoxes(templates, premade_calcs) {
     templates.forEach((obj, index) => {
       if (templates[index].feature.active)
@@ -9,10 +15,17 @@ export class PremadeLayoutManager {
     })
   }
 
-  syncSingleCheckBox(event, template, premade_calcs, calc = {}) {
+  syncSingleCheckBox(event, template, premade_calcs, calc:any = {}) {
     if (!template.active) {
       this.popUp();
-      event.preventDefault();
+      //setTimeout(()=>{
+        let item = premade_calcs.findIndex(cal=>{
+          return cal._id === calc._id;
+        })
+        premade_calcs[item].active=false;
+       // this.cd.detectChanges();
+     // },200);
+      //event.preventDefault();
       return;
     }
     template.feature.visibility = this.checkForParentStatus(template.feature._id, premade_calcs, calc);
