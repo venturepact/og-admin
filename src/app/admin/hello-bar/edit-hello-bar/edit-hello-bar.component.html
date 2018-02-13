@@ -1,85 +1,147 @@
 <div class="container">
-  <div>Conditions</div>
-  <div *ngFor="let cond of conditions;let i = index;">
-    <div style="display:inline-flex">
-      <div>
-        <select *ngIf="i!=0" [(ngModel)]="cond.logic_gate">
-          <option>and</option>
-          <option>or</option>
-        </select>
-        <select [(ngModel)]="cond.selected_attribute" title="select attribute">
-          <option style="display: none"></option>
-          <option *ngFor="let attr of cond.attributes">
-            {{attr}}
-          </option>
-        </select>
-
-        <select style="margin: 5px" title="select operator" [(ngModel)]="cond.selected_operator">
-          <option style="display: none"></option>
-          <option *ngFor="let operator of operators[cond.selected_attribute]">
-            {{operator}}
-          </option>
-
-        </select>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">Conditions</div>
+      <div class="panel-body">
+        <div class="form-group row" *ngFor="let cond of conditions;let i = index;">
+          <div class="col-md-1">
+            <button [disabled]="conditions.length == 1" class="btn btn-danger" (click)="removeCondition(i)">
+              <i class="glyphicon glyphicon-minus"></i>
+            </button>
+          </div>
+          <div class="col-md-3 mr20">
+            <select [(ngModel)]="cond.selected_attribute" title="select attribute" class="form-control"
+                    style="width: 100%;">
+              <option *ngFor="let attr of cond.attributes" [ngValue]="attr">{{attr}}</option>
+            </select>
+          </div>
+          <div class="col-md-3 mr20">
+            <select class="form-control" style="width: 100%;" title="select operator"
+                    [(ngModel)]="cond.selected_operator">
+              <option *ngFor="let operator of operators[cond.selected_attribute]" [ngValue]="operator">{{operator}}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3 mr20">
+            <ng-container *ngIf="cond.selected_attribute==='signed_up' || cond.selected_attribute==='payment_due_date'">
+              <input class="form-control" type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'" min="{{today}}"
+                     (change)="cond.selected_value=$event.target.value"/>
+            </ng-container>
+            <select class="form-control"
+                    *ngIf="!(cond.selected_attribute==='signed_up' || cond.selected_attribute==='payment_due_date')"
+                    [(ngModel)]="cond.selected_value" title="select value" [multiple] = "cond.selected_operator == 'contains'">
+              <option *ngFor="let value of values[cond.selected_attribute]" [ngValue]="value">{{value}}</option>
+            </select>
+            <label class="contains" *ngIf="cond.selected_operator == 'contains'">Press ctrl + click value to select multiple</label>
+          </div>
+        </div>
       </div>
-      <div *ngIf="cond.selected_attribute==='signed_up' ||
-      cond.selected_attribute==='payment_due_date'">
-        <input type="date" [ngModel]="cond.selected_value | date:'yyyy-MM-dd'"
-               (change)="cond.selected_value=$event.target.value"/>
-      </div>
-      <div>
-
-        <select *ngIf="!(cond.selected_attribute==='signed_up' ||
-        cond.selected_attribute==='payment_due_date')" [(ngModel)]="cond.selected_value" title="select value">
-          <option *ngFor="let value of values[cond.selected_attribute]" [ngValue]="value">{{value}}</option>
-        </select>
-        <button (click)="addCondition()">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-        <button (click)="removeCondition(i)">
-          <span class="glyphicon glyphicon-minus"></span>
-        </button>
-        <br>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-md-1">
+            <button class="btn btn-success" (click)="addCondition()">
+              <i class="glyphicon glyphicon-plus"></i>
+            </button>
+          </div>
+          <div class="col-md-11">
+            <button class="btn btn-warning" (click)="reset()">Reset</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div>
+  </div>
+
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">Message</div>
+      <div class="panel-body">
+        <div class="form-group row">
+          <div class="col-md-3 mr20">
+            <textarea title="Message" [(ngModel)]="hellobarMessage" maxlength="100" class="form-control"></textarea>
+          </div>
+          <div class="col-md-3 mr20">
+            <select class="form-control" name="ticker" style="width: 100%;" [(ngModel)]="ticker">
+              <option value="no_ticker">No ticker</option>
+              <option value="ticker">Ticker</option>
+              <option value="on_trial_end">When trial ends</option>
+              <option value="stop_date">Add stop date</option>
+            </select>
+            <label class="contains" *ngIf="ticker == 'no_ticker' || ticker == 'stop_date'">No date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'ticker'">Specified date will be shown with message</label>
+            <label class="contains" *ngIf="ticker == 'on_trial_end'">Subscription trial ending date will be shown with message</label>
+          </div>
+          <div class="col-md-3 mr20">
+            <ng-container *ngIf="ticker==='ticker'">
+              <input class="form-control" type="date" [ngModel]="tickerDate | date:'yyyy-MM-dd'" min="{{today}}" (change)="this.tickerDate = $event.target.value"/>
+            </ng-container>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <button (click)="saveHellobar('DRAFT')">Save</button>
-  <button (click)="reset()">Reset</button>
-</div>
-<br>
 
-<div class="container">
-  <div>Message</div>
-  <div><input type="text" [(ngModel)]="hellobarMessage"></div>
-</div>
-<br>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">CTA</div>
+      <div class="panel-body">
+        <div class="form-group row">
+          <div class="col-md-3 mr20">
+            <input type="text" placeholder="Text shown at button" [(ngModel)]="ctaText" class="form-control"/>
+          </div>
+          <div class="col-md-3 mr20">
+            <select class="form-control" style="width: 100%;" [(ngModel)]="ctaLink">
+              <option value="upgrade">One Click Upgrade for</option>
+              <option value="pricing">Pricing Page</option>
+              <option value="intercom">Intercom Messaging popup</option>
+            </select>
+          </div>
+          <div class="col-md-3 mr20">
+            <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='upgrade'" class="form-control">
+              <option *ngFor="let plan of values.one_click_upgrade_plans">{{plan}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
-  <div style="margin: 10px">CTA</div>
-  <div><input type="text" [(ngModel)]="ctaText"></div>
-  <div>
-    <label>Link to</label>
-    <select [(ngModel)]="ctaLink">
-      <option value="upgrade">One Click Upgrade for</option>
-      <option value="pricing">Pricing Page</option>
-      <option value="intercom">Intercom Messaging popup</option>
-    </select>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">Stop Date &amp; Priority</div>
+      <div class="panel-body">
+        <div class="form-group row">
+          <div class="col-md-3 mr20">
+            <input class="form-control" type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" min="{{today}}" (change)="stopDate = $event.target.value"/>
+          </div>
+          <div class="col-md-3 mr20">
+            <select name="priority" [(ngModel)] = "priority" class="form-control" style="width: 100%;">
+              <ng-container *ngFor="let i of [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]">
+                <option value="{{i}}">{{i}} {{(i == 10) ? 'Lowest' : ((i == 1) ? 'Highest' : '')}}</option>
+              </ng-container>
+            </select>
+          </div>
+          <div class="col-md-3 mr20">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <select [(ngModel)]="ctaPlan" *ngIf="ctaLink==='upgrade'">
-      <option *ngFor="let plan of values.one_click_upgrade_plans">{{plan}}</option>
-    </select>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group row">
+        <div class="col-md-6 mr20">
+          &nbsp;
+        </div>
+        <div class="col-md-2 mr20">
+          <button class="btn btn-info" (click)="saveHellobar('DRAFT',$event.target)">Save Draft</button>
+        </div>
+        <div class="col-md-2 mr20">
+          <button class="btn btn-success" (click)="saveHellobar('LIVE',$event.target)">Go Live</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container">
-  <div style="margin: 10px">Stop Date</div>
-  <input type="date" [ngModel]="stopDate | date:'yyyy-MM-dd'" (change)="stopDate = $event.target.value"/>
-
-</div>
-
-<div style="margin-top: 20px;float: right">
-  <button (click)="saveHellobar('DRAFT')">Save Draft</button>
-  <button (click)="saveHellobar('LIVE')">Go Live</button>
-</div>

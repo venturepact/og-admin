@@ -5,6 +5,8 @@ import {AdminCompany} from '../../../../../shared/models/company';
 import {CompanyService} from './../../../../../shared/services/company.service';
 import {MembershipService} from './../../../../../shared/services/membership.service';
 import {AdminService} from './../../../../../shared/services/admin.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 declare var window:any;
 declare var jQuery: any;
 
@@ -20,6 +22,7 @@ export class CompanyDetailComponent implements OnInit {
   @Input() company: any = '';
   childCompany = new EventEmitter<any>();
   updateCompany: any = ''; //AdminCompany = new AdminCompany({});
+  change_immediate: string;
   leads: any = '';
   traffic: any = '';
   id: any;
@@ -33,7 +36,7 @@ export class CompanyDetailComponent implements OnInit {
   selectedCompanyCoupon: any;
   generateKeys = Object.keys;
   stringify = JSON.stringify;
-
+  @Input() customFeatures:any;
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
               public _membershipService: MembershipService, private router: Router) {
@@ -46,6 +49,8 @@ export class CompanyDetailComponent implements OnInit {
   ngOnInit() {
     this.errorMsg = '';
     this.updateCompany = this.company;
+    this.updateCompany['change_immediate'] = false;
+    this.change_immediate = this.company.chargebee_plan_id;
     if(!this.updateCompany.child_intercom_id) {
       this.updateCompany.child_intercom_id = '';
     }
@@ -75,9 +80,12 @@ export class CompanyDetailComponent implements OnInit {
       isAppSumo: [this.updateCompany.isAppSumo],
       leaddyno_url: [this.updateCompany.referral.leaddyno_url],
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
+      remove_leads_after_saving: [this.updateCompany.remove_leads_after_saving],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
-      child_intercom_id: [this.updateCompany.child_intercom_id || '']
+      child_intercom_id: [this.updateCompany.child_intercom_id || ''],
+      change_immediate: [false],
+      company_logo:[this.customFeatures['extras']['company_logo']['active']]
     });
     this.getPlanList();
     this.getCompanyCoupon();
@@ -87,6 +95,7 @@ export class CompanyDetailComponent implements OnInit {
     this.router.navigate(['/admin/company/', company]);
     window.location.reload();
   }
+
   getPlanList() {
     this._membershipService.getPlanList()
       .subscribe((result) => {
@@ -123,12 +132,14 @@ export class CompanyDetailComponent implements OnInit {
     if (this.updateFormdetail.valid) {
       this.loading = true;
       this.isSubmit = false;
-      this._adminService.updateCompany(this.updateCompany, this.id)
-        .subscribe(
+      Observable.forkJoin([
+        this._adminService.updateCompany(this.updateCompany, this.id),
+        this._adminService.updateCustomFeatures({customFeatures:this.customFeatures,update:'extras'})
+      ]).subscribe(
           (response: any) => {
-
             //window.location.reload(true);
-            this.company = new AdminCompany(response);
+            this.company = new AdminCompany(response[0]);
+            this.customFeatures=response[1];
             this.loading = false;
             this.edit_mode = false;
             this.childCompany.emit(this.company);

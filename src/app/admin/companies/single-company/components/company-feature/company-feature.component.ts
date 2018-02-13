@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import { CompanyService } from './../../../../../shared/services/company.service';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FeatureAuthService} from "../../../../../shared/services/feature-access.service";
+
 
 declare var jQuery: any;
 declare var window:any;
@@ -15,8 +17,9 @@ export class CompanyFeatureComponent implements OnInit {
   features: any;
   edit_mode: Boolean = false;
   loading: Boolean = false;
-
-  constructor(private _featureAuthService: FeatureAuthService, public route: ActivatedRoute) {
+  constructor(private _featureAuthService: FeatureAuthService,
+     public route: ActivatedRoute,
+    private companyService:CompanyService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -29,6 +32,7 @@ export class CompanyFeatureComponent implements OnInit {
   getCompanyFeatures() {
     this._featureAuthService.getCompanyFeatures(this.id).subscribe((response) => {
         this.features = response;
+        this.emitAvailableTemplates(this.features,'GETTER');
       },
       (error) => {
         console.log(error);
@@ -68,8 +72,11 @@ export class CompanyFeatureComponent implements OnInit {
     this.loading = true;
     this._featureAuthService.updateCompanyFeatures(data, this.id)
       .subscribe((result) => {
+       
         if (result.update) {
           this.loading = false;
+
+        this.emitAvailableTemplates(this.features);
           window.toastNotification("Feature update successfully");
         }
       }, (error) => {
@@ -82,5 +89,15 @@ export class CompanyFeatureComponent implements OnInit {
       sub.active = false;
     });
     this.features[parent].sub_features[child].active = event.target.checked;
+  }
+  emitAvailableTemplates(features=[],op='UPDATION'){
+    console.log(features);
+    if(features.length==0) return;
+    for(let i=0;i<features.length;i++){
+      if(features[i].feature['_id'] == 'templates'){
+          this.companyService.companyTemplates.next({templates:features[i].sub_features,op});
+        // break;
+      } 
+    }
   }
 }

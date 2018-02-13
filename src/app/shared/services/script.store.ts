@@ -22,7 +22,7 @@ export const ScriptStore: Scripts[] = [
   // { name: 'clipboard', src: '../../../assets/js/clipboard.min.js' },
   // { name: 'rangeSlider', src: '../../../assets/js/ion.rangeSlider.min.js' },
   // { name: 'isotope', src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.11/isotope.pkgd.min.js' },
-  // { name: 'selectize', src: '//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js' },
+  {name: 'selectize', src: '//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js'},
   //for graphs on analytics page
   { name: 'gCharts', src: 'https://www.gstatic.com/charts/loader.js' },
   { name: 'raphael', src: 'https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js' },
@@ -53,4 +53,5 @@ export const ScriptStore: Scripts[] = [
   { name: 'progressbar', src: './../../../assets/js/jQuery-plugin-progressbar.js' },
   // { name: 'JSHINT', src: '../../../assets/js/jshint.js' },
   // { name: 'NumberedTextarea', src: '../../../assets/js/jquery.numberedtextarea.js'}
+  { name: 'ClipBoard', src: "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"}
 ];

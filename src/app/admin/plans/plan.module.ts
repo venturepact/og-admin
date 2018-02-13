@@ -5,6 +5,7 @@ import {PlansComponent} from './plans.component';
 import {SharedModule} from "../../shared/modules/shared.module";
 import {PlanService} from "../../shared/services/plan.service";
 import {CompanyPlansComponent} from "./company-plans/company-plans.component";
+import { PremadeCalcsComponent } from './premade-calcs/premade-calcs.component';
 
 @NgModule({
 
@@ -12,7 +13,7 @@ import {CompanyPlansComponent} from "./company-plans/company-plans.component";
   	SharedModule,
   	RouterModule
   	],
-  declarations: [FeaturesComponent, PlansComponent, CompanyPlansComponent],
+  declarations: [FeaturesComponent, PlansComponent, CompanyPlansComponent, PremadeCalcsComponent],
   providers: [PlanService]
 })
 

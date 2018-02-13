@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {PlanService} from "../../../shared/services/plan.service";
-import {environment} from "../../../../environments/environment";
+import {DOCUMENT} from '@angular/common';
 
 @Component({
-  selector: 'app-company-plans',
+  selector: 'og-company-plans',
   templateUrl: './company-plans.component.html',
   styleUrls: ['../plans.component.css', './../custom-material.css'
     , './../features/features.component.css']
 })
 export class CompanyPlansComponent implements OnInit {
 
-  loading: boolean = false;
+  loading: boolean = true;
+  buttonLoading: boolean = false;
   planFeatures: any;
   planTypes: Array<any>;
   featureUpdate: Map<String, Object> = new Map<String, Object>();
@@ -19,11 +20,11 @@ export class CompanyPlansComponent implements OnInit {
   selectedPlan: String;
   keys = Object.keys;
 
-  constructor(private _planService: PlanService) {
+  constructor(private _planService: PlanService
+    , @Inject(DOCUMENT) private document: any) {
   }
 
   ngOnInit() {
-
     this.loading = true;
     this._planService.getPlanTypes().subscribe(response => {
       this.planTypes = response;
@@ -33,41 +34,35 @@ export class CompanyPlansComponent implements OnInit {
   }
 
   fetchPlanFeature(planId) {
+    this.loading = true;
     this.selectedPlan = planId;
     this._planService.getAllCompanyFeaure(planId)
       .subscribe((result) => {
-        this.planFeatures = result;
         this.loading = false;
+        this.planFeatures = result;
       });
   }
 
   updateParentFeature(parentFeature) {
-    console.log(parentFeature);
     if (!parentFeature.active) {
       parentFeature.sub_features.forEach(feat => {
         feat.active = false;
+        this.updateChildFeature(parentFeature.sub_features, parentFeature);
       });
     }
-    if (this.featureUpdate.has(parentFeature._id)) {
-      this.featureUpdate.delete(parentFeature._id);
-    }
     this.featureUpdate.set(parentFeature._id, parentFeature);
-    //  this.featureUpdate.push(parentFeature);
-
   }
 
   updateChildFeature(childFeature, parentFeature) {
-    console.log(childFeature, parentFeature);
     if (childFeature.active) {
       parentFeature.active = true;
+      this.updateParentFeature(parentFeature);
     }
-    if (this.featureUpdate.has(parentFeature._id)) {
-      this.featureUpdate.delete(parentFeature._id);
-    }
-    this.featureUpdate.set(parentFeature._id, parentFeature);
+    this.featureUpdate.set(childFeature._id, childFeature);
   }
 
   updateCompanyPlan() {
+    this.buttonLoading = true;
     let request = [];
 
     this.featureUpdate.forEach((value: any, key: String) => {
@@ -75,18 +70,15 @@ export class CompanyPlansComponent implements OnInit {
         _id: value._id,
         active: value.active
       });
-
-      value.sub_features.forEach(feat => {
-        request.push({
-          _id: feat._id,
-          active: feat.active
-        });
-      });
     });
 
     this._planService.updateCompanyFeatures(this.selectedPlan, request)
       .subscribe(response => {
+        this.buttonLoading = false;
+        this.fetchPlanFeature(this.selectedPlan);
+      }, err => {
+        this.buttonLoading = false;
+        this.document.querySelector('#submit-btn').innerText = 'Failed';
       })
   }
-
 }

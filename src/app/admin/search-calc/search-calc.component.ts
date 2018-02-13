@@ -1,10 +1,8 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
-import {FormControl} from "@angular/forms";
 import {AdminService} from "../../shared/services/admin.service";
-import {Script} from "../../shared/services/script.service";
-import {CookieService} from "../../shared/services/cookie.service";
-import {Subscription} from "rxjs/Subscription";
+import {FormControl} from "@angular/forms";
+import {CookieService, Script} from "../../shared/services";
 
 declare var moment;
 declare var jQuery;
@@ -12,20 +10,19 @@ declare var jQuery;
 @Component({
   selector: 'og-search-calc',
   templateUrl: './search-calc.component.html',
-  styleUrls: ['./search-calc.component.css',
+  styleUrls: ['./search-calc.component.css', './../success-rate/success-rate.component.css',
     '../../site/components/+analytics/assets/css/daterangepicker.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy, AfterViewInit {
+export class SearchCalcComponent extends Datatable implements OnInit {
 
   apps: Array<any> = [];
-  loading = false;
-  scriptLoaded = false;
-  selectedFilter: any;
+  loading = true;
   onlyLive: boolean = false;
   showAdvancedFilter = false;
   analyticsUpdateStatus = "";
   value: any;
+  filters: any = [];
   createdAtFilter: any = {
     start_date: moment("1970-01-01").format('YYYY-MM-DD'), //start of time
     end_date: moment().add(1, 'day').format('YYYY-MM-DD')
@@ -33,12 +30,37 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   sortKey = '_id'; // default sort parameters
   sortOrder = -1; // -1 for ascending order
 
-  searchCalc = new FormControl();
-  public subscriptions: Subscription = new Subscription();
-  public sub_role: String = null;
+  templates: Array<any> = [{id: 'template-eight', text: 'The Venice'},
+    {id: 'template-seven', text: 'The Seattle'}, {id: 'one-page-card-new', text: 'The Chicago'},
+    {id: 'sound-cloud-v3', text: 'The Londoner'}, {id: 'inline-temp-new', text: 'The Greek'},
+    {id: 'experian', text: 'The Tokyo'}, {id: 'template-five', text: 'The Madrid'},
+    {id: 'template-six', text: 'The Stockholm'}];
 
-  constructor(private adminService: AdminService, private scriptService: Script,
+  templateTypes: Array<string> = ['Recommendation', 'Numerical', 'Graded', 'Poll'];
+
+  filter = {
+    company: ['sub_domain'],
+    app: ['header', 'sub_header'],
+    template: ['layouts and experiences'],
+
+    selected_property: '',
+    selected_operator: '',
+    selected_property_category: '',
+    selected_property_type: '',
+    selected_value: {},
+    visible: true,
+  };
+  operators = {
+    string: ['contains']
+  };
+
+  searchCalc = new FormControl();
+  public sub_role: string = null;
+
+  constructor(private adminService: AdminService,
+              private scriptService: Script,
               private _cookieService: CookieService) {
+
     super();
     if (_cookieService.readCookie('storage')) {
       let storage = JSON.parse(_cookieService.readCookie('storage'));
@@ -46,8 +68,11 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
     }
   }
 
-  ngOnInit() {
-    this.subscriptions.add(this.searchCalc.valueChanges.debounceTime(1500).distinctUntilChanged()
+  async ngOnInit() {
+    await this.scriptService.load('daterangepicker', 'datatables');
+    this.addFilter();
+
+    this.searchCalc.valueChanges.debounceTime(1500).distinctUntilChanged()
       .switchMap(input => {
         super.searchData();
         return this.searchData();
@@ -55,20 +80,20 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
         this.showApps(data);
       }, err => {
         this.loading = false
-      }));
+    });
+    this.searchApps();
   }
 
-  ngAfterViewInit(): void {
-    this.scriptService.load('daterangepicker', 'datatables')
-      .then((data) => {
-        this.scriptLoaded = true;
-      })
-      .catch((error) => {
-        console.log('script load error', error);
-      });
+  addFilter() {
+    this.filters.push(Object.assign({}, this.filter)); // passing filter by value
+  }
+
+  removeFilter(index) {
+    this.filters[index].visible = false;
   }
 
   filterResults() {
+    console.log(this.filters);
     super.searchData();
     this.searchApps();
   }
@@ -81,17 +106,67 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
     });
   }
 
+  parseFilterData() {
+    return this.filters.filter(el => el.visible && el.selected_property &&
+      el.selected_property_category && el.selected_property_type && el.selected_value)
+      .map(el => {
+        let val = {
+          property: el.selected_property,
+          type: el.selected_property_category,
+          value: el.selected_value
+        };
+        if (val.type === 'template') {
+
+          if (val.value.template.includes('all')) {
+            val.value.template = [];
+            this.templates.forEach(template => {
+              val.value.template.push(template.id);
+            });
+
+          }
+          if (val.value.templateType.includes('all')) {
+
+            val.value.templateType = [];
+            this.templateTypes.forEach(type => {
+              val.value.templateType.push(type);
+            });
+          }
+        }
+        return val;
+      });
+  }
+
   getParams(): any {
     return {
       limit: this.current_limit,
       search_key: this.search,
       page: this.current_page - 1,
       only_live: this.onlyLive,
-      filter: this.selectedFilter,
+      filter: this.parseFilterData(),
       created_at_filter: this.createdAtFilter,
       sort_key: this.sortKey,
       sort_order: this.sortOrder
     };
+  }
+
+  removed(event, index, type) {
+    if (event === 'all') {
+      this.filters[index].selected_value[type] = [];
+    }
+    let i = this.filters[index].selected_value[type].indexOf(event);
+    this.filters[index].selected_value[type].splice(i, 1);
+  }
+
+  selected(event, index, type) {
+    console.log('selected', event, index);
+
+    if (typeof this.filters[index].selected_value === 'string') {
+      this.filters[index].selected_value = {};
+    }
+    if (!Array.isArray(this.filters[index].selected_value[type])) {
+      this.filters[index].selected_value[type] = [];
+    }
+    this.filters[index].selected_value[type].push(event.id);
   }
 
   onDateSelect(date: any) {
@@ -133,10 +208,6 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
       this.analyticsUpdateStatus = "success", err => this.analyticsUpdateStatus = "failed");
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
   paging(num: number) {
     super.paging(num);
     this.searchApps();
@@ -160,5 +231,21 @@ export class SearchCalcComponent extends Datatable implements OnInit, OnDestroy,
   searchData() {
     this.loading = true;
     return this.adminService.getApps(this.getParams());
+  }
+
+  fetchLiveCalc() {
+    this.onlyLive = !this.onlyLive;
+    this.searchApps()
+  }
+
+  setFilterProperty(target, index) {
+    this.filters[index].selected_property_category = target.options[target.options.selectedIndex].className;
+    this.filters[index].selected_property_type = 'string';
+    this.filters[index].selected_operator = ''; // reset operator value
+    this.filters[index].selected_value = ''; // reset selected value
+  }
+
+  setFilterOperator(value, index) {
+    this.filters[index].selected_operator = value;
   }
 }

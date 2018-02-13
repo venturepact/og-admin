@@ -10,10 +10,14 @@ import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AdminService extends BaseService {
-  public getLogSubject = new ReplaySubject<String>(2);
 
+  public getLogSubject = new ReplaySubject<String>(2);
+  public availableTemplates = [];
   constructor(public _http: Http) {
     super();
+    this.getAvailableTemplates().subscribe((data)=>{
+      this.availableTemplates=data;
+    })
   }
 
   getBasicGraph(data: any) {
@@ -95,8 +99,7 @@ export class AdminService extends BaseService {
   }
 
   updateCompany(company: any, companyId: string) {
-    let details: any = {};
-    details = {
+    let details: any = {
       'name': company.name,
       'sub_domain': company.sub_domain,
       'cname': company.cname,
@@ -119,9 +122,10 @@ export class AdminService extends BaseService {
         'leaddyno_url': company.referral.leaddyno_url,
         'is_referralcandy_visible': company.referral.is_referralcandy_visible
       },
-      'child_intercom_id': company.child_intercom_id
+      'child_intercom_id': company.child_intercom_id,
+      'change_immediate': company.change_immediate,
+      'remove_leads_after_saving': company.remove_leads_after_saving
     };
-
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
       .catch(this.handleError);
@@ -422,5 +426,34 @@ export class AdminService extends BaseService {
     return this._http.put(this._url + '/admin/saveHellobar', data, this.put_options())
       .map(this.extractData)
       .catch(this.handleError)
+  }
+
+  deleteHellobar(hellobarId) {
+    return this._http.delete(this._url + '/admin/' + hellobarId, this.delete_options())
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+  getAvailableTemplates(){
+    return this._http.get(`${this._url}/admin/getAvailableTemplates`,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  saveAutoLoginToken(data: Object): Observable<any> {
+    return this._http.post(this._url + '/admin/saveAutoLoginToken', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  removeAutoLoginToken(data: Object): Observable<any> {
+    return this._http.put(this._url + '/admin/removeAutoLoginToken', data, this.options)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+  updateCustomFeatures(data){
+    console.log("<><><><><><><>",data);
+    return this._http.post(`${this._url}/admin/update/custom_feature`,data,this.post_options())
+          .map(this.extractData)
+          .catch(this.handleError);
   }
 }

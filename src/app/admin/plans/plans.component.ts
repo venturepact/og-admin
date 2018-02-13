@@ -16,12 +16,13 @@ export class PlansComponent implements OnInit {
   plans: any;
   planTypes: Array<any>;
   planNames: Array<any>;
-
+  selectedPlan:any;
+  manage='features';
   loading = false;
   addon_leads: String = '';
   addon_traffic: String = '';
   siteSettingMsg: String = '';
-  selectedPlanCategory: String = 'default';
+  selectedPlanCategory: string = 'default';
   keys = Object.keys;
   createPlanModel = {
     _id: 'new_plan',
@@ -62,6 +63,8 @@ export class PlansComponent implements OnInit {
       .subscribe((result) => {
         this.plans = result;
         this.loading = false;
+        this.selectedPlan=this.setPlan(this.selectedPlanCategory);
+        
         const planOb = [];
         for (let planType in this.plans) {
           this.plans[planType].forEach(plan => planOb.push({id: plan.plan._id, text: plan.plan.name}));
@@ -216,5 +219,13 @@ export class PlansComponent implements OnInit {
         this.siteSettingMsg = error.error.message;
       });
 
+  }
+  setPlan(category){
+    if(category == 'default')
+      return JSON.parse(JSON.stringify(this.plans[category][1]));
+    return JSON.parse(JSON.stringify(this.plans[category][0]));
+  }
+  copyPlan(plan){
+    return JSON.parse(JSON.stringify(plan));
   }
 }

@@ -9,6 +9,7 @@ import {CookieService} from "../../shared/services/cookie.service";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import "rxjs/add/operator/switchMap";
+import {FilterOperators} from "../../shared/interfaces/filter-operators.interface";
 
 declare var moment: any;
 declare var jQuery: any;
@@ -42,8 +43,6 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
   filters: Array<any> = []; // represents each filter
   savedFilters: Array<any> = [];
   filtersPostData: Array<any> = [];
-  stringOperators = ['contains', 'does not contain', 'equals', 'not equal to', 'starts with'];
-  numberOperators = ['between', 'less than', 'greater than', 'equals'];
 
   filter = {
     company: ['name', 'number_of_calculators', 'leads', 'last_lead_generated', 'visits', 'sign_up', 'plan', 'appsumo_created', 'conversion_rate',
@@ -73,14 +72,24 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     },
 
     operators: {
-      leads: this.numberOperators, visits: this.numberOperators,
-      name: this.stringOperators, number_of_calculators: this.numberOperators,
-      sign_up: this.numberOperators, appsumo_created: ['equals', 'not equal to'],
-      plan: this.stringOperators, status: this.stringOperators,
-      created_at: this.numberOperators, latest_publish: this.numberOperators,
-      conversion_rate: this.numberOperators, trial: this.stringOperators, next_payment: this.numberOperators,
-      percent_cycle_over: this.numberOperators, request_cancellation: ['equals', 'not equal to'],
-      last_lead_generated: this.numberOperators, billing_unit: this.stringOperators, web_session: this.numberOperators
+      leads: FilterOperators.numberOperators,
+      visits: FilterOperators.numberOperators,
+      name: FilterOperators.stringOperators,
+      number_of_calculators: FilterOperators.numberOperators,
+      sign_up: FilterOperators.numberOperators,
+      appsumo_created: ['equals', 'not equal to'],
+      plan: FilterOperators.stringOperators,
+      status: FilterOperators.stringOperators,
+      created_at: FilterOperators.numberOperators,
+      latest_publish: FilterOperators.numberOperators,
+      conversion_rate: FilterOperators.numberOperators,
+      trial: FilterOperators.stringOperators,
+      next_payment: FilterOperators.numberOperators,
+      percent_cycle_over: FilterOperators.numberOperators,
+      request_cancellation: ['equals', 'not equal to'],
+      last_lead_generated: FilterOperators.numberOperators,
+      billing_unit: FilterOperators.stringOperators,
+      web_session: FilterOperators.numberOperators
     },
     selected_property: '', // initially select name
     selected_operator: '',
@@ -146,7 +155,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
     filter.forEach((value, index) => {
       this.addFilter();
       this.filters[index].selected_property = value.property;
-      this.filters[index].select_property_type = value.type;
+      this.filters[index].select_property_category = value.type;
       this.filters[index].selected_operator = value.operator;
 
       //set post data
@@ -200,9 +209,8 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   parseFilterData() {
     // filter empty objects
-    let filteredData = this.filtersPostData.filter(value => {
-      return !(Object.keys(value).length === 0);
-    });
+    let filteredData = this.filtersPostData.filter(value =>
+      value.property && value.type && value.operator && value.value);
 
     // group by types - {app:[],company:[]}
     let groupedByData = {};
@@ -319,7 +327,7 @@ export class SuccessRateComponent extends Datatable implements OnInit, AfterView
 
   // Check the obj has the keys in the order mentioned. Used for checking JSON results.
   checkObjHasKeys(object, ...keys): boolean {
-    return keys.reduce((a, b) => ( a || {} )[b], object) !== undefined;
+    return keys.reduce((a, b) => (a || {})[b], object) !== undefined;
   }
 
   paging(num: number) {

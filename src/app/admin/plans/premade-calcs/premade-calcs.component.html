@@ -1,0 +1,49 @@
+<div *ngIf="loading">
+    <div>
+        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+    </div>
+</div>
+<div class="container" *ngIf="!loading">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Premade Calculators</div>
+            <div class="panel-body">
+                <div [id]="'template'+x" class="row" *ngFor="let template of availableTemplates;let x=index">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="checkbox">
+                                <label>
+                                    <span style="position: relative;right: 10px;">{{ !template.feature.visibility ? 'Select All' : 'Deselect All' }}</span>
+                                    <input type="checkbox" [(ngModel)]="template.feature.visibility"
+                                    (click)="selectAll($event,template,premades_calcs?.premades)"  
+                                    [id]="'feature'+x" />{{template.feature.name}}
+                                    <span *ngIf="!template.active" class="tag-beta"
+                                    style="position: relative;left: 10px;font-size:12px!important;">
+                                    Layout associated with this template is locked </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="todolist not-done">
+                                <ul id="sortable" class="list-unstyled">
+                                    <ng-container *ngFor="let calc of premades_calcs?.premades;let i=index">
+                                        <li class="ui-state-default" *ngIf="getModifiedTemplateName(template.feature._id) == calc.template">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" (ngModelChange)="syncSingleCheckBox($event,template,premades_calcs?.premades,calc)" 
+                                                    [ngModel]="calc.active" name="feature" /><span>{{calc.industry}} ,  </span><span>{{calc.type}} , </span>{{calc.title}}</label>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button (click)="updateCalcs()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

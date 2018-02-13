@@ -3,7 +3,7 @@
 </div>
 <br>
 <div class="np">
-    <ul class="nav nav-tabs nav-justified" style="padding:0px;" role="tablist">
+  <ul class="nav nav-tabs nav-justified" style="padding-left:265px!important;float: left;" role="tablist">
         <li role="presentation" [class.active]="" (click)="showTab('company')">
             <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Company details </a>
         </li>
@@ -28,7 +28,8 @@
   <div class="container col-md-12 company-cont">
     <div class="row company">
       <div>
-        <company-detail [company]="company" (childCompany)="updatecompany($event)"></company-detail>
+        <company-detail [company]="company" [customFeatures]="custom_features"
+         (childCompany)="updatecompany($event)"></company-detail>
       </div>
       <div>
         <br>
@@ -43,6 +44,9 @@
     <div class="row hide features">
       <div class="col-md-12 col-sm-12">
         <company-feature></company-feature>
+      </div>
+      <div class="col-md-12 col-sm-12" style="margin-bottom:50px">
+        <company-premades [company]="company" ></company-premades>
       </div>
     </div>
     <div class="row hide features">

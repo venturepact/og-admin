@@ -332,3 +332,33 @@
 /*.promolist .goalname { padding-right: 2em; }*/
 
 /*.promolist .editbtn { cursor: pointer; font-size: 17px; }*/
+.editbtn {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+
+.table-str-outer{ float: left; width:100%;}
+.table-str-outer .row-style{ float: left; width:100%; min-height: 40px; border-bottom: 1px solid #f2f2f2; }
+.table-str-outer .row-style.head{ border: none; background: #888888; margin-top: 10px;}
+.table-str-outer .row-style.head .col-style{ color: #fff; text-transform: uppercase; text-align: left;}
+.table-str-outer .row-style .col-style{ float: left; width: 25%; color: #888888; font-size: 13px;  padding:15px 10px;}
+.table-str-outer .row-style .col-style:nth-child(1){ width: 50px; text-align: center !important;}
+.table-str-outer .row-style .col-style:nth-child(3){ width:40%;}
+.table-str-outer .row-style .col-style a i{ font-size: 16px; color: #279ed6; margin:0 8px; float: left;}
+.table-str-outer .row-style .col-style a:last-child i{color:#F44336; }
+#autoLoginModal .modal-content.modal-bg{-webkit-border-radius: 5px;-moz-border-radius: 5px; border-radius: 5px;}
+#autoLoginModal.modal .form-group{ margin-top: 10px;}
+#autoLoginModal.modal .form-group:nth-child(1){ margin-top: 0px;}
+#autoLoginModal.modal .modal-body{ padding:15px 25px; float: left; width:100%; border:none; }
+#autoLoginModal.modal .modal-dialog{ width: 500px;}
+#autoLoginModal.modal .modal-header{color: #fb5f66;}
+#autoLoginModal.modal .modal-header h5{ font-size: 20px; text-transform: uppercase;}
+.token-outer{ float: left; width: 100%; min-height: 30px; padding: 10px 0;}
+.token-outer span{ float: left; width:100%; font-size: 10px; color: #8e989f;text-transform: uppercase;}
+.token-outer p{ float: left; width: 100%; font-size: 14px; color: #62696d; margin-bottom: 0;}
+#autoLoginModal.modal .btn-red{ padding:7px 20px;}
+.add-bth-outer{ float: left; width:100%;}
+.add-bth-outer .btn-red{ padding:7px 20px 7px 35px; position: relative }
+.add-bth-outer .btn-red i{font-size: 18px; position: absolute;left: 14px; top: 8px;}
+.mr10{ margin-right: 10px;}

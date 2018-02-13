@@ -92,6 +92,14 @@
                 </tr>
                 <tr>
                   <td>
+                    Remove leads After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    {{company.remove_leads_after_saving}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Current Referral Program
                   </td>
                   <td *ngIf="!edit_mode">
@@ -176,6 +184,14 @@
                 </tr>
                 <tr>
                   <td>
+                    Deal referred
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    {{company.deal_refered ? company.deal_refered : (company.isAppSumo ? 'APPSUMO' : 'NONE')}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Number of calculators
                   </td>
                   <td *ngIf="!edit_mode">
@@ -215,6 +231,14 @@
                   </td>
                   <td *ngIf="!edit_mode">
                     <span>{{company.child_intercom_id || 'Not set'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Company Logo
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{ customFeatures['extras']['company_logo']['active'] }}</span>
                   </td>
                 </tr>
                 </tbody>
@@ -349,6 +373,20 @@
                     </label>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Remove leads After Sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_leads_after_saving"
+                             formControlName="remove_leads_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
                 <div class="row" *ngIf="updateCompany.current_referral_program">
                   <div class="col-sm-4">
                     LeadDyno
@@ -461,6 +499,17 @@
                     </select>
                   </div>
                 </div>
+                <div class="row" *ngIf="change_immediate != updateCompany.chargebee_plan_id">
+                  <div class="col-sm-4">
+                    Change Plan immediately
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.change_immediate" formControlName="change_immediate">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-sm-4">
                     Is AppSumo
@@ -507,6 +556,19 @@
                   <div class="col-sm-8">
                     <input class="form-control" type="text" [(ngModel)]="updateCompany.child_intercom_id"
                            formControlName="child_intercom_id" [attr.disabled]="!updateCompany.agency || updateCompany.parent_company"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    company logo
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="customFeatures['extras']['company_logo']['active']"
+                             formControlName="company_logo">
+                      <div class="slider round"></div>
+                    </label>
                   </div>
                 </div>
 
