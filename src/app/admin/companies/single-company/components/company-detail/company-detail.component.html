@@ -95,7 +95,9 @@
                     Remove leads After Sync
                   </td>
                   <td *ngIf="!edit_mode">
-                    {{company.remove_leads_after_saving}}
+                    <div>
+                      {{!!company.remove_leads_after_saving}}
+                    </div>
                   </td>
                 </tr>
                 <tr>

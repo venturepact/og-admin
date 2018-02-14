@@ -248,6 +248,10 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     this.filters[index].selected_value = ''; // reset selected value
   }
 
+  getTemplateName(template) {
+    return this.templates.find(t => t.id === template);
+  }
+
   setFilterOperator(value, index) {
     this.filters[index].selected_operator = value;
   }

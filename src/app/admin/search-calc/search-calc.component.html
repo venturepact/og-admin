@@ -128,8 +128,8 @@
         <th (click)="sort('conversionRate')">
           <div class="sort-icon"><a href="javascript:void(0);">Conversion Rate</a></div>
         </th>
-        <th>Template type</th>
-        <th>Template</th>
+        <th>Experience</th>
+        <th>Layout</th>
         <th>AnalyticsLastUpdate</th>
         <th (click)="sort('createdAt')">
           <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
@@ -160,7 +160,7 @@
           <div *ngIf="!app.analytics?.conversionRate">0%</div>
         </td>
         <td>{{app.templateType}}</td>
-        <td>{{app.template}}</td>
+        <td>{{getTemplateName(app.template).text}}</td>
         <td>
           {{app.analytics?.updatedAt}}
         </td>
