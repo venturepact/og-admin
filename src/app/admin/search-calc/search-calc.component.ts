@@ -22,6 +22,9 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   showAdvancedFilter = false;
   analyticsUpdateStatus = "";
   value: any;
+  selectedApp:any;
+  errorMessage:any='';
+  companyDetails:any;
   filters: any = [];
   createdAtFilter: any = {
     start_date: moment("1970-01-01").format('YYYY-MM-DD'), //start of time
@@ -248,8 +251,31 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   setFilterOperator(value, index) {
     this.filters[index].selected_operator = value;
   }
+  setApp(app){
+    this.selectedApp=app;
+    (this.companyDetails && Object.keys(this.companyDetails).length>0) && (this.companyDetails={});
+  }
+  searchCompany(company){
+    this.errorMessage='';
+    if(company){
 
-  duplicateClac(appId: any) {
-    
+      this.adminService.searchCompany(company.trim()).subscribe((data)=>{
+        this.companyDetails=data;
+        this.companyDetails['check']=false;
+        this.errorMessage='no_error';
+      },(error:any)=>{
+        this.errorMessage = error.error.err_message;
+      });
+    }else{
+      this.errorMessage='Enter company name';
+    }
+  }
+  duplicateApp(app,company) {
+    console.log(app,company);
+    this.adminService.duplicateApp({app_id:app._id,company_id:company._id}).subscribe((data)=>{
+      console.log(data);
+    },(error)=>{
+      this.errorMessage=error.error.err_message;
+    })
   }
 }

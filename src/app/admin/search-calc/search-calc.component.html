@@ -172,6 +172,11 @@
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
+          <a data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value=''">
+            <i class="ui-tooltip material-icons"  style="font-size: 22px;"
+            data-original-title="Edit">
+            content_copy</i></a>
+              
         </td>
       </tr>
       </tbody>
@@ -203,46 +208,40 @@
 </div>
 
 <!-- duplicate model -->
-<!-- <div class="modal fade" id="assignCompany" role="dialog">
+<div class="modal fade" id="copyCalc" role="dialog">
   <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
           <i class="material-icons">close</i>
         </button>
-        <h3 class="modal-title">Create Duplicate of {{app.name}}</h3>
-        <h5>Type the company sub_domain in which you want to duplicate the {{app.}}</h5>
+        <h3 class="modal-title">Create Duplicate of {{selectedApp?.name}}</h3>
+        <h5>Type the company sub_domain in which you want to duplicate</h5>
       </div>
-      <div *ngIf="searchCompany" class="modal-body">
+      <div class="modal-body">
+        <div *ngIf="errorMessage!='no_error'">{{errorMessage}}</div>
         <div>
-            <input type="textbox" placeholder="enter company subdomain" ([ngModel])="subDomain">
+          <div style="float:left;">
+              <input type="textbox" placeholder="enter company subdomain" #company>
+          </div>
+          <div style="float:left;">
+            <button class="btn btn-primary" (click)="searchCompany(company.value)">Find</button>
+          </div>
         </div>
-        <div>
-          <button class="btn btn-primary">Find</button>
+        <div style="clear:both"></div>
+        <div *ngIf="errorMessage == 'no_error'">
+            <label class="check-icon">
+                <input id="f-option" type="radio"  [checked]="companyDetails.check" 
+                  (click)="companyDetails.check = !companyDetails.check"/>{{companyDetails.name}}
+            </label>
         </div>
+        
       </div>
-      <div *ngIf="selectCompany._id" class="modal-body">
-        <div *ngIf="!agencySelect" class="alert alert-danger custom-alert">
-          <i class="material-icons">report_problem</i>
-          <span id="server-error-msg">Please select the account where you want to add the clone of {{agencyCalcName}} {{agencyCalcType}}</span>
-        </div>
-        <div *ngIf="agencySelect && childLimitExced" class="alert alert-danger custom-alert">
-          <i class="material-icons">report_problem</i>
-          <span id="server-error-msg">Limit is execd of selected company</span>
-        </div>
-        <div>
-          <label class="check-icon">
-            <input id="f-option" type="radio" [value]="companyDetails.name" [checked]="companyDetails.check" (click)="companyDetails.check = !companyDetails.check; makeFalse(company._id)"
-            />
-            <label for="f-option{{i}}">
-              <span>{{companyDetails.name}}</span>
-            </label>44
-          </label>
-        </div>
-      </div>
+      
       <div class="modal-footer">
-        <button type="button" class="btn btn-red" (click)="selectCompany()">Done</button>
+        <button class="btn btn-red" (click)="duplicateApp(selectedApp,companyDetails)"
+          [disabled]="!companyDetails || !companyDetails.check">Create Duplicate</button>
       </div>
     </div>
   </div>
-</div> -->
+</div>

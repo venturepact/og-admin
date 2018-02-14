@@ -456,4 +456,15 @@ export class AdminService extends BaseService {
           .map(this.extractData)
           .catch(this.handleError);
   }
+  searchCompany(sub_domain){
+    return this._http.get(`${this._url}/admin/getCompanyBySubdomain/${sub_domain}`,this.get_options())
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+  duplicateApp(data){
+    return this._http.post(`${this._url}/admin/duplicateApp`,data,this.post_options())
+          .map(this.extractData)
+          .catch(this.handleError);
+
+  }
 }
