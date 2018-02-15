@@ -231,7 +231,7 @@
         <div style="clear:both"></div>
         <div *ngIf="errorMessage == 'no_error'">
             <label class="check-icon">
-                <input id="f-option" type="radio"  [checked]="companyDetails.check" 
+                <input class="checkBoxClass" id="f-option" type="radio"  [checked]="companyDetails.check" 
                   (click)="companyDetails.check = !companyDetails.check"/>{{companyDetails.name}}
             </label>
         </div>
