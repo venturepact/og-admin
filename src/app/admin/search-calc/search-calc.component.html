@@ -176,7 +176,7 @@
             <i class="ui-tooltip material-icons"  style="font-size: 22px;"
             data-original-title="Edit">
             content_copy</i></a>
-              
+
         </td>
       </tr>
       </tbody>
@@ -231,13 +231,13 @@
         <div style="clear:both"></div>
         <div *ngIf="errorMessage == 'no_error'">
             <label class="check-icon">
-                <input class="checkBoxClass" id="f-option" type="radio"  [checked]="companyDetails.check" 
-                  (click)="companyDetails.check = !companyDetails.check"/>{{companyDetails.name}}
+              <input class="checkBoxClass" id="f-option" type="radio" [checked]="companyDetails.check"
+                     (click)="companyDetails.check = !companyDetails.check"/>{{companyDetails.name}}
             </label>
         </div>
-        
+
       </div>
-      
+
       <div class="modal-footer">
         <button class="btn btn-red" (click)="duplicateApp(selectedApp,companyDetails)"
           [disabled]="!companyDetails || !companyDetails.check">Create Duplicate</button>

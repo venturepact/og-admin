@@ -249,7 +249,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   getTemplateName(template) {
-    return this.templates.find(t => t.id === template);
+    return this.templates.find(t => t.id.includes(template));
   }
 
   setFilterOperator(value, index) {
