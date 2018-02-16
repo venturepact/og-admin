@@ -172,7 +172,7 @@
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
-          <a data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value=''">
+          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value=''">
             <i class="ui-tooltip material-icons"  style="font-size: 22px;"
             data-original-title="Edit">
             content_copy</i></a>
@@ -222,10 +222,10 @@
         <div *ngIf="errorMessage!='no_error'">{{errorMessage}}</div>
         <div>
           <div style="float:left;">
-              <input type="textbox" placeholder="enter company subdomain" #company>
+              <input class="admin-input" type="textbox" placeholder="enter company subdomain" #company>
           </div>
           <div style="float:left;">
-            <button class="btn btn-primary" (click)="searchCompany(company.value)">Find</button>
+            <button class="btn btn-primary" (click)="searchCompany(company.value)">Search subdomain</button>
           </div>
         </div>
         <div style="clear:both"></div>
@@ -240,7 +240,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-red" (click)="duplicateApp(selectedApp,companyDetails)"
-          [disabled]="!companyDetails || !companyDetails.check">Create Duplicate</button>
+          [disabled]="!companyDetails || !companyDetails.check">Clone this calculator</button>
       </div>
     </div>
   </div>

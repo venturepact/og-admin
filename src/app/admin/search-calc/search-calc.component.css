@@ -181,10 +181,15 @@ thead th .desc {
 }
 .checkBoxClass{
   width: 30px !important;
+  
 }
 
 
-
+.admin-input{width: 270px;
+  padding: 6px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;}
 
 
 
