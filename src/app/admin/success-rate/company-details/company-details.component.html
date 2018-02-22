@@ -11,6 +11,7 @@
     <thead>
     <tr>
       <th>Link</th>
+      <th>Title</th>
       <th>Status</th>
       <th>Created At</th>
       <th>Latest Publish</th>
@@ -27,6 +28,7 @@
         <div *ngIf="app.status=='DEV'">{{app.url}}</div>
         <a *ngIf="app.status==='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
       </td>
+      <td>{{app.title}}</td>
       <td>{{app.status}}</td>
       <td>{{momentJs(app.createdAt).fromNow()}}</td>
       <td>{{momentJs(app.updatedAt).fromNow()}}</td>
