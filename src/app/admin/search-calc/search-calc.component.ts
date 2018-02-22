@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Datatable } from "../../shared/interfaces/datatable.interface";
-import { AdminService } from "../../shared/services/admin.service";
-import { FormControl } from "@angular/forms";
-import { CookieService, Script } from "../../shared/services";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Datatable} from "../../shared/interfaces/datatable.interface";
+import {AdminService} from "../../shared/services/admin.service";
+import {FormControl} from "@angular/forms";
+import {CookieService, Script} from "../../shared/services";
+import {Angular2Csv} from 'angular2-csv/Angular2-csv';
 
 declare var moment;
 declare var jQuery;
+
 
 @Component({
   selector: 'og-search-calc',
@@ -22,10 +24,11 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   showAdvancedFilter = false;
   analyticsUpdateStatus = "";
   value: any;
-  selectedApp:any;
-  errorMessage:any='';
-  companyDetails:any;
+  selectedApp: any;
+  errorMessage: any = '';
+  companyDetails: any;
   filters: any = [];
+  totalApps: number = 0;
   createdAtFilter: any = {
     start_date: moment("1970-01-01").format('YYYY-MM-DD'), //start of time
     end_date: moment().add(1, 'day').format('YYYY-MM-DD')
@@ -33,11 +36,11 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   sortKey = '_id'; // default sort parameters
   sortOrder = -1; // -1 for ascending order
 
-  templates: Array<any> = [{ id: 'template-eight', text: 'The Venice' },
-  { id: 'template-seven', text: 'The Seattle' }, { id: 'one-page-card-new', text: 'The Chicago' },
-  { id: 'sound-cloud-v3', text: 'The Londoner' }, { id: 'inline-temp-new', text: 'The Greek' },
-  { id: 'experian', text: 'The Tokyo' }, { id: 'template-five', text: 'The Madrid' },
-  { id: 'template-six', text: 'The Stockholm' }];
+  templates: Array<any> = [{id: 'template-eight', text: 'The Venice'},
+    {id: 'template-seven', text: 'The Seattle'}, {id: 'one-page-card-new', text: 'The Chicago'},
+    {id: 'sound-cloud-v3', text: 'The Londoner'}, {id: 'inline-temp-new', text: 'The Greek'},
+    {id: 'experian', text: 'The Tokyo'}, {id: 'template-five', text: 'The Madrid'},
+    {id: 'template-six', text: 'The Stockholm'}];
 
   templateTypes: Array<string> = ['Recommendation', 'Numerical', 'Graded', 'Poll'];
 
@@ -61,8 +64,8 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   public sub_role: string = null;
 
   constructor(private adminService: AdminService,
-    private scriptService: Script,
-    private _cookieService: CookieService) {
+              private scriptService: Script,
+              private _cookieService: CookieService) {
 
     super();
     if (_cookieService.readCookie('storage')) {
@@ -80,10 +83,10 @@ export class SearchCalcComponent extends Datatable implements OnInit {
         super.searchData();
         return this.searchData();
       }).subscribe((data: any) => {
-        this.showApps(data);
-      }, err => {
-        this.loading = false
-      });
+      this.showApps(data);
+    }, err => {
+      this.loading = false
+    });
     this.searchApps();
   }
 
@@ -99,6 +102,10 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     console.log(this.filters);
     super.searchData();
     this.searchApps();
+  }
+
+  clearFilters() {
+    this.filters.forEach(filter => filter.visible = false);
   }
 
   searchApps(): any {
@@ -179,7 +186,8 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
   showApps(response: any) {
     this.apps = response.apps;
-    this.total_pages = Math.ceil(response.count / this.current_limit);
+    this.totalApps = response.count
+    this.total_pages = Math.ceil(this.totalApps / this.current_limit);
 
     for (let i = 0; i < this.apps.length; i++) {
       this.apps[i].createdAt = moment(this.apps[i].createdAt).fromNow().trim();
@@ -255,32 +263,52 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   setFilterOperator(value, index) {
     this.filters[index].selected_operator = value;
   }
-  setApp(app){
-    this.selectedApp=app;
-    (this.companyDetails && Object.keys(this.companyDetails).length>0) && (this.companyDetails={});
-  }
-  searchCompany(company){
-    this.errorMessage='';
-    if(company){
 
-      this.adminService.searchCompany(company.trim()).subscribe((data)=>{
-        this.companyDetails=data;
-        this.companyDetails['check']=false;
-        this.errorMessage='no_error';
-      },(error:any)=>{
+  setApp(app) {
+    this.selectedApp = app;
+    (this.companyDetails && Object.keys(this.companyDetails).length > 0) && (this.companyDetails = {});
+  }
+
+  searchCompany(company) {
+    this.errorMessage = '';
+    if (company) {
+
+      this.adminService.searchCompany(company.trim()).subscribe((data) => {
+        this.companyDetails = data;
+        this.companyDetails['check'] = false;
+        this.errorMessage = 'no_error';
+      }, (error: any) => {
         this.errorMessage = error.error.err_message;
       });
-    }else{
-      this.errorMessage='Enter company name';
+    } else {
+      this.errorMessage = 'Enter company name';
     }
   }
-  duplicateApp(app,company) {
-    console.log(app,company);
-    this.adminService.duplicateApp({app_id:app._id,company_id:company._id}).subscribe((data)=>{
+
+  duplicateApp(app, company) {
+    console.log(app, company);
+    this.adminService.duplicateApp({app_id: app._id, company_id: company._id}).subscribe((data) => {
       console.log(data);
       jQuery('#copyCalc').modal('hide');
-    },(error)=>{
-      this.errorMessage=error.error.err_message;
+    }, (error) => {
+      this.errorMessage = error.error.err_message;
     })
+  }
+
+  exportToCSV() {
+    let data = this.apps.map(app => {
+      return {
+        url: app.url,
+        status: app.status,
+        subdomain: app.company.sub_domain,
+        template: this.getTemplateName(app.template).text,
+        templateType: app.templateType
+      }
+    });
+
+    const options = {
+      headers: ['url', 'status', 'sub domain', 'Layout', 'Experience']
+    };
+    new Angular2Csv(data, 'apps', options);
   }
 }

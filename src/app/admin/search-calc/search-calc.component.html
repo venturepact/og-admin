@@ -10,14 +10,7 @@
     <button (click)="updateAnalytics()">Update Analytics</button>
   </div>
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
-    <div class="dataTables_length" id="table-dataTables_length">
-      <label style="color: black">Show
-        <select name="table-dataTables_length" (change)="limitChange($event)">
-          <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
-        </select>
-        entries
-      </label>
-    </div>
+
 
     <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
       <span class="glyphicon glyphicon-filter"></span>
@@ -26,7 +19,8 @@
     <div class="right-section">
       <div id="table-datatable_filter" class="dataTables_filter">
         <label style="color: black">
-          Search:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" [formControl]='searchCalc'>
+          keyword:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search"
+                         [formControl]='searchCalc'>
         </label>
       </div>
       <div class="check-box-outer">
@@ -38,16 +32,21 @@
 
     <div *ngIf="showAdvancedFilter" class="advanced-filter">
 
+      <button style="margin: 5px;margin-left: 20px" (click)="addFilter()">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      Add more search parameters
+
       <div class="row filter-params-container" style="position:relative"
            *ngFor="let filter of filters;let i = index;">
 
         <div [ngClass]="{'hidden':!(filter.visible)}">
-          <button style="float: left;" (click)="removeFilter(i)">
+          <button style="float: left;margin: 5px;" (click)="removeFilter(i)">
             <span class="glyphicon glyphicon-minus"></span>
           </button>
 
           <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"
-                  title="Select Operators" style="float:left;">
+                  title="Select Operators" style="float:left;margin: 8px">
             <option style="display: none"></option>
             <optgroup label="Company">
 
@@ -102,10 +101,9 @@
       </div>
 
       <div class="apply-filter-container">
-        <button (click)="addFilter()">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
+
         <button (click)="filterResults()">Fetch Results</button>
+        <button (click)="clearFilters()">Clear Filters</button>
 
       </div>
     </div>
@@ -113,7 +111,23 @@
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
-
+    <div style="float: left; padding: 7px; width: 69%;">
+      <div class="dataTables_length" id="table-dataTables_length">
+        <label style="color: black">Show
+          <select name="table-dataTables_length" (change)="limitChange($event)">
+            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+          </select>
+          entries
+        </label>
+      </div>
+    </div>
+    <div style="float: right;width: 31%;">
+      <label style="float: left;margin: 0;
+    margin-right: 10px;padding: 8px;">Showing {{current_limit}} of {{totalApps}}</label>
+      <button style="float: left;
+    margin: 5px;" (click)="exportToCSV()">Download in csv
+      </button>
+    </div>
     <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
       <thead>
       <tr>
@@ -172,7 +186,8 @@
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
-          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value=''">
+          <a href="javascript:void(0)" data-toggle="modal" data-target="#copyCalc"
+             (click)="setApp(app);company.value=''">
             <i class="ui-tooltip material-icons"  style="font-size: 22px;"
             data-original-title="Edit">
             content_copy</i></a>
