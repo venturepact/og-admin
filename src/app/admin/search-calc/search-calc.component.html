@@ -172,7 +172,7 @@
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
-          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value=''">
+          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value='';errorMessage=''">
             <i class="ui-tooltip material-icons"  style="font-size: 22px;"
             data-original-title="Edit">
             content_copy</i></a>
@@ -219,7 +219,7 @@
         <h5>Type the company sub_domain in which you want to duplicate</h5>
       </div>
       <div class="modal-body">
-        <div *ngIf="errorMessage!='no_error'">{{errorMessage}}</div>
+        <div style="color:red;font-size:10px" *ngIf="errorMessage!='no_error'">{{errorMessage}}</div>
         <div>
           <div style="float:left;">
               <input class="admin-input" type="textbox" placeholder="enter company subdomain" #company>
