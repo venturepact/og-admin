@@ -284,10 +284,9 @@ export class SearchCalcComponent extends Datatable implements OnInit {
       this.errorMessage = 'Enter company name';
     }
   }
-
-  duplicateApp(app, company) {
-    console.log(app, company);
-    this.adminService.duplicateApp({app_id: app._id, company_id: company._id}).subscribe((data) => {
+  duplicateApp(app,company) {
+    console.log(app,company);
+    this.adminService.duplicateApp({appData:app,company_id:company._id}).subscribe((data)=>{
       console.log(data);
       jQuery('#copyCalc').modal('hide');
     }, (error) => {
