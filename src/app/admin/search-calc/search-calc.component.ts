@@ -22,6 +22,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   loading = true;
   onlyLive: boolean = false;
   showAdvancedFilter = false;
+  fetchAll: boolean = false;
   analyticsUpdateStatus = "";
   value: any;
   selectedApp: any;
@@ -100,6 +101,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
   filterResults() {
     console.log(this.filters);
+
     super.searchData();
     this.searchApps();
   }
@@ -146,11 +148,11 @@ export class SearchCalcComponent extends Datatable implements OnInit {
       });
   }
 
-  getParams(): any {
+  getParams(getAll?: boolean): any {
     return {
-      limit: this.current_limit,
+      limit: getAll ? null : this.current_limit,
       search_key: this.search,
-      page: this.current_page - 1,
+      page: getAll ? null : (this.current_page - 1),
       only_live: this.onlyLive,
       filter: this.parseFilterData(),
       created_at_filter: this.createdAtFilter,
@@ -186,7 +188,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
   showApps(response: any) {
     this.apps = response.apps;
-    this.totalApps = response.count
+    this.totalApps = response.count;
     this.total_pages = Math.ceil(this.totalApps / this.current_limit);
 
     for (let i = 0; i < this.apps.length; i++) {
@@ -284,6 +286,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
       this.errorMessage = 'Enter company name';
     }
   }
+
   duplicateApp(app,company) {
     console.log(app,company);
     this.adminService.duplicateApp({appData:app,company_id:company._id}).subscribe((data)=>{
@@ -295,12 +298,14 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   exportToCSV() {
-    let data = this.apps.map(app => {
-      return {
+    this.adminService.getApps(this.getParams(this.fetchAll)).subscribe(({apps}) => {
+      let data = apps.map(app => {
+
+        return {
         url: app.url,
         status: app.status,
         subdomain: app.company.sub_domain,
-        template: this.getTemplateName(app.template).text,
+          template: this.getTemplateName(app.template) ? this.getTemplateName(app.template).text : '',
         templateType: app.templateType
       }
     });
@@ -309,5 +314,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
       headers: ['url', 'status', 'sub domain', 'Layout', 'Experience']
     };
     new Angular2Csv(data, 'apps', options);
+    });
+
   }
 }

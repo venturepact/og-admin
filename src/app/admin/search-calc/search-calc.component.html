@@ -111,7 +111,7 @@
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
-    <div style="float: left; padding: 7px; width: 69%;">
+    <div style="float: left; padding: 7px; width: 60%;" *ngIf="!loading">
       <div class="dataTables_length" id="table-dataTables_length">
         <label style="color: black">Show
           <select name="table-dataTables_length" (change)="limitChange($event)">
@@ -121,12 +121,20 @@
         </label>
       </div>
     </div>
-    <div style="float: right;width: 31%;">
+    <div style="float: right;width: 40%;" *ngIf="!loading">
       <label style="float: left;margin: 0;
-    margin-right: 10px;padding: 8px;">Showing {{current_limit}} of {{totalApps}}</label>
-      <button style="float: left;
-    margin: 5px;" (click)="exportToCSV()">Download in csv
+    margin-right: 10px;padding: 8px;">Showing {{(current_limit-apps.length)===0?current_limit:apps.length}} of
+        {{totalApps}}</label>
+
+      <div style="float: left;margin: 5px;">
+        <button (click)="exportToCSV()">Download in csv
       </button>
+        <div class="check-box-outer">
+          <label>Get All<input class="check-box" type="checkbox" [(ngModel)]="fetchAll">
+          </label>
+        </div>
+      </div>
+
     </div>
     <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
       <thead>
@@ -174,7 +182,7 @@
           <div *ngIf="!app.analytics?.conversionRate">0%</div>
         </td>
         <td>{{app.templateType}}</td>
-        <td>{{getTemplateName(app.template).text}}</td>
+        <td>{{getTemplateName(app.template)?.text}}</td>
         <td>
           {{app.analytics?.updatedAt}}
         </td>
