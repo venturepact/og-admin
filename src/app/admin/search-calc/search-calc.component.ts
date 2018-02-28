@@ -284,16 +284,22 @@ export class SearchCalcComponent extends Datatable implements OnInit {
       this.errorMessage = 'Enter company name';
     }
   }
-  duplicateApp(app,company) {
-    console.log(app,company);
+  duplicateApp(event,app,company) {
+    
+    console.log(event.target.disabled,app,company);
+    this.changeButtonState(event);
     this.adminService.duplicateApp({appData:app,company_id:company._id}).subscribe((data)=>{
       console.log(data);
+      this.changeButtonState(event);
       jQuery('#copyCalc').modal('hide');
     }, (error) => {
+      this.changeButtonState(event);
       this.errorMessage = error.error.err_message;
     })
   }
-
+  changeButtonState(event){
+    event.target.disabled = !event.target.disabled;
+  }
   exportToCSV() {
     let data = this.apps.map(app => {
       return {
