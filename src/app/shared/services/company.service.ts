@@ -325,6 +325,7 @@ export class CompanyService extends BaseService {
   }
 
   getCompanyPremades(company){
+    company['special_jv']=company['integration'];
     return this._http.post(`${this._url}/company/premade_calcs`,company,this.post_options())
         .map(this.extractData)
         .catch(this.handleError)
