@@ -80,14 +80,13 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     await this.scriptService.load('daterangepicker', 'datatables');
     this.addFilter();
     this.searchApps();
-    let superSearch = super.searchData;
 
     let self = this;
     document.getElementById('keyword')
       .addEventListener("keyup", function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
-          superSearch();
+          self.current_page = 1;
           self.searchData().subscribe(data => self.showApps(data));
         }
       });
