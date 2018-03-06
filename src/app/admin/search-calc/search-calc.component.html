@@ -10,14 +10,7 @@
     <button (click)="updateAnalytics()">Update Analytics</button>
   </div>
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
-    <div class="dataTables_length" id="table-dataTables_length">
-      <label style="color: black">Show
-        <select name="table-dataTables_length" (change)="limitChange($event)">
-          <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
-        </select>
-        entries
-      </label>
-    </div>
+
 
     <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
       <span class="glyphicon glyphicon-filter"></span>
@@ -26,7 +19,8 @@
     <div class="right-section">
       <div id="table-datatable_filter" class="dataTables_filter">
         <label style="color: black">
-          Search:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search" [formControl]='searchCalc'>
+          keyword:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search"
+                         [formControl]='searchCalc'>
         </label>
       </div>
       <div class="check-box-outer">
@@ -37,70 +31,103 @@
     </div>
 
     <div *ngIf="showAdvancedFilter" class="advanced-filter">
-      <div class="row">
-        <div class="col-sm-4" style="margin-left: 15px">
-          <b>Created At: </b>
-        </div>
-        <div class="col-sm-4">
-          <og-date-range-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)">
-          </og-date-range-picker>
-        </div>
 
-      </div>
-      <div class="row" style="margin-top: 10px">
-        <div class="col-sm-4" style="margin-left: 15px">
-          <select title="select" (change)="selectedFilter['value']=''" [(ngModel)]="selectedFilter">
+      <button style="margin: 5px;margin-left: 20px" (click)="addFilter()">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      Add more search parameters
+
+      <div class="row filter-params-container" style="position:relative"
+           *ngFor="let filter of filters;let i = index;">
+
+        <div [ngClass]="{'hidden':!(filter.visible)}">
+          <button style="float: left;margin: 5px;" (click)="removeFilter(i)">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+
+          <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"
+                  title="Select Operators" style="float:left;margin: 8px">
+            <option style="display: none"></option>
             <optgroup label="Company">
-              <option [ngValue]="{type:'company',field:'sub_domain', value: value}">Sub Domain</option>
+
+              <option *ngFor="let property of filter.company;" class="company"
+                      [value]="property">
+                {{property}}
+              </option>
             </optgroup>
+
             <optgroup label="App">
-              <option [ngValue]="{type:'app',field:'header', value: value}">Header</option>
-              <option [ngValue]="{type:'app',field:'sub_header', value: value}">SubHeader</option>
-            </optgroup>
-
-            <optgroup label="Recommendation">
-              <option [ngValue]="{type:'Recommendation',field:'all'}">All</option>
-              <option *ngFor="let template of adminService.availableTemplates"
-                      [ngValue]="{type:'Recommendation',field:template.selector}">{{template.name}}
+              <option *ngFor="let property of filter.app;" class="app" [value]="property">
+                {{property}}
               </option>
             </optgroup>
 
-            <optgroup label="Numerical">
-              <option [ngValue]="{type:'Numerical',field:'all'}">All</option>
-              <option *ngFor="let template of adminService.availableTemplates"
-                      [ngValue]="{type:'Numerical',field:template.selector}">{{template.name}}
+            <optgroup label="template">
+              <option *ngFor="let property of filter.template" class="template" [value]="property">
+                {{property}}
               </option>
             </optgroup>
-
-            <optgroup label="Graded">
-              <option [ngValue]="{type:'Graded',field:'all'}">All</option>
-              <option *ngFor="let template of adminService.availableTemplates"
-                      [ngValue]="{type:'Graded',field:template.selector}">{{template.name}}
-              </option>
-            </optgroup>
-
-            <optgroup label="Poll">
-              <option [ngValue]="{type:'Poll',field:'all'}">All</option>
-              <option *ngFor="let template of adminService.availableTemplates"
-                      [ngValue]="{type: 'Poll',field: template.selector}">{{template.name}}
-              </option>
-            </optgroup>
-
           </select>
-        </div>
-        <div *ngIf="notTemplate(selectedFilter?.type)">
-          <input type="text" placeholder="enter value" [(ngModel)]="selectedFilter['value']">
+
+
+          <input [(ngModel)]="filters[i].selected_value"
+                 *ngIf="['company','app'].includes(filters[i].selected_property_category) && (filters[i].selected_property_type==='number' || filters[i].selected_property_type==='string')"
+                 type="text"/>
+
+          <div *ngIf="filters[i].selected_property_category==='template'"
+               style="width: 300px; margin-bottom: 20px;float: left;margin-left: 10px">
+            <ng-select [multiple]="true"
+                       [items]="[{id: 'all', text: 'all'}].concat(templates)"
+                       (selected)="selected($event,i,'template')"
+                       (removed)="removed($event.id,i,'template')"
+                       placeholder="Select a template">
+
+            </ng-select>
+          </div>
+          <div *ngIf="filters[i].selected_property_category==='template'"
+               style="width: 300px;float: left; margin-left: 10px">
+            <ng-select
+              [multiple]="true"
+              [items]="['all'].concat(templateTypes)"
+              (selected)="selected($event,i,'templateType')"
+              (removed)="removed($event.id,i,'templateType')"
+              placeholder="Select a template type">
+
+            </ng-select>
+          </div>
+
+
         </div>
       </div>
 
-      <button class="apply-filter-container" (click)="filterResults()">Fetch Results</button>
-    </div>
+      <div class="apply-filter-container">
 
+        <button (click)="filterResults()">Fetch Results</button>
+        <button (click)="clearFilters()">Clear Filters</button>
+
+      </div>
+    </div>
 
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
-
+    <div style="float: left; padding: 7px; width: 69%;">
+      <div class="dataTables_length" id="table-dataTables_length">
+        <label style="color: black">Show
+          <select name="table-dataTables_length" (change)="limitChange($event)">
+            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+          </select>
+          entries
+        </label>
+      </div>
+    </div>
+    <div style="float: right;width: 31%;">
+      <label style="float: left;margin: 0;
+    margin-right: 10px;padding: 8px;">Showing {{current_limit}} of {{totalApps}}</label>
+      <button style="float: left;
+    margin: 5px;" (click)="exportToCSV()">Download in csv
+      </button>
+    </div>
     <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
       <thead>
       <tr>
@@ -115,6 +142,8 @@
         <th (click)="sort('conversionRate')">
           <div class="sort-icon"><a href="javascript:void(0);">Conversion Rate</a></div>
         </th>
+        <th>Experience</th>
+        <th>Layout</th>
         <th>AnalyticsLastUpdate</th>
         <th (click)="sort('createdAt')">
           <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
@@ -144,6 +173,8 @@
           <div *ngIf="app.analytics?.conversionRate">{{app.analytics?.conversionRate}}%</div>
           <div *ngIf="!app.analytics?.conversionRate">0%</div>
         </td>
+        <td>{{app.templateType}}</td>
+        <td>{{getTemplateName(app.template).text}}</td>
         <td>
           {{app.analytics?.updatedAt}}
         </td>
@@ -155,6 +186,11 @@
             <i class="ui-tooltip material-icons" style="font-size: 22px;"
                data-original-title="Edit">
               mode_edit</i></a>
+          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value='';errorMessage=''">
+            <i class="ui-tooltip material-icons"  style="font-size: 22px;"
+            data-original-title="Edit">
+            content_copy</i></a>
+
         </td>
       </tr>
       </tbody>
@@ -185,4 +221,41 @@
   </div>
 </div>
 
+<!-- duplicate model -->
+<div class="modal fade" id="copyCalc" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h3 class="modal-title">Create Duplicate of {{selectedApp?.name}}</h3>
+        <h5>Type the company sub_domain in which you want to duplicate</h5>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="errorMessage!='no_error'">{{errorMessage}}</div>
+        <div>
+          <div style="float:left;">
+              <input class="admin-input" type="textbox" placeholder="enter company subdomain" #company>
+          </div>
+          <div style="float:left;">
+            <button class="btn btn-primary" (click)="searchCompany(company.value)">Search subdomain</button>
+          </div>
+        </div>
+        <div style="clear:both"></div>
+        <div *ngIf="errorMessage == 'no_error'">
+            <label class="check-icon">
+              <input class="checkBoxClass" id="f-option" type="radio" [checked]="companyDetails.check"
+                     (click)="companyDetails.check = !companyDetails.check"/>{{companyDetails.name}}
+            </label>
+        </div>
 
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-red" (click)="duplicateApp($event,selectedApp,companyDetails)"
+          [disabled]="!companyDetails || !companyDetails.check">Clone this calculator</button>
+      </div>
+    </div>
+  </div>
+</div>

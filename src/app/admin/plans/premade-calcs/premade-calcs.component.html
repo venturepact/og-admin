@@ -30,7 +30,9 @@
                                         <li class="ui-state-default" *ngIf="getModifiedTemplateName(template.feature._id) == calc.template">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" (ngModelChange)="syncSingleCheckBox($event,template,premades_calcs?.premades,calc)" 
+                                                    <!-- <input type="checkbox" (click)="onclick()"  (ngModelChange)="syncSingleCheckBox($event,template,premades_calcs?.premades,calc);" 
+                                                    [ngModel]="calc.active" name="feature" /><span>{{calc.industry}} ,  </span><span>{{calc.type}} , </span>{{calc.title}}</label> -->
+                                                    <input type="checkbox" (ngModelChange)="syncSingleCheckBox($event,template,premades_calcs?.premades,calc);"  [disabled]="!template.active"
                                                     [ngModel]="calc.active" name="feature" /><span>{{calc.industry}} ,  </span><span>{{calc.type}} , </span>{{calc.title}}</label>
                                             </div>
                                         </li>

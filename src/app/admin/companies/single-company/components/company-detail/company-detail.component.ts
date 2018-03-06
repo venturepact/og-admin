@@ -85,7 +85,8 @@ export class CompanyDetailComponent implements OnInit {
       sharing_url: [this.updateCompany.referral.sharing_url],
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
       change_immediate: [false],
-      company_logo:[this.customFeatures['extras']['company_logo']['active']]
+      company_logo:[this.customFeatures['extras']['company_logo']['active']],
+      gdpr:[this.customFeatures['extras']['GDPR'] || false]
     });
     this.getPlanList();
     this.getCompanyCoupon();
@@ -134,7 +135,7 @@ export class CompanyDetailComponent implements OnInit {
       this.isSubmit = false;
       Observable.forkJoin([
         this._adminService.updateCompany(this.updateCompany, this.id),
-        this._adminService.updateCustomFeatures({customFeatures:this.customFeatures,update:'extras'})
+        this._adminService.updateCustomFeatures({customFeatures:this.customFeatures,update:'extras GDPR'})
       ]).subscribe(
           (response: any) => {
             //window.location.reload(true);

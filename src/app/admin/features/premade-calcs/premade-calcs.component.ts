@@ -21,7 +21,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   industries=['Auto','Education','Finance','Health & Fitness'
               ,'Legal','Marketing & Advertising','Publishing'
               ,'Quintessential','Real Estate & Construction','Technology'
-              ,'Travel','TV and Entertainment'];
+              ,'Travel','TV and Entertainment','Trending'];
   templates = [];
   // templates= [
   //   ['one-page-card-new','Chicago'],
