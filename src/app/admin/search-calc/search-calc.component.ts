@@ -80,12 +80,14 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     await this.scriptService.load('daterangepicker', 'datatables');
     this.addFilter();
     this.searchApps();
+    let superSearch = super.searchData;
 
     let self = this;
     document.getElementById('keyword')
       .addEventListener("keyup", function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
+          superSearch();
           self.searchData().subscribe(data => self.showApps(data));
         }
       });
@@ -100,6 +102,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   filterResults() {
+    super.searchData();
     this.searchApps();
   }
 
@@ -207,6 +210,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     } else {
       this.sortOrder = -1;
     }
+    super.searchData();
     this.searchApps();
   }
 
@@ -236,7 +240,6 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   searchData() {
-    super.searchData();
     this.loading = true;
     return this.adminService.getApps(this.getParams());
   }
