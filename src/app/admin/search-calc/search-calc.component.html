@@ -262,7 +262,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-red" (click)="duplicateApp(selectedApp,companyDetails)"
+        <button class="btn btn-red" (click)="duplicateApp($event,selectedApp,companyDetails)"
           [disabled]="!companyDetails || !companyDetails.check">Clone this calculator</button>
       </div>
     </div>
