@@ -7,6 +7,7 @@ import {Angular2Csv} from 'angular2-csv/Angular2-csv';
 
 declare var moment;
 declare var jQuery;
+declare var document;
 
 
 @Component({
@@ -78,17 +79,16 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   async ngOnInit() {
     await this.scriptService.load('daterangepicker', 'datatables');
     this.addFilter();
-
-    this.searchCalc.valueChanges.debounceTime(1500).distinctUntilChanged()
-      .switchMap(input => {
-        super.searchData();
-        return this.searchData();
-      }).subscribe((data: any) => {
-      this.showApps(data);
-    }, err => {
-      this.loading = false
-    });
     this.searchApps();
+
+    let self = this;
+    document.getElementById('keyword')
+      .addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+          self.searchData().subscribe(data => self.showApps(data));
+        }
+      });
   }
 
   addFilter() {
@@ -100,9 +100,6 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   filterResults() {
-    console.log(this.filters);
-
-    super.searchData();
     this.searchApps();
   }
 
@@ -170,8 +167,6 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   selected(event, index, type) {
-    console.log('selected', event, index);
-
     if (typeof this.filters[index].selected_value === 'string') {
       this.filters[index].selected_value = {};
     }
@@ -212,7 +207,6 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     } else {
       this.sortOrder = -1;
     }
-    super.searchData();
     this.searchApps();
   }
 
@@ -242,6 +236,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
   }
 
   searchData() {
+    super.searchData();
     this.loading = true;
     return this.adminService.getApps(this.getParams());
   }
@@ -315,6 +310,5 @@ export class SearchCalcComponent extends Datatable implements OnInit {
     };
     new Angular2Csv(data, 'apps', options);
     });
-
   }
 }

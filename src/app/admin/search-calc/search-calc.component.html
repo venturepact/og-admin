@@ -18,25 +18,20 @@
     </div>
     <div class="right-section">
       <div id="table-datatable_filter" class="dataTables_filter">
-        <label style="color: black">
-          keyword:<input type="search" placeholder="By Name, Title, Url" [(ngModel)]="search"
+        <label>
+          Search by keyword:<input id="keyword" type="search" placeholder="By Name, Title, Url" [(ngModel)]="search"
                          [formControl]='searchCalc'>
         </label>
       </div>
-      <div class="check-box-outer">
-        <label>Only Live<input (change)="fetchLiveCalc()" type="checkbox" class="check-box">
-        </label>
-      </div>
 
+
+    </div>
+    <div class="check-box-outer cust">
+      <label class="custom-filter">Only Live<input (change)="fetchLiveCalc()" type="checkbox" class="check-box">
+      </label>
     </div>
 
     <div *ngIf="showAdvancedFilter" class="advanced-filter">
-
-      <button style="margin: 5px;margin-left: 20px" (click)="addFilter()">
-        <span class="glyphicon glyphicon-plus"></span>
-      </button>
-      Add more search parameters
-
       <div class="row filter-params-container" style="position:relative"
            *ngFor="let filter of filters;let i = index;">
 
@@ -99,6 +94,12 @@
 
         </div>
       </div>
+      <span class="add-more">
+        <button style="margin: 5px;margin-left: 20px" (click)="addFilter()">
+        <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        Add more search parameters
+      </span>
 
       <div class="apply-filter-container">
 
@@ -129,7 +130,7 @@
       <div style="float: left;margin: 5px;">
         <button (click)="exportToCSV()">Download in csv
       </button>
-        <div class="check-box-outer">
+        <div class="check-box-outer1">
           <label>Get All<input class="check-box" type="checkbox" [(ngModel)]="fetchAll">
           </label>
         </div>
