@@ -1,0 +1,46 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let feature of features; let i=index">
+    <div *ngIf="info?.type!=='premades'; else premadeLabel">
+      <input type="checkbox" [(ngModel)]="feature.active" (change)="pushChanges(feature)" id="{{feature._id}}" class="featureCheck"
+      />
+      <label for="{{feature._id}}">
+        {{feature.name}}
+      </label>
+      <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
+        (click)="expand($event.target)">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
+        <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
+          <input type="checkbox" [(ngModel)]="feat.active" (change)="pushChanges(feat)" id="{{feat._id}}" class="featureCheck"
+          />
+          <label for="{{feat._id}}">
+            <span>{{feat.name}}</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+    <ng-template #premadeLabel>
+      <input type="checkbox" [checked]="isAllChildMarked(feature)" (change)="selectAllCalc($event,feature);" id="{{feature._id}}"
+        class="featureCheck" />
+      <label for="{{feature._id}}">
+        {{feature.name}}
+        <span *ngIf="!feature.active " class="tag-beta" style="position: relative;left: 10px;font-size:9px!important;">
+          Layout associated with this feature is locked </span>
+      </label>
+      <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
+        (click)="expand($event.target)">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
+        <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
+          <input type="checkbox" [(ngModel)]="feat.active" [disabled]="!feature.active" (change)="pushChanges(feat)" id="{{feat._id}}"
+            class="featureCheck" />
+          <label for="{{feat._id}}">
+            <span>{{feat.title}}</span>
+          </label>
+        </li>
+      </ul>
+    </ng-template>
+  </li>
+</ul>

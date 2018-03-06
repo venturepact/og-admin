@@ -14,13 +14,13 @@ declare var jQuery: any;
 })
 
 export class SingleCompanyComponent implements AfterViewInit {
-
+  templates:any=[];
   company_users: any[];
   id: number;
   currentTab: any;
   @Output() company: any;
   custom_features:any;
-
+  companyFeatures:any;
   constructor(public companyService: CompanyService,
               public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
@@ -30,12 +30,25 @@ export class SingleCompanyComponent implements AfterViewInit {
 
   }
 
+  ngOnInit(){
+  }
   ngAfterViewInit() {
     
     this.getCompanyInfo(this.id);
     this.getCompanyUser(this.id);
-  }
 
+  }
+  getCompanyFeatures(company){
+    let $ref= this.companyService.getCompanyFeatures(company)
+    .subscribe((data)=>{
+      this.companyFeatures=data;
+      this.companyFeatures['company'] = this.company.id;
+      this.companyFeatures.features && (this.templates=this.getFeatures(this.companyFeatures.features,'templates')); 
+      $ref.unsubscribe();
+    },error=>{
+      $ref.unsubscribe();
+    })
+  }
   showTab(tab: any) {
     this.currentTab = tab;
     if (tab === 'company') {
@@ -105,22 +118,22 @@ export class SingleCompanyComponent implements AfterViewInit {
         this.company = new AdminCompany(data[0].company);
         this.company['reset_period_list'] = data[0].reset_period_list;
         this.custom_features = data[1];
+        this.getCompanyFeatures(this.company);
       },error=>{
         console.log("error");
     });
-    // this.companyService.getCompanyInfo(id)
-    //   .subscribe(
-    //     (response: any) => {
-    //       this.company = new AdminCompany(response.company);
-    //       this.company['reset_period_list'] = response.reset_period_list;
-
-    //     },
-    //     (response: any) => {
-    //     }
-    //   );
   }
   updatecompany(data){
     this.company = data;
   }
-
+  getFeatures(features,parentFeature){
+    let item = features.find(feature=>{
+      return feature['_id'] === parentFeature;
+    });
+    return (item ? item['sub_features'] :[]);
+  }
+  emitChanges(changes){
+      changes=changes.filter(obj=>obj['parent_feature']==='templates');
+      changes.length && this.companyService.companyTemplates.next(changes);
+  }
 }

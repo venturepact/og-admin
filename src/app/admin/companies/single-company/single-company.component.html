@@ -42,11 +42,13 @@
                    [companyId]="company.id"></team-detail>
      </div>
     <div class="row hide features">
-      <div class="col-md-12 col-sm-12">
-        <company-feature></company-feature>
+      <div class="col-md-6 col-sm-6">
+        <!-- <company-feature></company-feature> -->
+        <company-features-new [data]="companyFeatures" (featureUpdates)="emitChanges($event)"></company-features-new>
       </div>
-      <div class="col-md-12 col-sm-12" style="margin-bottom:50px">
-        <company-premades [company]="company" ></company-premades>
+      <div class="col-md-6 col-sm-6" style="margin-bottom:50px">
+        <!-- <company-premades [company]="company" ></company-premades> -->
+        <company-premades-new [data]="companyFeatures" [templates]="templates"></company-premades-new>
       </div>
     </div>
     <div class="row hide features">

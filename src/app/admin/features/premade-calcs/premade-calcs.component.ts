@@ -1,11 +1,11 @@
-import { Datatable } from './../../shared/interfaces/datatable.interface';
-import { PremadeCalcService } from './../../shared/services/premade-calc.service';
+import { PremadeCalcsService } from './../services/premade-calcs.service';
+import { Datatable } from './../../../shared/interfaces/datatable.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,Validators,FormBuilder} from '@angular/forms';
-import { AdminService } from '../../shared/services/admin.service';
+import { AdminService } from './../../../shared/services/admin.service';
 declare var jQuery:any;
 @Component({
-  selector: 'app-premade-calcs',
+  selector: 'premade-calcs',
   templateUrl: './premade-calcs.component.html',
   styleUrls: ['./premade-calcs.component.css']
 })
@@ -34,7 +34,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   //   ['template-eight',]
   // ];
   constructor(private _fb:FormBuilder,
-    private _calculatorService:PremadeCalcService,
+    private _calculatorService:PremadeCalcsService,
   private _adminService:AdminService) {
     super();
    }

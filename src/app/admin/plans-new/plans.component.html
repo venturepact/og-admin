@@ -1,0 +1,17 @@
+<div class="plan_container">
+  <div>
+    <select (change)="planChanged($event.target.value)">
+      <option  *ngFor="let plan of plansData;let i=index" [value]="plan['plan']['_id']" [selected]="i==0">
+        {{plan['plan']['name']}}
+      </option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <features [data]="selectedPlan" (featureUpdates)="emitChanges($event)"></features>
+    </div>
+    <div class="col-md-6">
+      <premades [data]="selectedPlan" [templates]="templates"></premades>
+    </div>
+  </div>
+</div>
