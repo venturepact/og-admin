@@ -86,8 +86,9 @@ export class CompanyDetailComponent implements OnInit {
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
       change_immediate: [false],
       company_logo:[this.customFeatures['extras']['company_logo']['active']],
-      gdpr:[this.customFeatures['extras']['GDPR'] || false]
+      GDPR:[this.updateCompany['GDPR'] || false]
     });
+    console.log(this.updateCompany);
     this.getPlanList();
     this.getCompanyCoupon();
   }
