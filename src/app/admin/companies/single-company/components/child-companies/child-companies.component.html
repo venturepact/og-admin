@@ -19,6 +19,9 @@
 										<th>
 											subdomain
 										</th>
+										<th>
+											(A,I,L,D,R)
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -30,6 +33,11 @@
                     </td>
 										<td>
 											{{cc.sub_domain}}
+										</td>
+										<td>
+											({{cc.APPROVED || 0}},	{{cc.INVITED || 0}},
+											{{cc.LEFT || 0}},{{cc.DELETED || 0}},
+											{{cc.REQUESTED || 0}})
 										</td>
 									</tr>
 								</tbody>
