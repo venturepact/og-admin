@@ -602,7 +602,7 @@
                   <div class="col-sm-8">
                     <select class="form-control" [(ngModel)]="updateCompany.deal_refered"
                             formControlName="deal_refered">
-                      <option *ngFor="let deal of dealReferred" value="{{deal}}">{{deal}}</option>
+                      <option *ngFor="let deal of dealReferred" [ngValue]="deal">{{deal}}</option>
                     </select>
                   </div>
                 </div>
