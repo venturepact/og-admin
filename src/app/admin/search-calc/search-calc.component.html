@@ -112,7 +112,7 @@
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
-    <div *ngIf="!loading && !apps.length > 0">
+    <div *ngIf="!loading && !(apps.length > 0)">
       No apps found
     </div>
     <div *ngIf="!loading && apps.length > 0">

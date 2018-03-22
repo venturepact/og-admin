@@ -33,11 +33,7 @@
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
 
-    <div *ngIf="!loading && !company.length > 0">
-      No companies found
-    </div>
-
-    <div *ngIf="!loading && company.length > 0">
+    <div>
       <div *ngIf="showAdvancedFilter" class="advanced-filter">
         <div class="row filter-params-container" style="position:relative"
              *ngFor="let filter of filters;let i = index;">
@@ -119,7 +115,7 @@
         </div>
       </div>
 
-      <table id="successrate-datatable"
+      <table *ngIf="!loading && company.length > 0" id="successrate-datatable"
              class="dataTable table table-hover table-striped table-sortable">
         <thead>
 
@@ -235,6 +231,9 @@
            id="all-companies-datatable_next">Next</a>
       </div>
     </div>
+  </div>
+  <div *ngIf="!loading && !(company.length > 0)">
+    No companies found
   </div>
 </div>
 
