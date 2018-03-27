@@ -20,9 +20,9 @@
           <option *ngFor="let company of companyArray" [value]="company.value">{{company.name}}</option>
         </select>
       </label>
-      <div *ngIf="companyType==='JVZOO'">
+      <div class="smart-template-check" *ngIf="companyType==='JVZOO'">
         <input type="checkbox" placeholder="Smart temhplate" [(ngModel)]="isSmartTemplate"
-               (change)="showSmartTemplates()">smart template
+               (change)="showSmartTemplates()"><span>smart template</span>
       </div>
     </div>
 

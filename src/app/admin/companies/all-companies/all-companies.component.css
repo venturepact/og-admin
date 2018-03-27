@@ -27,6 +27,11 @@ ul {
   display: inherit;
 }
 
+.smart-template-check input {
+  width: auto;
+  margin-right: 5px;
+}
+
 
 
 
