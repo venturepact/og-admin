@@ -20,7 +20,12 @@
           <option *ngFor="let company of companyArray" [value]="company.value">{{company.name}}</option>
         </select>
       </label>
+      <div *ngIf="companyType==='JVZOO'">
+        <input type="checkbox" placeholder="Smart temhplate" [(ngModel)]="isSmartTemplate"
+               (change)="showSmartTemplates()">smart template
+      </div>
     </div>
+
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>

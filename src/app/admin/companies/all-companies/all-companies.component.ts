@@ -14,9 +14,10 @@ declare var window: any;
 })
 
 export class AllCompaniesComponent extends Datatable implements AfterViewInit {
-  data: Object = [];
+  data: Array<any> = [];
   loading: boolean = false;
   companyType: string = 'all';
+  isSmartTemplate: boolean = false;
   companyArray: Array<{}> = [
     {name: "All", value: "all"},
     {name: "Regular", value: "regular"},
@@ -104,6 +105,14 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
   companyTypeChange(event: any) {
     this.companyType = event.target.value;
     this.getAllCompany();
+  }
+
+  showSmartTemplates() {
+    if (this.isSmartTemplate) {
+      this.data = this.data.filter(app => app.integration === true)
+    } else {
+      this.getAllCompany();
+    }
   }
 
 }
