@@ -36,6 +36,8 @@ export class CompanyDetailComponent implements OnInit {
   selectedCompanyCoupon: any;
   generateKeys = Object.keys;
   stringify = JSON.stringify;
+  dealReferred: Array<String> = [null, "DEALFUEL", "WARRIOR", "APPSUMO_BLACK",
+    "WEBMASTER", "AFFILATES", "JVZOO", 'PKS', 'BLACK_FRIDAY', 'LTD', 'SPECIAL_PAYMENT'];
   @Input() customFeatures:any;
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
@@ -86,7 +88,8 @@ export class CompanyDetailComponent implements OnInit {
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
       change_immediate: [false],
       company_logo:[this.customFeatures['extras']['company_logo']['active']],
-      GDPR:[this.updateCompany['GDPR'] || false]
+      GDPR: [this.updateCompany['GDPR'] || false],
+      deal_refered: [this.updateCompany['deal_refered'] || null]
     });
     console.log(this.updateCompany);
     this.getPlanList();

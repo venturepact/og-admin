@@ -112,120 +112,126 @@
     <div *ngIf="loading">
       <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
     </div>
-    <div style="float: left; padding: 7px; width: 60%;" *ngIf="!loading">
-      <div class="dataTables_length" id="table-dataTables_length">
-        <label style="color: black">Show
-          <select name="table-dataTables_length" [(ngModel)]="current_limit" (change)="limitChange($event)">
-            <option [value]="limit" *ngFor="let limit of limits">{{limit}}</option>
-          </select>
-          entries
-        </label>
-      </div>
+    <div *ngIf="!loading && !(apps.length > 0)">
+      No apps found
     </div>
-    <div style="float: right;width: 40%;" *ngIf="!loading">
-      <label style="float: left;margin: 0;
-    margin-right: 10px;padding: 8px;">Showing {{(current_limit-apps.length)===0?current_limit:apps.length}} of
-        {{totalApps}}</label>
-
-      <div style="float: left;margin: 5px;">
-        <button (click)="exportToCSV()">Download in csv
-      </button>
-        <div class="check-box-outer1">
-          <label>Get All<input class="check-box" type="checkbox" [(ngModel)]="fetchAll">
+    <div *ngIf="!loading && apps.length > 0">
+      <div style="float: left; padding: 7px; width: 60%;" *ngIf="!loading">
+        <div class="dataTables_length" id="table-dataTables_length">
+          <label style="color: black">Show
+            <select name="table-dataTables_length" [(ngModel)]="current_limit" (change)="limitChange($event)">
+              <option [value]="limit" *ngFor="let limit of limits">{{limit}}</option>
+            </select>
+            entries
           </label>
         </div>
       </div>
+      <div style="float: right;width: 40%;" *ngIf="!loading">
+        <label style="float: left;margin: 0;
+       margin-right: 10px;padding: 8px;">Showing {{(current_limit-apps.length)===0?current_limit:apps.length}} of
+          {{totalApps}}</label>
 
-    </div>
-    <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
-      <thead>
-      <tr>
-        <th>Calculator Url</th>
-        <th>Status</th>
-        <th (click)="sort('leadsCount')">
-          <div class="sort-icon"><a href="javascript:void(0);">Leads</a></div>
-        </th>
-        <th (click)="sort('visitorsCount')">
-          <div class="sort-icon"><a href="javascript:void(0);">Visits</a></div>
-        </th>
-        <th (click)="sort('conversionRate')">
-          <div class="sort-icon"><a href="javascript:void(0);">Conversion Rate</a></div>
-        </th>
-        <th>Experience</th>
-        <th>Layout</th>
-        <th>AnalyticsLastUpdate</th>
-        <th (click)="sort('createdAt')">
-          <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
-        </th>
-        <th (click)="sort('updatedAt')">
-          <div class="sort-icon"><a href="javascript:void(0);">Latest Publish</a></div>
-        </th>
-        <th>Company</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let app of apps">
-        <td>
-          <div *ngIf="app.status=='DEV'">{{app.url}}</div>
-          <a *ngIf="app.status=='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
-        </td>
-        <td>{{app.status}}</td>
-        <td>
-          <div *ngIf="app.analytics?.leadsCount">{{app.analytics?.leadsCount}}</div>
-          <div *ngIf="!app.analytics?.leadsCount">0</div>
-        </td>
-        <td>
-          <div *ngIf="app.analytics?.visitorsCount">{{app.analytics?.visitorsCount}}</div>
-          <div *ngIf="!app.analytics?.visitorsCount">0</div>
-        </td>
-        <td>
-          <div *ngIf="app.analytics?.conversionRate">{{app.analytics?.conversionRate}}%</div>
-          <div *ngIf="!app.analytics?.conversionRate">0%</div>
-        </td>
-        <td>{{app.templateType}}</td>
-        <td>{{getTemplateName(app.template)?.text}}</td>
-        <td>
-          {{app.analytics?.updatedAt}}
-        </td>
-        <td>{{app.createdAt}}</td>
-        <td>{{app.updatedAt}}</td>
-        <td>
-          {{app.name}}
-          <a [routerLink]="['/admin/company',app.company._id]">
-            <i class="ui-tooltip material-icons" style="font-size: 22px;"
-               data-original-title="Edit">
-              mode_edit</i></a>
-          <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc" (click)="setApp(app);company.value='';errorMessage=''">
-            <i class="ui-tooltip material-icons"  style="font-size: 22px;"
-            data-original-title="Edit">
-            content_copy</i></a>
+        <div style="float: left;margin: 5px;">
+          <button (click)="exportToCSV()">Download in csv
+          </button>
+          <div class="check-box-outer1">
+            <label>Get All<input class="check-box" type="checkbox" [(ngModel)]="fetchAll">
+            </label>
+          </div>
+        </div>
 
-        </td>
-      </tr>
-      </tbody>
-    </table>
+      </div>
+      <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable">
+        <thead>
+        <tr>
+          <th>Calculator Url</th>
+          <th>Status</th>
+          <th (click)="sort('leadsCount')">
+            <div class="sort-icon"><a href="javascript:void(0);">Leads</a></div>
+          </th>
+          <th (click)="sort('visitorsCount')">
+            <div class="sort-icon"><a href="javascript:void(0);">Visits</a></div>
+          </th>
+          <th (click)="sort('conversionRate')">
+            <div class="sort-icon"><a href="javascript:void(0);">Conversion Rate</a></div>
+          </th>
+          <th>Experience</th>
+          <th>Layout</th>
+          <th>AnalyticsLastUpdate</th>
+          <th (click)="sort('createdAt')">
+            <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
+          </th>
+          <th (click)="sort('updatedAt')">
+            <div class="sort-icon"><a href="javascript:void(0);">Latest Publish</a></div>
+          </th>
+          <th>Company</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let app of apps">
+          <td>
+            <div *ngIf="app.status=='DEV'">{{app.url}}</div>
+            <a *ngIf="app.status=='LIVE'" [href]="'http://'+app.url" target="_blank">{{app.url}}</a>
+          </td>
+          <td>{{app.status}}</td>
+          <td>
+            <div *ngIf="app.analytics?.leadsCount">{{app.analytics?.leadsCount}}</div>
+            <div *ngIf="!app.analytics?.leadsCount">0</div>
+          </td>
+          <td>
+            <div *ngIf="app.analytics?.visitorsCount">{{app.analytics?.visitorsCount}}</div>
+            <div *ngIf="!app.analytics?.visitorsCount">0</div>
+          </td>
+          <td>
+            <div *ngIf="app.analytics?.conversionRate">{{app.analytics?.conversionRate}}%</div>
+            <div *ngIf="!app.analytics?.conversionRate">0%</div>
+          </td>
+          <td>{{app.templateType}}</td>
+          <td>{{getTemplateName(app.template)?.text}}</td>
+          <td>
+            {{app.analytics?.updatedAt}}
+          </td>
+          <td>{{app.createdAt}}</td>
+          <td>{{app.updatedAt}}</td>
+          <td>
+            {{app.name}}
+            <a [routerLink]="['/admin/company',app.company._id]">
+              <i class="ui-tooltip material-icons" style="font-size: 22px;"
+                 data-original-title="Edit">
+                mode_edit</i></a>
+            <a href="javascript::void(0)" data-toggle="modal" data-target="#copyCalc"
+               (click)="setApp(app);company.value='';errorMessage=''">
+              <i class="ui-tooltip material-icons" style="font-size: 22px;"
+                 data-original-title="Edit">
+                content_copy</i></a>
 
-    <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
-    <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
-      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0"
-         tabindex="0"
-         (click)="previous()"
-         id="all-companies-datatable_previous">Previous</a>
-      <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
-               aria-controls="all-companies-datatable"
-               (click)="paging(1)" tabindex="0">1</a></span>
-      <span *ngIf="current_page >= 5">...</span>
-      <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
-               aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
-               *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
-      <span *ngIf="current_page <= total_pages - 5">...</span>
-      <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
-               [ngClass]="total_pages==current_page?'current':''"
-               aria-controls="all-companies-datatable"
-               (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
-      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
-         (click)="next()"
-         id="all-companies-datatable_next">Next</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+      <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+        <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0"
+           tabindex="0"
+           (click)="previous()"
+           id="all-companies-datatable_previous">Previous</a>
+        <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
+                 aria-controls="all-companies-datatable"
+                 (click)="paging(1)" tabindex="0">1</a></span>
+        <span *ngIf="current_page >= 5">...</span>
+        <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
+                 aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
+                 *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
+        <span *ngIf="current_page <= total_pages - 5">...</span>
+        <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
+                 [ngClass]="total_pages==current_page?'current':''"
+                 aria-controls="all-companies-datatable"
+                 (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
+        <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
+           (click)="next()"
+           id="all-companies-datatable_next">Next</a>
+      </div>
     </div>
   </div>
 </div>

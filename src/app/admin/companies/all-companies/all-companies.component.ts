@@ -14,14 +14,23 @@ declare var window: any;
 })
 
 export class AllCompaniesComponent extends Datatable implements AfterViewInit {
-  data: Object = [];
+  data: Array<any> = [];
   loading: boolean = false;
   companyType: string = 'all';
+  isSmartTemplate: boolean = false;
   companyArray: Array<{}> = [
     {name: "All", value: "all"},
     {name: "Regular", value: "regular"},
     {name: "appsumo", value: "appsumo"},
-    {name: "JVZOO", value: "JVZOO"}
+    {name: "JVZOO", value: "JVZOO"},
+    {name: "DEALFUEL", value: "DEALFUEL"},
+    {name: "WARRIOR", value: "WARRIOR"},
+    {name: "APPSUMO_BLACK", value: "APPSUMO_BLACK"},
+    {name: "WEBMASTER", value: "WEBMASTER"},
+    {name: "AFFILATES", value: "AFFILATES"},
+    {name: "PKS", value: "PKS"},
+    {name: "BLACK_FRIDAY", value: "BLACK_FRIDAY"},
+    {name: "LTD", value: "LTD"}
   ];
 
   constructor(public companyService: CompanyService,
@@ -96,6 +105,14 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
   companyTypeChange(event: any) {
     this.companyType = event.target.value;
     this.getAllCompany();
+  }
+
+  showSmartTemplates() {
+    if (this.isSmartTemplate) {
+      this.data = this.data.filter(app => app.integration === true)
+    } else {
+      this.getAllCompany();
+    }
   }
 
 }
