@@ -159,8 +159,24 @@ thead th .desc {
 }
 
 .check-box-outer {
+  float: left;
+  margin: 3px 10px;
+
+}
+
+.check-box-outer1 {
   float: right;
   margin: 3px 10px;
+}
+
+.cust {
+  width: 100%;
+
+}
+
+.custom-filter {
+  float: right;
+  margin-right: 12px;
 }
 .advanced-filter {
   clear: both;
@@ -177,11 +193,11 @@ thead th .desc {
 
 .apply-filter-container {
   margin: 10px;
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
+  /*box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)*/
 }
 .checkBoxClass{
   width: 30px !important;
-  
+
 }
 
 

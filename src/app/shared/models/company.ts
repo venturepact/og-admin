@@ -103,6 +103,7 @@ export class AdminCompany {
   public cname: CName;
   public child_intercom_id: String;
   public remove_leads_after_saving: boolean;
+  public GDPR:boolean;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
 
@@ -143,7 +144,8 @@ export class AdminCompany {
       this.parent_company = company.parent_company;
       this.cname = new CName(company.cname);
       this.child_intercom_id = company.child_intercom_id;
-      this.remove_leads_after_saving = company.remove_leads_after_saving
+      this.remove_leads_after_saving = company.remove_leads_after_saving;
+      this.GDPR=company['GDPR'];
       //this.referralcandy_url = company.referral.referralcandy_url;
       //this.leaddyno_url = company.referral.leaddyno_url;
     }

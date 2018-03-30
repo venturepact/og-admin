@@ -1,4 +1,10 @@
 <div class="col-md-6 col-lg-6" *ngIf="childCompanies.length">
+	<label>*<span>A - APPROVED</span>,
+		<span>I - INVITED</span>,
+		<span>L - LEFT</span>,
+		<span>D - DELETED</span>,
+		<span>R - REQUESTED</span>
+	</label> 
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad">
 			<div class="panel panel-info">
@@ -19,6 +25,9 @@
 										<th>
 											subdomain
 										</th>
+										<th>
+											(A,I,L,D,R)
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -30,6 +39,11 @@
                     </td>
 										<td>
 											{{cc.sub_domain}}
+										</td>
+										<td>
+											({{cc.APPROVED || 0}},	{{cc.INVITED || 0}},
+											{{cc.LEFT || 0}},{{cc.DELETED || 0}},
+											{{cc.REQUESTED || 0}})
 										</td>
 									</tr>
 								</tbody>

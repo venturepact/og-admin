@@ -124,7 +124,9 @@ export class AdminService extends BaseService {
       },
       'child_intercom_id': company.child_intercom_id,
       'change_immediate': company.change_immediate,
-      'remove_leads_after_saving': company.remove_leads_after_saving
+      'remove_leads_after_saving': company.remove_leads_after_saving,
+      'GDPR': company['GDPR'],
+      'deal_refered': company['deal_refered']
     };
     return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
       .map(this.extractData)
@@ -466,5 +468,17 @@ export class AdminService extends BaseService {
           .map(this.extractData)
           .catch(this.handleError);
 
+  }
+  uploadGif(file){
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    console.log(formData,"><><><",headers);
+    return this._http.post(`${this._url}/admin/uploadGif`,formData,{})
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 }

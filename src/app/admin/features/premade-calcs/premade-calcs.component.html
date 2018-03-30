@@ -2,41 +2,46 @@
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-2 pull-right" style="padding:5px;">
-          <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc" (click)="calculatorForm.reset();edit=false;">Add Calculator</a>      
+        <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc" (click)="calculatorForm.reset();edit=false;loader=false;">Add Calculator</a>
       </div>
       <div class="col-md-3 pull-right" style="padding:5px;">
-          <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>          
+        <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>
       </div>
       <div style="padding:5px;" class="col-md-7 pull-right">
-          <div class="pull-right">
-            <span class="pull-left" style="margin-right:10px;">Upload CSV for Bulk Upload: </span>
-            <span class="pull-left"><input type="file" (change)="fileChange($event)" accept=".csv"></span>    
-          </div>
-        </div> 
+        <div class="pull-right">
+          <span class="pull-left" style="margin-right:10px;">Upload CSV for Bulk Upload: </span>
+          <span class="pull-left">
+            <input type="file" (change)="fileChange($event)" accept=".csv">
+          </span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">&nbsp;</div>
   <div class="row">
     <div class="alert alert-danger custom-alert" *ngIf="errorMessage!=''">{{errorMessage}}</div>
   </div>
-  <div  id="table">
-		<div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
-			<div class="dataTables_length" id="table-dataTables_length">
-				<label>Show 
-                <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)">
-                    <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
-                </select>
-                entries
-            </label>
-			</div>
-			<div id="table-datatable_filter" class="dataTables_filter">
-				<label>
-                    Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
-            </label>
+  <div id="table">
+    <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+      <div class="dataTables_length" id="table-dataTables_length">
+        <label>Show
+          <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)">
+            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+          </select>
+          entries
+        </label>
+      </div>
+      <div id="table-datatable_filter" class="dataTables_filter">
+        <label>
+          Search:
+          <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="searchData()">
+        </label>
       </div>
       <div style="clear:both"></div>
-			<div *ngIf="loading">
-				<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+      <div *ngIf="loading">
+        <div>
+          <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+        </div>
       </div>
       <div>
         <div *ngIf="!loading && calculators.length==0">
@@ -49,9 +54,9 @@
               {{calc}}
             </div>
           </div>
-        </div>  
+        </div>
         <div *ngIf="!loading && calculators.length>0">
-          <table  class="dataTable">
+          <table class="dataTable">
             <thead>
               <tr>
                 <th>
@@ -76,7 +81,7 @@
                   Industry
                 </th>
                 <th>
-                  Edit 
+                  Edit
                 </th>
                 <th>
                   Delete
@@ -92,7 +97,7 @@
                   {{calculator.liveApp?.url}}
                 </td>
                 <td>
-                  <img width="100px" [src]="calculator.media" alt="not found"/>
+                  <img width="100px" [src]="calculator.media" alt="not found" />
                 </td>
                 <td>
                   {{calculator.type}}
@@ -107,10 +112,14 @@
                   {{calculator.industry}}
                 </td>
                 <td>
-                    <a href = "javascript:void(0);" data-toggle="modal" data-target="#add-calc" (click)="editCalculator(i);"><i class="material-icons">edit</i></a>                    
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="#add-calc" (click)="editCalculator(i);">
+                    <i class="material-icons">edit</i>
+                  </a>
                 </td>
-                <td>  
-                  <a href = "javascript:void(0);" (click)="removeCalculator(calculator._id)"><i class="material-icons">delete</i></a>
+                <td>
+                  <a href="javascript:void(0);" (click)="removeCalculator(calculator._id)">
+                    <i class="material-icons">delete</i>
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -119,19 +128,28 @@
           <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
             <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
               id="all-companies-datatable_previous">Previous</a>
-            <span><a class="paginate_button" [ngClass] = "1==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(1)"  tabindex="0">1</a></span>
+            <span>
+              <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+                tabindex="0">1</a>
+            </span>
             <span *ngIf="current_page >= 5">...</span>
-            <span><a class="paginate_button" [ngClass] = "num==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(num)"  tabindex="0" *ngFor = "let num of arrayOf(total_pages)">{{num}}</a></span>
+            <span>
+              <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable"
+                (click)="paging(num)" tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+            </span>
             <span *ngIf="current_page <= total_pages - 5">...</span>
-            <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass] = "total_pages==current_page?'current':''" aria-controls="all-companies-datatable" (click) = "paging(total_pages)"  tabindex="0">{{total_pages}}</a></span>
-            <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
-              [disabled]="current_page == total_pages" (click)="next()"  id="all-companies-datatable_next">Next</button>
+            <span>
+              <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''"
+                aria-controls="all-companies-datatable" (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+            </span>
+            <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" [disabled]="current_page == total_pages"
+              (click)="next()" id="all-companies-datatable_next">Next</button>
           </div>
         </div>
-      </div> 
-		</div>
+      </div>
+    </div>
   </div>
-  
+
 </div>
 
 <div id="add-calc" class="modal fade" tabindex="-1" role="dialog">
@@ -140,17 +158,20 @@
     <div class="modal-content modal-bg">
       <div class="modal-header">
         <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
-                    <i class="material-icons">close</i>
+          <i class="material-icons">close</i>
         </button>
         <h5 class="modal-title">Add a Premade Calculator</h5>
       </div>
       <div class="modal-body">
-        <div class="">
+        <!-- <div>
+          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div> -->
+        <div>
           <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
           <form id="addCalculatorForm" [formGroup]="calculatorForm">
             <div class="form-group label-floating">
               <label class="control-label" for="title">Name</label>
-              <input class="form-control" id="title" type="text" name="title" formControlName="title"/>
+              <input class="form-control" id="title" type="text" name="title" formControlName="title" />
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="live_url">Live Calc Url</label>
@@ -158,44 +179,49 @@
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="media">Calculator Media</label>
-              <input class="form-control" id="media" type="text" name="media" formControlName="media">
+              <div *ngIf="!loader">
+                <input class="form-control" id="media" type="text" name="media" [readonly]="'true'" formControlName="media">
+                <img #imgSrc/>
+                <input type="file" (change)="upload($event.target.files,imgSrc);" #fileUpload style="display:none;" />
+                <button (click)="fileUpload.click()">Upload Gif</button>
+              </div>
+              <div *ngIf="loader">
+                <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+              </div>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="tier">Tier</label>
               <select class="form-control" id="tier" name="tier" formControlName="tier">
-                  <option [value]="'standard'" selected>Standard</option>
-                  <option [value]="'premium'">Premium</option>                  
+                <option [value]="'standard'" selected>Standard</option>
+                <option [value]="'premium'">Premium</option>
               </select>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="template">Template</label>
               <select class="form-control" id="template" name="type" formControlName="template">
-                  <option *ngFor="let template of templates" [value]="template['selector']">{{template['name']}}</option>
+                <option *ngFor="let template of templates" [value]="template['selector']">{{template['name']}}</option>
               </select>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="type">type</label>
               <select class="form-control" id="type" name="type" formControlName="type">
-                  <option *ngFor="let type of ['Outcome Quiz','Calculator','Graded Quiz','Poll']" [value]="type">{{type}}</option>
+                <option *ngFor="let type of ['Outcome Quiz','Calculator','Graded Quiz','Poll']" [value]="type">{{type}}</option>
               </select>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="type">Industry</label>
               <select class="form-control" id="industry" name="type" formControlName="industry">
-                  <option *ngFor="let industry of industries" [value]="industry">{{industry}}</option>
+                <option *ngFor="let industry of industries" [value]="industry">{{industry}}</option>
               </select>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="description">Description</label>
-              <textarea class="form-control" id="description" 
-                  type="text" name="description" rows="5" formControlName="description"></textarea>
+              <textarea class="form-control" id="description" type="text" name="description" rows="5" formControlName="description"></textarea>
             </div>
-            <button *ngIf="!edit" (click)="addCalculator(calculatorForm.value)" 
-              class="btn btn btn-red-outline btn-add-user btn-hover" id="addCalulator"
-              [disabled]="!calculatorForm.valid">Add</button>
-            <button *ngIf="edit" (click)="updateCalculator(calculatorForm.value)" 
-            class="btn btn btn-red-outline btn-add-user btn-hover" id="updateCalulator"
-            [disabled]="!calculatorForm.valid">Update</button>
+            <button *ngIf="!edit" (click)="addCalculator(calculatorForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+              id="addCalulator" [disabled]="!calculatorForm.valid">Add</button>
+            <button *ngIf="edit" (click)="updateCalculator(calculatorForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+              id="updateCalulator" [disabled]="!calculatorForm.valid">Update</button>
           </form>
         </div>
       </div>
