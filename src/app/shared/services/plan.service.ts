@@ -122,4 +122,9 @@ export class PlanService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  updatePlan(data){
+    return this._http.put(`${this._url}/plan/updatePlan`,data)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }
