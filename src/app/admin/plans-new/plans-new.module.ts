@@ -6,6 +6,7 @@ import { PlansComponent } from './plans.component';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { FeaturesComponent } from './features/features.component';
 import { PremadesComponent } from './premades/premades.component';
+import { PlanComponent } from './plan/plan.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { PremadesComponent } from './premades/premades.component';
     SharedModule,
     RouterModule
   ],
-  declarations: [PlansComponent, FeaturesComponent, PremadesComponent],
+  declarations: [PlansComponent, FeaturesComponent, PremadesComponent, PlanComponent],
   providers:[PlanService]
 })
 export class PlansNewModule { }
