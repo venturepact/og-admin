@@ -468,4 +468,16 @@ export class AdminService extends BaseService {
           .catch(this.handleError);
 
   }
+  uploadGif(file){
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    console.log(formData,"><><><",headers);
+    return this._http.post(`${this._url}/admin/uploadGif`,formData,{})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

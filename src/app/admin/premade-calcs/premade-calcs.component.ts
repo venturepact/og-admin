@@ -1,6 +1,6 @@
 import { Datatable } from './../../shared/interfaces/datatable.interface';
 import { PremadeCalcService } from './../../shared/services/premade-calc.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup,Validators,FormBuilder} from '@angular/forms';
 import { AdminService } from '../../shared/services/admin.service';
 declare var jQuery:any;
@@ -17,7 +17,9 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   calculators:any=[];
   rejectedCalcs:any=[];
   $subscription;
-  errorMessage='';
+  errorMessage='';;
+  loader=false;
+  @ViewChild('fileUpload') fileUpload:any;
   industries=['Auto','Education','Finance','Health & Fitness'
               ,'Legal','Marketing & Advertising','Publishing'
               ,'Quintessential','Real Estate & Construction','Technology'
@@ -237,5 +239,40 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this._calculatorService.setForm(this.selectedItem);
     this.edit=true;
     this.errorMessage='';
+    this.loader= false;
+  }
+  upload(files:FileList,imgSrc:any){
+    console.log(files);
+    let file:File=files.item(0);
+    if(file.type.startsWith('image/')){
+      this.loader=true;
+      //let reader: FileReader = new FileReader();
+      this.uploadImageToServer(file);
+      // reader.readAsDataURL(file);
+      // reader.onload = (e:any) => {
+      //     console.log(e.target.result);
+      //     imgSrc.src=e.target.result;
+          
+      // }
+      // reader.addEventListener('progress',e=>{
+      //   if(e.lengthComputable){
+      //     console.log(e.loaded);
+          
+      //   }
+      // },false);
+      // this.errorMessage='';
+    }
+  }
+  uploadImageToServer(url){ 
+      this._adminService.uploadGif(url).subscribe((data)=>{
+        this.loader=false;
+        console.log(data);
+        this.calculatorForm.get('media').setValue(data);
+      },error=>{
+        this.loader=false;
+        this.calculatorForm.get('media').setValue('');
+        console.log(error.error);
+        this.errorMessage=error.error.err_message;
+      })
   }
 }
