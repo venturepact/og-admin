@@ -35,7 +35,7 @@
           </div>
         </a>
       </li>
-      <li *ngIf="sub_role == null" class="setting-nav" id="company_plans" (click)="showTab('company_plans')">
+      <!-- <li *ngIf="sub_role == null" class="setting-nav" id="company_plans" (click)="showTab('company_plans')">
         <a [routerLink]="['company_plans']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">view_carousel</i>
@@ -45,7 +45,7 @@
             <span>Manage all features of different Company Feature plans </span>
           </div>
         </a>
-      </li>
+      </li> -->
       <li *ngIf="sub_role == null" class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
         <a [routerLink]="['subdomains']" data-toggle="tab">
                     <span class="left-sidebar-icon">
@@ -206,9 +206,9 @@
                     <i class="material-icons">list</i>
                   </span>
                     <div class="left-sidebar-title">
-                        <h6 class="">Premade Calculators</h6>
-                        <span class="">Check all the Premade Calculators</span>
-                    </div>
+                        <h6 class="">Features</h6>
+                        <span class="">Check all the features and premade calculators</span>
+                    </div> 
                 </a>
             </li>
       <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">-->

@@ -6,9 +6,13 @@
       <label for="{{feature._id}}">
         {{feature.name}}
       </label>
+      <i *ngIf="feature['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+      <i *ngIf="feature['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
       <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
         (click)="expand($event.target)">
         <i class="glyphicon glyphicon-plus"></i>
+        
+        
       </a>
       <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
         <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
@@ -16,6 +20,9 @@
           />
           <label for="{{feat._id}}">
             <span>{{feat.name}}</span>
+            <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+            <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
+            
           </label>
         </li>
       </ul>
