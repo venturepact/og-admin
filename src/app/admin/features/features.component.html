@@ -206,7 +206,7 @@
                             <label class="control-label" for="description">Description</label>
                             <textarea class="form-control" id="description" type="text" name="description" rows="5" formControlName="description"></textarea>
                         </div>
-                        <div *ngIf="!edit && plans.length" class="form-group label-floating">
+                        <div *ngIf="!edit && plans?.length > 0" class="form-group label-floating">
                             <label class="control-label" for="description">Plans</label>
                             <ng-select #selections
                                 [allowClear]="true"
