@@ -1,3 +1,12 @@
+.plan_container1 {
+    top: 20px !important;
+    position: relative;
+    padding: 0px 20px;
+    width: calc(100% - 255px);
+    float: left;
+    margin-bottom: 50px;
+  
+}
 .panel-heading {
     padding: 10px 10px !important;
     background: #fb6066 !important;
@@ -67,4 +76,8 @@
     .slider.round:before {
     border-radius: 50%;
     }
-    
+ .createButton{
+    position:absolute;
+    top:-50px;
+    right:300px;
+ }   

@@ -1,5 +1,5 @@
 import { Datatable } from './../../shared/interfaces/datatable.interface';
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren } from '@angular/core';
 import { FeaturesService } from './services/features.service';
 import { FormGroup } from '@angular/forms';
 import { PlanService } from '../../shared/services/plan.service';
@@ -12,7 +12,7 @@ declare var jQuery: any;
 })
 export class FeatureComponent extends Datatable implements OnInit {
   selectedItem: String = 'features';
-  @ViewChild('selections') public ngSelect:SelectComponent;
+  @ViewChildren('selections') public ngSelect:SelectComponent[];
   featureForm: FormGroup;
   edit: boolean;
   loading: Boolean = false;
@@ -117,6 +117,10 @@ export class FeatureComponent extends Datatable implements OnInit {
     if (Object.prototype.toString.call(arr) == '[object Array]' && arr.length > 0) {
       this._featureService.addFeatures(arr).subscribe((data) => {
         console.log(data);
+        if(data &&  data['invalidFeatures'].length){
+          this.errorMessage=`Feature already exist or parent feature doesn't exists`; 
+          return;
+        }
         this.featureAdded();
         this.getFeatures();
       },error=>{
@@ -189,9 +193,13 @@ export class FeatureComponent extends Datatable implements OnInit {
   }
   resetPlans(){
     if(this.ngSelect){
-      this.ngSelect.active = [];
+      this.ngSelect.forEach(s=>(s.active = []));
       this.selectedPlans =[];
     }
     this.disableSelection=false;
+    this.errorMessage='';
+  }
+  mediaType(e){
+    this.featureForm.get('media_type').setValue(e.id);
   }
 }

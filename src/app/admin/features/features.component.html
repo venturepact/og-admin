@@ -15,17 +15,17 @@
                     <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-feature"
                      (click)="featureForm.reset();edit=false;">Add Feature</a>
                 </div>
-                <div class="col-md-3 pull-right" style="padding:5px;">
+                <!-- <div class="col-md-3 pull-right" style="padding:5px;">
                     <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>
-                </div>
-                <div style="padding:5px;" class="col-md-7 pull-right">
+                </div> -->
+                <!-- <div style="padding:5px;" class="col-md-7 pull-right">
                     <div class="pull-right">
                         <span class="pull-left" style="margin-right:10px;">Upload CSV for Bulk Upload: </span>
                         <span class="pull-left">
                             <input type="file" (change)="fileChange($event)" accept=".csv">
                         </span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="row">&nbsp;</div>
@@ -186,13 +186,18 @@
                             <input class="form-control" id="name" type="text" name="name" formControlName="name">
                         </div>
                         <div class="form-group label-floating">
-                            <label class="control-label"  for="parent_feature">Parent Feature</label>
+                            <label class="control-label"  for="parent_feature">Parent Feature<span style="color:#777;font-size:12px"> (if feature haven't have parent feature then leave it empty)</span></label>
                             <input class="form-control" [attr.disabled]="(edit && (!oldFeature['parent_feature']))?'':null" id="parent_feature" 
                                 type="text" name="parent_feature" formControlName="parent_feature">
                         </div>
-                        <div class="form-group label-floating">
+                        <!-- <div class="form-group label-floating">
                             <label class="control-label" for="media_type">Media Type</label>
                             <input class="form-control" id="media_type" type="text" name="media_type" formControlName="media_type">                            
+                        </div> -->
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="media_type">Media Type</label>
+                            <ng-select #selections placeholder="Select Plan Type" [items]="[{id:'IMAGE',text:'IMAGE'},{id:'VIDEO',text:'VIDEO'},{id:'GIF',text:'GIF'},{id:'YOUTUBE',text:'YOUTUBE'}]"
+                            (selected)="mediaType($event)" id="media_type"></ng-select>
                         </div>
                         <div class="form-group label-floating">
                                 <label class="control-label" for="media_link">Media Link</label>
