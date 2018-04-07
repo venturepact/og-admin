@@ -85,6 +85,7 @@ export class CompanyDetailComponent implements OnInit {
       remove_leads_after_saving: [this.updateCompany.remove_leads_after_saving],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
+      growsumo_url: [this.updateCompany.referral.growsumo_url],
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
       change_immediate: [false],
       company_logo:[this.customFeatures['extras']['company_logo']['active']],

@@ -435,6 +435,23 @@
                     <!--</label>-->
                   </div>
                 </div>
+
+                <div class="row" *ngIf="updateCompany.current_referral_program">
+                  <div class="col-sm-4">
+                    GrowSumo
+                  </div>
+                  <div class="col-sm-8">
+                    <!--<label class="switch">-->
+                    <input type="radio" style="width: auto" name="current_referral_program" value='GROWSUMO'
+                           [checked]="updateCompany.current_referral_program == 'GROWSUMO'"
+                           [(ngModel)]="updateCompany.current_referral_program"
+                           formControlName="current_referral_program">
+                    <input class="form-control" style="width: 100%" formControlName="growsumo_url" type="text"
+                           [(ngModel)]="updateCompany.referral.growsumo_url"/>
+                    <!--<div class="slider round"></div>-->
+                    <!--</label>-->
+                  </div>
+                </div>
                 <div class="row" *ngIf="!company.parent_company">
                   <div class="col-sm-4">
                     Agency

@@ -160,6 +160,7 @@ export class Referral {
   public referral_code: String;
   public sharing_url: String;
   public is_referralcandy_visible: Boolean;
+  public growsumo_url: string;
 
   constructor(referral: any) {
     if (referral) {
@@ -169,6 +170,7 @@ export class Referral {
       this.leaddyno_url = referral.leaddyno_url;
       this.sharing_url = referral.sharing_url;
       this.referral_code = referral.referral_code;
+      this.growsumo_url = referral.growsumo_url;
       this.is_referralcandy_visible = referral.is_referralcandy_visible;
     }
   }

@@ -120,7 +120,8 @@ export class AdminService extends BaseService {
       'referral': {
         'referralcandy_url': company.referral.referralcandy_url,
         'leaddyno_url': company.referral.leaddyno_url,
-        'is_referralcandy_visible': company.referral.is_referralcandy_visible
+        'is_referralcandy_visible': company.referral.is_referralcandy_visible,
+        'growsumo_url': company.referral.growsumo_url
       },
       'child_intercom_id': company.child_intercom_id,
       'change_immediate': company.change_immediate,
