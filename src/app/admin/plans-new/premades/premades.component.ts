@@ -60,10 +60,6 @@ export class PremadesComponent extends PremadeLayoutManager implements OnInit {
   }
  
   pushChanges(feature){
-    // console.log(feature);
-    // let index = this.changedFeatures.findIndex(obj=>(obj['_id']===feature['_id']));
-    // (index==-1) && this.changedFeatures.push(feature);
-    // (index==-1) || this.changedFeatures.splice(index,1);
     let index = this.changedFeatures.findIndex(obj=>(obj['_id']===feature['_id']));
     (index==-1) && this.changedFeatures.push(feature);
     (index!=-1 && this.changedFeatures[index]['active']==feature['active']) && this.changedFeatures.splice(index,1);

@@ -196,7 +196,7 @@
                         </div> -->
                         <div class="form-group label-floating">
                             <label class="control-label" for="media_type">Media Type</label>
-                            <ng-select #selections placeholder="Select Plan Type" [items]="[{id:'IMAGE',text:'IMAGE'},{id:'VIDEO',text:'VIDEO'},{id:'GIF',text:'GIF'},{id:'YOUTUBE',text:'YOUTUBE'}]"
+                            <ng-select #selections placeholder="Select Media Type" [items]="[{id:'IMAGE',text:'IMAGE'},{id:'VIDEO',text:'VIDEO'},{id:'GIF',text:'GIF'},{id:'YOUTUBE',text:'YOUTUBE'}]"
                             (selected)="mediaType($event)" id="media_type"></ng-select>
                         </div>
                         <div class="form-group label-floating">
@@ -225,9 +225,9 @@
                         </div>
                         
                         <button *ngIf="!edit" (click)="addfeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
-                            id="addCalulator" [disabled]="!featureForm.valid || !selectedPlans.length">Add</button>
+                            id="addCalulator" [disabled]="!featureForm.valid || !selectedPlans.length || disableSelection">Add</button>
                         <button *ngIf="edit" (click)="updatefeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
-                            id="updateCalulator" [disabled]="!featureForm.valid">Update</button>
+                            id="updateCalulator" [disabled]="!featureForm.valid || disableSelection">Update</button>
                     </form>
                 </div>
             </div>

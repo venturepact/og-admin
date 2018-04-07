@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { PlanService } from '../../shared/services/plan.service';
 declare var bootbox:any;
 @Component({
@@ -7,6 +7,7 @@ declare var bootbox:any;
   styleUrls: ['./plans.component.css']
 })
 export class PlansComponent implements OnInit {
+  @ViewChild('selectBox') selectBox:ElementRef;
   plansData: any = []
   constructor(public _planService: PlanService) { }
   selectedPlan: any;
@@ -26,6 +27,8 @@ export class PlansComponent implements OnInit {
       (this.plansData.length) && (this.selectedPlan = this.plansData[0],
         this.plansInfo.planTypes=this.getPlanTypes(),
         this.plansInfo.planNames=this.getPlanNames());
+        this.plansInfo.isPlanSelected = false;
+        this.plansInfo.mappedPlanTypes=this.mapPlansAccTypes(this.plansData);
       (this.selectedPlan) && (this.templates = this.getFeatures(this.selectedPlan['features'], 'templates'));
     },error=>{
       this.loading=false;
@@ -33,6 +36,11 @@ export class PlansComponent implements OnInit {
     })
   }
   planChanged(plan) {
+    if(plan==-1){
+      this.plansInfo.isPlanSelected=false;
+      return;
+    } 
+    this.plansInfo.isPlanSelected=true;    
     if (this.plansData.length) {
       this.selectedPlan = this.plansData.find(planData => {
         return (planData['plan']['_id'] === plan)
@@ -73,9 +81,17 @@ export class PlansComponent implements OnInit {
       });
     }else{
       this.plansData.push(data);
+      this.plansInfo['mappedPlanTypes'][data['plan']['plan_type']].push({id:data['plan']['_id'],text:data['plan']['name']})
       this.plansInfo.planNames.push({id:data['plan']['_id'],text:data['plan']['name']});   
       this.selectedPlan=this.plansData[this.plansData.length-1];   
     }
+
+    // this.plansInfo.planTypes=[...this.plansInfo.planTypes];
+    this.plansInfo.isPlanSelected=true;    
+    setTimeout(()=>{
+      this.selectBox.nativeElement.value=this.selectedPlan['plan']['_id'];      
+    },0);
+    console.log('>>>>>>>>>>>>>>>>>>>>>',this.selectBox.nativeElement.value);
     this.templates = this.getFeatures(this.selectedPlan['features'], 'templates');
   }
   popUp(message) {
@@ -106,5 +122,13 @@ export class PlansComponent implements OnInit {
   updatePlan(data){
     let planIndex =  this.plansData.findIndex(p=>(p['plan']['_id']===data['_id']));
     planIndex!=-1 && (this.plansData[planIndex]['plan']=data);
+  }
+  mapPlansAccTypes(plans){
+    return plans.reduce((acc,p)=>{
+      acc[p['plan']['plan_type']]?
+        acc[p['plan']['plan_type']].push({id:p['plan']['_id'],text:p['plan']['name']}):
+        (acc[p['plan']['plan_type']]=[{id:p['plan']['_id'],text:p['plan']['name']}]);
+      return acc;
+    },{});
   }
 }

@@ -4,34 +4,37 @@
       Create Plan
     </button>
   </div>
-  <div *ngIf="loading">
-    <div>
-        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
-    </div>
-</div>
-
-  <div class="panel-group" *ngIf="!loading">
-    <h3>Plan Details:-</h3>
-    <hr/>
-    <div *ngFor="let key of ['users','calculators','visits','templates']">
-      <div class="col-sm-2">
-        {{key}} :
+  <div *ngIf="plansInfo && plansInfo['isPlanSelected']">
+    <div *ngIf="loading">
+      <div>
+          <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
       </div>
-
-      <div class="col-sm-5">
-        <input type="text" [disabled]="planDetails[key]===-1 && checkedVal.checked" (keyup)="planDetails[key]=d.value" [value]="planDetails[key]===-1 ? 'Unlimited' : planDetails[key]"
-          #d>
+  </div>
+  
+    <div class="panel-group" *ngIf="!loading">
+      <h3>Plan Details:-</h3>
+      <hr/>
+      <div *ngFor="let key of ['users','calculators','visits','templates']">
+        <div class="col-sm-2">
+          {{key}} :
+        </div>
+  
+        <div class="col-sm-5">
+          <input type="text" [disabled]="planDetails[key]===-1 && checkedVal.checked" (keyup)="planDetails[key]=d.value" [value]="planDetails[key]===-1 ? 'Unlimited' : planDetails[key]"
+            #d>
+        </div>
+        <div class="checkbox col-sm-5">
+          <label>
+            <input type="checkbox" [checked]="planDetails[key]===-1" (change)="planDetails[key]=(planDetails[key]>=0)?-1:data[key]" #checkedVal>Unlimited</label>
+        </div>
+  
       </div>
-      <div class="checkbox col-sm-5">
-        <label>
-          <input type="checkbox" [checked]="planDetails[key]===-1" (change)="planDetails[key]=(planDetails[key]>=0)?-1:data[key]" #checkedVal>Unlimited</label>
+      <div>
+        <button (click)="updatePlan(planDetails)">Update</button>
       </div>
-
-    </div>
-    <div>
-      <button (click)="updatePlan(planDetails)">Update</button>
     </div>
   </div>
+  
 </div>
 
 <div id="planModal" class="modal fade" role="dialog">
@@ -44,6 +47,7 @@
         <h4 class="modal-title">Create/Duplicate a Plan</h4>
       </div>
       <div class="modal-body">
+        <div class="alert alert-danger" *ngIf="errorMessage!=='no_error' || !errorMessage">{{errorMessage}}</div>
         <form [formGroup]="planData">
           <div class="form-group">
             <label for="plan_id">Id:</label>
@@ -87,7 +91,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="plan_to_be_duplicated">Plan to be duplicated - Select non to create a plan from scratch with all features set to true</label>
+            <label for="plan_to_be_duplicated">Plan to be duplicated - Select nothing to create a plan from scratch with all features set to false</label>
             <ng-select #selects [allowClear]="true" (removed)="onPlanDeselect($event)" placeholder="Select a plan to be duplicated" [items]="plansInfo.planNames"
               (selected)="onPlanSelected($event)" id="plan_to_be_duplicated"></ng-select>
           </div>
@@ -123,8 +127,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" [disabled]="!planData.valid" (click)="createPlan(planData.value)">Create</button>
-        <button type="button" class="btn btn-default" (click)="resetForm()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" [disabled]="!planData.valid" #createButton (click)="createPlan(planData.value,createButton,dismiss)">Create</button>
+        <button type="button" #dismiss class="btn btn-default" (click)="resetForm()" data-dismiss="modal">Close</button>
       </div>
     </div>
 

@@ -16,6 +16,7 @@ export class PlanComponent implements OnInit {
   @Output() planUpdates:EventEmitter<any>=new EventEmitter<any>();  
   @ViewChildren('selects') selections:SelectComponent[];
   loading=false;
+  errorMessage='';
   constructor(private _fb:FormBuilder,private _planService:PlanService) { }
   planDetails: any = {
     users: 0,
@@ -86,16 +87,25 @@ export class PlanComponent implements OnInit {
   onPlanTypeSelected(e){
     this.planData.get('plan_type').setValue(e.id);
   }
-  createPlan(data){
+  createPlan(data,createButton,closeButton){
     console.log(data);
+    createButton.textContent='Please Wait....';
+    createButton.disabled=true;
     data['price']= data['price']*100;
     this._planService.createPlan(data).subscribe(result=>{
       if(result['isPeriodBased'] == false){
         alert('Plan Id should contains either one of these[_y,_d,_m]');
       }
+      createButton.textContent='Create';
+      createButton.disabled=false;
+      closeButton.click();
       this.planAdded.emit(result);
+      this.errorMessage='no_error';
     },error=>{
       console.log(error.error.err_message);
+      this.errorMessage=error.error.err_message;
+      createButton.textContent='Create';
+      createButton.disabled=false;
     });
   }
   onPlanSelected(e){

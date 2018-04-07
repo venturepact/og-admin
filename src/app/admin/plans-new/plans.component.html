@@ -13,22 +13,39 @@
     </div>
     <div *ngIf="!loading">
         <!-- <label for="plansBox">Plan:</label> -->
-        <select id="plansBox" (change)="planChanged($event.target.value)">
-            <option *ngFor="let plan of plansData;let i=index" [value]="plan['plan']['_id']" [selected]="selectedPlan['plan']['_id']==plan['plan']['_id']">
-                {{plan['plan']['name']}}
-            </option>
+        
+        <!-- <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
+            <optgroup *ngFor="let type of plansInfo['planTypes']" [label]="type">
+                <option *ngFor="let plan of plansData;let i=index" [value]="plan['plan']['_id']" [selected]="selectedPlan['plan']['_id']==plan['plan']['_id']">
+                    {{plan['plan']['name']}}
+                </option>
+            </optgroup>
+                
+            
+        </select> -->
+        <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
+            <option [value]="-1">Select a Plan</option>
+            <optgroup *ngFor="let type of plansInfo['planTypes']" [label]="type">
+                <option *ngFor="let plan of plansInfo['mappedPlanTypes'][type];let i=index" [value]="plan['id']" >
+                    {{plan['text']}}
+                </option>
+            </optgroup>    
         </select>
-        <div class="row">
+        <div class="row" >
             <plan [data]="selectedPlan['plan']" [plansInfo]="plansInfo" 
             (planAdded)="changeSelection($event)" (planUpdates)="updatePlan($event)"></plan>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <features [data]="selectedPlan" (featureUpdates)="emitChanges($event)"></features>
-            </div>
-            <div class="col-md-6">
-                <premades [data]="selectedPlan" [templates]="templates"></premades>
+        <div *ngIf="selectBox.value!=-1">
+            
+            <div class="row" >
+                <div class="col-md-6">
+                    <features [data]="selectedPlan" (featureUpdates)="emitChanges($event)"></features>
+                </div>
+                <div class="col-md-6">
+                    <premades [data]="selectedPlan" [templates]="templates"></premades>
+                </div>
             </div>
         </div>
+        
     </div>
 </div>

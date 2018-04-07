@@ -33,6 +33,7 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
     (index==-1 && feature['parent_feature']) && this.changedFeatures.push(feature);
     if(index==-1 && !feature['parent_feature']){
       let obj={_id:feature['_id'],parent_feature:null,name:feature['name'],active:feature['active']};
+     // let addableFeatures = feature['sub_features'].filter(obj=>(obj['active']!=feature['active']));
       this.changeStatus(feature['sub_features'],feature.active);
       this.changedFeatures.push(obj,...feature['sub_features']);
     }
@@ -51,7 +52,9 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
   }
   changeStatus(subFeatures,status){
     subFeatures.forEach((feat)=>{
-      feat.active = status;
+      // if(feat['active']!=status){
+        feat.active = status;      
+      // }
     }) 
   }
   updateFeatures(features){
@@ -63,7 +66,7 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
       .subscribe(data=>{
           this.loading=false;
           if(data && data['features'].length){
-            this.featureUpdates.emit(data['features']);            
+            this.featureUpdates.emit(features);            
           }
           window.toastNotification('features Updated');
           this.errorMessage='';

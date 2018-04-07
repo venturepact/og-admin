@@ -136,6 +136,8 @@ export class FeatureComponent extends Datatable implements OnInit {
     })
   }
   updatefeature(obj) {
+    console.log(obj);
+    // return;
     let keys = Object.keys(obj).reduce((acc,key)=>{ 
       if(this.oldFeature[key]!=obj[key]){
         acc.push(key);
