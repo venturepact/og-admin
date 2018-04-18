@@ -34,7 +34,7 @@ export class SingleCompanyComponent implements AfterViewInit {
   }
   ngAfterViewInit() {
     
-    this.getCompanyInfo(this.id);
+  //  this.getCompanyInfo(this.id);
     this.getCompanyUser(this.id);
 
   }

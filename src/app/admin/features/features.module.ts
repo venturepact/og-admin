@@ -1,3 +1,4 @@
+import { UtilitiesModule } from './../../shared/modules/utilities.module';
 import { PremadeCalcsService } from './services/premade-calcs.service';
 import { FeaturesService } from './services/features.service';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,7 @@ export const featureRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(featureRoutes),
-    SharedModule
+    SharedModule,UtilitiesModule
   ],
   providers:[FeaturesService,PremadeCalcsService],
   declarations: [FeatureComponent,PremadeCalcsComponent]

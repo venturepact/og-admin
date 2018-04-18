@@ -4,6 +4,7 @@ import { FeaturesService } from './services/features.service';
 import { FormGroup } from '@angular/forms';
 import { PlanService } from '../../shared/services/plan.service';
 import { SelectComponent } from 'ng2-select';
+import { Script } from '../../shared/services/index';
 declare var jQuery: any;
 @Component({
   selector: 'features',
@@ -22,11 +23,13 @@ export class FeatureComponent extends Datatable implements OnInit {
   disableSelection:Boolean=false;
   oldFeature:any={};
   constructor(public _featureService: FeaturesService,
-    public _planService:PlanService) {
+    public _planService:PlanService,
+    public _script:Script) {
     super();
   }
   features: any = [];
   ngOnInit() {
+    
     this.featureForm = this._featureService.getForm();
     this._planService.getPlanTypes().subscribe((data)=>{
       console.log(data);

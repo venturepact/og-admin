@@ -22,14 +22,15 @@ export class PremadeCalcsService extends BaseService {
     getFormFields(){
         return {
             title:['',Validators.required],
-            live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co)\/([a-zA-Z0-9_-]+)$/)])],
+            live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co|co.in)\/([a-zA-Z0-9_-]+)$/)])],
             // media:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$/)])],
-            media:['',Validators.compose([Validators.required])],            
+            media:['',Validators.compose([])],            
             type:['',Validators.required],
             description:['',Validators.required],
             industry:['',Validators.required],
             template:['',Validators.required],
-            tier:['',Validators.required]
+            tier:['',Validators.required],
+            launch_date:['']
           }
     }
     addPremadeCalc(data){
@@ -61,6 +62,8 @@ export class PremadeCalcsService extends BaseService {
         this.premadeForm.get('tier').setValue(obj.tier);
         this.premadeForm.get('industry').setValue(obj.industry);
         this.premadeForm.get('description').setValue(obj.description);
+        this.premadeForm.get('launch_date').setValue(obj.launch_date);
+        
     }
 }
 

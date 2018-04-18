@@ -1,13 +1,17 @@
+import { Script } from './../../../shared/services/script.service';
 import { PremadeCalcsService } from './../services/premade-calcs.service';
 import { Datatable } from './../../../shared/interfaces/datatable.interface';
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,ViewEncapsulation} from '@angular/core';
 import { FormGroup,Validators,FormBuilder} from '@angular/forms';
 import { AdminService } from './../../../shared/services/admin.service';
 declare var jQuery:any;
+declare var moment: any;
 @Component({
   selector: 'premade-calcs',
   templateUrl: './premade-calcs.component.html',
-  styleUrls: ['./premade-calcs.component.css']
+  styleUrls: ['./premade-calcs.component.css',
+  './../../../site/components/+analytics/assets/css/daterangepicker.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PremadeCalcsComponent extends Datatable implements OnInit {
   loading: boolean;
@@ -35,15 +39,25 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   //   ['template-six','Stockholm'],
   //   ['template-eight',]
   // ];
+  scriptLoaded=false;
   constructor(private _fb:FormBuilder,
     private _calculatorService:PremadeCalcsService,
-  private _adminService:AdminService) {
+  private _adminService:AdminService,
+  private _script:Script) {
     super();
    }
 
   ngOnInit() {
+   
     this.calculatorForm=this._calculatorService.getForm();
     this.getCalculators();
+  }
+  ngAfterViewInit(){
+    this._script.load('daterangepicker')
+    .then((data) => {
+      console.log(data);
+      this.scriptLoaded=true;
+    })
   }
   getCalculators(){
       this.loading = true;
@@ -237,6 +251,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     console.log(this.calculators[index]);
     this.selectedItem=this.calculators[index];
     this._calculatorService.setForm(this.selectedItem);
+    this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(1, 'days').format('MM/DD/YYYY')))
     this.edit=true;
     this.errorMessage='';
     this.loader= false;
@@ -274,5 +289,9 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         console.log(error.error);
         this.errorMessage=error.error.err_message;
       })
+  }
+  setLaunchDate(date){
+    console.log(date);
+    this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
 }
