@@ -67,7 +67,7 @@ export class MembershipService extends BaseService {
         'cvv': data.cvv,
       }
     };
-    return this._http.put(this._url + '/customer/' + company + '/cards', details, this.put_options())
+    return this._http.put(this._url + '/customer/' + company + '/cards', details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -75,7 +75,7 @@ export class MembershipService extends BaseService {
   cancelMembership(reasons?: string): Observable<UserBilling> {
     let details = {reasons};
     let company_id = this._subDomainService.subDomain.company_id;
-    return this._http.put(this._url + '/subscriptions/' + company_id, details, this.put_options())
+    return this._http.put(this._url + '/subscriptions/' + company_id, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -83,7 +83,7 @@ export class MembershipService extends BaseService {
   cancelForcefully(): Observable<any> {
     let details = {};
     let company_id = this._subDomainService.subDomain.company_id;
-    return this._http.put(this._url + '/subscriptions/cancel/' + company_id, details, this.put_options())
+    return this._http.put(this._url + '/subscriptions/cancel/' + company_id, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -100,7 +100,7 @@ export class MembershipService extends BaseService {
         'country': data.inputCountry
       }
     };
-    return this._http.put(this._url + '/customer/' + company + '/billing', details, this.put_options())
+    return this._http.put(this._url + '/customer/' + company + '/billing', details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -215,7 +215,7 @@ export class MembershipService extends BaseService {
     let details = {
       'first_name': data,
     };
-    return this._http.put(this._url + '/customer/' + company + '/updateCustomer', details, this.put_options())
+    return this._http.put(this._url + '/customer/' + company + '/updateCustomer', details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }

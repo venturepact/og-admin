@@ -94,7 +94,7 @@ export class FeatureAuthService extends BaseService {
     let data = {};
     data['features'] = feature;
     let putUrl = this._url + '/company/features/update/' + company;
-    return this._http.put(putUrl, data, this.put_options())
+    return this._http.put(putUrl, data, this.putOptions())
       .map(this.boolData)
       .catch(this.handleError);
   }

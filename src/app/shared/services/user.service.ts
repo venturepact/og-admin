@@ -108,7 +108,7 @@ export class UserService extends BaseService {
     if(isAdmin)
       user_id = data.id;
 
-    return this._http.put(this._url + '/users/'+user_id, data, this.put_options())
+    return this._http.put(this._url + '/users/' + user_id, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -140,7 +140,7 @@ export class UserService extends BaseService {
     };
     let storage:any = this.readCookie('storage');
     storage = JSON.parse(storage);
-    return this._http.put(this._url + '/users/password', data, this.put_options())
+    return this._http.put(this._url + '/users/password', data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -157,7 +157,7 @@ export class UserService extends BaseService {
 
     };
     //console.log('email json',data);
-    return this._http.put(this._url + '/users/email', data, this.put_options())
+    return this._http.put(this._url + '/users/email', data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -187,7 +187,7 @@ export class UserService extends BaseService {
       'username'       : data.first_name,
       'password'       : data.password
     };
-    return this._http.put(this._url + '/users/'+storage.user._id, details, this.put_options())
+    return this._http.put(this._url + '/users/' + storage.user._id, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
 
@@ -237,7 +237,7 @@ export class UserService extends BaseService {
     }
 
 
-    return this._http.put(this._url + '/users/' + userid + '/companies/' + cid + '/join', this.put_options())
+    return this._http.put(this._url + '/users/' + userid + '/companies/' + cid + '/join', this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
 

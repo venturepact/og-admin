@@ -1,41 +1,73 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../../../shared/services/admin.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PlanService} from "../../../../../shared/services/plan.service";
 import {EmailValidator} from "../../../../../shared/validators/email.validator";
 import {UserService} from "../../../../../shared/services/user.service";
+
 declare var jQuery;
 declare var window: any;
 
 @Component({
   selector: 'team-detail',
   templateUrl: './team-detail.component.html',
-  styleUrls: ['./team-detail.component.css', './../../../../../../assets/css/sahil-hover.css', './../../../../../../assets/css/custom-material.css']
+  styleUrls: ['./team-detail.component.css', './../../../../../../assets/css/sahil-hover.css',
+    './../../../../../../assets/css/custom-material.css']
 })
-
 export class TeamDetailComponent implements OnInit {
 
   @Input() team: any[];
   @Input() company: any;
   @Input() userLimit: number;
   @Input() companyId: string;
+  updateTeam: any;
   delUser: any = '';
   error: any = '';
   formAddMember: FormGroup;
+  teamFormDetail: FormGroup;
+  editMode: boolean = false;
+  statusEnum: Array<string> = ['REQUESTED', 'INVITED', 'APPROVED', 'LEFT', 'DELETED'];
+  roleEnum: Array<string> = ['ADMIN', 'MANAGER'];
 
   constructor(private _router: Router, private _adminService: AdminService,
-              private _planService: PlanService, private userService: UserService) {
-    console.log(this.team);
+              private _planService: PlanService, private userService: UserService, public fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.createForm();
+    this.updateTeam = this.team;
     if (this.userLimit === -1) {
     }
     else if (!this.userLimit) {
       this.getPlanLimits();
     }
+    // this.teamFormDetail = this.fb.group({
+    //   users: this.fb.array([
+    //     this.fb.group({
+    //       name: [this.updateTeam.name, Validators.compose([Validators.required])],
+    //       role: [this.updateTeam.user_company.role, Validators.compose([Validators.required])],
+    //       status: [this.updateTeam.user_company.status, Validators.compose([Validators.required])],
+    //       active: [this.updateTeam.user_company.active, Validators.compose([Validators.required])],
+    //     })
+    //   ])
+    // });
+    // this.teamFormDetail = this.getTeamFormArray();
+  }
+
+  getTeamFormArray() {
+    // let formArray = [];
+    // this.updateTeam.forEach(team => {
+    //   formArray.push(this.fb.group({
+    //     name: [this.updateTeam.name, Validators.compose([Validators.required])],
+    //     role: [this.updateTeam.user_company.role, Validators.compose([Validators.required])],
+    //     status: [this.updateTeam.user_company.status, Validators.compose([Validators.required])],
+    //     active: [this.updateTeam.user_company.active, Validators.compose([Validators.required])],
+    //   })
+    // });
+    // return this.fb.group({
+    //   teams: this.fb.array(formArray)
+    // });
   }
 
   getPlanLimits() {
@@ -144,17 +176,26 @@ export class TeamDetailComponent implements OnInit {
 
   approve(userid) {
     this.userService.userApproval(this.company.sub_domain, userid, true).subscribe((data) => {
-      console.log(data, "xo");
 
       for (let i = 0; i < this.team.length; i++) {
         if (this.team[i]._id == userid) {
           this.team[i].user_company.status = data.status;
           this.team[i].user_company.active = true;
-
         }
       }
       window.toastNotification("User approved");
     })
 
+  }
+
+  updateTeamInfo(button) {
+    button.innerText = 'Updating...'
+    this._adminService.updateTeam(this.updateTeam)
+      .subscribe(updatedTeam => {
+        window.toastNotification("Team details updated");
+        button.innerText = 'Update'
+      }, err => {
+        button.innerText = 'Update';
+      })
   }
 }

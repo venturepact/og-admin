@@ -33,7 +33,7 @@ export class PlanService extends BaseService {
   }
 
   updateCompanyFeatures(planId, data: any) {
-    return this._http.put(this._url + '/updateAllCompanyFeatures/' + planId, data, this.put_options())
+    return this._http.put(this._url + '/updateAllCompanyFeatures/' + planId, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }

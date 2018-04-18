@@ -10,3 +10,7 @@
   float: left;
   width: 100%;
 }
+
+.form-input {
+  width: 200px;
+}

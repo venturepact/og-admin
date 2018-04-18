@@ -38,13 +38,13 @@ export class BaseService {
     return new RequestOptions({ headers: this.headers});
   }
 
-  protected put_options() {
+  protected putOptions() {
     this.storage = this.readCookie('storage');
     if (this.storage) {
       this.storage = JSON.parse(this.storage);
-      this.headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'JWT ' + this.storage.token });
+      this.headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'JWT ' + this.storage.token});
     }
-    return new RequestOptions({ headers: this.headers, method: 'put' });
+    return new RequestOptions({headers: this.headers, method: 'put'});
   }
 
   protected patch_options() {
