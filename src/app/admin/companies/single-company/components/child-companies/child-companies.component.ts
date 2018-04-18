@@ -14,13 +14,13 @@ declare var window;
 
 export class ChildCompaniesComponent implements OnInit {
   @Input() companyId: string;
-  childCompanies: any = [];
+  @Input() childCompanies: any = [];
 
   constructor(private _adminService: AdminService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.getChildCompanies();
+    //this.getChildCompanies();
   }
 
   getChildCompanies() {
@@ -37,7 +37,8 @@ export class ChildCompaniesComponent implements OnInit {
         }
       );
   }
-
+  ngOnChanges(){
+  }
   navigateToCompany(companyId) {
     this.router.navigate(['/admin/company', companyId]);
     window.location.reload();
