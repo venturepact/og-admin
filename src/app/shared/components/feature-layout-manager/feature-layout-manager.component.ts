@@ -17,7 +17,27 @@ export class FeatureLayoutManagerComponent extends PremadeLayoutManager implemen
   ngOnInit() {
   }
   pushChanges(feature,calc){
-    this.changes.emit(feature);
+    if(feature.parent_feature === 'formula_operators'){
+      console.log(feature.active);
+    }else{
+      this.changes.emit(feature);      
+    }
+  }
+  changeOthers(feat,feature){
+    let featIndex = this.features.findIndex(f=>f._id === feature._id);
+    if(featIndex!=-1){
+      this.features[featIndex].sub_features = feature.sub_features.map(f=>{
+        console.log(f._id !== feat._id);
+        if(f._id !== feat._id)
+            f.active = false;
+        else
+            f.active= true;
+        this.changes.emit(f);
+        return f;
+      });
+      
+    }
+    
   }
   selectAllCalc(event,feature){
     if(!feature['active']){

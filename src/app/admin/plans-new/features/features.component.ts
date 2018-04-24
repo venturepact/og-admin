@@ -35,7 +35,13 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
       let obj={_id:feature['_id'],parent_feature:null,name:feature['name'],active:feature['active']};
      // let addableFeatures = feature['sub_features'].filter(obj=>(obj['active']!=feature['active']));
       this.changeStatus(feature['sub_features'],feature.active);
-      this.changedFeatures.push(obj,...feature['sub_features']);
+      //this.changedFeatures.push(obj,...feature['sub_features']);
+      feature['sub_features'].forEach(element => {
+        let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
+        i!==-1 && (this.changedFeatures[i]=element);
+        i===-1 && this.changedFeatures.push(element);
+      });
+      this.changedFeatures.push(obj);
     }
     if(index!=-1 && feature['parent_feature']){
       this.changedFeatures.splice(index,1);

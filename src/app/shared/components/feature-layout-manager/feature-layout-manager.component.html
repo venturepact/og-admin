@@ -1,7 +1,7 @@
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let feature of features; let i=index">
     <div *ngIf="info?.type!=='premades'; else premadeLabel">
-      <input type="checkbox" [(ngModel)]="feature.active" (change)="pushChanges(feature)" id="{{feature._id}}" class="featureCheck"
+      <input type="checkbox" [disabled]="feature._id === 'formula_operators'" [(ngModel)]="feature.active" (change)="pushChanges(feature)" id="{{feature._id}}" class="featureCheck"
       />
       <label for="{{feature._id}}">
         {{feature.name}}
@@ -11,20 +11,35 @@
       <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
         (click)="expand($event.target)">
         <i class="glyphicon glyphicon-plus"></i>
-        
-        
+
+
       </a>
       <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
-        <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
-          <input type="checkbox" [(ngModel)]="feat.active" (change)="pushChanges(feat)" id="{{feat._id}}" class="featureCheck"
-          />
-          <label for="{{feat._id}}">
-            <span>{{feat.name}}</span>
-            <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
-            <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
-            
-          </label>
-        </li>
+        <div *ngIf="feature._id !=='formula_operators';else fOps">
+          <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
+            <input type="checkbox" [(ngModel)]="feat.active" (change)="pushChanges(feat)" id="{{feat._id}}" class="featureCheck" />
+            <label for="{{feat._id}}">
+              <span>{{feat.name}}</span>
+              <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+              <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
+
+            </label>
+          </li>
+        </div>
+        <ng-template #fOps>
+          <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
+            <input type="radio"  (change)="pushChanges(feat);changeOthers(feat,feature)" 
+             [checked]="feat.active" id="{{feat._id}}"
+            [name]="feature._id" class="featureCheck" />
+            <label for="{{feat._id}}">
+              <span>{{feat.name}}</span>
+              <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+              <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
+
+            </label>
+          </li>
+        </ng-template>
+
       </ul>
     </div>
     <ng-template #premadeLabel>
@@ -47,7 +62,7 @@
             <span>{{feat.title}}</span>
             <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
             <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
-            
+
           </label>
         </li>
       </ul>
