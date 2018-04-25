@@ -81,6 +81,9 @@
                   Industry
                 </th>
                 <th>
+                  App Count
+                </th>
+                <th>
                   Edit
                 </th>
                 <th>
@@ -111,6 +114,14 @@
                 <td>
                   {{calculator.industry}}
                 </td>
+                <td *ngIf="calculator.count>0;else noLink">
+                  <a href="javascript::void(0)" data-toggle="modal" data-target="#apps_created" (click)="fetchApps(calculator._id)">{{calculator?.count}}</a>
+                </td>
+                <ng-template #noLink >
+                  <td>
+                    {{calculator?.count}}
+                  </td>
+                </ng-template>
                 <td>
                   <a href="javascript:void(0);" data-toggle="modal" data-target="#add-calc" (click)="editCalculator(i);">
                     <i class="material-icons">edit</i>
@@ -224,6 +235,65 @@
               id="updateCalulator" [disabled]="!calculatorForm.valid">Update</button>
           </form>
         </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="apps_created" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Apps Created From Premade Calculator</h5>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="fetchedApps && !fetchedApps.length;else apps">
+          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div>
+        <ng-template #apps>
+          <div>
+            <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+            <div>
+              <table class="dataTable">
+                <thead>
+                  <tr>
+                    <th>
+                      SubDomain
+                    </th>
+                    <th>
+                      Title
+                    </th>
+                    <th>
+                      Link
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody class="custom-tbody">
+                  <tr *ngFor="let app of fetchedApps;let i=index;">
+                    <td>
+                      {{app?.company?.sub_domain}}
+                    </td>
+                    <td>
+                      {{app?.title}}
+                    </td>
+                    <td>
+                      <a [href]="getLink(app?.company?.sub_domain || '',app.url || '')" target="_blank">{{app.url}}</a>
+                    </td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+        
       </div>
       <div class="modal-footer">
       </div>

@@ -36,7 +36,8 @@
         "prod": "environments/environment.prod.ts",
         "biz": "environments/environment.biz.ts",
         "us": "environments/environment.us.ts",
-        "ogdev": "environments/environment.ogdev.ts"
+        "ogdev": "environments/environment.ogdev.ts",
+        "cricket": "environments/environment.cricket.ts"
       }
     }
   ],

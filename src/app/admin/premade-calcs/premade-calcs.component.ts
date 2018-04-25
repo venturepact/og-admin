@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Datatable } from './../../shared/interfaces/datatable.interface';
 import { PremadeCalcService } from './../../shared/services/premade-calc.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -19,6 +20,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   $subscription;
   errorMessage='';;
   loader=false;
+  domain='';
+  fetchedApps=[];
   @ViewChild('fileUpload') fileUpload:any;
   industries=['Auto','Education','Finance','Health & Fitness'
               ,'Legal','Marketing & Advertising','Publishing'
@@ -274,5 +277,19 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         console.log(error.error);
         this.errorMessage=error.error.err_message;
       })
+  }
+  fetchApps(id){
+    this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
+      this.fetchedApps = res;
+      // this.domain=this.getDomain();
+    },error=>{
+
+    })
+  }
+  // getDomain(){
+  //   return `${environment.APP_EXTENSION/`
+  // }
+  getLink(sub_domain,url){
+    return `${environment.PROTOCOL}${sub_domain}.${environment.APP_EXTENSION}/${url}`;
   }
 }
