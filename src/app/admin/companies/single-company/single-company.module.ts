@@ -13,10 +13,11 @@ import {IntegrationDetailComponent} from "./components/integration-detail/integr
 import {ChildCompaniesComponent} from "./components/child-companies/child-companies.component";
 import {CompanylogComponent} from "./components/company-log/companylog.component";
 import { CompanyPremadesComponent } from './components/company-premades/company-premades.component';
+import { UsageCycleComponent } from './components/usage-cycle/usage-cycle.component';
 @NgModule({
   imports : [ RouterModule, SharedModule],
   declarations : [SingleCompanyComponent, CalculatorDetailComponent,
-    CompanyDetailComponent, MembershipDetailComponent, TeamDetailComponent, CompanyFeatureComponent, IntegrationDetailComponent, ChildCompaniesComponent,CompanylogComponent, CompanyPremadesComponent],
+    CompanyDetailComponent, MembershipDetailComponent, TeamDetailComponent, CompanyFeatureComponent, IntegrationDetailComponent, ChildCompaniesComponent,CompanylogComponent, CompanyPremadesComponent, UsageCycleComponent],
 })
 
 export class SingleCompanyModule {}

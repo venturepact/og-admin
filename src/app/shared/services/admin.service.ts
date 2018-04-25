@@ -509,5 +509,9 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-
+  getCompUsageCycle(id) {
+    return this._http.get(`${this._url}/admin/getcompanyUsageCycle/${id}`,this.get_options())
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
 }

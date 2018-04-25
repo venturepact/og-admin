@@ -47,6 +47,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'membership') {
       jQuery('.company').addClass('hide');
@@ -55,6 +56,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'team') {
       jQuery('.team').removeClass('hide');
@@ -63,6 +65,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'features') {
       jQuery('.team').addClass('hide');
@@ -70,6 +73,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.integrations').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').addClass('hide');
     }
     else if (tab === 'integration') {
@@ -78,6 +82,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.features').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').addClass('hide');
     }
     else if (tab === 'logs') {
@@ -86,7 +91,17 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.features').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').removeClass('hide');
+    }
+    else if (tab === 'usage-cycle') {
+      jQuery('.team').addClass('hide');
+      jQuery('.integrations').addClass('hide');
+      jQuery('.company').addClass('hide');
+      jQuery('.membership').addClass('hide');
+      jQuery('.features').addClass('hide');
+      jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').removeClass('hide');
     }
   }
 

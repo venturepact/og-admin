@@ -22,6 +22,9 @@
         <li role="presentation" [class.active]="" (click)="showTab('logs')">
           <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company Logs</a>
         </li>
+        <li role="presentation" [class.active]="" (click)="showTab('usage-cycle')">
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Usage Cycle</a>
+        </li>
     </ul>
 </div>
 <div *ngIf="company!=null && company_users != null" class="single-company-container col-sm-10">
@@ -67,6 +70,11 @@
     <div class="row hide logs">
       <div class="col-md-12 col-sm-12">
         <company-log [company]="company"></company-log>
+      </div>
+    </div>
+    <div class="row hide usage-cycle">
+      <div class="col-md-12 col-sm-12">
+        <usage-cycle [company]="company"></usage-cycle>
       </div>
     </div>
   </div>
