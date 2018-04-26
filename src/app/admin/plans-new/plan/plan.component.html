@@ -53,7 +53,7 @@
             <label for="plan_id">Id:</label>
             <input type="text" class="form-control" id="plan_id" formControlName="_id">
             <div *ngIf="planData.get('_id').invalid">
-              <p *ngIf="planData.get('_id').errors.invalidIdFormat">Plan Id should contains either one of these[_y,_d,_m]</p>
+              <p *ngIf="planData.get('_id').errors.invalidIdFormat">Plan Id should contain either one of these[_y,_d,_m]</p>
             </div>
           </div>
           <div class="form-group">
