@@ -1,6 +1,6 @@
 <div class="col-md-6 col-lg-6">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  toppad">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad">
       <div class="panel panel-info">
         <div class="panel-heading">
           <div class="panel-title">
@@ -431,6 +431,23 @@
                            formControlName="sharing_url" type="text" [(ngModel)]="updateCompany.referral.sharing_url"/>
                     <small>Sharing URL</small>
                     <!--<label class="switch">-->
+                    <!--<div class="slider round"></div>-->
+                    <!--</label>-->
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="updateCompany.current_referral_program">
+                  <div class="col-sm-4">
+                    GrowSumo
+                  </div>
+                  <div class="col-sm-8">
+                    <!--<label class="switch">-->
+                    <input type="radio" style="width: auto" name="current_referral_program" value='GROWSUMO'
+                           [checked]="updateCompany.current_referral_program == 'GROWSUMO'"
+                           [(ngModel)]="updateCompany.current_referral_program"
+                           formControlName="current_referral_program">
+                    <input class="form-control" style="width: 100%" formControlName="growsumo_url" type="text"
+                           [(ngModel)]="updateCompany.referral.growsumo_url"/>
                     <!--<div class="slider round"></div>-->
                     <!--</label>-->
                   </div>

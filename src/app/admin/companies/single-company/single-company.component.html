@@ -8,7 +8,7 @@
             <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Company details </a>
         </li>
         <li role="presentation" [class.active]="" (click)="showTab('team')">
-          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">team details</a>
+          <a href="#" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Team details</a>
         </li>
         <li role="presentation" [class.active]="" (click)="showTab('membership')" >
           <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Membership details</a>
@@ -22,6 +22,9 @@
         <li role="presentation" [class.active]="" (click)="showTab('logs')">
           <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company Logs</a>
         </li>
+        <li role="presentation" [class.active]="" (click)="showTab('usage-cycle')">
+          <a href="#"  aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Usage Cycle</a>
+        </li>
     </ul>
 </div>
 <div *ngIf="company!=null && company_users != null" class="single-company-container col-sm-10">
@@ -33,7 +36,7 @@
       </div>
       <div>
         <br>
-        <child-companies [companyId]="company.id"></child-companies>
+        <child-companies [companyId]="company.id" [childCompanies]="childCompanies"></child-companies>
         <br/>
       </div>
     </div>
@@ -69,6 +72,11 @@
     <div class="row hide logs">
       <div class="col-md-12 col-sm-12">
         <company-log [company]="company"></company-log>
+      </div>
+    </div>
+    <div class="row hide usage-cycle">
+      <div class="col-md-12 col-sm-12">
+        <usage-cycle [company]="company"></usage-cycle>
       </div>
     </div>
   </div>

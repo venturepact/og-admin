@@ -25,9 +25,9 @@ export class PromotionChecklistService extends BaseService {
             .map(this.extractData)
             .catch(this.handleError)
     }
-    
+
     updateCalcStrategies(data: any, calcid: String) {
-        return this._http.put(this._url + '/calcstrategies/' + calcid, data, this.put_options())
+      return this._http.put(this._url + '/calcstrategies/' + calcid, data, this.putOptions())
             .map(this.extractData)
             .catch(this.handleError)
     }

@@ -104,6 +104,7 @@ export class AdminCompany {
   public child_intercom_id: String;
   public remove_leads_after_saving: boolean;
   public GDPR:boolean;
+  public subscription_updated: Date;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
 
@@ -121,6 +122,7 @@ export class AdminCompany {
       this.chargebee_customer_id = company.billing.chargebee_customer_id;
       this.chargebee_plan_id = company.billing.chargebee_plan_id;
       this.chargebee_subscription_id = company.billing.chargebee_subscription_id;
+      this.subscription_updated = company.subscription_updated;
       this.stripe_customer_id = company.billing.stripe_customer_id;
       this.is_admin_created = company.is_admin_created;
       this.current_limit_leads = company.current_limit.leads;
@@ -160,6 +162,7 @@ export class Referral {
   public referral_code: String;
   public sharing_url: String;
   public is_referralcandy_visible: Boolean;
+  public growsumo_url: string;
 
   constructor(referral: any) {
     if (referral) {
@@ -169,6 +172,7 @@ export class Referral {
       this.leaddyno_url = referral.leaddyno_url;
       this.sharing_url = referral.sharing_url;
       this.referral_code = referral.referral_code;
+      this.growsumo_url = referral.growsumo_url;
       this.is_referralcandy_visible = referral.is_referralcandy_visible;
     }
   }

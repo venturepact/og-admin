@@ -37,7 +37,7 @@ export class WebhookService extends BaseService {
       .catch(this.handleError);
   }
   activateWebhook(calcId, status):Observable<any>{
-    return this._http.put(this._url + '/calc/webhook/'+calcId, {status:status},this.put_options())
+    return this._http.put(this._url + '/calc/webhook/' + calcId, {status: status}, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }

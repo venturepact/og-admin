@@ -49,7 +49,7 @@ export class FeaturesService extends BaseService{
       .catch(this.handleError);
   }
   updateFeature(data){
-    return this._http.put(`${this._url}/admin/updateFeature`,data,this.put_options())
+    return this._http.put(`${this._url}/admin/updateFeature`,data,this.putOptions())
       .map(this.extractData)
       .catch(this.handleError)
   }

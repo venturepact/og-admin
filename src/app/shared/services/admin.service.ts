@@ -36,7 +36,7 @@ export class AdminService extends BaseService {
         'new_email': new_email
       }
     };
-    return this._http.put(this._url + '/admin/update/email/' + user_id, data, this.put_options())
+    return this._http.put(this._url + '/admin/update/email/' + user_id, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -45,19 +45,19 @@ export class AdminService extends BaseService {
     let data = {
       'new_password': new_password
     };
-    return this._http.put(this._url + '/admin/update/password/' + user_id, data, this.put_options())
+    return this._http.put(this._url + '/admin/update/password/' + user_id, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   updateCompanyAddon(data: any, company_id: String) {
-    return this._http.put(this._url + '/admin/company/addon/' + company_id, data, this.put_options())
+    return this._http.put(this._url + '/admin/company/addon/' + company_id, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   verifyEmail(user_id: string) {
-    return this._http.put(this._url + '/admin/email/verify/' + user_id, {}, this.put_options())
+    return this._http.put(this._url + '/admin/email/verify/' + user_id, {}, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -87,7 +87,7 @@ export class AdminService extends BaseService {
   }
 
   updateSiteSettings(data: any) {
-    return this._http.put(this._url + '/admin/site/settings/', data, this.put_options())
+    return this._http.put(this._url + '/admin/site/settings/', data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -120,7 +120,8 @@ export class AdminService extends BaseService {
       'referral': {
         'referralcandy_url': company.referral.referralcandy_url,
         'leaddyno_url': company.referral.leaddyno_url,
-        'is_referralcandy_visible': company.referral.is_referralcandy_visible
+        'is_referralcandy_visible': company.referral.is_referralcandy_visible,
+        'growsumo_url': company.referral.growsumo_url
       },
       'child_intercom_id': company.child_intercom_id,
       'change_immediate': company.change_immediate,
@@ -128,7 +129,7 @@ export class AdminService extends BaseService {
       'GDPR': company['GDPR'],
       'deal_refered': company['deal_refered']
     };
-    return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.put_options())
+    return this._http.put(this._url + '/admin/update/company/' + companyId, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -148,7 +149,7 @@ export class AdminService extends BaseService {
   }
 
   deletePromocode(couponId: string) {
-    return this._http.put(this._url + '/coupon/delete/' + couponId, {}, this.put_options())
+    return this._http.put(this._url + '/coupon/delete/' + couponId, {}, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -160,7 +161,7 @@ export class AdminService extends BaseService {
   }
 
   editPromocode(couponId: string, data: any) {
-    return this._http.put(this._url + '/coupon/update/' + couponId, data, this.put_options())
+    return this._http.put(this._url + '/coupon/update/' + couponId, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -178,7 +179,7 @@ export class AdminService extends BaseService {
   }
 
   editMessage(data: any, type: string) {
-    return this._http.put(this._url + '/selectedHellobar/' + type, data, this.put_options())
+    return this._http.put(this._url + '/selectedHellobar/' + type, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -328,7 +329,7 @@ export class AdminService extends BaseService {
 
   updateBasicDetails(data: any, isAdmin: boolean = true): Observable<User> {
     let user_id = data.id;
-    return this._http.put(this._url + '/users/' + user_id, data, this.put_options())
+    return this._http.put(this._url + '/users/' + user_id, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -425,7 +426,7 @@ export class AdminService extends BaseService {
   }
 
   saveHellobar(data) {
-    return this._http.put(this._url + '/admin/saveHellobar', data, this.put_options())
+    return this._http.put(this._url + '/admin/saveHellobar', data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError)
   }
@@ -452,23 +453,50 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError)
   }
+
   updateCustomFeatures(data){
-    console.log("<><><><><><><>",data);
     return this._http.post(`${this._url}/admin/update/custom_feature`,data,this.post_options())
           .map(this.extractData)
           .catch(this.handleError);
   }
+
   searchCompany(sub_domain){
     return this._http.get(`${this._url}/admin/getCompanyBySubdomain/${sub_domain}`,this.get_options())
         .map(this.extractData)
         .catch(this.handleError);
   }
+
   duplicateApp(data){
     return this._http.post(`${this._url}/admin/duplicateApp`,data,this.post_options())
           .map(this.extractData)
           .catch(this.handleError);
 
   }
+
+  updateTeam(data) {
+    let users = [];
+    let userCompanies = [];
+
+    data.forEach(d => {
+      let userCompany = {};
+      let user = {};
+
+      user['name'] = d['name'];
+      user['_id'] = d['_id'];
+      users.push(user);
+
+      userCompany['_id'] = d.user_company._id;
+      userCompany['role'] = d.user_company.role;
+      userCompany['status'] = d.user_company.status;
+      userCompany['active'] = d.user_company.active;
+      userCompanies.push(userCompany);
+    });
+
+    return this._http.put(`${this._url}/admin/updateTeam`, {users, userCompanies}, this.putOptions())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   uploadGif(file){
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
@@ -480,5 +508,10 @@ export class AdminService extends BaseService {
     return this._http.post(`${this._url}/admin/uploadGif`,formData,{})
       .map(this.extractData)
       .catch(this.handleError);
+  }
+  getCompUsageCycle(id) {
+    return this._http.get(`${this._url}/admin/getcompanyUsageCycle/${id}`,this.get_options())
+        .map(this.extractData)
+        .catch(this.handleError);
   }
 }

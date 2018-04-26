@@ -4,6 +4,7 @@ import {AfterViewInit, Component, NgZone, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from './../../../shared/services/company.service';
 import {AdminCompany} from '../../../shared/models/company';
+import { AdminService } from '../../../shared/services/admin.service';
 
 declare var jQuery: any;
 
@@ -16,13 +17,15 @@ declare var jQuery: any;
 export class SingleCompanyComponent implements AfterViewInit {
   templates:any=[];
   company_users: any[];
-  id: number;
+  id: any;
   currentTab: any;
   @Output() company: any;
   custom_features:any;
   companyFeatures:any;
+  childCompanies:any;
   constructor(public companyService: CompanyService,
-              public route: ActivatedRoute) {
+              public route: ActivatedRoute,
+            public _adminService:AdminService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getCompanyInfo(this.id);
@@ -58,6 +61,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'membership') {
       jQuery('.company').addClass('hide');
@@ -66,6 +70,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'team') {
       jQuery('.team').removeClass('hide');
@@ -74,6 +79,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.features').addClass('hide');
       jQuery('.integrations').addClass('hide');
       jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
     }
     else if (tab === 'features') {
       jQuery('.team').addClass('hide');
@@ -81,6 +87,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.integrations').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').addClass('hide');
     }
     else if (tab === 'integration') {
@@ -89,6 +96,7 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.features').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').addClass('hide');
     }
     else if (tab === 'logs') {
@@ -97,7 +105,17 @@ export class SingleCompanyComponent implements AfterViewInit {
       jQuery('.company').addClass('hide');
       jQuery('.membership').addClass('hide');
       jQuery('.features').addClass('hide');
+      jQuery('.usage-cycle').addClass('hide');
       jQuery('.logs').removeClass('hide');
+    }
+    else if (tab === 'usage-cycle') {
+      jQuery('.team').addClass('hide');
+      jQuery('.integrations').addClass('hide');
+      jQuery('.company').addClass('hide');
+      jQuery('.membership').addClass('hide');
+      jQuery('.features').addClass('hide');
+      jQuery('.logs').addClass('hide');
+      jQuery('.usage-cycle').removeClass('hide');
     }
   }
 
@@ -113,12 +131,14 @@ export class SingleCompanyComponent implements AfterViewInit {
   getCompanyInfo(id: number) {
     Observable.forkJoin([
       this.companyService.getCompanyInfo(this.id),
-      this.companyService.getCustomFeatures(this.id)])
+      this.companyService.getCustomFeatures(this.id),
+    this._adminService.getChildCompanies(this.id)])
       .subscribe((data:any)=>{
         this.company = new AdminCompany(data[0].company);
         this.company['reset_period_list'] = data[0].reset_period_list;
         this.custom_features = data[1];
         this.getCompanyFeatures(this.company);
+        this.childCompanies=data[2];
       },error=>{
         console.log("error");
     });

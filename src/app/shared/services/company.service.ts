@@ -158,7 +158,7 @@ export class CompanyService extends BaseService {
       'company_id': companyId,
       'admin': admin
     };
-    return this._http.put(getBasicUrl, details, this.put_options())
+    return this._http.put(getBasicUrl, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -168,7 +168,7 @@ export class CompanyService extends BaseService {
       'user_id': userId,
       'admin': true
     };
-    return this._http.put(getBasicUrl, details, this.put_options())
+    return this._http.put(getBasicUrl, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -178,7 +178,7 @@ export class CompanyService extends BaseService {
       'user_id': userId,
       'admin': false
     };
-    return this._http.put(getBasicUrl, details, this.put_options())
+    return this._http.put(getBasicUrl, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -194,7 +194,7 @@ export class CompanyService extends BaseService {
       },
       'agency': data.companyType
     };
-    return this._http.put(this._url + '/companies/' + storage.company._id, details, this.put_options())
+    return this._http.put(this._url + '/companies/' + storage.company._id, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -234,7 +234,7 @@ export class CompanyService extends BaseService {
         // }
       };
     }
-    return this._http.put(companyUrl, details, this.put_options())
+    return this._http.put(companyUrl, details, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -349,7 +349,7 @@ export class CompanyService extends BaseService {
       .catch(this.handleError);
   }
   updateFeatures(data,iteratee){
-    return this._http.put(`${this._url}/company/update/company-${iteratee}`,data,this.put_options())
+    return this._http.put(`${this._url}/company/update/company-${iteratee}`,data,this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
