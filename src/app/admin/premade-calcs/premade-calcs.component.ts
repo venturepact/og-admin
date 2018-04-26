@@ -290,6 +290,6 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   //   return `${environment.APP_EXTENSION/`
   // }
   getLink(sub_domain,url){
-    return `${environment.PROTOCOL}${sub_domain}.${environment.APP_EXTENSION}/${url}`;
+    return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
   }
 }

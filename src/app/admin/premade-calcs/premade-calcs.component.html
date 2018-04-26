@@ -283,10 +283,14 @@
                     <td>
                       {{app?.title}}
                     </td>
-                    <td>
+                    <td *ngIf="app['liveApp'];else noLink">
                       <a [href]="getLink(app?.company?.sub_domain || '',app.url || '')" target="_blank">{{app.url}}</a>
                     </td>
-                    
+                    <ng-template #noLink>
+                      <td>
+                        {{app.url}}
+                      </td>
+                    </ng-template>
                   </tr>
                 </tbody>
               </table>
