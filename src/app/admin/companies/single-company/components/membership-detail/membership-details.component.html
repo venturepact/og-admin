@@ -73,6 +73,17 @@
                                           </td>
                                         </tr>
                                         <tr>
+                                            <td>
+                                                Last reset on
+                                            </td>
+                                            <td>
+                                                <span *ngIf="company?.subscription_updated">
+                                                    {{moment(company.subscription_updated).format('DD-MM-YYYY')}}
+                                                </span>
+                                                <span *ngIf="!company?.subscription_updated">-</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Reset Period</td>
                                             <td>
                                                 {{company.reset_period}} days

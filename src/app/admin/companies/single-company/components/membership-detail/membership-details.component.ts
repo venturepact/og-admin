@@ -43,7 +43,7 @@ export class MembershipDetailComponent implements OnInit {
 
   err_message: String = '';
   updateFormDetail: FormGroup;
-
+  moment: any;
   constructor(public _membershipService: MembershipService,
               public _adminService: AdminService,
               public route: ActivatedRoute,
@@ -51,6 +51,7 @@ export class MembershipDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
+    this.moment = moment;
   }
 
   ngOnInit() {
