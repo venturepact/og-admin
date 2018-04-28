@@ -13,7 +13,7 @@ declare var window: any;
   selector: 'team-detail',
   templateUrl: './team-detail.component.html',
   styleUrls: ['./team-detail.component.css', './../../../../../../assets/css/sahil-hover.css',
-    './../../../../../../assets/css/custom-material.css']
+    './../../../../../../assets/css/custom-material.css', './../company-detail/company-detail.component.css']
 })
 export class TeamDetailComponent implements OnInit {
 
