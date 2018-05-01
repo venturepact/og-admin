@@ -1,9 +1,10 @@
+import { ActivatedRoute } from '@angular/router';
 import { Datatable } from './../../shared/interfaces/datatable.interface';
 import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren } from '@angular/core';
 import { FeaturesService } from './services/features.service';
 import { FormGroup } from '@angular/forms';
 import { PlanService } from '../../shared/services/plan.service';
-import { SelectComponent } from 'ng2-select';
+import { SelectComponent, SelectItem } from 'ng2-select';
 import { Script } from '../../shared/services/index';
 declare var jQuery: any;
 @Component({
@@ -23,29 +24,34 @@ export class FeatureComponent extends Datatable implements OnInit {
   disableSelection:Boolean=false;
   oldFeature:any={};
   constructor(public _featureService: FeaturesService,
-    public _planService:PlanService,
+    public _planService:PlanService,public route: ActivatedRoute,    
     public _script:Script) {
     super();
   }
   features: any = [];
   ngOnInit() {
+    this.route.params.subscribe(params => {
+        this.selectedItem = params['type'];
+        if(this.selectedItem == 'features'){
+          this.featureForm = this._featureService.getForm();
+          this._planService.getPlanTypes().subscribe((data)=>{
+            console.log(data);
+            Object.keys(data).forEach((key:any)=>{
+                this.plans.push(...(data[key].map(obj=>{
+                  obj['id']=obj['_id'];
+                  obj['text']=obj['name'];
+                  delete obj['_id'];
+                  delete obj['name'];
+                  delete obj['plan_type'];
+                  return obj;
+                })));
+            });
+            console.log(this.plans);
+          })
+          this.getFeatures();
+        }
+     });
     
-    this.featureForm = this._featureService.getForm();
-    this._planService.getPlanTypes().subscribe((data)=>{
-      console.log(data);
-      Object.keys(data).forEach((key:any)=>{
-          this.plans.push(...(data[key].map(obj=>{
-            obj['id']=obj['_id'];
-            obj['text']=obj['name'];
-            delete obj['_id'];
-            delete obj['name'];
-            delete obj['plan_type'];
-            return obj;
-          })));
-      });
-      console.log(this.plans);
-    })
-    this.getFeatures();
   }
   getFeatures() {
     this.loading = true;

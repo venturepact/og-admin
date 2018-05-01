@@ -23,6 +23,10 @@
                 
             
         </select> -->
+        <a [routerLink]="['/admin/premades-features/features']" target="_blank" class="btn btn-primary pull-right">
+            Manage Features
+        </a>
+       
         <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
             <option [value]="-1">Select a Plan</option>
             <optgroup *ngFor="let type of plansInfo['planTypes']" [label]="type">

@@ -1,14 +1,14 @@
 <div class="features_container">
-    <button (click)="selectedItem='features'">
+    <!-- <button (click)="selectedItem='features'">
         Features
     </button>
     <button (click)="selectedItem='premade_calcs'">
         Premade Calculators
-    </button>
+    </button> -->
     <div *ngIf="selectedItem=='premade_calcs'">
         <premade-calcs></premade-calcs>
     </div>
-    <div [hidden]="selectedItem=='premade_calcs'">
+    <div *ngIf="selectedItem=='features'">
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-2 pull-right" style="padding:5px;">
@@ -160,7 +160,7 @@
     </div>
 
 </div>
-<div id="add-feature" class="modal fade" tabindex="-1" role="dialog">
+<div *ngIf="selectedItem=='features'" id="add-feature" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content modal-bg">

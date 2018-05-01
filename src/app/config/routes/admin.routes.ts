@@ -177,10 +177,11 @@ export const ADMIN_ROUTES: Routes = [
             canActivate: [AdminGuard]
           },
           {
-            path: 'premade_calculators',
+            path: 'premades-features/:type',
             component:FeatureComponent,
             canActivate: [AdminGuard]
-          }
+          },
+          
         ]
       },
     ]
