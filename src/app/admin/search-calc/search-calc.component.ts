@@ -185,6 +185,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
   showApps(response: any) {
     this.apps = response.apps;
+    console.log('this.apps', this.apps);
     this.totalApps = response.count;
     this.total_pages = Math.ceil(this.totalApps / this.current_limit);
 
