@@ -48,7 +48,9 @@ export class CompanyPremadesNewComponent extends PremadeLayoutManager implements
   }
   ngOnChanges(changes:SimpleChanges){
     console.log(this.data,this.templates);
+    this.loading=true;
     if(this.data && this.data.premades){
+      this.loading=false;
       this.premades = JSON.parse(JSON.stringify(this.data.premades));
       let templates = JSON.parse(JSON.stringify(this.templates));
       this.templates =this.modifyTemplates(templates,this.premades);

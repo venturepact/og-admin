@@ -24,7 +24,9 @@ export class CompanyFeaturesNewComponent extends PremadeLayoutManager implements
   ngOnInit() {
   }
   ngOnChanges(changes:SimpleChanges){
+    this.loading=true;
     if(this.data && this.data.features){
+      this.loading=false;
       this.features = JSON.parse(JSON.stringify(this.data.features));
       this.edit_mode=false;
     }
