@@ -1,10 +1,10 @@
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-import {AfterViewInit, Component, NgZone, Output} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CompanyService} from './../../../shared/services/company.service';
+import {AfterViewInit, Component, Output} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {AdminCompany} from '../../../shared/models/company';
-import { AdminService } from '../../../shared/services/admin.service';
+import {AdminService} from '../../../shared/services/admin.service';
+import {CompanyService} from "../../../shared/services";
 
 declare var jQuery: any;
 
@@ -25,7 +25,7 @@ export class SingleCompanyComponent implements AfterViewInit {
   childCompanies:any;
   constructor(public companyService: CompanyService,
               public route: ActivatedRoute,
-            public _adminService:AdminService) {
+              public _adminService: AdminService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getCompanyInfo(this.id);
@@ -36,7 +36,7 @@ export class SingleCompanyComponent implements AfterViewInit {
   ngOnInit(){
   }
   ngAfterViewInit() {
-    
+
   //  this.getCompanyInfo(this.id);
     this.getCompanyUser(this.id);
 
@@ -46,7 +46,7 @@ export class SingleCompanyComponent implements AfterViewInit {
     .subscribe((data)=>{
       this.companyFeatures=data;
       this.companyFeatures['company'] = this.company.id;
-      this.companyFeatures.features && (this.templates=this.getFeatures(this.companyFeatures.features,'templates')); 
+      this.companyFeatures.features && (this.templates=this.getFeatures(this.companyFeatures.features,'templates'));
       $ref.unsubscribe();
     },error=>{
       $ref.unsubscribe();
@@ -123,7 +123,6 @@ export class SingleCompanyComponent implements AfterViewInit {
     this.companyService.getCompanyUsers(id)
       .subscribe(
         (response: any) => {
-
           this.company_users = response;
         });
   }
@@ -132,8 +131,8 @@ export class SingleCompanyComponent implements AfterViewInit {
     Observable.forkJoin([
       this.companyService.getCompanyInfo(this.id),
       this.companyService.getCustomFeatures(this.id),
-    this._adminService.getChildCompanies(this.id)])
-      .subscribe((data:any)=>{
+      this._adminService.getChildCompanies(this.id)])
+      .subscribe((data: any) => {
         this.company = new AdminCompany(data[0].company);
         this.company['reset_period_list'] = data[0].reset_period_list;
         this.custom_features = data[1];
@@ -143,7 +142,8 @@ export class SingleCompanyComponent implements AfterViewInit {
         console.log("error");
     });
   }
-  updatecompany(data){
+
+  updatecompany(data) {
     this.company = data;
   }
   getFeatures(features,parentFeature){

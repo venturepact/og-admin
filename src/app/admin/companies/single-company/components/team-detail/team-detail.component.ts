@@ -2,9 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../../../shared/services/admin.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {PlanService} from "../../../../../shared/services/plan.service";
 import {EmailValidator} from "../../../../../shared/validators/email.validator";
-import {UserService} from "../../../../../shared/services/user.service";
+import {PlanService, UserService} from "../../../../../shared/services";
 
 declare var jQuery;
 declare var window: any;
@@ -13,7 +12,7 @@ declare var window: any;
   selector: 'team-detail',
   templateUrl: './team-detail.component.html',
   styleUrls: ['./team-detail.component.css', './../../../../../../assets/css/sahil-hover.css',
-    './../../../../../../assets/css/custom-material.css']
+    './../../../../../../assets/css/custom-material.css', './../company-detail/company-detail.component.css']
 })
 export class TeamDetailComponent implements OnInit {
 
@@ -31,12 +30,20 @@ export class TeamDetailComponent implements OnInit {
   roleEnum: Array<string> = ['ADMIN', 'MANAGER'];
 
   constructor(private _router: Router, private _adminService: AdminService,
-              private _planService: PlanService, private userService: UserService, public fb: FormBuilder) {
+              private _planService: PlanService, private userService: UserService,
+              public fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.createForm();
     this.updateTeam = this.team;
+
+    // this.updateTeam.forEach(t => {
+    //   if (t.user_company.role === 'ADMIN') {
+    //     this.teamHasAdmin = true;
+    //   }
+    // });
+
     if (this.userLimit === -1) {
     }
     else if (!this.userLimit) {
@@ -189,13 +196,40 @@ export class TeamDetailComponent implements OnInit {
   }
 
   updateTeamInfo(button) {
-    button.innerText = 'Updating...'
-    this._adminService.updateTeam(this.updateTeam)
-      .subscribe(updatedTeam => {
-        window.toastNotification("Team details updated");
-        button.innerText = 'Update'
-      }, err => {
-        button.innerText = 'Update';
-      })
+    let canUpdate = false;
+
+    this.updateTeam.forEach(t => {
+      if (t.user_company.role === 'ADMIN') {
+        canUpdate = true;
+      }
+    });
+
+    if (canUpdate) {
+      button.innerText = 'Updating...';
+
+      this._adminService.updateTeam(this.updateTeam)
+        .subscribe(updatedTeam => {
+          window.toastNotification("Team details updated");
+          button.innerText = 'Update'
+        }, err => {
+          button.innerText = 'Update';
+        })
+    } else {
+      window.toastNotification('Atleast one team member neads to be an admin')
+    }
+  }
+
+  changeRole(team) {
+    //
+    // this.updateTeam.forEach(t => {
+    //   if (t.user_company.role === 'ADMIN') {
+    //     this.teamHasAdmin = true;
+    //   }
+    // });
+    // if (!this.teamHasAdmin && team.user_company.role === 'MANAGER') {
+    //   console.log('problem');
+    //   // team.user_company.role='ADMIN';
+    // }
+
   }
 }
