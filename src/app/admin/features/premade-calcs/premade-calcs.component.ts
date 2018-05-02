@@ -251,7 +251,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     console.log(this.calculators[index]);
     this.selectedItem=this.calculators[index];
     this._calculatorService.setForm(this.selectedItem);
-    this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(1, 'days').format('MM/DD/YYYY')))
+    this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
     this.edit=true;
     this.errorMessage='';
     this.loader= false;
