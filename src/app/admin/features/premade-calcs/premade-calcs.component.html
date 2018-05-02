@@ -250,9 +250,9 @@
                 Not Valid
               </div>
             </div>
-            <button *ngIf="!edit" (click)="addCalculator(calculatorForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+            <button *ngIf="!edit" #saveButton (click)="addCalculator(calculatorForm.value,saveButton)" class="btn btn btn-red-outline btn-add-user btn-hover"
               id="addCalulator" [disabled]="!calculatorForm.valid">Add</button>
-            <button *ngIf="edit" (click)="updateCalculator(calculatorForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+            <button *ngIf="edit" #updateButton (click)="updateCalculator(calculatorForm.value,updateButton)" class="btn btn btn-red-outline btn-add-user btn-hover"
               id="updateCalulator" [disabled]="!calculatorForm.valid">Update</button>
           </form>
         </div>
