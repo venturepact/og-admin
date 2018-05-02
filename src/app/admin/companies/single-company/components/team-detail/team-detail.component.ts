@@ -38,12 +38,6 @@ export class TeamDetailComponent implements OnInit {
     this.createForm();
     this.updateTeam = this.team;
 
-    // this.updateTeam.forEach(t => {
-    //   if (t.user_company.role === 'ADMIN') {
-    //     this.teamHasAdmin = true;
-    //   }
-    // });
-
     if (this.userLimit === -1) {
     }
     else if (!this.userLimit) {
@@ -203,7 +197,7 @@ export class TeamDetailComponent implements OnInit {
         canUpdate = true;
       }
     });
-
+    console.log('canUpdate', canUpdate);
     if (canUpdate) {
       button.innerText = 'Updating...';
 
