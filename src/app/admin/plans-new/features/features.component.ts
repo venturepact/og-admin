@@ -51,7 +51,7 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
       this.changeStatus(feature['sub_features'],feature.active);
       feature['sub_features'].forEach(element => {
         let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-        i!=-1 && this.changedFeatures.splice(index,1);
+        i!=-1 && this.changedFeatures.splice(i,1);
       });
     }
     console.log(this.changedFeatures);
@@ -68,6 +68,7 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
       return;
     }
     this.loading = true;
+    
     this._planService.updateFeatures({plan:this.data['plan']['_id'],featuresToUpdate:features,iteratee:'features'})
       .subscribe(data=>{
           this.loading=false;

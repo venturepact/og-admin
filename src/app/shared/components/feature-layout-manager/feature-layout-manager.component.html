@@ -59,7 +59,7 @@
           <input type="checkbox" [(ngModel)]="feat.active" [disabled]="!feature.active" (change)="pushChanges(feat)" id="{{feat._id}}"
             class="featureCheck" />
           <label for="{{feat._id}}">
-            <span>{{feat.title}}</span>
+            <span>{{feat.industry}} ,  </span><span>{{feat.type}} , </span>{{feat.title}}
             <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
             <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
 
