@@ -75,7 +75,10 @@
                   Template
                 </th>
                 <th>
-                  Tier
+                  Launch Date
+                </th>
+                <th>
+                  Created Date
                 </th>
                 <th>
                   Industry
@@ -105,8 +108,11 @@
                 <td>
                   {{getTemplateType(calculator?.template,'selector')}}
                 </td>
-                <td>
-                  {{calculator?.tier}}
+                <td [ngClass]="!calculator.launch_date ? 'text-center' : ''">
+                  {{calculator?.launch_date ? mt(calculator?.launch_date).format('DD-MM-YYYY') : '----'}}
+                </td>
+                <td [ngClass]="!calculator.created_at ? 'text-center' : ''">
+                  {{calculator?.created_at ? mt(calculator?.created_at).format('DD-MM-YYYY') : '----'}}
                 </td>
                 <td>
                   {{calculator.industry}}

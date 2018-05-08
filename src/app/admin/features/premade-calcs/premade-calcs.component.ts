@@ -23,6 +23,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   $subscription;
   errorMessage = '';;
   loader = false;
+  mt=moment;
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
