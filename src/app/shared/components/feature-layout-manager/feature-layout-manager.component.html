@@ -10,11 +10,11 @@
       <i *ngIf="feature['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
       <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
         (click)="expand($event.target)">
-        <i class="glyphicon glyphicon-plus"></i>
+        <i class="glyphicon glyphicon-minus"></i>
 
 
       </a>
-      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
+      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse in">
         <div *ngIf="feature._id !=='formula_operators';else fOps">
           <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
             <input type="checkbox" [(ngModel)]="feat.active" (change)="pushChanges(feat)" id="{{feat._id}}" class="featureCheck" />
@@ -52,14 +52,14 @@
       </label>
       <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
         (click)="expand($event.target)">
-        <i class="glyphicon glyphicon-plus"></i>
+        <i class="glyphicon glyphicon-minus"></i>
       </a>
-      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse">
+      <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse in">
         <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
           <input type="checkbox" [(ngModel)]="feat.active" [disabled]="!feature.active" (change)="pushChanges(feat)" id="{{feat._id}}"
             class="featureCheck" />
           <label for="{{feat._id}}">
-            <span>{{feat.title}}</span>
+            <span>{{feat.industry}} ,  </span><span>{{feat.type}} , </span>{{feat.title}}
             <i *ngIf="feat['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
             <i *ngIf="feat['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
 

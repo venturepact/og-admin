@@ -75,7 +75,10 @@
                   Template
                 </th>
                 <th>
-                  Tier
+                  Launch Date
+                </th>
+                <th>
+                  Created Date
                 </th>
                 <th>
                   Industry
@@ -105,8 +108,11 @@
                 <td>
                   {{getTemplateType(calculator?.template,'selector')}}
                 </td>
-                <td>
-                  {{calculator?.tier}}
+                <td [ngClass]="!calculator.launch_date ? 'text-center' : ''">
+                  {{calculator?.launch_date ? mt(calculator?.launch_date).format('DD-MM-YYYY') : '----'}}
+                </td>
+                <td [ngClass]="!calculator.created_at ? 'text-center' : ''">
+                  {{calculator?.created_at ? mt(calculator?.created_at).format('DD-MM-YYYY') : '----'}}
                 </td>
                 <td>
                   {{calculator.industry}}
@@ -173,14 +179,14 @@
               <label class="control-label" for="title">Name</label>
               <input class="form-control" id="title" type="text" name="title" formControlName="title" />
               <div class="er-msg" *ngIf="calculatorForm.controls.title.dirty && !calculatorForm.controls.title.valid">
-                Not Valid
+                Please enter calculator name
               </div>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="live_url">Live Calc Url</label>
               <input class="form-control" id="live_url" type="text" name="live_url" formControlName="live_url">
               <div class="er-msg" *ngIf="calculatorForm.controls.live_url.dirty && !calculatorForm.controls.live_url.valid">
-                Not Valid
+                Please enter calculator url
               </div>
             </div>
             <div class="form-group label-floating">
@@ -195,7 +201,7 @@
                 <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
               </div>
               <div class="er-msg" *ngIf="!calculatorForm.controls.media.valid">
-                Not Valid
+                Please enter calculator gif url 
               </div>
             </div>
             <div class="form-group label-floating">
@@ -205,7 +211,7 @@
                 <option [value]="'premium'">Premium</option>
               </select>
               <div class="er-msg" *ngIf="calculatorForm.controls.tier.dirty && !calculatorForm.controls.tier.valid">
-                Not Valid
+                Please select calculator tier
               </div>
             </div>
             <div class="form-group label-floating">
@@ -214,7 +220,7 @@
                 <option *ngFor="let template of templates" [value]="template['selector']">{{template['name']}}</option>
               </select>
               <div class="er-msg" *ngIf="calculatorForm.controls.template.dirty && !calculatorForm.controls.template.valid">
-                Not Valid
+                Please select calculator layout
               </div>
             </div>
             <div class="form-group label-floating">
@@ -223,7 +229,7 @@
                 <option *ngFor="let type of ['Outcome Quiz','Calculator','Graded Quiz','Poll']" [value]="type">{{type}}</option>
               </select>
               <div class="er-msg" *ngIf="calculatorForm.controls.type.dirty && !calculatorForm.controls.type.valid">
-                Not Valid
+                Please select calculator experience
               </div>
             </div>
             <div class="form-group label-floating">
@@ -232,7 +238,7 @@
                 <option *ngFor="let industry of industries" [value]="industry">{{industry}}</option>
               </select>
               <div class="er-msg" *ngIf="calculatorForm.controls.industry.dirty && !calculatorForm.controls.industry.valid">
-                Not Valid
+                Please select calculator industry
               </div>
             </div>
             <div class="form-group label-floating">
@@ -240,14 +246,21 @@
               <og-date-picker *ngIf="scriptLoaded" (date)="setLaunchDate($event)">
               </og-date-picker>
               <div class="er-msg" *ngIf="calculatorForm.controls.launch_date.dirty && !calculatorForm.controls.launch_date.valid">
-                Not Valid
+                Please select calculator launch date
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="event_name">Event Name</label>
+              <input class="form-control" id="event_name" type="text" name="event_name" formControlName="event_name">
+              <div class="er-msg" *ngIf="calculatorForm.controls.event_name.dirty && !calculatorForm.controls.event_name.valid">
+                Please enter event name
               </div>
             </div>
             <div class="form-group label-floating">
               <label class="control-label" for="description">Description</label>
               <textarea class="form-control" id="description" type="text" name="description" rows="5" formControlName="description"></textarea>
               <div class="er-msg" *ngIf="calculatorForm.controls.description.dirty && !calculatorForm.controls.description.valid">
-                Not Valid
+                Please enter calculator description
               </div>
             </div>
             <button *ngIf="!edit" #saveButton (click)="addCalculator(calculatorForm.value,saveButton)" class="btn btn btn-red-outline btn-add-user btn-hover"

@@ -30,7 +30,8 @@ export class PremadeCalcsService extends BaseService {
             industry:['',Validators.required],
             template:['',Validators.required],
             tier:['',Validators.required],
-            launch_date:['']
+            launch_date:[''],
+            event_name:['']
           }
     }
     addPremadeCalc(data){
@@ -63,6 +64,8 @@ export class PremadeCalcsService extends BaseService {
         this.premadeForm.get('industry').setValue(obj.industry);
         this.premadeForm.get('description').setValue(obj.description);
         this.premadeForm.get('launch_date').setValue(obj.launch_date);
+        this.premadeForm.get('event_name').setValue(obj.event_name);
+        
         
     }
 }

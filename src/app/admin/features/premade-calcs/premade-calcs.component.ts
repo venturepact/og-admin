@@ -23,6 +23,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   $subscription;
   errorMessage = '';;
   loader = false;
+  mt=moment;
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
@@ -267,6 +268,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   editCalculator(index) {
     console.log(this.calculators[index]);
     this.selectedItem = this.calculators[index];
+    console.log(this.selectedItem);
     this._calculatorService.setForm(this.selectedItem);
     this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
     this.edit = true;

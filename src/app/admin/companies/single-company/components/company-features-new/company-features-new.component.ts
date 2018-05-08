@@ -53,7 +53,7 @@ export class CompanyFeaturesNewComponent extends PremadeLayoutManager implements
       this.changeStatus(feature['sub_features'],feature.active);
       feature['sub_features'].forEach(element => {
         let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-        i!=-1 && this.changedFeatures.splice(index,1);
+        i!=-1 && this.changedFeatures.splice(i,1);
       });
     }
     console.log(this.changedFeatures);

@@ -64,7 +64,7 @@ export class PlansComponent implements OnInit {
     return this.plansData.map(plan=>({id:plan['plan']['_id'],text:plan['plan']['name']}));
   }
   emitChanges(changes) {
-    changes = this.getFeatures(changes, 'templates');
+    changes = changes.filter(obj=>obj['parent_feature']==='templates');
     changes.length && this._planService.planTemplates.next(changes);
   }
   getFeatures(features, parentFeature) {
