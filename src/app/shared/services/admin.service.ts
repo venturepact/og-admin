@@ -13,10 +13,11 @@ export class AdminService extends BaseService {
 
   public getLogSubject = new ReplaySubject<String>(2);
   public availableTemplates = [];
+
   constructor(public _http: Http) {
     super();
-    this.getAvailableTemplates().subscribe((data)=>{
-      this.availableTemplates=data;
+    this.getAvailableTemplates().subscribe((data) => {
+      this.availableTemplates = data;
     })
   }
 
@@ -99,6 +100,12 @@ export class AdminService extends BaseService {
   }
 
   updateCompany(company: any, companyId: string) {
+    let growSumoUrl = company.referral.growsumo_url;
+
+    if (!/^(f|ht)tps?:\/\//i.test(growSumoUrl)) {
+      growSumoUrl = "http://" + growSumoUrl;
+    }
+
     let details: any = {
       'name': company.name,
       'sub_domain': company.sub_domain,
@@ -121,7 +128,7 @@ export class AdminService extends BaseService {
         'referralcandy_url': company.referral.referralcandy_url,
         'leaddyno_url': company.referral.leaddyno_url,
         'is_referralcandy_visible': company.referral.is_referralcandy_visible,
-        'growsumo_url': company.referral.growsumo_url
+        'growsumo_url': growSumoUrl
       },
       'child_intercom_id': company.child_intercom_id,
       'change_immediate': company.change_immediate,
@@ -436,8 +443,9 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError)
   }
-  getAvailableTemplates(){
-    return this._http.get(`${this._url}/admin/getAvailableTemplates`,this.get_options())
+
+  getAvailableTemplates() {
+    return this._http.get(`${this._url}/admin/getAvailableTemplates`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -454,22 +462,22 @@ export class AdminService extends BaseService {
       .catch(this.handleError)
   }
 
-  updateCustomFeatures(data){
-    return this._http.post(`${this._url}/admin/update/custom_feature`,data,this.post_options())
-          .map(this.extractData)
-          .catch(this.handleError);
+  updateCustomFeatures(data) {
+    return this._http.post(`${this._url}/admin/update/custom_feature`, data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
-  searchCompany(sub_domain){
-    return this._http.get(`${this._url}/admin/getCompanyBySubdomain/${sub_domain}`,this.get_options())
-        .map(this.extractData)
-        .catch(this.handleError);
+  searchCompany(sub_domain) {
+    return this._http.get(`${this._url}/admin/getCompanyBySubdomain/${sub_domain}`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
-  duplicateApp(data){
-    return this._http.post(`${this._url}/admin/duplicateApp`,data,this.post_options())
-          .map(this.extractData)
-          .catch(this.handleError);
+  duplicateApp(data) {
+    return this._http.post(`${this._url}/admin/duplicateApp`, data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
 
   }
 
@@ -497,21 +505,22 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  uploadGif(file){
+  uploadGif(file) {
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
     const headers = new Headers();
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
-    console.log(formData,"><><><",headers);
-    return this._http.post(`${this._url}/admin/uploadGif`,formData,{})
+    console.log(formData, "><><><", headers);
+    return this._http.post(`${this._url}/admin/uploadGif`, formData, {})
       .map(this.extractData)
       .catch(this.handleError);
   }
+
   getCompUsageCycle(id) {
-    return this._http.get(`${this._url}/admin/getcompanyUsageCycle/${id}`,this.get_options())
-        .map(this.extractData)
-        .catch(this.handleError);
+    return this._http.get(`${this._url}/admin/getcompanyUsageCycle/${id}`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 }

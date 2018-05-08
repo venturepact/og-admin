@@ -5,9 +5,10 @@ import {AdminCompany} from '../../../../../shared/models/company';
 import {CompanyService} from './../../../../../shared/services/company.service';
 import {MembershipService} from './../../../../../shared/services/membership.service';
 import {AdminService} from './../../../../../shared/services/admin.service';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-declare var window:any;
+
+declare var window: any;
 declare var jQuery: any;
 
 @Component({
@@ -38,7 +39,8 @@ export class CompanyDetailComponent implements OnInit {
   stringify = JSON.stringify;
   dealReferred: Array<String> = [null, "DEALFUEL", "WARRIOR", "APPSUMO_BLACK",
     "WEBMASTER", "AFFILATES", "JVZOO", 'PKS', 'BLACK_FRIDAY', 'LTD', 'SPECIAL_PAYMENT'];
-  @Input() customFeatures:any;
+  @Input() customFeatures: any;
+
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
               public _membershipService: MembershipService, private router: Router) {
@@ -53,7 +55,7 @@ export class CompanyDetailComponent implements OnInit {
     this.updateCompany = this.company;
     this.updateCompany['change_immediate'] = false;
     this.change_immediate = this.company.chargebee_plan_id;
-    if(!this.updateCompany.child_intercom_id) {
+    if (!this.updateCompany.child_intercom_id) {
       this.updateCompany.child_intercom_id = '';
     }
     this.updateFormdetail = this.fb.group({
@@ -88,7 +90,7 @@ export class CompanyDetailComponent implements OnInit {
       growsumo_url: [this.updateCompany.referral.growsumo_url],
       child_intercom_id: [this.updateCompany.child_intercom_id || ''],
       change_immediate: [false],
-      company_logo:[this.customFeatures['extras']['company_logo']['active']],
+      company_logo: [this.customFeatures['extras']['company_logo']['active']],
       GDPR: [this.updateCompany['GDPR'] || false],
       deal_refered: [this.updateCompany['deal_refered'] || null]
     });
@@ -140,26 +142,26 @@ export class CompanyDetailComponent implements OnInit {
       this.isSubmit = false;
       Observable.forkJoin([
         this._adminService.updateCompany(this.updateCompany, this.id),
-        this._adminService.updateCustomFeatures({customFeatures:this.customFeatures,update:'extras GDPR'})
+        this._adminService.updateCustomFeatures({customFeatures: this.customFeatures, update: 'extras GDPR'})
       ]).subscribe(
-          (response: any) => {
-            //window.location.reload(true);
-            this.company = new AdminCompany(response[0]);
-            this.customFeatures=response[1];
-            this.loading = false;
-            this.edit_mode = false;
-            this.childCompany.emit(this.company);
-            this.errorMsg = '';
-            jQuery('#btnSaveDetail').text('Update').attr('disabled', false);
-          },
-          (error: any) => {
-            this.loading = false;
-            this.edit_mode = true;
-            this.getCompanyInfo(this.updateCompany.id);
-            this.errorMsg = error.error.err_message;
-            jQuery('#btnSaveDetail').text('Update').attr('disabled', false);
-          }
-        );
+        (response: any) => {
+          //window.location.reload(true);
+          this.company = new AdminCompany(response[0]);
+          this.customFeatures = response[1];
+          this.loading = false;
+          this.edit_mode = false;
+          this.childCompany.emit(this.company);
+          this.errorMsg = '';
+          jQuery('#btnSaveDetail').text('Update').attr('disabled', false);
+        },
+        (error: any) => {
+          this.loading = false;
+          this.edit_mode = true;
+          this.getCompanyInfo(this.updateCompany.id);
+          this.errorMsg = error.error.err_message;
+          jQuery('#btnSaveDetail').text('Update').attr('disabled', false);
+        }
+      );
     }
   }
 }
