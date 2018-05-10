@@ -337,3 +337,6 @@
   border: 1px solid #08c;
   color: #fff;
 }
+.oh{
+  overflow: hidden !important;
+}
