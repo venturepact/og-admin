@@ -157,6 +157,7 @@
           </th>
           <th>Experience</th>
           <th>Layout</th>
+          <th>Premium Features Used</th>
           <th>AnalyticsLastUpdate</th>
           <th (click)="sort('createdAt')">
             <div class="sort-icon"><a href="javascript:void(0);">Created At</a></div>
@@ -188,6 +189,12 @@
           </td>
           <td>{{app.templateType}}</td>
           <td>{{getTemplateName(app.template)?.text}}</td>
+          <td>
+            <ul *ngIf="app.premiumFeatureUsed">
+              <li *ngFor="let pf of app.premiumFeatureUsed" style="list-style: disc;">{{pf}}</li>
+            </ul>
+            <span *ngIf="!app?.premiumFeatureUsed">-</span>
+          </td>
           <td>
             {{app.analytics?.updatedAt}}
           </td>

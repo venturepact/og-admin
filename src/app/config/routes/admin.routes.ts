@@ -11,7 +11,7 @@ import { EmailLogsComponent } from "./../../admin/email-logs/email-logs.componen
 import { LeadsComponent } from "./../../admin/leads/leads.component";
 import { CouponsComponent } from "./../../admin/coupons/coupons.component";
 import { SitesettingsComponent } from "./../../admin/sitesettings/sitesettings.component";
-import { PlansComponent } from "./../../admin/plans/plans.component";
+import { PlansComponent } from "./../../admin/plans-new/plans.component";
 import { AllFeaturesComponent } from "./../../admin/allFeatures/allFeatures.component";
 import { LondonerComponent } from '../../admin/londoner/londoner.component';
 import { AdminGuard } from "./../../shared/authentication/admin.guard";
@@ -27,9 +27,9 @@ import { SingleadminComponent } from '../../admin/sub-admin/single-admin/single-
 import { SpecialDealComponent } from "../../admin/special-deal/special-deal.component";
 import { IntegrationLogsComponent } from "../../admin/integration-logs/integration-logs.component";
 import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
-import { PremadeCalcsComponent } from './../../admin/premade-calcs/premade-calcs.component'
 import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
 import {HelloBarComponent} from "../../admin/hello-bar/hello-bar.component";
+import { FeatureComponent } from '../../admin/features/features.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -177,10 +177,11 @@ export const ADMIN_ROUTES: Routes = [
             canActivate: [AdminGuard]
           },
           {
-            path: 'premade_calculators',
-            component: PremadeCalcsComponent,
+            path: 'premades-features/:type',
+            component:FeatureComponent,
             canActivate: [AdminGuard]
-          }
+          },
+          
         ]
       },
     ]

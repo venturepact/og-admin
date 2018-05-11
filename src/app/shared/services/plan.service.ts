@@ -112,4 +112,19 @@ export class PlanService extends BaseService {
   getPlanTemplates(){
     return this.planTemplates.asObservable();
   }
+  getAllPlans(){
+    return this._http.get(`${this._url}/plans/get/all/planfeatures`,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  updateFeatures(data){
+    return this._http.put(`${this._url}/plans/${data['plan']}/updateFeature`,data,this.putOptions())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  updatePlan(data){
+    return this._http.put(`${this._url}/plan/updatePlan`,data)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

@@ -31,13 +31,13 @@
       "environments": {
         "production": "environments/environment.production.ts",
         "admin": "environments/environment.admin.ts",
-
         "dev": "environments/environment.dev.ts",
         "prod": "environments/environment.prod.ts",
         "biz": "environments/environment.biz.ts",
         "us": "environments/environment.us.ts",
         "ogdev": "environments/environment.ogdev.ts",
         "cricket": "environments/environment.cricket.ts"
+        
       }
     }
   ],

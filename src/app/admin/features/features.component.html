@@ -1,0 +1,238 @@
+<div class="features_container">
+    <!-- <button (click)="selectedItem='features'">
+        Features
+    </button>
+    <button (click)="selectedItem='premade_calcs'">
+        Premade Calculators
+    </button> -->
+    <div *ngIf="selectedItem=='premade_calcs'">
+        <premade-calcs></premade-calcs>
+    </div>
+    <div *ngIf="selectedItem=='features'">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2 pull-right" style="padding:5px;">
+                    <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-feature"
+                     (click)="featureForm.reset();edit=false;">Add Feature</a>
+                </div>
+                <!-- <div class="col-md-3 pull-right" style="padding:5px;">
+                    <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>
+                </div> -->
+                <!-- <div style="padding:5px;" class="col-md-7 pull-right">
+                    <div class="pull-right">
+                        <span class="pull-left" style="margin-right:10px;">Upload CSV for Bulk Upload: </span>
+                        <span class="pull-left">
+                            <input type="file" (change)="fileChange($event)" accept=".csv">
+                        </span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div id="table">
+            <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_length" id="table-dataTables_length">
+                    <label>Show
+                        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)">
+                            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+                        </select>
+                        entries
+                    </label>
+                </div>
+                <div id="table-datatable_filter" class="dataTables_filter">
+                    <label>
+                        Search:
+                        <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="searchData()">
+                    </label>
+                </div>
+                <div style="clear:both"></div>
+                <div *ngIf="loading">
+                    <div>
+                        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+                    </div>
+                </div>
+                <div>
+                    <div *ngIf="!loading && features.length == 0">
+                        No Record Found...
+                    </div>
+                    <!-- <div *ngIf="rejectedCalcs.length>0">
+                        <div> Rejected Calculators:</div>
+                        <div class="alert alert-danger custom-alert" *ngIf="rejectedCalcs.length>0">
+                            <div *ngFor="let calc of rejectedCalcs">
+                                {{calc}}
+                            </div>
+                        </div>
+                    </div> -->
+                    <div *ngIf="!loading && features.length>0">
+                        <table class="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Feature
+                                    </th>
+                                    <th>
+                                        parent Features
+                                    </th>
+                                    <th>
+                                        name
+                                    </th>
+                                    <th>
+                                        Media type
+                                    </th>
+                                    <th>
+                                        Media Link
+                                    </th>
+                                    <th>
+                                        Heading
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Edit
+                                    </th>
+                                    <th>
+                                        Delete
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="custom-tbody">
+                                <tr *ngFor="let feature of features;let i=index;">
+                                    <td>
+                                        {{feature['_id']}}
+                                    </td>
+                                    <td>
+                                        {{feature['parent_feature'] || 'null'}}
+                                    </td>
+                                    <td>
+                                        {{feature['name'] || '---'}}
+                                    </td>
+                                    <td>
+                                        {{feature['media_type'] || '---'}}
+                                    </td>
+                                    <td>
+                                        <img width="100px" [src]="feature['media_link']" alt="not found" />
+                                    </td>
+                                    <td>
+                                        {{feature['heading'] || '---'}}
+                                    </td>
+                                    <td>
+                                        {{feature['description'] || '---'}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#add-feature" (click)="editFeature(i);">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" (click)="removeFeature(feature._id)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+                        <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+                            <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+                                id="all-companies-datatable_previous">Previous</a>
+                            <span>
+                                <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+                                    tabindex="0">1</a>
+                            </span>
+                            <span *ngIf="current_page >= 5">...</span>
+                            <span>
+                                <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+                                    tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+                            </span>
+                            <span *ngIf="current_page <= total_pages - 5">...</span>
+                            <span>
+                                <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
+                                    (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+                            </span>
+                            <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" [disabled]="current_page == total_pages"
+                                (click)="next()" id="all-companies-datatable_next">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="selectedItem=='features'" id="add-feature" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal-bg">
+            <div class="modal-header">
+                <button type="button" (click)="resetPlans()" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+                <h5 class="modal-title">
+                    <span *ngIf="edit">Update a feature</span><span *ngIf="!edit">Add a feature</span>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+                    <form id="featureForm" [formGroup]="featureForm">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="id"> id </label>
+                            <input class="form-control" [attr.disabled]="edit?'':null" 
+                                id="id" type="text" name="id" formControlName="_id" />
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="name">Name</label>
+                            <input class="form-control" id="name" type="text" name="name" formControlName="name">
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label"  for="parent_feature">Parent Feature<span style="color:#777;font-size:12px"> (if feature haven't have parent feature then leave it empty)</span></label>
+                            <input class="form-control" [attr.disabled]="(edit && (!oldFeature['parent_feature']))?'':null" id="parent_feature" 
+                                type="text" name="parent_feature" formControlName="parent_feature">
+                        </div>
+                        <!-- <div class="form-group label-floating">
+                            <label class="control-label" for="media_type">Media Type</label>
+                            <input class="form-control" id="media_type" type="text" name="media_type" formControlName="media_type">                            
+                        </div> -->
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="media_type">Media Type</label>
+                            <ng-select #selections placeholder="Select Media Type" [items]="[{id:'IMAGE',text:'IMAGE'},{id:'VIDEO',text:'VIDEO'},{id:'GIF',text:'GIF'},{id:'YOUTUBE',text:'YOUTUBE'}]"
+                            (selected)="mediaType($event)" id="media_type"></ng-select>
+                        </div>
+                        <div class="form-group label-floating">
+                                <label class="control-label" for="media_link">Media Link</label>
+                                <input class="form-control" id="media_link" type="text" name="media_link" formControlName="media_link">                                
+                        </div>
+                        <div class="form-group label-floating">
+                                <label class="control-label" for="heading">Heading</label>
+                                <input class="form-control" id="heading" type="text" name="heading" formControlName="heading">    
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="description">Description</label>
+                            <textarea class="form-control" id="description" type="text" name="description" rows="5" formControlName="description"></textarea>
+                        </div>
+                        <div *ngIf="!edit && plans?.length > 0" class="form-group label-floating">
+                            <label class="control-label" for="description">Plans</label>
+                            <ng-select #selections
+                                [allowClear]="true"
+                                [disabled]="disableSelection"
+                                placeholder="Select a plan to be duplicated"
+                                [items] = "plans"
+                                [multiple]="true"
+                                (data)="currentSelections($event)"
+                                id="plan_to_be_duplicated">
+                            </ng-select>
+                        </div>
+                        
+                        <button *ngIf="!edit" (click)="addfeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+                            id="addCalulator" [disabled]="!featureForm.valid || !selectedPlans.length || disableSelection">Add</button>
+                        <button *ngIf="edit" (click)="updatefeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
+                            id="updateCalulator" [disabled]="!featureForm.valid || disableSelection">Update</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

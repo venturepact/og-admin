@@ -343,4 +343,14 @@ export class CompanyService extends BaseService {
         .map(this.extractData)
         .catch(this.handleError);
   }
+  getCompanyFeatures(data){
+    return this._http.post(`${this._url}/company/company_features`,data,this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  updateFeatures(data,iteratee){
+    return this._http.put(`${this._url}/company/update/company-${iteratee}`,data,this.putOptions())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

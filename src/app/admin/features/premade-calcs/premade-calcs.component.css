@@ -1,4 +1,4 @@
-.premadeCalculators-container {
+/* .premadeCalculators-container {
     top: 50px !important;
     position: relative;
     margin-left: 255px;
@@ -26,8 +26,6 @@ ul {
   list-style-type: none;
   padding: 0 0 0 8px;
 }
-
-/* Start: Add New User Modal */
   #add-calc .modal-content {
       border-radius: 8px;
   }
@@ -123,7 +121,7 @@ tbody.custom-tbody td
     font-size: 13px;
     margin: 0;
 
-}
+} */
 
 
 

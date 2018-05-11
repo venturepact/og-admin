@@ -1,0 +1,21 @@
+<div class="wrap">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-9">Premade templates access</div>
+        <div class="col-md-1">Edit: </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="edit_mode">
+            <div class="slider round"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body" *ngIf="edit_mode">
+      <feature-layout-manager [features]="templates" [info]="componentInfo" (changes)="pushChanges($event)"></feature-layout-manager>      
+      <button (click)="updateCalcs(changedFeatures)">Update</button>
+      <div style="color:red;font-size:12px" *ngIf="errorMessage">{{errorMessage}}</div>
+    </div>
+  </div>
+</div>

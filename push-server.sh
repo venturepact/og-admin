@@ -18,7 +18,6 @@ then
     BRANCH="admin-biz"
     CONFIG_ENV=" --prod --env=$1 --aot --build-optimizer --output-hashing none"
 fi
-
 if [ "$1" = "cricket" ]
 then
     BRANCH="admin-cricket"
