@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Script } from './../../../shared/services/script.service';
 import { PremadeCalcsService } from './../services/premade-calcs.service';
 import { Datatable } from './../../../shared/interfaces/datatable.interface';
@@ -30,6 +31,8 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     , 'Quintessential', 'Real Estate & Construction', 'Technology'
     , 'Travel', 'TV and Entertainment', 'Trending'];
   templates = [];
+  domain='';
+  fetchedApps=[];
   // templates= [
   //   ['one-page-card-new','Chicago'],
   //   ['sound-cloud-v3','Londoner'],
@@ -317,5 +320,16 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   setLaunchDate(date) {
     console.log(date);
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
+  }
+  fetchApps(id){
+    this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
+      this.fetchedApps = res;
+      // this.domain=this.getDomain();
+    },error=>{
+  
+   })
+  }
+  getLink(sub_domain,url){
+    return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
   }
 }

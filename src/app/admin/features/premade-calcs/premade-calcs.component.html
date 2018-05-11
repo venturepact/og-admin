@@ -38,12 +38,12 @@
         </label>
       </div>
       <div style="clear:both"></div>
-      <div *ngIf="loading">
+      <div *ngIf="loading" >
         <div>
           <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
         </div>
       </div>
-      <div>
+      <div class="premade-scroller">
         <div *ngIf="!loading && calculators.length==0">
           No Record Found...
         </div>

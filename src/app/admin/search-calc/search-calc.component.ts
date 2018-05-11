@@ -288,7 +288,7 @@ export class SearchCalcComponent extends Datatable implements OnInit {
 
     console.log(event.target.disabled,app,company);
     this.changeButtonState(event);
-    this.adminService.duplicateApp({appData:app,company_id:company._id}).subscribe((data)=>{
+    this.adminService.duplicateApp({appData:app,companyData:company}).subscribe((data)=>{
       console.log(data);
       this.changeButtonState(event);
       jQuery('#copyCalc').modal('hide');
