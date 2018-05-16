@@ -3,9 +3,9 @@
     <ul>
       <li class="setting-nav active" id="userSet" (click)="showTab('users')">
         <a [routerLink]="['users']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">face</i>
-                  </span>
+          <span class="left-sidebar-icon">
+            <i class="material-icons">face</i>
+          </span>
           <div class="left-sidebar-title">
             <h6 class="">Users</h6>
             <span class="">See the account, membership, team and other details of all users of outgrow</span>
@@ -14,9 +14,9 @@
       </li>
       <li class="setting-nav" id="compSet" (click)="showTab('companies')">
         <a [routerLink]="['companies']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">bubble_chart</i>
-                  </span>
+          <span class="left-sidebar-icon">
+            <i class="material-icons">bubble_chart</i>
+          </span>
           <div class="left-sidebar-title">
             <h6 class="">Companies</h6>
             <span class="">See the account, membership, team and other details of all companies of outgrow</span>
@@ -26,9 +26,9 @@
 
       <li *ngIf="sub_role == null" class="setting-nav" id="plnSet" (click)="showTab('plans')">
         <a [routerLink]="['plans']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">view_carousel</i>
-                  </span>
+          <span class="left-sidebar-icon">
+            <i class="material-icons">view_carousel</i>
+          </span>
           <div class="left-sidebar-title">
             <h6 class="">Plans</h6>
             <span class="">Manage all features of diffrent plans and also control users, templates and no of calculators. </span>
@@ -48,9 +48,9 @@
       </li> -->
       <li *ngIf="sub_role == null" class="setting-nav" id="sub_domainSet" (click)="showTab('sub_domains')">
         <a [routerLink]="['subdomains']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">public</i>
-                  </span>
+          <span class="left-sidebar-icon">
+            <i class="material-icons">public</i>
+          </span>
           <div class="left-sidebar-title">
             <h6 class="">Sub Domains</h6>
             <span class="">manage the reserved and premium subdomains</span>
@@ -62,22 +62,22 @@
       -->
       <li class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
         <a [routerLink]="['londoner']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">public</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Londoner</h6>
-                        <span class="">manage your londoner calc</span>
-                    </div>
-                </a>
-            </li>
-            <!---
+          <span class="left-sidebar-icon">
+            <i class="material-icons">public</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Londoner</h6>
+            <span class="">manage your londoner calc</span>
+          </div>
+        </a>
+      </li>
+      <!---
             Code for Landon Calc
             -->
-            <!--
+      <!--
                 Code for premaid calc
             -->
-            <!-- <li class="setting-nav" id="premaidset" (click)="showTab('premaidcalc')">
+      <!-- <li class="setting-nav" id="premaidset" (click)="showTab('premaidcalc')">
                 <a [routerLink]="['premaidcalc']" data-toggle="tab">
                     <span class="left-sidebar-icon">
                     <i class="material-icons">public</i>
@@ -89,128 +89,140 @@
                 </a>
             </li> -->
 
-            <li *ngIf="sub_role == null" class="setting-nav" id="email-logs" (click)="showTab('email-logs')">
-                <a [routerLink]="['emailLogs']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">chrome_reader_mode</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Email/Deal Logs</h6>
-                        <span class="">Check all the email &amp; deal Logs</span>
-                    </div>
-                </a>
-            </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="email-logs" (click)="showTab('email-logs')">
+        <a [routerLink]="['emailLogs']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">chrome_reader_mode</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Email/Deal Logs</h6>
+            <span class="">Check all the email &amp; deal Logs</span>
+          </div>
+        </a>
+      </li>
 
-            <li class="setting-nav" id="leads-tab" (click)="showTab('leads')">
-                <a [routerLink]="['leads']" data-toggle="tab">
-                        <span class="left-sidebar-icon">
-                        <i class="material-icons">supervisor_account</i>
-                      </span>
-                  <div class="left-sidebar-title">
-                    <h6 class="">Leads</h6>
-                    <span class="">All generated leads</span>
-                  </div>
-                </a>
-            </li>
-            <li *ngIf="sub_role == null" class="setting-nav" id="couponcode-tab" (click)="showTab('couponcode-tab')">
-                <a [routerLink]="['couponcode']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                        <i class="material-icons">local_activity</i>
-                    </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Couponcode</h6>
-                        <span class="">All created couponcodes</span>
-                    </div>
-                </a>
-            </li>
-          <li class="setting-nav" id="special_deals-tab" (click)="showTab('specialdeals-tab')">
-            <a [routerLink]="['specialDeals']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                        <i class="material-icons">local_activity</i>
-                    </span>
-              <div class="left-sidebar-title">
-                <h6 class="">Special Coupon code</h6>
-                <span class="">All created Special couponcodes</span>
-              </div>
-            </a>
-          </li>
-            <li *ngIf="sub_role == null" class="setting-nav" id="error-logs" (click)="showTab('error-logs')">
-                <a [routerLink]="['errorLogs']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Error Logs</h6>
-                        <span class="">Check all the Error Logs</span>
-                    </div>
-                </a>
-            </li>
+      <li class="setting-nav" id="leads-tab" (click)="showTab('leads')">
+        <a [routerLink]="['leads']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">supervisor_account</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Leads</h6>
+            <span class="">All generated leads</span>
+          </div>
+        </a>
+      </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="couponcode-tab" (click)="showTab('couponcode-tab')">
+        <a [routerLink]="['couponcode']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">local_activity</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Couponcode</h6>
+            <span class="">All created couponcodes</span>
+          </div>
+        </a>
+      </li>
+      <li class="setting-nav" id="special_deals-tab" (click)="showTab('specialdeals-tab')">
+        <a [routerLink]="['specialDeals']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">local_activity</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Special Coupon code</h6>
+            <span class="">All created Special couponcodes</span>
+          </div>
+        </a>
+      </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="error-logs" (click)="showTab('error-logs')">
+        <a [routerLink]="['errorLogs']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Error Logs</h6>
+            <span class="">Check all the Error Logs</span>
+          </div>
+        </a>
+      </li>
       <li class="setting-nav" id="hello-bar" (click)="showTab('hello-bar')">
         <a [routerLink]="['hello-bar']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
           <div class="left-sidebar-title">
             <h6 class="">HELLO BAR</h6>
             <span>Creates Hello bar with custom filters</span>
           </div>
         </a>
       </li>
-            <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
-                <a [routerLink]="['locales-admin']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Locales</h6>
-                        <span class="">Manage all the locales</span>
-                    </div>
-                </a>
-            </li>
-            <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
-                <a [routerLink]="['responseLogs']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Response Logs</h6>
-                        <span class="">Check all the Response Logs</span>
-                    </div>
-                </a>
-            </li>
-            <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
-                <a [routerLink]="['promotion-checklist']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Promotion Checklist</h6>
-                        <span class="">Create Edit promotion checklist items</span>
-                    </div>
-                </a>
-            </li>
-          <li class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
-            <a [routerLink]="['integration-logs']" data-toggle="tab">
-              <span class="left-sidebar-icon">
-                <i class="material-icons">list</i>
-              </span>
-              <div class="left-sidebar-title">
-                <h6 class="">Integrations</h6>
-                <span class="">List of all Integrations</span>
-              </div>
-            </a>
-          </li>
-          <li *ngIf="sub_role == null" class="setting-nav" id="premade-calcs" (click)="showTab('premade-calcs')">
-                <a [routerLink]="['premades-features/premade_calcs']" data-toggle="tab">
-                    <span class="left-sidebar-icon">
-                    <i class="material-icons">list</i>
-                  </span>
-                    <div class="left-sidebar-title">
-                        <h6 class="">Premades</h6>
-                        <span class="">Check all the premade calculators</span>
-                    </div> 
-                </a>
-            </li>
+      <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
+        <a [routerLink]="['locales-admin']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Locales</h6>
+            <span class="">Manage all the locales</span>
+          </div>
+        </a>
+      </li>
+      <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
+        <a [routerLink]="['responseLogs']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Response Logs</h6>
+            <span class="">Check all the Response Logs</span>
+          </div>
+        </a>
+      </li>
+      <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
+        <a [routerLink]="['promotion-checklist']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Promotion Checklist</h6>
+            <span class="">Create Edit promotion checklist items</span>
+          </div>
+        </a>
+      </li>
+      <li class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
+        <a [routerLink]="['integration-logs']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Integrations</h6>
+            <span class="">List of all Integrations</span>
+          </div>
+        </a>
+      </li>
+      <li *ngIf="sub_role == null" class="setting-nav" id="premade-calcs" (click)="showTab('premade-calcs')">
+        <a [routerLink]="['premades-features/premade_calcs']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Premades</h6>
+            <span class="">Check all the premade calculators</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="setting-nav" id="layout-preview" (click)="showTab('layout-preview')">
+        <a [routerLink]="['layout-preview']" data-toggle="tab">
+          <span class="left-sidebar-icon">
+            <i class="material-icons">list</i>
+          </span>
+          <div class="left-sidebar-title">
+            <h6 class="">Layout Preview</h6>
+            <span class="">Set Preview For Each Layout</span>
+          </div>
+        </a>
+      </li>
       <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">-->
       <!--<a [routerLink]="['customJSApprovals']" data-toggle="tab">-->
       <!--<span class="left-sidebar-icon">-->
@@ -222,6 +234,6 @@
       <!--</div>-->
       <!--</a>-->
       <!--</li>-->
-        </ul>
-    </div>
+    </ul>
+  </div>
 </div>

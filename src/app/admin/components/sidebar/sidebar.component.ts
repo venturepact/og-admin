@@ -66,7 +66,7 @@ export class SidebarComponent implements OnInit {
     else if (tab == 'premaidcalc') {
       jQuery('premaidset').addClass('active');
     }
-    else if(tab == 'premade-calcs'){
+    else if (tab == 'premade-calcs') {
       jQuery('#premade-calcs').addClass('active');
     }
     else if (tab === 'company_plans') {
@@ -91,6 +91,9 @@ export class SidebarComponent implements OnInit {
     }
     else if (tab === 'promotion-checklist') {
       jQuery('#promotion-checklist').addClass('active');
+    }
+    else if (tab == 'layout-preview') {
+      jQuery('#layout-preview').addClass('active');
     }
   }
 }

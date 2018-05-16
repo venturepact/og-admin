@@ -1,3 +1,4 @@
+import { LayoutPreviewComponent } from './../../admin/layout-preview/layout-preview.component';
 import { LocalesAdminComponent } from './../../admin/locale/locale-admin.component';
 import { Routes } from "@angular/router";
 import { AdminComponent } from "./../../admin/admin.component";
@@ -27,8 +28,8 @@ import { SingleadminComponent } from '../../admin/sub-admin/single-admin/single-
 import { SpecialDealComponent } from "../../admin/special-deal/special-deal.component";
 import { IntegrationLogsComponent } from "../../admin/integration-logs/integration-logs.component";
 import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component";
-import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
-import {HelloBarComponent} from "../../admin/hello-bar/hello-bar.component";
+import { CompanyPlansComponent } from "../../admin/plans/company-plans/company-plans.component";
+import { HelloBarComponent } from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
 
 export const ADMIN_ROUTES: Routes = [
@@ -178,10 +179,15 @@ export const ADMIN_ROUTES: Routes = [
           },
           {
             path: 'premades-features/:type',
-            component:FeatureComponent,
+            component: FeatureComponent,
             canActivate: [AdminGuard]
           },
-          
+          {
+            path: 'layout-preview',
+            component: LayoutPreviewComponent,
+            canActivate: [AdminGuard]
+          },
+
         ]
       },
     ]
