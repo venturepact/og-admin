@@ -8,7 +8,7 @@ declare var bootbox:any;
 })
 export class PlansComponent implements OnInit {
   @ViewChild('selectBox') selectBox:ElementRef;
-  plansData: any = []
+  plansData: any = new Map();
   constructor(public _planService: PlanService) { }
   selectedPlan: any;
   templates: any = [];
@@ -20,20 +20,32 @@ export class PlansComponent implements OnInit {
   }
   getPlanFeatures() {
     this.loading=true;
-    this._planService.getAllPlans().subscribe(data => {
-      console.log(data);
+    this._planService.getIntialPlanData().subscribe((data)=>{
+      console.log("new data",data);
       this.loading=false;
-      this.plansData = data;
-      (this.plansData.length) && (this.selectedPlan = this.plansData[0],
-        this.plansInfo.planTypes=this.getPlanTypes(),
-        this.plansInfo.planNames=this.getPlanNames());
-        this.plansInfo.isPlanSelected = false;
-        this.plansInfo.mappedPlanTypes=this.mapPlansAccTypes(this.plansData);
+      this.plansInfo['planTypes']=data['planTypes'];
+      this.selectedPlan=data['pfeatures'];
+      this.plansInfo.isPlanSelected = false;
       (this.selectedPlan) && (this.templates = this.getFeatures(this.selectedPlan['features'], 'templates'));
+      this.plansData.set(this.selectedPlan['plan']['_id'],this.selectedPlan);
     },error=>{
       this.loading=false;
-      console.log(error.error);
+
     })
+    // this._planService.getAllPlans().subscribe(data => {
+    //   console.log(data);
+    //   this.loading=false;
+    //   this.plansData = data;
+    //   (this.plansData.length) && (this.selectedPlan = this.plansData[0],
+    //     this.plansInfo.planTypes=this.getPlanTypes(),
+    //     this.plansInfo.planNames=this.getPlanNames());
+    //     this.plansInfo.isPlanSelected = false;
+    //     this.plansInfo.mappedPlanTypes=this.mapPlansAccTypes(this.plansData);
+    //   (this.selectedPlan) && (this.templates = this.getFeatures(this.selectedPlan['features'], 'templates'));
+    // },error=>{
+    //   this.loading=false;
+    //   console.log(error.error);
+    // })
   }
   planChanged(plan) {
     if(plan==-1){
@@ -41,12 +53,31 @@ export class PlansComponent implements OnInit {
       return;
     } 
     this.plansInfo.isPlanSelected=true;    
-    if (this.plansData.length) {
-      this.selectedPlan = this.plansData.find(planData => {
-        return (planData['plan']['_id'] === plan)
-      });
+    if (!this.plansData.has(plan)) {
+      this.fetchPlanFeatures(plan);
+      // this.selectedPlan = this.plansData.find(planData => {
+      //   return (planData['plan']['_id'] === plan)
+      // });
+      // this.templates = this.getFeatures(this.selectedPlan['features'], 'templates');
+
+    }else{
+      this.selectedPlan=this.plansData.get(plan);
       this.templates = this.getFeatures(this.selectedPlan['features'], 'templates');
     }
+  }
+  fetchPlanFeatures(plan){
+    // this.loading=true;
+    this._planService.fetchPlanFeatures(plan).subscribe((data)=>{
+      // this.loading=false;
+      if(data['plan']){
+        this.selectedPlan=data;
+        (this.selectedPlan) && (this.templates = this.getFeatures(this.selectedPlan['features'], 'templates'));
+        this.plansData.set(this.selectedPlan['plan']['_id'],this.selectedPlan);
+      }
+    },error=>{
+      this.loading=false;      
+      console.log("Error",error.error.err_message);
+    });
   }
   // updateSelectedPlan(changes) {
   //   if (changes.length > 0) {
@@ -76,14 +107,19 @@ export class PlansComponent implements OnInit {
   changeSelection(data){
     if(data['isPlanExists']){
       this.popUp('Plan created in ChargeBee');
-      this.selectedPlan=this.plansData.find(plan=>{
-        return (plan['plan']['_id']===data['plan']);
-      });
+      // this.selectedPlan=this.plansData.find(plan=>{
+      //   return (plan['plan']['_id']===data['plan']);
+      // });
+      this.selectedPlan = this.plansData.get(data['plan']);
     }else{
-      this.plansData.push(data);
-      this.plansInfo['mappedPlanTypes'][data['plan']['plan_type']].push({id:data['plan']['_id'],text:data['plan']['name']})
-      this.plansInfo.planNames.push({id:data['plan']['_id'],text:data['plan']['name']});   
-      this.selectedPlan=this.plansData[this.plansData.length-1];   
+      // this.plansData.push(data);
+      // this.plansInfo['mappedPlanTypes'][data['plan']['plan_type']].push({id:data['plan']['_id'],text:data['plan']['name']})
+      // this.plansInfo.planNames.push({id:data['plan']['_id'],text:data['plan']['name']});   
+      // this.selectedPlan=this.plansData[this.plansData.length-1];   
+      this.plansData.set(data['plan']['_id'],data);
+      this.selectedPlan=data;
+      let typeIndex = this.plansInfo.planTypes.findIndex((type)=>type['_id']===data['plan']['plan_type']);
+      (typeIndex !=-1) && (this.plansInfo.planTypes[typeIndex]['names'].push({id:data['plan']['_id'],text:data['plan']['name']})) 
     }
 
     // this.plansInfo.planTypes=[...this.plansInfo.planTypes];
@@ -120,8 +156,10 @@ export class PlansComponent implements OnInit {
       });
   }
   updatePlan(data){
-    let planIndex =  this.plansData.findIndex(p=>(p['plan']['_id']===data['_id']));
-    planIndex!=-1 && (this.plansData[planIndex]['plan']=data);
+    let planData = this.plansData.get(data['_id']);
+    planData && (planData['plan']=data,this.plansData.set(data['_id'],planData));
+    // let planIndex =  this.plansData.findIndex(p=>(p['plan']['_id']===data['_id']));
+    // planIndex!=-1 && (this.plansData[planIndex]['plan']=data);
   }
   mapPlansAccTypes(plans){
     return plans.reduce((acc,p)=>{

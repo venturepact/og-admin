@@ -13,7 +13,7 @@ import {BaseService} from './base.service';
 @Injectable()
 export class PlanService extends BaseService {
   planTemplates:BehaviorSubject<any> = new BehaviorSubject<any>([])
-
+  isPlanSelected:Boolean = false;
   constructor(public _http: Http) {
     super();
   }
@@ -124,6 +124,16 @@ export class PlanService extends BaseService {
   }
   updatePlan(data){
     return this._http.put(`${this._url}/plan/updatePlan`,data)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  getIntialPlanData(){
+    return this._http.get(`${this._url}/plans/pfeature/initialPlanData`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  fetchPlanFeatures(plan){
+     return this._http.get(`${this._url}/plans/${plan}/planFeatures`)
       .map(this.extractData)
       .catch(this.handleError);
   }

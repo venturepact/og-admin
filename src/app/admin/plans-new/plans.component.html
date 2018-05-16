@@ -27,10 +27,18 @@
             Manage Features
         </a>
        
-        <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
+        <!-- <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
             <option [value]="-1">Select a Plan</option>
             <optgroup *ngFor="let type of plansInfo['planTypes']" [label]="type">
                 <option *ngFor="let plan of plansInfo['mappedPlanTypes'][type];let i=index" [value]="plan['id']" >
+                    {{plan['text']}}
+                </option>
+            </optgroup>    
+        </select> -->
+        <select id="plansBox" #selectBox (change)="planChanged($event.target.value)">
+            <option [value]="-1">Select a Plan</option>
+            <optgroup *ngFor="let type of plansInfo['planTypes']" [label]="type['_id']">
+                <option *ngFor="let plan of type['names'];let i=index" [value]="plan['id']" >
                     {{plan['text']}}
                 </option>
             </optgroup>    

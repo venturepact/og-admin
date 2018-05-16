@@ -124,4 +124,14 @@ export class PlanComponent implements OnInit {
     })
 
   }
+  getTypes(){
+    return this.plansInfo.planTypes.map(t=>({id:t._id,text:t._id}));
+  }
+  getPlanNames(){
+    return this.plansInfo.planTypes.reduce((acc,t)=>{
+      if(t['names'] && t['names'].length)
+        return [...acc,...t['names']];
+      return acc;
+    },[])
+  }
 }
