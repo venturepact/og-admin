@@ -71,5 +71,11 @@ export class DatePickerComponent implements AfterViewInit, OnChanges {
     }
     return {start_date, end_date};
   }
+  addClass(){
+    jQuery("#add-calc").addClass('oh')
+  }
+  removeClass(){
+    jQuery("#add-calc").removeClass('oh');
+  }
 }
 
