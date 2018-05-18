@@ -120,7 +120,13 @@ export class CompanylogComponent extends Datatable implements OnInit, AfterViewI
     this.beforeChange = JSON.parse(success.before_change);
     this.afterChange = JSON.parse(success.after_change);
     var t0 = performance.now();
-    this._JSONCompare.compareJson(this.beforeChange,this.afterChange);  
+    this._JSONCompare.compareJson(this.beforeChange,this.afterChange);
+    this.beforeChange = Object.keys(this.beforeChange).reduce((acc,key)=>{
+      return acc+this.beforeChange[key];
+    },'')//.replace(/<\/td>/g,'</td><br/>'); 
+    this.afterChange = Object.keys(this.afterChange).reduce((acc,key)=>{
+      return acc+this.afterChange[key];
+    },'')//.replace(/<\/td>/g,'</td><br/>');
     var t1 = performance.now();
 
   }

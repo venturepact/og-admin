@@ -41,14 +41,15 @@ export class JSONCompare{
     return true;
   }
   private modify(ref,prop,value,cls='highlight'){
-    ref[prop] = this.modifier(prop,ref[prop],cls); 
+    ref[prop] = `<tr>${this.modifier(prop,ref[prop],cls)}</tr>`; 
   }
   private modifier(propName,value,cls){
     propName = propName ? propName + ':' : '&nbsp;';
-    return `<span class="${cls}">${ propName.toString() + JSON.stringify(value, null, 2).replace(/ /g, '&nbsp;').replace(/\n/g, '<br/>')}</span></br>`
+   // return `<span class="${cls}">${ propName.toString() + JSON.stringify(value, null, 2).replace(/ /g, '&nbsp;').replace(/\n/g, '<br/>')}</span></br>`
+   return `<td >${ propName.toString()}</td><td class="${cls}">${JSON.stringify(value, null, 2).replace(/ /g, '&nbsp;').replace(/\n/g, '<br/>')}</td>`;
   }
   private ObjectModifier(ref,prop,obj){
-    let newString = prop + ':{ <br/>&nbsp;&nbsp;';
+    let newString =`<tr><td> ${prop}</td><td>` //+ ':{ <br/>&nbsp;&nbsp;';
     Object.keys(obj).forEach((key)=>{
         if(this.typeOf(key) === '[object Object]'){
             this.ObjectModifier(obj,key,obj[key]);
@@ -59,12 +60,12 @@ export class JSONCompare{
         }else
             newString += obj[key].toString();
     });
-    newString+= "<br/>}";
+    newString+='</td></tr>';// "<br/>}";
     ref[prop]=newString;
     return true;
   }
-  private ArrayModifier(ref,prop,arr){
-    let newString = prop + ':[ <br/>&nbsp;&nbsp;';
+  private ArrayModifier(ref,prop,arr,no_prop=false){
+    let newString =`<tr><td>${prop}</td><td>`// + ':[ <br/>&nbsp;&nbsp;';
     arr.forEach((value,index)=>{
         if(this.typeOf(value) === '[object Object]'){
             this.ObjectModifier(arr,index,value);
@@ -75,7 +76,7 @@ export class JSONCompare{
         }else    
             newString+=value.toString();
     })
-    newString+= "<br/>]";
+    newString+= "</td></tr>";
     console.log(ref,"\n",prop,"\n",arr,"\n",newString);
     ref[prop] = newString;
   }
