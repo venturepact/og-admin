@@ -1,9 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output, AfterViewInit} from "@angular/core";
 import {Script} from "../../../shared/services/script.service";
 import {AdminService} from "../../../shared/services/admin.service";
 import {PlanService} from "../../../shared/services/plan.service";
+import {CompanyService} from "../../../shared/services/company.service";
 import {parseLazyRoute} from "@angular/compiler/src/aot/lazy_routes";
 declare var moment: any;
+declare var jQuery: any;
 @Component({
   selector: 'edit-hello-bar',
   templateUrl: './edit-hello-bar.component.html',
@@ -11,11 +13,10 @@ declare var moment: any;
     , '../../../site/components/+analytics/assets/css/daterangepicker.css'
     , '../../search-calc/search-calc.component.css']
 })
-export class EditHelloBarComponent implements OnInit {
+export class EditHelloBarComponent implements OnInit, AfterViewInit {
 
-  @Input()
-  selectedHellobar: any;
-  @Output()
+  @Input() selectedHellobar: any;
+  allcompanies: any = [];
   @Output() gotoDashboard: EventEmitter<Boolean> = new EventEmitter<Boolean>();
   today: Date;
   plans: Array<String> = [];
@@ -51,11 +52,15 @@ export class EditHelloBarComponent implements OnInit {
   priority: number = 10;
   tickerDate: Date;
   ticker: string = 'no_ticker';
+  disardedCompanies: any = [];
   constructor(private _script: Script, private adminService: AdminService,
-              private planService: PlanService) {
+              private planService: PlanService,
+              private companyService: CompanyService) {
+                this.disardedCompanies = [];
   }
 
   ngOnInit() {
+    let self= this;
     this.today = moment(new Date).format('YYYY-MM-DD');
     this.planService.getPlanTypes().subscribe(data => {
       data.default.forEach(plan => {
@@ -100,8 +105,23 @@ export class EditHelloBarComponent implements OnInit {
           logic_gate: condition.logicGate
         });
       });
+      let getcompanies = setInterval(() => {
+        if(self.allcompanies.length){
+          let result = self.allcompanies.filter((company) => {
+            if(!this.selectedHellobar.not_to_show.includes(company.id))
+              return company;
+            else
+              self.disardedCompanies.push(company);
+          });
+          self.allcompanies = result;
+          clearInterval(getcompanies);
+        }
+      }, 500);
     }
-
+    this.getAllCompanies();
+  }
+  
+  ngAfterViewInit() {
   }
 
   addCondition() {
@@ -126,7 +146,10 @@ export class EditHelloBarComponent implements OnInit {
       ctaText: this.ctaText,
       ctaLink: this.ctaLink,
       plan: this.ctaPlan,
-      status: status
+      status: status,
+      not_to_show: this.disardedCompanies.map((item, index) => {
+        return item.id;
+      })
     }).subscribe(response => {
       this.hellobarId = response._id;
       button.innerHTML = 'Save' + status;
@@ -142,6 +165,63 @@ export class EditHelloBarComponent implements OnInit {
   reset() {
     this.conditions = [];
     this.conditions.push(JSON.parse(JSON.stringify(this.condition)));
+  }
+
+  addToDiscard() {
+    let self = this;
+    let selected = jQuery('#companylists').val();
+    if(selected) {
+      let result = self.allcompanies.filter((company) => {
+        if(!selected.includes(company.id))
+          return company;
+        else
+          self.disardedCompanies.push(company);
+      });
+      self.allcompanies = result;
+    }
+  }
+
+  removeToDiscard() {
+    let self = this;
+    let selected = jQuery('#discardcompanylists').val();
+    if(selected) {
+      let result = self.disardedCompanies.filter((company) => {
+        if(!selected.includes(company.id))
+          return company;
+        else
+          self.allcompanies.push(company);
+      });
+      self.disardedCompanies = result;
+    }
+  }
+
+  getAllCompanies() {
+    let obj = {
+      limit: 25,
+      page: 0,
+      searchKey: '',
+      companyType: 'all'
+    };
+    let searchkey = jQuery('#searchCompany').val();
+    jQuery('#searchcmp').attr('disabled', true);
+    jQuery('#searchcmp').html('<i class="fa fa-spinner fa-spin"></i>');
+    if(searchkey)
+      obj.searchKey = searchkey;
+    else
+      obj.searchKey = '';
+    this.companyService.getAllCompanies(obj)
+      .subscribe(
+        (response: any) => {
+          this.allcompanies = response.companies.map((item, index) => {
+            return {id: item._id, name: item.name, sub_domain: item.sub_domain}
+          });
+          jQuery('#searchcmp').attr('disabled', false);
+          jQuery('#searchcmp').html('Search');
+        }, (error) => {
+          console.error(' error in fetching companies', error);
+          jQuery('#searchcmp').attr('disabled', false);
+          jQuery('#searchcmp').html('Search');
+      });
   }
 
 }
