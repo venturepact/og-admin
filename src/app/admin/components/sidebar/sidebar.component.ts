@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
     // 	jQuery('#customJSApprovals').addClass('active');
     // }
     else if (tab === 'response-logs') {
-      this._adminService.notifylogType('requestsLogs')
+      this._adminService.notifylogType('requestsLogs');
       jQuery('#response-logs').addClass('active');
     }
     else if (tab === 'leads-tab') {

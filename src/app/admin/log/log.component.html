@@ -1,18 +1,20 @@
 
  <div class="all-erorrs-container">
- <og-date-picker  (date)="onDateSelect($event)"></og-date-picker>
+   <og-date-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)"></og-date-picker>
  <button type="button" class="btn btn-design" (click)="onRefresh()">Refresh</button>
  <table class="dataTable">
      <thead>
-         <tr><th>Logs</th></tr>
+     <tr>
+       <th>Logs</th>
+     </tr>
      </thead>
-     
+
      <tbody id="logContainer" class="logContainer">
          <tr *ngFor="let log of logs">
              {{log}}
          </tr>
          <tr>{{message}}</tr>
      </tbody>
-     
+
  </table>
-</div>    
+ </div>

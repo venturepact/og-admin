@@ -3,12 +3,14 @@
   position: relative;
   margin-left: 255px;
 }
-.btn-design{
-  border:2px solid #fb545b;
-    color: #636f76;
-    background: none;
-    cursor: pointer;
-    font-size: 13px;
+
+.btn-design {
+  border: 2px solid #fb545b;
+  color: #636f76;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  margin-left: 50px;
 }
 .dataTable{
   width:90%;
@@ -23,5 +25,5 @@
 
 .dataTables_filter{
   display: inherit;
-}   
+}
 

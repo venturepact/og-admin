@@ -1,26 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {Script} from '../../shared/services/script.service';
 import {AdminService} from '../../shared/services/admin.service';
 import {Router} from "@angular/router";
-import {CookieService} from "../../shared/services/cookie.service";
+import {CookieService, Script} from "../../shared/services";
+
 declare var jQuery: any;
 
 @Component({
   selector: 'error-log',
   templateUrl: './log.component.html',
-  styleUrls: ['./log.component.css']
+  styleUrls: ['./log.component.css'
+    , '../../site/components/+analytics/assets/css/daterangepicker.css',
+    './../search-calc/search-calc.component.css']
 })
 export class LogComponent implements OnInit {
-  $getErrorList;
-  scriptloaded = false;
+  scriptLoaded = false;
   logs: Array<String>;
   message: String;
-  folderName: String
+  folderName: String;
 
-  constructor(public _script: Script, public _adminService: AdminService, public _cookieService: CookieService, public router: Router) {
+  constructor(public _script: Script, public _adminService: AdminService,
+              public _cookieService: CookieService, public router: Router) {
     if (this._cookieService.readCookie('storage')) {
       let storage = JSON.parse(this._cookieService.readCookie('storage'));
-      if(storage.user.sub_role !== null)
+      if (storage.user.sub_role !== null)
         this.router.navigate(['/admin/users']);
     }
   }
@@ -33,9 +35,19 @@ export class LogComponent implements OnInit {
       console.log(dateString);
       this.requestForLog(dateString, this.folderName);
     });
-    var $cont = jQuery('#logContainer');
+
+    let $cont = jQuery('#logContainer');
     console.log($cont[0]);
     $cont[0].scrollTop = $cont[0].scrollHeight;
+  }
+
+  ngAfterViewInit() {
+    this._script.load('daterangepicker')
+      .then((data) => {
+        this.scriptLoaded = true;
+      }).catch((error) => {
+      console.log('Script not loaded', error);
+    });
   }
 
   requestForLog(dateString, folder) {
@@ -62,11 +74,8 @@ export class LogComponent implements OnInit {
 
   onDateSelect(date: any) {
     console.log(date);
-
     //this.$getErrorList= this._adminService.getLog({selectedDate:date.start_date,folder:this.folderName});
     this.requestForLog(date.start_date, this.folderName);
-
-
   }
 
   onRefresh() {
