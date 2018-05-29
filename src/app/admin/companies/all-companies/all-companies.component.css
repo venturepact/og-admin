@@ -32,6 +32,39 @@ ul {
   margin-right: 5px;
 }
 
+.advanced-filter {
+  clear: both;
+  margin-top: 20px;
+  background: beige;
+  padding-top: 20px;
+}
+.cust {
+  width: 100%;
+
+}
+
+.custom-filter {
+  float: right;
+  margin-right: 12px;
+}
+.advanced-filter {
+  clear: both;
+  margin-top: 20px;
+  background: beige;
+  padding-top: 20px;
+}
+
+.filter-icon {
+  cursor: pointer;
+  display: inline;
+  margin-left: 10px;
+}
+
+
+
+
+
+
 
 
 
