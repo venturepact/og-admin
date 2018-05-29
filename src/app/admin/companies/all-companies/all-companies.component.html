@@ -71,6 +71,7 @@
                   filters[i].selected_property==='current_limit.users'||
                   filters[i].selected_property==='current_limit.companies'||
                   filters[i].selected_property==='current_limit.companies'||
+                  filters[i].selected_property==='cname.url'||
                   filters[i].selected_property==='current_limit.calculators'||
                   filters[i].selected_property==='current_referral_program'"
                  type="text"/>
@@ -104,7 +105,7 @@
             </ng-select>
           </div>
 
-          <div *ngIf="filters[i].selected_property==='GDPR'||filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='integration'"
+          <div *ngIf="filters[i].selected_property==='GDPR'||filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='integration'||filters[i].selected_property==='is_appsumo_created'"
                style="width: 300px;float: left; margin-left: 10px">
                <ng-select [multiple]="false"
                [items]="[{id: 'true', text: 'true'},{id: 'false', text: 'false'}]"
