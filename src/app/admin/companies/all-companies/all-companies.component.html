@@ -117,8 +117,8 @@
           <div *ngIf="filters[i].selected_property==='current_limit.users'||filters[i].selected_property==='current_limit.calculators'||filters[i].selected_property==='current_limit.companies'"
                style="width: 300px;float: left; margin-left: 10px">
                <ng-select [multiple]="false"
-               [items]="[{id: '-1', text: 'Unlimted'},{id: '$gt:', text: 'Greater Than'},{id: '$lt:', text: 'Less Than'},{id: '==:', text: 'Equals'}]"
-               (selected)="select($event,i)"
+               [items]="[{id: '-1', text: 'Unlimted'},{id: '$gt', text: 'Greater Than'},{id: '$lt', text: 'Less Than'},{id: '==', text: 'Equals'}]"
+               (selected)="selectOperator($event,i)"
                (removed)="removed($event.id,i,'current_plan')"
                placeholder="Select">
             </ng-select>

@@ -20,6 +20,7 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
   isSmartTemplate: boolean = false;
   filters: any = [];
   Plans: any = [];
+  showAdvancedFilter:boolean=false;
   totalCompanies:number
   companyArray: Array<{}> = [
     {name: "All", value: "all"},
@@ -57,8 +58,6 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Chargebee Customer ID','id':'billing.chargebee_customer_id'},
               {'name':'Chargebee Subscription ID','id':'billing.chargebee_subscription_id'},
               {'name':'Current Plan','id':'billing.chargebee_plan_id'},
-
-
               ],
 
     selected_property: '',
@@ -163,13 +162,11 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
   removeFilter(index) {
     this.filters[index].visible = false;
   }
-   setFilterProperty(target, index) {
-     console.log("asas",target,index)
+  setFilterProperty(target, index) {
     this.filters[index].selected_property_category = target.options[target.options.selectedIndex].className;
     this.filters[index].selected_property_type = 'string';
-    this.filters[index].selected_operator = ''; // reset operator value
     this.filters[index].selected_value = ''; // reset selected value
-  }
+    }
 
   selected(event, index, type) {
     if (typeof this.filters[index].selected_value === 'string') {
@@ -185,10 +182,19 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
     this.filters[index].selected_value=event
     }else{
     this.filters[index].selected_value=event.id
-    this.filters[index].selected_operator=event.name
-
-  }
-  }
+    }
+    }
+  selectOperator(event,index){
+    if(event.id==='-1'){
+    this.filters[index].selected_value=event.id
+    this.filters[index].selected_operator=event.id
+    }
+    else{
+    this.filters[index].selected_value=''
+    this.filters[index].selected_operator=event.id
+    }
+    }
+    
   removed(event, index, type) {
     if (event === 'all') {
       this.filters[index].selected_value[type] = [];
@@ -203,7 +209,8 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
         let val = {
           property: el.selected_property,
           type: el.selected_property_category,
-          value: el.selected_value
+          value: el.selected_value,
+          operator:el.selected_operator
         };
 
         return val;
