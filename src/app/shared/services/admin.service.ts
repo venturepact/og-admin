@@ -8,7 +8,10 @@ import {BaseService} from "./base.service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
 
+var keys="";
 @Injectable()
+
+
 export class AdminService extends BaseService {
 
   public getLogSubject = new ReplaySubject<String>(2);
@@ -522,5 +525,20 @@ export class AdminService extends BaseService {
     return this._http.get(`${this._url}/admin/getcompanyUsageCycle/${id}`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
+  }
+
+  showCacheKey(){
+    // console.log("::In Cache Key fxn::")
+    return this._http.get(`${this._url}/cache/index`)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  clearCache(id:any){
+    // let urls = []
+    //   urls.push(id)
+    //   console.log(urls)
+    return this._http.delete(`${this._url}/cache/clear/`,{body:{urls:id}})
+      .map(this.extractData)
   }
 }
