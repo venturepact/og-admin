@@ -167,6 +167,7 @@
                     </div>
                 </a>
             </li>
+
             <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
                 <a [routerLink]="['responseLogs']" data-toggle="tab">
                     <span class="left-sidebar-icon">
@@ -211,6 +212,24 @@
                     </div> 
                 </a>
             </li>
+
+
+            <!-- new edition -->
+            <li class="setting-nav" id="cache-handling" (click)="showTab('cache-handling')">
+              <a [routerLink]="['cache-handling']" data-toggle="tab">
+                          <span class="left-sidebar-icon">
+                          <i class="material-icons">list</i>
+                        </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Handling Cache</h6>
+                  <span>Manage all the cache</span>
+                </div>
+              </a>
+            </li>
+          <!-- ends new edition -->
+
+
+
       <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">-->
       <!--<a [routerLink]="['customJSApprovals']" data-toggle="tab">-->
       <!--<span class="left-sidebar-icon">-->
