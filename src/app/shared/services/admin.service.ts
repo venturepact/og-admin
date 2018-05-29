@@ -527,6 +527,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
+
   showCacheKey(){
     // console.log("::In Cache Key fxn::")
     return this._http.get(`${this._url}/cache/index`)
@@ -540,5 +541,11 @@ export class AdminService extends BaseService {
     //   console.log(urls)
     return this._http.delete(`${this._url}/cache/clear/`,{body:{urls:id}})
       .map(this.extractData)
+
+  getAppsCreatedByPremade(url){
+    return this._http.get(`${this._url}/admin/getAppsCreatedByPremade/${url}`,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+
   }
 }
