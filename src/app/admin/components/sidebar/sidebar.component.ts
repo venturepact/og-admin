@@ -75,6 +75,9 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'hello-bar') {
       jQuery('#hello-bar').addClass('active');
     }
+    else if (tab === 'cache-handling') {
+      jQuery('#cache-handling').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');

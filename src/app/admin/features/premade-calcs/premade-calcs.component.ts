@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Script } from './../../../shared/services/script.service';
 import { PremadeCalcsService } from './../services/premade-calcs.service';
 import { Datatable } from './../../../shared/interfaces/datatable.interface';
@@ -6,6 +7,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AdminService } from './../../../shared/services/admin.service';
 declare var jQuery: any;
 declare var moment: any;
+
 @Component({
   selector: 'premade-calcs',
   templateUrl: './premade-calcs.component.html',
@@ -24,6 +26,9 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   errorMessage = '';;
   loader = false;
   mt=moment;
+  
+  domain='';
+  fetchedApps=[];
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
@@ -317,5 +322,16 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   setLaunchDate(date) {
     console.log(date);
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
+  }
+  fetchApps(id){
+    this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
+      this.fetchedApps = res;
+      // this.domain=this.getDomain();
+    },error=>{
+  
+   })
+  }
+  getLink(sub_domain,url){
+    return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
   }
 }
