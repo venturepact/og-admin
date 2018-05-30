@@ -354,7 +354,7 @@ export class CompanyService extends BaseService {
       .catch(this.handleError);
   }
   getPlanTypes() {
-    const url = `${this._url}plan/usedPlans`;
+    const url = `${this._url}/plan/usedPlans`;
     return this._http.get(url, this.options)
       .map(this.extractData)
       .catch(this.handleError);
