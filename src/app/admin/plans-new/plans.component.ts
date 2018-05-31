@@ -14,7 +14,7 @@ export class PlansComponent implements OnInit {
   templates: any = [];
   plansInfo:any={};
   loading:Boolean=false;
-
+  loader:Boolean=false;
   ngOnInit() {
     this.getPlanFeatures();
   }
@@ -66,16 +66,16 @@ export class PlansComponent implements OnInit {
     }
   }
   fetchPlanFeatures(plan){
-    // this.loading=true;
+    this.loader=true;
     this._planService.fetchPlanFeatures(plan).subscribe((data)=>{
-      // this.loading=false;
+      this.loader=false;
       if(data['plan']){
         this.selectedPlan=data;
         (this.selectedPlan) && (this.templates = this.getFeatures(this.selectedPlan['features'], 'templates'));
         this.plansData.set(this.selectedPlan['plan']['_id'],this.selectedPlan);
       }
     },error=>{
-      this.loading=false;      
+      this.loader=false;      
       console.log("Error",error.error.err_message);
     });
   }
