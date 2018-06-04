@@ -540,4 +540,9 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  changeNCbP(id, ncbp) {
+    return this._http.put(`${this._url}/admin/updateNCbP/${id}`, {cf_non_cb_payments: ncbp}, this.putOptions())
+    .map(this.extractData).catch(this.handleError);
+  }
 }

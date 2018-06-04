@@ -119,7 +119,7 @@ export class MembershipService extends BaseService {
   getplanSubscription(id: string = null): Observable<UserBilling> {
     let company = id ? id : this._subDomainService.subDomain.company_id;
     let getPlanUrl = this._url + '/subscriptions/' + company;
-    return this._http.post(getPlanUrl, {}, this.post_options())
+    return this._http.get(getPlanUrl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }

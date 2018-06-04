@@ -40,7 +40,7 @@ export class CompanyDetailComponent implements OnInit {
   dealReferred: Array<String> = [null, "DEALFUEL", "WARRIOR", "APPSUMO_BLACK",
     "WEBMASTER", "AFFILATES", "JVZOO", 'PKS', 'BLACK_FRIDAY', 'LTD', 'SPECIAL_PAYMENT'];
   @Input() customFeatures: any;
-
+  non_cb_payment : Boolean = false;
   constructor(public companyService: CompanyService, public fb: FormBuilder,
               public route: ActivatedRoute, public _adminService: AdminService,
               public _membershipService: MembershipService, private router: Router) {
@@ -97,6 +97,26 @@ export class CompanyDetailComponent implements OnInit {
     console.log(this.updateCompany);
     this.getPlanList();
     this.getCompanyCoupon();
+    this.getCurrentSubscription();
+  }
+
+  getCurrentSubscription() {
+    this._membershipService.getplanSubscription(this.id).subscribe((result: any) => {
+      if(result.currentplan.subscription.cf_non_cb_payments && result.currentplan.subscription.cf_non_cb_payments == 'True')
+        this.non_cb_payment = true;
+      else
+        this.non_cb_payment = false;
+      });
+  }
+  changeNCbP() {
+    this.non_cb_payment = !this.non_cb_payment;
+    this.loading = true;
+    this._adminService.changeNCbP(this.id, this.non_cb_payment).subscribe((result) => {
+      console.log('result<><><><> ', result);
+      this.loading = false;
+    }, (error) => {
+      console.error('error<><><><> ', error);
+    })
   }
 
   navigate(company) {
