@@ -614,13 +614,13 @@
 
                 <div class="row">
                   <div class="col-sm-4">
-                    Deal Referred
+                    None chargebee Payer
                   </div>
                   <div class="col-sm-8">
-                    <select class="form-control" [(ngModel)]="updateCompany.deal_refered"
-                            formControlName="deal_refered">
-                      <option *ngFor="let deal of dealReferred" [ngValue]="deal">{{deal}}</option>
-                    </select>
+                    <label class="switch">
+                      <input type="checkbox" [checked]="non_cb_payment" (click)="changeNCbP()">
+                      <div class="slider round"></div>
+                    </label>
                   </div>
                 </div>
 
