@@ -30,6 +30,7 @@ import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component
 import {CompanyPlansComponent} from "../../admin/plans/company-plans/company-plans.component";
 import {HelloBarComponent} from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
+import { CacheHandlingComponent } from '../../admin/cache-handling/cache-handling.component'
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -179,6 +180,11 @@ export const ADMIN_ROUTES: Routes = [
           {
             path: 'premades-features/:type',
             component:FeatureComponent,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: 'cache-handling',
+            component:CacheHandlingComponent,
             canActivate: [AdminGuard]
           },
           
