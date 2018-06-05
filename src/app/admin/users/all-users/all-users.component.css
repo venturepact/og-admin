@@ -96,7 +96,7 @@ margin-bottom: 10px;
         color: #fff !important;
   }
 
-  .modal .btn-red-outline.hvr-sweep-to-right:focus, 
+  .modal .btn-red-outline.hvr-sweep-to-right:focus,
   .modal .btn-red-outline.hvr-sweep-to-right:active {
       color: #fff !important;
       background: #ffb5b8 none repeat scroll 0 0 !important;
@@ -182,3 +182,43 @@ margin-bottom: 10px;
 .dataTables_filter{
   display: inherit;
 }
+
+.advanced-filter {
+  clear: both;
+  margin-top: 20px;
+  background: beige;
+  padding-top: 20px;
+}
+.cust {
+  width: 100%;
+
+}
+
+.custom-filter {
+  float: right;
+  margin-right: 12px;
+}
+.advanced-filter {
+  clear: both;
+  margin-top: 20px;
+  background: beige;
+  padding-top: 20px;
+}
+
+.filter-icon {
+  cursor: pointer;
+  display: inline;
+  margin-left: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

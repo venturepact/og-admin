@@ -6,8 +6,14 @@
 	</div>
 	<div  id="table">
 		<div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+
+    <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
+      <span class="glyphicon glyphicon-filter"></span>
+      Filter
+    </div>
+
 			<div class="dataTables_length" id="table-dataTables_length">
-				<label>Show 
+				<label>Show
                 <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change) = "limitChange($event)" class="">
                     <option value="{{limit}}" *ngFor = "let limit of limits">{{limit}}</option>
                 </select>
@@ -18,7 +24,82 @@
 				<label>
                     Search:<input type="search" class="" placeholder="" [(ngModel)] = "search" aria-controls="table" (keyup) = "searchData()">
             </label>
-			</div>
+      </div>
+      <div *ngIf="showAdvancedFilter" class="advanced-filter">
+          <div style="text-align: center">
+            </div>
+        <div class="row filter-params-container" style="position:relative"
+             *ngFor="let filter of filters;let i = index;">
+
+          <div [ngClass]="{'hidden':!(filter.visible)}">
+            <button style="float: left;margin: 10px;" (click)="removeFilter(i)">
+              <span class="glyphicon glyphicon-minus"></span>
+            </button>
+
+            <select [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)"
+                    title="Select Operators" style="float:left;margin: 8px">
+              <option style="display: none"></option>
+              <optgroup label="Company">
+                <option *ngFor="let property of filter.company;" class="company"
+                        [value]="property.id">
+                  {{property.name}}
+                </option>
+              </optgroup>
+
+            </select>
+            <input [(ngModel)]="filters[i].selected_value"
+            *ngIf="filters[i].selected_property==='name'||filters[i].selected_property==='username'||
+                    filters[i].selected_property==='emails.email'||
+                    filters[i].selected_property==='userCompany'"
+                   type="text"/>
+
+
+            <div *ngIf="filters[i].selected_property==='billing.chargebee_subscription_status'"
+                 style="width: 300px;float: left; margin-left: 10px">
+              <ng-select
+                [multiple]="false"
+                [items]="[{id: 'active', text: 'Active'},{id: 'in_trial', text: 'IN Trial'},{id: 'future', text: 'future'},{id: 'non_renewing', text: 'Non Renewing'},{id: 'paused', text: 'Non Paused'},{id: 'cancelled', text: 'Cancelled'}]"
+                (selected)="select($event,i)"
+                placeholder="Select Subscription status">
+
+              </ng-select>
+            </div>
+
+            <div *ngIf="filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='active'"
+                 style="width: 300px;float: left; margin-left: 10px">
+                 <ng-select [multiple]="false"
+                 [items]="[{id: 'true', text: 'true'},{id: 'false', text: 'false'}]"
+                 (selected)="select($event,i)"
+                 (removed)="removed($event.id,i,'current_plan')"
+                 placeholder="Select">
+              </ng-select>
+            </div>
+
+
+
+            <div *ngIf="filters[i].selected_property==='created_at'"
+            style="width: 300px;float: left; margin-left: 10px">
+        <og-date-picker  (date)="select($event,i)"></og-date-picker>
+            </div>
+
+          </div>
+        </div>
+        <span class="add-more">
+          <button style="margin: 5px;margin-left: 20px" (click)="addFilter()">
+          <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          Add more search parameters
+        </span>
+
+        <div class="apply-filter-container">
+
+
+          <button (click)="getAllUsers()">Fetch Results</button>
+          <button (click)="clearFilters()">Clear Filters</button>
+
+        </div>
+      </div>
+
 			<div *ngIf="loading">
 				<div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
 			</div>
@@ -203,4 +284,3 @@
 	<!-- End:Upgrde Plan Modal -->
 
 
-		
