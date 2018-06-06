@@ -53,6 +53,7 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Is Appsumo Created','id':'is_appsumo_created'},
               ],
   billings: [
+              {'name':'Deal Refered','id':'deal_refered'},
               {'name':'Card Status','id':'billing.customer_card_status'},
               {'name':'Subscription Status','id':'billing.chargebee_subscription_status'},
               {'name':'Chargebee Customer ID','id':'billing.chargebee_customer_id'},
@@ -194,7 +195,7 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
     this.filters[index].selected_operator=event.id
     }
     }
-    
+
   removed(event, index, type) {
     if (event === 'all') {
       this.filters[index].selected_value[type] = [];
