@@ -29,6 +29,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   
   domain='';
   fetchedApps=[];
+  allApps=[];
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
@@ -324,8 +325,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
   fetchApps(id){
+    this.allApps=[];
+    this.fetchedApps=[];
     this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
       this.fetchedApps = res;
+      this.allApps=res;
       // this.domain=this.getDomain();
     },error=>{
   
@@ -333,5 +337,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   }
   getLink(sub_domain,url){
     return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
+  }
+  filterApps(date){
+      console.log(date);
+      this.fetchedApps=this.allApps.filter(app=>{
+        return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
+      })
   }
 }
