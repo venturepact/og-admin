@@ -143,3 +143,10 @@ input:checked + .slider:before {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+/* mine */
+   th{
+    color:#3e3b3bd1;
+  }
+   td{
+    color:#3e3b3bd1;
+  }
