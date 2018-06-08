@@ -42,6 +42,7 @@ export class DateRangePickerComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    console.log("in here, ", this.calc);
     if (this.initialized) {
       let startDate = this.calc ? this.calc.createdAt : moment().subtract(10, 'days').calendar();
       jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(this.getUTCDate(startDate, 'MM/DD/YYYY'));
