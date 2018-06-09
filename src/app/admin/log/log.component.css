@@ -27,3 +27,28 @@
   display: inherit;
 }
 
+.ab-accordion {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 35em;
+  padding: 2em;
+  overflow-y: auto;
+  background-color: black;
+  color: red;
+}
+.ab-accordion > i {
+  top: 1px;
+  cursor: pointer;
+  right: 1px;
+  float: right;
+  border-color: black;
+  position: sticky;
+  background-color: white;
+}
+
+.ab-input-search {
+  height: 20px;
+  width: 80px;
+  border: 1px solid;
+}

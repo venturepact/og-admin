@@ -7,11 +7,12 @@ import { User } from "./../models/user";
 import { BaseService } from "./base.service";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class AdminService extends BaseService {
 
-  public getLogSubject = new ReplaySubject<String>(2);
+  public getLogSubject = new BehaviorSubject<String>('');
   public availableTemplates = [];
 
   constructor(public _http: Http) {
