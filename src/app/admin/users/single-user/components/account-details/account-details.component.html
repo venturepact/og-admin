@@ -219,6 +219,46 @@
 		</div>
 	</div>
 </div>
+<!-- <div class="container"> -->
+	<div class="row" style="margin: 20px">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div class="col-sm-12 ">
+							<h4>Company Details</h4>
+						</div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Active</th>
+									<th>Created at</th>
+									<th>Request from</th>
+									<th>Request By</th>
+									<th>Status</th>
+									<th>Role</th>
+								</tr>
+							</thead>
+							<tbody>
+										<tr *ngFor="let company of companies">
+												<td><a [routerLink] = "['/admin/company',company._id]">{{company.name}}</a></td>
+												<td>{{company.user_company.active}}</td>
+												<td>{{company.user_company.createdAt}}</td>
+												<td>{{company.user_company.invite.request_from }}</td>
+												<td>{{company.user_company.invite.requested_by.name}}</td>
+												<td>{{company.user_company.status}}</td>
+												<td>{{company.user_company.role}}</td>
+											 </tr>
+							</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+				<!-- </div> -->
+
 
 
 
