@@ -29,7 +29,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   
   domain='';
   fetchedApps=[];
-  allApps=[];
+  allApps;
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
@@ -325,7 +325,9 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
   fetchApps(id){
-    this.allApps=[];
+    jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+    jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+    this.allApps=undefined;
     this.fetchedApps=[];
     this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
       this.fetchedApps = res;

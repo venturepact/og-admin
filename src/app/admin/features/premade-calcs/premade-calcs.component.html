@@ -298,13 +298,16 @@
         <h5 class="modal-title">Apps Created From Premade Calculator</h5>
       </div>
       <div class="modal-body">
-        <div *ngIf="allApps && !allApps.length;else apps">
+        <div *ngIf="!allApps">
           <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div>
+        <div *ngIf="allApps && !allApps.length;else apps">
+          No Premades
         </div>
         <ng-template #apps>
           <div>
             <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
-            <div>
+            <div id="appCountPicker">
               <og-date-picker [parentElementName]="'apps_created'" *ngIf="scriptLoaded" (date)="filterApps($event)">
               </og-date-picker>
               <table class="dataTable">
