@@ -26,7 +26,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   errorMessage = '';;
   loader = false;
   mt=moment;
-  
+  modalSelected='premadeCalc';
   domain='';
   fetchedApps=[];
   allApps;
@@ -276,11 +276,14 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this.selectedItem = this.calculators[index];
     console.log(this.selectedItem);
     this._calculatorService.setForm(this.selectedItem);
-    this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')),
-    jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
-    this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY')),
-    jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
-    );
+    setTimeout(()=>{
+      this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')),
+      jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
+      this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY')),
+      jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
+      );
+    },100);
+    
     
     this.edit = true;
     this.errorMessage = '';
@@ -325,8 +328,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
   fetchApps(id){
-    jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
-    jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+    setTimeout(()=>{
+      jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+      jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+    },100);
+    
     this.allApps=undefined;
     this.fetchedApps=[];
     this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
@@ -342,8 +348,10 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   }
   filterApps(date){
       console.log(date);
-      this.fetchedApps=this.allApps.filter(app=>{
-        return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
-      })
+      if(this.allApps){
+        this.fetchedApps=this.allApps.filter(app=>{
+          return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
+        })
+      }
   }
 }
