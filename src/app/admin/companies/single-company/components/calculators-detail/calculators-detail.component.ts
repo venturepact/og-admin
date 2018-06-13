@@ -51,7 +51,7 @@ export class CalculatorDetailComponent implements AfterViewInit {
   tableInit() {
     this.adminService.getCompanyProjects(this.company.sub_domain)
       .subscribe((result) => {
-          this.calc_details = result;
+          this.calc_details = result.leaves;
           this.getAppsScore();
           setTimeout(function () {
             jQuery('#calc-datatable').DataTable();

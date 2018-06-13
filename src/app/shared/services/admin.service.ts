@@ -273,7 +273,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getCompanyProjects(sub_domain: String) {
+  getCompanyProjects(sub_domain: String):Observable<any> {
     let URL = this._url + '/admin/company_projects/';
     return this._http.post(URL, { company: sub_domain }, this.options)
       .map(this.extractData)
