@@ -1,5 +1,9 @@
-.all-erorrs-container{
-  top:100px;
+*:focus {
+  outline: none;
+}
+
+.all-erorrs-container {
+  top: 100px;
   position: relative;
   margin-left: 255px;
 }
@@ -12,18 +16,21 @@
   font-size: 13px;
   margin-left: 50px;
 }
-.dataTable{
-  width:90%;
+
+.dataTable {
+  width: 90%;
 }
-.logContainer{
+
+.logContainer {
   max-height: 600px;
-    overflow-y:auto;
+  overflow-y: auto;
 }
-.dataTables_length{
+
+.dataTables_length {
   display: inherit;
 }
 
-.dataTables_filter{
+.dataTables_filter {
   display: inherit;
 }
 
@@ -37,7 +44,8 @@
   background-color: black;
   color: red;
 }
-.ab-accordion > i {
+
+.ab-accordion>i {
   top: 1px;
   cursor: pointer;
   right: 1px;
@@ -47,8 +55,95 @@
   background-color: white;
 }
 
+.ab-select {
+  border: 1px solid transparent;
+  margin: 10px;
+  height: 50px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  padding: 2px;
+  width: fit-content;
+}
+
+/* .ab-select:focus > .ab-floating-label {
+  color: #fb545b;
+} */
+
+.ab-select>.ab-select__native-control:focus+.ab-floating-label {
+  color: #fb545b;
+  left: 0.4em;
+  top: -70px;
+  font-size: 1em;
+  background-color: white;
+  padding: 0px 2px;
+}
+
+.ab-select>.ab-select__native-control.ng-dirty+.ab-floating-label {
+  color: #fb545b;
+  left: 0.4em;
+  top: -70px;
+  font-size: 1em;
+  background-color: white;
+  padding: 0px 2px;
+}
+
+.ab-select>.ab-select__native-control {
+  display: block;
+  margin: 0px 0px;
+  top: 0px;
+  position: absolute;
+  height: 3em;
+  width: fit-content;
+  color: #222;
+  font-size: 16px;
+  font-family: cursive;
+  padding: 10px 20px;
+  font-weight: bolder;
+}
+
+.ab-select>.ab-floating-label {
+  position: relative;
+  top: -52px;
+  font-size: 1.5em;
+  font-family: monospace;
+  left: 0.6em;
+  transition-delay: 200ms;
+  transition-duration: 200ms;
+}
+
 .ab-input-search {
-  height: 20px;
-  width: 80px;
+  border: 1px solid transparent;
+  margin: 10px;
+  height: 50px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  padding: 2px;
+  width: fit-content;
+}
+
+.ab-input-search>.ab-floating-label {
+  position: relative;
+  left: 12px;
+  background-color: white;
+  top: -52px;
+  color: tomato;
+  padding: 0px 4px;
+}
+
+.ab-input-search>.ab-icon {
+  position: relative;
+  float: right;
+  top: 0px;
+  right: 1px;
+  height: 43px;
   border: 1px solid;
+  padding: 10px;
+  background-color: whitesmoke;
+}
+
+.ab-input-search>input {
+  display: block;
+  height: 3em;
+  padding: 1em;
+  width: 20em;
 }
