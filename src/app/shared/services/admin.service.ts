@@ -525,14 +525,16 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  showCacheKey() {
-    return this._http.get(`${this._url}/cache/index`)
+
+  showCacheKey(data:any):Observable<any>{
+    // console.log("::In Cache Key fxn::")
+    return this._http.post(`${this._url}/cache/index`,data)
       .map(this.extractData)
       .catch(this.handleError)
   }
 
-  clearCache(id: any) {
-    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: id } })
+  clearCache(keys) {
+    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: keys } })
       .map(this.extractData);
   }
 

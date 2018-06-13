@@ -39,6 +39,7 @@ import { PromotionChecklist } from './promotion-checklist/promotion-checklist.co
 import { SubAdminComponent } from './sub-admin/all-admin/sub-admin.component';
 import { CalculatorAnalytics } from "../site/components/+analytics/services/calculator-analytics.service";
 import { JSONCompare } from "../shared/services/helper-service/json-compare";
+import { JSONCompareForCache } from "../shared/services/helper-service/json-compare";
 import { LondonerComponent } from './londoner/londoner.component';
 import { FeatureAuthService } from "../shared/services/feature-access.service";
 import { PromoGoalsComponent } from "./sitesettings/promo-goals/promo-goals.component";
@@ -69,7 +70,7 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, CacheHandlingComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
+    JSONCompare,JSONCompareForCache, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
 })
 
 export class AdminModule {
