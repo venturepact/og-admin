@@ -310,8 +310,14 @@
           <div>
             <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
             <div id="appCountPicker">
-              <og-date-picker [parentElementName]="'apps_created'" *ngIf="scriptLoaded && modalSelected=='countDetails'" (date)="filterApps($event)">
-              </og-date-picker>
+              <div style=" float:left; width:100%">
+                  <div style=" float:left;">
+              <og-date-range-picker [parentElementName]="'apps_created'" 
+                *ngIf="scriptLoaded && modalSelected=='countDetails'" (date)="filterApps($event)">
+              </og-date-range-picker>
+              </div>
+              <span style="float:left; margin-left: 40px; margin-top: 8px;">Apps Count: <b>{{fetchedApps.length}}</b></span>
+              </div>
               <table class="dataTable">
                 <thead>
                   <tr>

@@ -331,6 +331,7 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     setTimeout(()=>{
       jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
       jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+      
     },100);
     
     this.allApps=undefined;
@@ -350,7 +351,11 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
       console.log(date);
       if(this.allApps){
         this.fetchedApps=this.allApps.filter(app=>{
-          return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
+            let startDateMs = moment(`${date['start_date']} 0.00`, "YYYY-MM-DD H:mm").valueOf();
+            let endDateMs = moment(`${date['end_date']} 0.00`, "YYYY-MM-DD H:mm").valueOf();
+            let appcreateMs = moment(app.createdAt).valueOf();
+            return (startDateMs<=appcreateMs && appcreateMs<=endDateMs);
+          // return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
         })
       }
   }
