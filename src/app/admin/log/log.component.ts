@@ -49,12 +49,10 @@ export class LogComponent extends Datatable {
       let dateObj = new Date();
       let dateString = this.formateDate(dateObj);
       this.dateme = dateString; // here
-      console.log('nb', dateString, this.folderName);
       this.requestForLog(this.dateme, this.folderName);
     });
 
     let $cont = jQuery('#logContainer');
-    console.log($cont[0]);
     $cont[0].scrollTop = $cont[0].scrollHeight;
   };
   loadScripts() {
@@ -86,20 +84,16 @@ export class LogComponent extends Datatable {
       searchKey: this.searchQuery,
       isFirstTime: this.firsTime
     };
-    console.log('requested');
     this.isLoading = true;
     this.message = 'loading...';
     this._adminService.getLog(this.apiSelect, obj).subscribe((response) => {
-      console.log("data is for error ", response);
       this.logs = response.logs;
       this.apiSwitched = false;
       this.isLoading = false;
       this.searchON = false;
-      console.log('current limit: ', Math.ceil(response.count / this.current_limit), this.current_limit);
       this.total_pages = Math.ceil(response.count / this.current_limit);
       this.message = '';
     }, (error) => {
-      console.log("data for error is ", error);
       this.errorHandler();
     });
   }
@@ -196,7 +190,6 @@ export class LogComponent extends Datatable {
     }
   }
   generateKeys(obj) {
-    console.log('sknjn ', obj)
     return Object.keys(obj);
   }
 
