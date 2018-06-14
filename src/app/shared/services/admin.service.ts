@@ -532,7 +532,7 @@ export class AdminService extends BaseService {
   showCacheKey(source_api = 'default',data:any):Observable<any>{
     // console.log("::In Cache Key fxn::")
     const _url = APIBasedServiceProvider.APISwitch(source_api);
-    return this._http.post(`${this._url}/cache/index`,data)
+    return this._http.post(`${_url}/cache/index`,data)
       .map(this.extractData)
       .catch(this.handleError)
   }
