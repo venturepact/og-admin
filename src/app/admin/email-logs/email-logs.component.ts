@@ -94,7 +94,6 @@ export class EmailLogsComponent extends Datatable implements AfterViewInit {
         super.previous();
         this.selectLog();
     }
-
     next() {
         super.next();
         this.selectLog();
