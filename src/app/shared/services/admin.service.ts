@@ -276,7 +276,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getCompanyProjects(sub_domain: String) {
+  getCompanyProjects(sub_domain: String):Observable<any> {
     let URL = this._url + '/admin/company_projects/';
     return this._http.post(URL, { company: sub_domain }, this.options)
       .map(this.extractData)
@@ -528,14 +528,16 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  showCacheKey() {
-    return this._http.get(`${this._url}/cache/index`)
+
+  showCacheKey(data:any):Observable<any>{
+    // console.log("::In Cache Key fxn::")
+    return this._http.post(`${this._url}/cache/index`,data)
       .map(this.extractData)
       .catch(this.handleError)
   }
 
-  clearCache(id: any) {
-    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: id } })
+  clearCache(keys) {
+    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: keys } })
       .map(this.extractData);
   }
 
