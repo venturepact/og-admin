@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Datatable } from "../../shared/interfaces/datatable.interface";
 import { AdminService } from "../../shared/services/admin.service";
-import { JSONCompareForCache } from '../../shared/services/helper-service/json-compare';
 declare var moment: any;
 declare var window: any;
 declare var bootbox: any;
@@ -11,7 +10,7 @@ declare var bootbox: any;
   styleUrls: ['./cache-handling.component.css']
 })
 export class CacheHandlingComponent extends Datatable implements OnInit {
-  popupKeyName: any;
+  KeyName: any;
   valueOfKey: any;
   values: any;
   keys: any;
@@ -22,7 +21,7 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
   header: any
   searchText: any
 
-  constructor(private adminService: AdminService, private _JSONCompareForCache: JSONCompareForCache) {
+  constructor(private adminService: AdminService) {
     super();
   }
 
@@ -39,7 +38,6 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
         for (let i = 0; i < success.data.length; i++)
           success.data[i] = JSON.parse(success.data[i])
         this.keyValues = success.data;
-        console.log(this.keyValues)
         this.main = this.keyValues;
         this.total_pages = Math.ceil(success.count / this.current_limit);
       }, (error: any) => {
@@ -47,7 +45,6 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
       })
   }
   limitChange(event: any) {
-    console.log(event)
     super.limitChange(event);
     this.getCacheLogs();
   }
@@ -74,14 +71,9 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
   }
   KeyValueDispaly(id, keyName) {
     let self = this;
-    console.log("::",id,keyName)
-    self.popupKeyName = keyName
+    self.KeyName = keyName
     console.log("id is:",id,"keyName:",keyName,"value is :",self.keyValues[id].value)
-    document.getElementById("json").innerHTML = JSON.stringify(self.keyValues[id].value,null,1)
-    // self._JSONCompareForCache.compareJson(self.valueOfKey);
-    // self.valueOfKey = Object.keys(self.valueOfKey).reduce((acc, key) => {
-    //   return acc + self.valueOfKey[key];
-    // }, '')
+    document.getElementById("json").innerHTML = JSON.stringify(self.keyValues[id].value,null,2)
   }
   deleteCache(index, keyName) {
     let self = this;
