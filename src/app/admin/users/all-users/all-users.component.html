@@ -28,11 +28,9 @@
             <div class="col-md-3">
               <select class="form-control-1" [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)" title="Select Operators">
                 <option style="display: none"></option>
-                <optgroup label="Company">
-                  <option *ngFor="let property of filter.company;" class="company" [value]="property.id">
-                    {{property.name}}
-                  </option>
-                </optgroup>
+                <option *ngFor="let property of filter.company;" class="company" [value]="property.id">
+                {{property.name}}
+                </option>
               </select>
             </div>
             <div class="col-md-3" *ngIf="filters[i].selected_property==='billing.chargebee_subscription_status'">

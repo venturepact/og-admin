@@ -30,7 +30,6 @@ export class AllUsersComponent extends Datatable implements AfterViewInit {
   filter = {
     company: [
       { name: "Name", id: "name" },
-      { name: "Username", id: "username" },
       { name: "Created At", id: "created_at" },
       { name: "Admin Created", id: "is_admin_created" },
       { name: "Active", id: "active" },

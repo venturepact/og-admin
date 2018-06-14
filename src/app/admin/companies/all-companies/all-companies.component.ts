@@ -42,7 +42,6 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Sub Domain','id':'sub_domain'},
               {'name':'Created At','id':'created_at'},
               {'name':'API','id':'api'},
-              {'name':'Integration Enabled','id':'integration'},
               {'name':'Admin Created','id':'is_admin_created'},
               {'name':'GDPR','id':'GDPR'},
               {'name':'Current Referral Program','id':'current_referral_program'},
