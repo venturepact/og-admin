@@ -14,6 +14,9 @@ declare var window: any;
     , '../../site/components/+analytics/assets/css/daterangepicker.css',
     './../search-calc/search-calc.component.css']
 })
+
+
+
 export class LogComponent extends Datatable {
   scriptLoaded = false;
   apiSelect: string;
@@ -26,7 +29,16 @@ export class LogComponent extends Datatable {
   isLoading = false;
   searchQuery: string;
   searchON = true;
+  logType: string;
   apiSwitched: boolean;
+  dataIsObject = false;
+  uu = `{
+    "id": "5b0fd39e105968a3ec58cc50",
+    "name": "admin",
+    "company": "",
+    "username": "admin.zp4ssl",
+    "primary_email": "admin@outgrow.co"
+  }`
 
   constructor(public _script: Script, public _adminService: AdminService,
     public _cookieService: CookieService, public router: Router) {
@@ -140,7 +152,7 @@ export class LogComponent extends Datatable {
     this.requestForLog(this.dateme, this.folderName);
   }
 
-  setDateInDatePicker(date){
+  setDateInDatePicker(date) {
     jQuery('.input-daterange-datepicker.datepicker-outer[name=daterange]').val(
       `${("0" + (date.getMonth() + 1)).slice(-2)}/${("0" + date.getDate()).slice(-2)}/${date.getFullYear()}`
     );
@@ -182,8 +194,18 @@ export class LogComponent extends Datatable {
     this.onRefresh();
   }
 
-  parseBody(body) {
-    this.selected = body;
+  parseBody(body, logType) {
+    if (!body || body === "undefined" || logType === 'err_data') {
+      this.dataIsObject = false;
+      this.selected = body || "Data is not available."
+    } else {
+      this.dataIsObject = true;
+      this.selected = JSON.parse(body);
+    }
+  }
+  generateKeys(obj) {
+    console.log('sknjn ', obj)
+    return Object.keys(obj);
   }
 
   createDate(body) {

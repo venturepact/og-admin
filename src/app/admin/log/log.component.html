@@ -60,7 +60,13 @@
           <tr *ngFor="let log of logs; let i = index">
             <th scope="row">{{i+1+((current_page-1) * current_limit)}}</th>
             <td>{{log.err_data.code || "Unavailable"}}</td>
-            <td>{{log.userInfo.name || "Name Not Available"}}</td>
+            <td>
+              <p>{{log.userInfo.name}}
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
+                  <i class="ui-tooltip material-icons" (click)="parseBody( log.userInfo , 'userInfo')" style="font-size: 22px;" data-original-title="Edit">visibility</i>
+                </a>
+              </p>
+            </td>
             <!-- <td>{{log.err_data.message || "Unavailable"}}&nbsp;
             <i (click)="log.active = true" data-toggle="tooltip" title="{{log.err_data.err_message || 'Click to know more.'}}" class="material-icons"
               style="cursor: pointer; color: tomato;">
@@ -69,7 +75,7 @@
           </td> -->
             <td>
               <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
-                <i class="ui-tooltip material-icons" (click)="parseBody(log.err_data.err_trace || log.err_data.message )" style="font-size: 22px;"
+                <i class="ui-tooltip material-icons" (click)="parseBody( log.err_data.err_trace || log.err_data.message, 'err_data')" style="font-size: 22px;"
                   data-original-title="Edit">visibility</i>
               </a>
             </td>
@@ -122,12 +128,15 @@
       </div>
       <div class="modal-body">
         <div class="sahil-material" *ngIf="selected">
-          <!--<textarea [innerHTML]="selected?.body" [readonly]="true" rows="10" style="width:100%"></textarea>-->
-          <!-- <div *ngFor="let key of generateKeys(selected)"> -->
-          <p>
-            <span [innerHTML]="selected"></span>
-          </p>
-          <!-- </div> -->
+          <textarea *ngIf="!dataIsObject" [innerHTML]="selected" [readonly]="true" rows="10" style="width:100%"></textarea>
+          <span *ngIf="dataIsObject">
+            <div *ngFor="let key of generateKeys(selected)">
+              <p>
+                <i>{{ key + ' :- ' }}</i>
+                <span [innerHTML]="selected[key]"></span>
+              </p>
+            </div>
+          </span>
         </div>
       </div>
       <div class="modal-footer">
