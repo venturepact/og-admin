@@ -69,7 +69,7 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, CacheHandlingComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
+    JSONCompare,LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
 })
 
 export class AdminModule {
