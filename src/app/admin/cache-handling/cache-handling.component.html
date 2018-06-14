@@ -27,6 +27,26 @@
                     <input type="search" class="" placeholder="" [(ngModel)]="searchText" aria-controls="table" (keyup)="searchData()">
                   </label>
                 </div>
+                <div>
+                  
+                </div>
+                <div >
+                    <label >Select API</label>
+                  <select (change)="apiChange()" [(ngModel)]="apiSelect">
+                    <option value="" disabled>Select an API</option>
+                    <option value="default" selected>
+                      Default
+                    </option>
+                    <option value="api_2">
+                      API 2
+                    </option>
+                    <option value="other">
+                      Any Other
+                    </option>
+                  </select>
+                 
+                  <!-- <div class="ab-line-ripple"></div> -->
+                </div>
                 <table class="dataTable">
                   <thead>
                     <tr>
