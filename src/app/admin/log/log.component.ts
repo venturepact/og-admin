@@ -29,17 +29,9 @@ export class LogComponent extends Datatable {
   isLoading = false;
   searchQuery: string;
   searchON = true;
-  logType: string;
   apiSwitched: boolean;
   dataIsObject = false;
-  uu = `{
-    "id": "5b0fd39e105968a3ec58cc50",
-    "name": "admin",
-    "company": "",
-    "username": "admin.zp4ssl",
-    "primary_email": "admin@outgrow.co"
-  }`
-
+  
   constructor(public _script: Script, public _adminService: AdminService,
     public _cookieService: CookieService, public router: Router) {
     super();
