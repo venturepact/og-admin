@@ -1,10 +1,29 @@
 <div class="all-erorrs-container">
-  <!-- <div class="ab-input-search"> -->
-    <!-- <i class="material-icons">search</i> -->
-    <input type="text" [disabled]="searchON" id="text-field--leading-outlined" class="mdc-text-field__input" [(ngModel)]="searchQuery"
-      aria-controls="table" (keyup)="searchData()">
-    <label class="" >Search</label>
-  <!-- </div> -->
+    <div class="ab-select">
+        <select class="ab-select__native-control" (change)="apiChange()" [(ngModel)]="apiSelect">
+          <option value="" disabled>Select an API</option>
+          <option value="default" selected>
+            Default
+          </option>
+          <option value="api_2">
+            API 2
+          </option>
+          <option value="other">
+            Any Other
+          </option>
+        </select>
+        <label class="ab-floating-label">Select API</label>
+        <div class="ab-line-ripple"></div>
+      </div>
+      <div class="ab-input-search">
+        <div class="ab-icon">
+          <i class="material-icons">search</i>
+        </div>
+        <input type="text" [disabled]="searchON" id="text-field--leading-outlined" class="ab-text-field__input" [(ngModel)]="searchQuery"
+          aria-controls="table" (keyup)="searchData()">
+        <label class="ab-floating-label" >Search</label>
+      </div>
+ 
 <div class="error message" *ngIf="!logs || logs.length === 0">No errors yet!
   <div id="table-datatable_filter" class="dataTables_filter">
     <og-date-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)"></og-date-picker>

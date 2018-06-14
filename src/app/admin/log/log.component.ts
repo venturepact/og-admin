@@ -15,6 +15,7 @@ declare var jQuery: any;
 })
 export class LogComponent extends Datatable {
   scriptLoaded = false;
+  apiSelect: string;
   logs: Array<String>;
   message: String;
   folderName: String;
@@ -81,7 +82,7 @@ export class LogComponent extends Datatable {
     this.isLoading = true;
     // this.searchON = true;
     this.message = 'loading...';
-    this._adminService.getLog(obj).subscribe((response) => {
+    this._adminService.getLog(this.apiSelect, obj).subscribe((response) => {
       console.log(response);
       this.logs = response.logs;
       this.searchON = false;
@@ -156,11 +157,17 @@ export class LogComponent extends Datatable {
   }
 
   searchData() {
-    if(this.searchQuery || this.searchQuery.length > 2 || this.searchQuery.length === 0){
+    if (this.searchQuery || this.searchQuery.length > 2 || this.searchQuery.length === 0) {
       super.searchData();
       this.firsTime = false;
       this.requestForLog(this.dateme, this.folderName);
     }
+  }
+
+  apiChange() {
+    console.log('data is ', this.apiSelect);
+    // this.requestForLog(this.dateme, this.folderName)
+    this.onRefresh();
   }
 }
 
