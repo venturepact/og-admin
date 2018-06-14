@@ -8,6 +8,7 @@ import { BaseService } from "./base.service";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { APIBasedServiceProvider } from './helper-service/api-based-request';
 
 @Injectable()
 export class AdminService extends BaseService {
@@ -240,12 +241,14 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getLog(data): Observable<any> {
-
-    return this._http.post(this._url + '/admin/getLog', data, this.options)
+  getLog( source_api = 'default', data): Observable<any> {
+    const url = APIBasedServiceProvider.APISwitch(source_api);
+    return this._http.post( url + '/admin/getLog', data, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+
 
   notifylogType(type) {
     this.getLogSubject.next(type);
@@ -273,7 +276,7 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getCompanyProjects(sub_domain: String) {
+  getCompanyProjects(sub_domain: String):Observable<any> {
     let URL = this._url + '/admin/company_projects/';
     return this._http.post(URL, { company: sub_domain }, this.options)
       .map(this.extractData)
@@ -525,14 +528,16 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  showCacheKey() {
-    return this._http.get(`${this._url}/cache/index`)
+
+  showCacheKey(data:any):Observable<any>{
+    // console.log("::In Cache Key fxn::")
+    return this._http.post(`${this._url}/cache/index`,data)
       .map(this.extractData)
       .catch(this.handleError)
   }
 
-  clearCache(id: any) {
-    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: id } })
+  clearCache(keys) {
+    return this._http.delete(`${this._url}/cache/clear/`, { body: { urls: keys } })
       .map(this.extractData);
   }
 
