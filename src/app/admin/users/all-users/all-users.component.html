@@ -62,7 +62,7 @@
               </ng-select>
             </div>
             <div class="col-md-3" *ngIf="filters[i].selected_property==='name'||
-                filters[i].selected_property==='username'||filters[i].selected_property==='sub_domain'||
+               filters[i].selected_property==='sub_domain'||
                 filters[i].selected_property==='emails.email'||
                 filters[i].selected_property==='userCompany'"
               >
@@ -83,7 +83,7 @@
             </div>
             <div class="col-md-3">
               <input [(ngModel)]="filters[i].selected_value" class="form-control-1"
-              *ngIf="filters[i].selected_property==='name'||filters[i].selected_property==='username'||
+              *ngIf="filters[i].selected_property==='name'||
                       filters[i].selected_property==='emails.email'||
                       filters[i].selected_property==='userCompany'"
                       type="text"/>
