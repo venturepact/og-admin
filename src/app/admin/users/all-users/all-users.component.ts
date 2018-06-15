@@ -201,6 +201,7 @@ export class AllUsersComponent extends Datatable implements AfterViewInit {
       target.options[target.options.selectedIndex].className;
     this.filters[index].selected_property_type = "string";
     this.filters[index].selected_value = ""; // reset selected value
+    this.filters[index].selected_operator = ''; // reset operator value
   }
 
   selected(event, index, type) {
