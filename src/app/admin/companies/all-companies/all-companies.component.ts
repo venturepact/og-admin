@@ -42,6 +42,7 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Sub Domain','id':'sub_domain'},
               {'name':'Created At','id':'created_at'},
               {'name':'API','id':'api'},
+              {'name':' Template Club','id':'integration'},
               {'name':'Admin Created','id':'is_admin_created'},
               {'name':'GDPR','id':'GDPR'},
               {'name':'Current Referral Program','id':'current_referral_program'},
@@ -50,6 +51,10 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Number of Calculaters','id':'current_limit.calculators'},
               {'name':'cname','id':'cname.url'},
               {'name':'Is Appsumo Created','id':'is_appsumo_created'},
+              {'name':'Allow Referal','id':'referral.is_referralcandy_visible'},
+              {'name':'Agency','id':'agency'},
+              {'name':'Remove Leads Afrer Saving','id':'remove_leads_after_saving'},
+              {'name':'Company Logo ','id':'company_logo'},
               ],
   billings: [
               {'name':'Deal Refered','id':'deal_refered'},
