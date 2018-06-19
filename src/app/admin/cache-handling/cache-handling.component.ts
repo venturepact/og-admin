@@ -20,6 +20,7 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
   body: any
   header: any
   searchText: any
+  apiSelect:string
 
   constructor(private adminService: AdminService) {
     super();
@@ -33,7 +34,7 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
       limit: this.current_limit,
       page: this.current_page - 1
     };
-    this.adminService.showCacheKey(obj)
+    this.adminService.showCacheKey(this.apiSelect,obj)
       .subscribe(success => {
         for (let i = 0; i < success.data.length; i++)
           success.data[i] = JSON.parse(success.data[i])
@@ -115,6 +116,11 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
         }
       }
     });
+
   }
 
+  apiChange() {
+    console.log('data is ', this.apiSelect);
+    this.getCacheLogs()
+  }
 }

@@ -30,7 +30,6 @@ export class AllUsersComponent extends Datatable implements AfterViewInit {
   filter = {
     company: [
       { name: "Name", id: "name" },
-      { name: "Username", id: "username" },
       { name: "Created At", id: "created_at" },
       { name: "Admin Created", id: "is_admin_created" },
       { name: "Active", id: "active" },
@@ -202,6 +201,7 @@ export class AllUsersComponent extends Datatable implements AfterViewInit {
       target.options[target.options.selectedIndex].className;
     this.filters[index].selected_property_type = "string";
     this.filters[index].selected_value = ""; // reset selected value
+    this.filters[index].selected_operator = ''; // reset operator value
   }
 
   selected(event, index, type) {

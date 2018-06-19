@@ -42,7 +42,6 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
               {'name':'Sub Domain','id':'sub_domain'},
               {'name':'Created At','id':'created_at'},
               {'name':'API','id':'api'},
-              {'name':'Integration Enabled','id':'integration'},
               {'name':'Admin Created','id':'is_admin_created'},
               {'name':'GDPR','id':'GDPR'},
               {'name':'Current Referral Program','id':'current_referral_program'},
@@ -167,6 +166,7 @@ export class AllCompaniesComponent extends Datatable implements AfterViewInit {
     this.filters[index].selected_property_category = target.options[target.options.selectedIndex].className;
     this.filters[index].selected_property_type = 'string';
     this.filters[index].selected_value = ''; // reset selected value
+    this.filters[index].selected_operator = ''; // reset operator value
     }
 
   selected(event, index, type) {
