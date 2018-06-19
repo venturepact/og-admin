@@ -5,6 +5,7 @@ import { CookieService, Script } from "../../shared/services";
 import { Datatable } from '../../shared/interfaces/datatable.interface';
 
 declare var jQuery: any;
+declare var window: any;
 
 @Component({
   selector: 'error-log',
@@ -13,6 +14,9 @@ declare var jQuery: any;
     , '../../site/components/+analytics/assets/css/daterangepicker.css',
     './../search-calc/search-calc.component.css']
 })
+
+
+
 export class LogComponent extends Datatable {
   scriptLoaded = false;
   apiSelect: string;
@@ -21,10 +25,13 @@ export class LogComponent extends Datatable {
   folderName: String;
   dateme: string;
   firsTime = true;
+  selected: any;
   isLoading = false;
   searchQuery: string;
   searchON = true;
-
+  apiSwitched: boolean;
+  dataIsObject = false;
+  
   constructor(public _script: Script, public _adminService: AdminService,
     public _cookieService: CookieService, public router: Router) {
     super();
@@ -42,12 +49,10 @@ export class LogComponent extends Datatable {
       let dateObj = new Date();
       let dateString = this.formateDate(dateObj);
       this.dateme = dateString; // here
-      console.log('nb', dateString, this.folderName);
       this.requestForLog(this.dateme, this.folderName);
     });
 
     let $cont = jQuery('#logContainer');
-    console.log($cont[0]);
     $cont[0].scrollTop = $cont[0].scrollHeight;
   };
   loadScripts() {
@@ -80,22 +85,28 @@ export class LogComponent extends Datatable {
       isFirstTime: this.firsTime
     };
     this.isLoading = true;
-    // this.searchON = true;
     this.message = 'loading...';
     this._adminService.getLog(this.apiSelect, obj).subscribe((response) => {
-      console.log(response);
       this.logs = response.logs;
-      this.searchON = false;
+      this.apiSwitched = false;
       this.isLoading = false;
-      console.log('current limit: ', Math.ceil(response.count / this.current_limit), this.current_limit);
+      this.searchON = false;
       this.total_pages = Math.ceil(response.count / this.current_limit);
       this.message = '';
     }, (error) => {
-      this.message = 'No log found!!';
-      console.log(this.message);
-      this.searchON = true;
-      this.logs = [];
+      this.errorHandler();
     });
+  }
+
+  errorHandler() {
+    if (this.apiSwitched) {
+      window.toastNotification("API Not Responding!...");
+    } else {
+      window.toastNotification("No log found!...");
+    }
+    this.isLoading = false;
+    this.searchON = true; // disabling search while true
+    this.logs = [];
   }
 
   formateDate(d) {
@@ -110,12 +121,9 @@ export class LogComponent extends Datatable {
   }
 
   onDateSelect(date: any) {
-    console.log(jQuery('.input-daterange-datepicker'));
     this.firsTime = true;
     this.searchQuery = "";
-    console.log(date);
     this.reset();
-    //this.$getErrorList= this._adminService.getLog({selectedDate:date.start_date,folder:this.folderName});
     this.dateme = date.start_date;
     this.requestForLog(this.dateme, this.folderName);
   }
@@ -124,14 +132,17 @@ export class LogComponent extends Datatable {
     this.firsTime = true;
     this.searchQuery = "";
     let dateObj = new Date();
+    this.setDateInDatePicker(dateObj);
     this.reset();
-    let dateString = this.formateDate(dateObj);
-    this.onDateSelect(dateString);
-    this.dateme = dateString;
-    console.log(dateString);
-    this.requestForLog(dateString, this.folderName);
+    this.dateme = this.formateDate(dateObj);
+    this.requestForLog(this.dateme, this.folderName);
   }
 
+  setDateInDatePicker(date) {
+    jQuery('.input-daterange-datepicker.datepicker-outer[name=daterange]').val(
+      `${("0" + (date.getMonth() + 1)).slice(-2)}/${("0" + date.getDate()).slice(-2)}/${date.getFullYear()}`
+    );
+  }
   paging(num: number) {
     this.firsTime = false;
     super.paging(num);
@@ -165,9 +176,26 @@ export class LogComponent extends Datatable {
   }
 
   apiChange() {
-    console.log('data is ', this.apiSelect);
-    // this.requestForLog(this.dateme, this.folderName)
+    this.apiSwitched = true;
     this.onRefresh();
+  }
+
+  parseBody(body, logType) {
+    if (!body || body === "undefined" || logType === 'err_data') {
+      this.dataIsObject = false;
+      this.selected = body || "Data is not available."
+    } else {
+      this.dataIsObject = true;
+      this.selected = JSON.parse(body);
+    }
+  }
+  generateKeys(obj) {
+    return Object.keys(obj);
+  }
+
+  createDate(body) {
+    let date = body.trim().split(/[\s-\/:]+/);
+    return new Date(...date);
   }
 }
 
