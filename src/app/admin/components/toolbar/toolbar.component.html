@@ -8,7 +8,7 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar">
         <div class="navbar-left col-md-7 np">
-          <ul *ngIf="loggedIn.isLoggedIn">
+          <ul *ngIf="loggedIn.isLoggedIn" style="width:850px">
             <li  *ngIf="sub_role == null"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/graph']"><i class="material-icons">home</i>
               &nbsp;Admin</a></li>
             <li *ngIf="sub_role == null"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/sitesettings']">
@@ -20,6 +20,8 @@
               class="material-icons">search</i>Search Apps</a></li>
               <li *ngIf="sub_role !== 'ADMIN_LTD'"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/customJSApprovals']"><i
               class="material-icons">notifications</i>Scripts <span class="tag-beta"> Beta</span></a></li>
+              <li><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/events']"><i
+                class="material-icons">event</i>EVENTS</a></li>
           </ul>
           <ul *ngIf="!loggedIn.isLoggedIn">
             <li><a [routerLink]="['/']"><i class="material-icons">home</i> &nbsp;Home</a></li>

@@ -55,6 +55,8 @@ import {HelloBarComponent} from "./hello-bar/hello-bar.component";
 import {EditHelloBarComponent} from "./hello-bar/edit-hello-bar/edit-hello-bar.component";
 import { AutologinTokenComponent } from "./sitesettings/autologin-token/autologinToken.component";
 import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
+import { EventsComponent } from './events/events.component';
+import { EventsService } from '../shared/services/events.service';
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
@@ -66,10 +68,10 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
     SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent,
-    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, CacheHandlingComponent],
+    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, CacheHandlingComponent, EventsComponent],
 
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare,LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
+    JSONCompare,LondonerService, FeatureAuthService, PremaidService,PremadeCalcService,EventsService]
 })
 
 export class AdminModule {
