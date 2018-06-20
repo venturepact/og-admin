@@ -1,0 +1,59 @@
+<div class='dropdown-view'>
+  <label>Select option</label>
+  <select name="dropdown" id="id1" (change)='selectChanges($event)'>
+    <option value='any'>Select any</option>
+    <option value='reset'>Reset sheets</option>
+    <option value='view'>View sheets </option>
+  </select>
+</div>
+<div *ngIf='resetInfo' class="reset-sheet">
+  <label>Enter subdomain to reset sheets</label>
+  <br/>
+  <input type='text' [(ngModel)]='searchText' placeholder='please enter subdomain' />
+  <input type='button' value='search' (click)='getcalculators()' />
+  <table *ngIf="allCalculatorIds?.length">
+    <tr>
+      <th>Calculator name</th>
+      <th>Reset buttons</th>
+    </tr>
+    <tr *ngFor="let calcs of allCalculatorIds">
+      <td>{{calcs.name}}</td>
+      <input type='button' value='reset' (click)='resetSheets(calcs._id)' />
+    </tr>
+  </table>
+  <br/>
+  <span *ngIf="errorInfo1">No calculators for this subdomain</span>
+</div>
+
+
+<div *ngIf='viewInfo' class="sheet-View">
+  <label>Enter subdomain to view generated sheets</label>
+  <br/>
+  <input type='text' [(ngModel)]='searchText' placeholder='please enter subdomain' />
+  <input type='button' value='search' (click)='sheetsView()' />
+  <table *ngIf="sheetArr?.length">
+    <tr>
+      <th>Calculator name</th>
+      <th>Sheets</th>
+    </tr>
+    <tr *ngFor="let obj of sheetArr">
+      <td>{{nameMapping[obj._id]}}</td>
+      <td>
+        <tr>
+          <th>Sheet Url</th>
+          <th>Leads</th>
+          <th>Visits</th>
+        </tr>
+        <tr *ngFor="let urls of obj.sheets">
+          <td>
+            <a [attr.href]="urls.sheetUrl" target="_blank">sheet url</a>
+          </td>
+          <td>{{urls.leadCount}}</td>
+          <td>{{urls.visitCount}}</td>
+        </tr>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <span *ngIf="errorInfo">No sheets were generated for this subdomain</span>
+</div>

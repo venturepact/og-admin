@@ -353,4 +353,21 @@ export class CompanyService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+ 
+  resetAppConfig(appId,passCode){
+    return this._http.get(`${this._url}/analytic/reset_appconfig/${appId}/${passCode}`)
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+  getSheets(company,passCode){
+    return this._http.get(`${this._url}/analytic/get_sheets/${company}/${passCode}`)
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
+  getAllCalcs(company){
+    return this._http.get(`${this._url}/analytic/get_calculators/${company}`)
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
+
 }

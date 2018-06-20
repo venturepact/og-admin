@@ -31,6 +31,7 @@ import { PremaidComponent } from "../../admin/premaidCalc/premaid-calc.component
 import { CompanyPlansComponent } from "../../admin/plans/company-plans/company-plans.component";
 import { HelloBarComponent } from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
+import { SheetsComponent } from '../../admin/sheets/sheets.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -187,7 +188,11 @@ export const ADMIN_ROUTES: Routes = [
             component: LayoutPreviewComponent,
             canActivate: [AdminGuard]
           },
-
+          {
+            path: 'sheets',
+            component: SheetsComponent,
+            canActivate: [AdminGuard]
+          },
         ]
       },
     ]
