@@ -98,17 +98,14 @@ export class SheetsComponent implements OnInit {
       id: appId,
       offset: new Date().getTimezoneOffset(),
       lead: false,
-      visit: false,
       userObj: {
-        primary: 'admin@outgrow.co',
+        primaryEmail: 'admin@outgrow.co',
         name: 'admin'
       }
     };
     if (value == 'Export leads') {
       data.lead = true;
-    } else if (value == 'Export visits') {
-      data.visit = true;
-    }
+    } 
     this._companyService.exportToSheetAsync(data).subscribe((res) => {
       if (res == 'syncing')
         return window.alert('Currently we are processing your previous request');
