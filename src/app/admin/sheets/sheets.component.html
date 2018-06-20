@@ -4,13 +4,16 @@
     <option value='any'>Select any</option>
     <option value='reset'>Reset sheets</option>
     <option value='view'>View sheets </option>
+    <option value='export'>Export sheet</option>
   </select>
 </div>
 <div *ngIf='resetInfo' class="reset-sheet">
-  <label>Enter subdomain to reset sheets</label>
-  <br/>
-  <input type='text' [(ngModel)]='searchText' placeholder='please enter subdomain' />
-  <input type='button' value='search' (click)='getcalculators()' />
+  <div class="reset-search">
+    <label>Enter subdomain to reset sheets</label>
+    <br/>
+    <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
+    <input type='button' value='search' (click)='getcalculators()' />
+  </div>
   <table *ngIf="allCalculatorIds?.length">
     <tr>
       <th>Calculator name</th>
@@ -27,10 +30,12 @@
 
 
 <div *ngIf='viewInfo' class="sheet-View">
-  <label>Enter subdomain to view generated sheets</label>
-  <br/>
-  <input type='text' [(ngModel)]='searchText' placeholder='please enter subdomain' />
-  <input type='button' value='search' (click)='sheetsView()' />
+  <div class="sheet-search">
+    <label>Enter subdomain to view generated sheets</label>
+    <br/>
+    <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
+    <input type='button' value='search' (click)='sheetsView()' />
+  </div>
   <table *ngIf="sheetArr?.length">
     <tr>
       <th>Calculator name</th>
@@ -56,4 +61,26 @@
   </table>
   <br/>
   <span *ngIf="errorInfo">No sheets were generated for this subdomain</span>
+</div>
+<div class="export-view" *ngIf="exportInfo">
+  <div class="export-search">
+    <label>Enter subdomain to export sheets</label>
+    <br/>
+    <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
+    <input type='button' value='search' (click)='getLivecalcs()' />
+  </div>
+  <table *ngIf="allLiveCalcs?.length">
+    <tr>
+      <th>Calculator name</th>
+      <th>Export buttons</th>
+    </tr>
+    <tr *ngFor="let calcs of allLiveCalcs">
+      <td>{{calcs.name}}</td>
+      <input type='button' value='Export leads' (click)='exportSheet(calcs._id,$event.target.value)' />
+      <input type='button' value='Export visits' (click)='exportSheet(calcs._id,$event.target.value)' />
+    </tr>
+  </table>
+  <br/>
+  <span *ngIf="errorInfo1">No calculators for this subdomain</span>
+
 </div>

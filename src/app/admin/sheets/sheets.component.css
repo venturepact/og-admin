@@ -1,6 +1,9 @@
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 80%;
+    margin-top: 41px;
+    margin-left:100px;
+    
 }
 
 th, td {
@@ -14,6 +17,13 @@ th {
     background-color:#fb5559;
     color: white;
 }
-.dropdown-view, .sheet-View, .reset-sheet {
+ .sheet-View, .reset-sheet, .export-view {
     margin-left:269px;
+}
+.dropdown-view{
+    margin-left: 298px;
+    margin-top: 29px;
+}
+.reset-search, .sheet-search, .export-search{
+    margin-left:350px;
 }
