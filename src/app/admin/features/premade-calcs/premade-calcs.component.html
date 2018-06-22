@@ -38,7 +38,7 @@
         </label>
       </div>
       <div style="clear:both"></div>
-      <div *ngIf="loading" >
+      <div *ngIf="loading">
         <div>
           <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
         </div>
@@ -121,17 +121,15 @@
                   {{calculator.industry}}
                 </td>
                 <td *ngIf="calculator.count>0;else noLink">
-                  <a href="javascript::void(0)" data-toggle="modal" data-target="#apps_created" 
-                  (click)="modalSelected='countDetails';fetchApps(calculator.liveApp.url.split('/').pop());">{{calculator?.count}}</a>
+                  <a href="javascript::void(0)" data-toggle="modal" data-target="#apps_created" (click)="modalSelected='countDetails';fetchApps(calculator.liveApp.url.split('/').pop());">{{calculator?.count}}</a>
                 </td>
-                <ng-template #noLink >
+                <ng-template #noLink>
                   <td>
                     {{calculator?.count}}
                   </td>
                 </ng-template>
                 <td>
-                  <a href="javascript:void(0);" data-toggle="modal" data-target="#add-calc"
-                   (click)="modalSelected='premadeCalc';editCalculator(i);">
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="#add-calc" (click)="modalSelected='premadeCalc';editCalculator(i);">
                     <i class="material-icons">edit</i>
                   </a>
                 </td>
@@ -171,7 +169,7 @@
 
 </div>
 
-<div id="add-calc" class="modal fade"  tabindex="-1" role="dialog">
+<div id="add-calc" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content modal-bg">
@@ -214,7 +212,7 @@
                 <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
               </div>
               <div class="er-msg" *ngIf="!calculatorForm.controls.media.valid">
-                Please enter calculator gif url 
+                Please enter calculator gif url
               </div>
             </div>
             <div class="form-group label-floating">
@@ -289,11 +287,7 @@
   </div>
 </div>
 
-<<<<<<< HEAD
 <div id="apps_created" class="modal fade" tabindex="-1" role="dialog">
-=======
-<div id="apps_created"  class="modal fade"  tabindex="-1" role="dialog">
->>>>>>> master
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content modal-bg">
@@ -304,17 +298,10 @@
         <h5 class="modal-title">Apps Created From Premade Calculator</h5>
       </div>
       <div class="modal-body">
-<<<<<<< HEAD
-        <div *ngIf="fetchedApps && !fetchedApps.length;else apps">
-          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
-        </div>
-        <ng-template #apps>
-          <div>
-            <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
-            <div>
-=======
         <div *ngIf="!allApps">
-          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+          <div>
+            <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+          </div>
         </div>
         <div *ngIf="allApps && !allApps.length;else apps">
           No Premades
@@ -324,14 +311,14 @@
             <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
             <div id="appCountPicker">
               <div style=" float:left; width:100%">
-                  <div style=" float:left;">
-              <og-date-range-picker [parentElementName]="'apps_created'" 
-                *ngIf="scriptLoaded && modalSelected=='countDetails'" (date)="filterApps($event)">
-              </og-date-range-picker>
+                <div style=" float:left;">
+                  <og-date-range-picker [parentElementName]="'apps_created'" *ngIf="scriptLoaded && modalSelected=='countDetails'" (date)="filterApps($event)">
+                  </og-date-range-picker>
+                </div>
+                <span style="float:left; margin-left: 40px; margin-top: 8px;">Apps Count:
+                  <b>{{fetchedApps.length}}</b>
+                </span>
               </div>
-              <span style="float:left; margin-left: 40px; margin-top: 8px;">Apps Count: <b>{{fetchedApps.length}}</b></span>
-              </div>
->>>>>>> master
               <table class="dataTable">
                 <thead>
                   <tr>
@@ -344,25 +331,18 @@
                     <th>
                       Link
                     </th>
-<<<<<<< HEAD
-=======
                     <th>
                       create date
                     </th>
->>>>>>> master
-                    
+
                   </tr>
                 </thead>
                 <tbody class="custom-tbody">
                   <tr *ngFor="let app of fetchedApps;let i=index;">
                     <td>
-<<<<<<< HEAD
-                      {{app?.company?.sub_domain}}
-=======
                       <a target="_blank" [routerLink]="['/admin/company',app.company._id]">
-                      {{app?.company?.sub_domain}}                      
+                        {{app?.company?.sub_domain}}
                       </a>
->>>>>>> master
                     </td>
                     <td>
                       {{app?.title}}
@@ -375,19 +355,16 @@
                         {{app.url}}
                       </td>
                     </ng-template>
-<<<<<<< HEAD
-=======
                     <td>
                       {{mt(app?.createdAt).format('DD-MM-YYYY')}}
                     </td>
->>>>>>> master
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </ng-template>
-        
+
       </div>
       <div class="modal-footer">
       </div>
