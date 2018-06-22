@@ -194,15 +194,12 @@ export const ADMIN_ROUTES: Routes = [
             component: SheetsComponent,
             canActivate: [AdminGuard]
           },
-<<<<<<< HEAD
-=======
           {
             path: 'cache-handling',
             component:CacheHandlingComponent,
             canActivate: [AdminGuard]
           },
           
->>>>>>> master
         ]
       },
     ]
