@@ -44,7 +44,10 @@
                  
                   <!-- <div class="ab-line-ripple"></div> -->
                 </div>
-                <table class="dataTable">
+                <div *ngIf="loading">
+                  <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+              </div>
+                <table *ngIf="!loading" class="dataTable">
                   <thead>
                     <tr>
                       <th>
