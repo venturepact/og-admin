@@ -28,6 +28,23 @@ export class EventsComponent extends Datatable implements OnInit {
   newEvent: any;
   selectedItem: any;
   scriptLoaded: boolean = false;
+  showAdvancedFilter: boolean = false;
+  filters: any = [];
+  filter = {
+    event: [
+      { name: "Event Name", id: "event_name" },
+      { name: "Description", id: "description" },
+      { name: "Event Type", id: "event_type" },
+      { name: "Launch Date", id: "launch_date" },
+      { name: "Created At", id: "created_at" }
+    ],
+    selected_property: "",
+    selected_operator: "",
+    selected_property_category: "",
+    selected_property_type: "",
+    selected_value: {},
+    visible: true
+  };
   @ViewChild('fileUpload') fileUpload: any;
 
   constructor(private _adminService: AdminService, private _eventsService: EventsService, private fb: FormBuilder, private _script: Script) {
@@ -59,7 +76,8 @@ export class EventsComponent extends Datatable implements OnInit {
     let obj = {
       limit: this.current_limit,
       page: this.current_page - 1,
-      searchKey: this.search
+      searchKey: this.search,
+      filter: this.parseFilterData()
     };
     this._eventsService.getEvents(obj).subscribe((data) => {
       this.loading = false;
@@ -81,6 +99,7 @@ export class EventsComponent extends Datatable implements OnInit {
 
   createEvent(data, btnRef: any = '') {
     btnRef && this.changeButtonProps(btnRef, { textContent: 'Please wait...', disabled: true });
+    data.launch_date = new Date(data.launch_date).toISOString();
     this.newEvent = this._eventsService.createEvent(data)
       .subscribe((response) => {
         this.getEvents();
@@ -118,15 +137,15 @@ export class EventsComponent extends Datatable implements OnInit {
       _id: this.selectedItem['_id'],
       event_name: data.event_name,
       description: data.description,
-      launch_date: data.launch_date,
+      launch_date: new Date(data.launch_date).toISOString(),
       launch_time: data.launch_time,
       event_type: data.event_type,
-      media: data.mediA
+      media: data.media
     };
-    if(data.event_name!=this.selectedItem.event_name || data.launch_date!=this.selectedItem.launch_date){
-      updatedData['check']=true;
-    }else{
-      updatedData['check']=false
+    if (data.event_name != this.selectedItem.event_name || data.launch_date != this.selectedItem.launch_date) {
+      updatedData['check'] = true;
+    } else {
+      updatedData['check'] = false
     }
     btnRef && this.changeButtonProps(btnRef, { textContent: 'Please wait...', disabled: true });
     this._eventsService.updateEvent(updatedData)
@@ -218,6 +237,77 @@ export class EventsComponent extends Datatable implements OnInit {
   setLaunchDate(date) {
     console.log("date", date);
     this.eventForm.get('launch_date').setValue(date['start_date']);
+  }
+
+  addFilter() {
+    this.filters.push(Object.assign({}, this.filter)); // passing filter by value
+  }
+  clearFilters() {
+    this.filters.forEach(filter => (filter.visible = false));
+  }
+  removeFilter(index) {
+    this.filters[index].visible = false;
+  }
+  setFilterProperty(target, index) {
+    this.filters[index].selected_property_category =
+      target.options[target.options.selectedIndex].className;
+    this.filters[index].selected_property_type = "string";
+    this.filters[index].selected_value = ""; // reset selected value
+    this.filters[index].selected_operator = ''; // reset operator value
+  }
+
+  selected(event, index, type) {
+    if (typeof this.filters[index].selected_value === "string") {
+      this.filters[index].selected_value = {};
+    }
+    if (!Array.isArray(this.filters[index].selected_value[type])) {
+      this.filters[index].selected_value[type] = [];
+    }
+    this.filters[index].selected_value[type].push(event.id);
+  }
+  select(event, index) {
+    if (event.hasOwnProperty("start_date")) {
+      this.filters[index].selected_value = event;
+    } else {
+      this.filters[index].selected_value = event.id;
+    }
+  }
+  selectOperator(event, index) {
+    if (event.id === "-1") {
+      this.filters[index].selected_value = event.id;
+      this.filters[index].selected_operator = event.id;
+    } else {
+      this.filters[index].selected_value = "";
+      this.filters[index].selected_operator = event.id;
+    }
+  }
+
+  removed(event, index, type) {
+    if (event === "all") {
+      this.filters[index].selected_value[type] = [];
+    }
+    let i = this.filters[index].selected_value[type].indexOf(event);
+    this.filters[index].selected_value[type].splice(i, 1);
+  }
+  parseFilterData() {
+    return this.filters
+      .filter(
+        el =>
+          el.visible &&
+          el.selected_property &&
+          el.selected_property_category &&
+          el.selected_property_type &&
+          el.selected_value
+      )
+      .map(el => {
+        let val = {
+          property: el.selected_property,
+          type: el.selected_property_category,
+          value: el.selected_value,
+          operator: el.selected_operator
+        };
+        return val;
+      });
   }
 
 }
