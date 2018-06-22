@@ -57,6 +57,7 @@ import { AutologinTokenComponent } from "./sitesettings/autologin-token/autologi
 import { LayoutPreviewComponent } from './layout-preview/layout-preview.component';
 import { LayoutService } from './../shared/services/layoutPreview.service';
 import { SheetsComponent } from './sheets/sheets.component';
+import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
@@ -68,8 +69,7 @@ import { SheetsComponent } from './sheets/sheets.component';
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
     SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent,
-    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, LayoutPreviewComponent, SheetsComponent],
-
+    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, LayoutPreviewComponent, SheetsComponent,CacheHandlingComponent],
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
     JSONCompare, LondonerService, FeatureAuthService, PremaidService, PremadeCalcService, LayoutService]
 })

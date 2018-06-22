@@ -132,6 +132,53 @@
   </div>
 
   <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-spinner fa-spin" *ngIf="allcompanies.length == 0"></i>
+        &nbsp;Companies
+      </div>
+      <div class="panel-body">
+        <div class="form-group row">
+          <div class="col-md-5">
+            viewing companies
+            <br/>
+            <input type="text" class="form-control" id="searchCompany" placeholder="search company">
+            <button class="btn btn-primary" (click)="getAllCompanies()" id="searchcmp">Search</button>
+          </div>
+          <div class="col-md-2">&nbsp;</div>
+          <div class="col-md-5">
+              non viewing companies
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-4">
+            <select id="companylists" class="form-control" multiple="multiple" size="25">
+              <option *ngFor="let company of allcompanies" value="{{company.id}}">
+                {{company.name}} - {{company.sub_domain}}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2 text-center">
+            <button class="btn btn-warning btn-block" (click)="addToDiscard()">
+              <i class="glyphicon glyphicon-hand-right"></i>
+            </button>
+            <button class="btn btn-success btn-block" (click)="removeToDiscard()">
+              <i class="glyphicon glyphicon-hand-left"></i>
+            </button>
+          </div>
+          <div class="col-md-4">
+            <select id="discardcompanylists" class="form-control" multiple="multiple" size="25">
+              <option *ngFor="let company of disardedCompanies" value="{{company.id}}">
+                {{company.name}} - {{company.sub_domain}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-md-12">
       <div class="form-group row">
         <div class="col-md-6 mr20">

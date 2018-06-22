@@ -32,6 +32,7 @@ import { CompanyPlansComponent } from "../../admin/plans/company-plans/company-p
 import { HelloBarComponent } from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
 import { SheetsComponent } from '../../admin/sheets/sheets.component';
+import { CacheHandlingComponent } from '../../admin/cache-handling/cache-handling.component'
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -193,6 +194,15 @@ export const ADMIN_ROUTES: Routes = [
             component: SheetsComponent,
             canActivate: [AdminGuard]
           },
+<<<<<<< HEAD
+=======
+          {
+            path: 'cache-handling',
+            component:CacheHandlingComponent,
+            canActivate: [AdminGuard]
+          },
+          
+>>>>>>> master
         ]
       },
     ]

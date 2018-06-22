@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Datatable} from "../../shared/interfaces/datatable.interface";
 import {AdminService} from "../../shared/services/admin.service";
-
 declare var moment: any;
 
 @Component({
@@ -16,7 +15,6 @@ export class HelloBarComponent extends Datatable implements OnInit {
   momentJs: any;
   hellobarData: Array<any> = [];
   selectedHellobar: any = null;
-
   constructor(private adminService: AdminService) {
     super();
   }
@@ -84,5 +82,4 @@ export class HelloBarComponent extends Datatable implements OnInit {
       this.hellobarData = data.hellobar;
     })
   }
-
 }

@@ -13,7 +13,8 @@ export class DateRangePickerComponent implements AfterViewInit, OnChanges {
   @Input() calc: any;
   @Output() date: EventEmitter<String> = new EventEmitter<String>();
   initialized: boolean = false;
-
+  @Input() parentElementName?:any;
+  
   ngAfterViewInit() {
     var self: any = this;
     // TODO error in these two functions so commented it.
@@ -70,5 +71,11 @@ export class DateRangePickerComponent implements AfterViewInit, OnChanges {
       end_date = moment(endDate).utc().add(1, 'days').format(format);
     }
     return {start_date, end_date};
+  }
+  addClass(){
+    (this.parentElementName) && (jQuery(`#${this.parentElementName}`).addClass('oh'));
+  }
+  removeClass(){
+    (this.parentElementName) && jQuery("#add-calc").removeClass('oh');
   }
 }

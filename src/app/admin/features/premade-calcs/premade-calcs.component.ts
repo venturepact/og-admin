@@ -7,6 +7,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AdminService } from './../../../shared/services/admin.service';
 declare var jQuery: any;
 declare var moment: any;
+
 @Component({
   selector: 'premade-calcs',
   templateUrl: './premade-calcs.component.html',
@@ -24,15 +25,17 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
   $subscription;
   errorMessage = '';;
   loader = false;
-  mt=moment;
+  mt = moment;
+  modalSelected = 'premadeCalc';
+  domain = '';
+  fetchedApps = [];
+  allApps;
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
     , 'Legal', 'Marketing & Advertising', 'Publishing'
     , 'Quintessential', 'Real Estate & Construction', 'Technology'
     , 'Travel', 'TV and Entertainment', 'Trending'];
   templates = [];
-  domain='';
-  fetchedApps=[];
   // templates= [
   //   ['one-page-card-new','Chicago'],
   //   ['sound-cloud-v3','Londoner'],
@@ -105,12 +108,12 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
         else
           this.calculatorAdded();
         this.getCalculators();
-        btnRef && this.changeButtonProps(btnRef,{textContent:'Update',disabled:false});
-    
-      },error=>{
-        this.errorMessage=error.error.err_message;
-        btnRef && this.changeButtonProps(btnRef,{textContent:'Update',disabled:false});
-    
+        btnRef && this.changeButtonProps(btnRef, { textContent: 'Update', disabled: false });
+
+      }, error => {
+        this.errorMessage = error.error.err_message;
+        btnRef && this.changeButtonProps(btnRef, { textContent: 'Update', disabled: false });
+
       });
 
   }
@@ -273,12 +276,15 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     this.selectedItem = this.calculators[index];
     console.log(this.selectedItem);
     this._calculatorService.setForm(this.selectedItem);
-    this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')),
-    jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
-    this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY')),
-    jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
-    );
-    
+    setTimeout(() => {
+      this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')),
+        jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
+      this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY')),
+        jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
+      );
+    }, 100);
+
+
     this.edit = true;
     this.errorMessage = '';
     this.loader = false;
@@ -321,15 +327,36 @@ export class PremadeCalcsComponent extends Datatable implements OnInit {
     console.log(date);
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
-  fetchApps(id){
-    this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
+  fetchApps(id) {
+    setTimeout(() => {
+      jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+      jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
+
+    }, 100);
+
+    this.allApps = undefined;
+    this.fetchedApps = [];
+    this._adminService.getAppsCreatedByPremade(id).subscribe(res => {
       this.fetchedApps = res;
+      this.allApps = res;
       // this.domain=this.getDomain();
-    },error=>{
-  
-   })
+    }, error => {
+
+    })
   }
-  getLink(sub_domain,url){
+  getLink(sub_domain, url) {
     return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
+  }
+  filterApps(date) {
+    console.log(date);
+    if (this.allApps) {
+      this.fetchedApps = this.allApps.filter(app => {
+        let startDateMs = moment(`${date['start_date']} 0.00`, "YYYY-MM-DD H:mm").valueOf();
+        let endDateMs = moment(`${date['end_date']} 0.00`, "YYYY-MM-DD H:mm").valueOf();
+        let appcreateMs = moment(app.createdAt).valueOf();
+        return (startDateMs <= appcreateMs && appcreateMs <= endDateMs);
+        // return (moment(app.createdAt).format('YYYY-MM-DD')===date['start_date']);
+      })
+    }
   }
 }

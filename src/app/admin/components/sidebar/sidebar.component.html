@@ -156,84 +156,80 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
-        <a [routerLink]="['locales-admin']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Locales</h6>
-            <span class="">Manage all the locales</span>
-          </div>
-        </a>
-      </li>
-      <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
-        <a [routerLink]="['responseLogs']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Response Logs</h6>
-            <span class="">Check all the Response Logs</span>
-          </div>
-        </a>
-      </li>
-      <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
-        <a [routerLink]="['promotion-checklist']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Promotion Checklist</h6>
-            <span class="">Create Edit promotion checklist items</span>
-          </div>
-        </a>
-      </li>
-      <li class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
-        <a [routerLink]="['integration-logs']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Integrations</h6>
-            <span class="">List of all Integrations</span>
-          </div>
-        </a>
-      </li>
-      <li *ngIf="sub_role == null" class="setting-nav" id="premade-calcs" (click)="showTab('premade-calcs')">
-        <a [routerLink]="['premades-features/premade_calcs']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Premades</h6>
-            <span class="">Check all the premade calculators</span>
-          </div>
-        </a>
-      </li>
+            <li class="setting-nav" *ngIf="sub_role == null" id="locales-admin" (click)="showTab('locales-admin')">
+                <a [routerLink]="['locales-admin']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Locales</h6>
+                        <span class="">Manage all the locales</span>
+                    </div>
+                </a>
+            </li>
 
-      <li class="setting-nav" id="layout-preview" (click)="showTab('layout-preview')">
-        <a [routerLink]="['layout-preview']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">Layout Preview</h6>
-            <span class="">Set Preview For Each Layout</span>
-          </div>
-        </a>
-      </li>
-      <li class="sheets" id="sheets" (click)="showTab('sheets')">
-        <a [routerLink]="['sheets']" data-toggle="tab">
-          <span class="left-sidebar-icon">
-            <i class="material-icons">list</i>
-          </span>
-          <div class="left-sidebar-title">
-            <h6 class="">sheets view</h6>
-            <span class="">sheets view of subdomain</span>
-          </div>
-        </a>
-      </li>
+            <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
+                <a [routerLink]="['responseLogs']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Response Logs</h6>
+                        <span class="">Check all the Response Logs</span>
+                    </div>
+                </a>
+            </li>
+            <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
+                <a [routerLink]="['promotion-checklist']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Promotion Checklist</h6>
+                        <span class="">Create Edit promotion checklist items</span>
+                    </div>
+                </a>
+            </li>
+          <li class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
+            <a [routerLink]="['integration-logs']" data-toggle="tab">
+              <span class="left-sidebar-icon">
+                <i class="material-icons">list</i>
+              </span>
+              <div class="left-sidebar-title">
+                <h6 class="">Integrations</h6>
+                <span class="">List of all Integrations</span>
+              </div>
+            </a>
+          </li>
+          <li *ngIf="sub_role == null" class="setting-nav" id="premade-calcs" (click)="showTab('premade-calcs')">
+                <a [routerLink]="['premades-features/premade_calcs']" data-toggle="tab">
+                    <span class="left-sidebar-icon">
+                    <i class="material-icons">list</i>
+                  </span>
+                    <div class="left-sidebar-title">
+                        <h6 class="">Premades</h6>
+                        <span class="">Check all the premade calculators</span>
+                    </div> 
+                </a>
+            </li>
+
+
+            <!-- new edition -->
+            <li class="setting-nav" id="cache-handling" (click)="showTab('cache-handling')">
+              <a [routerLink]="['cache-handling']" data-toggle="tab">
+                          <span class="left-sidebar-icon">
+                          <i class="material-icons">list</i>
+                        </span>
+                <div class="left-sidebar-title">
+                  <h6 class="">Handling Cache</h6>
+                  <span>Manage all the cache</span>
+                </div>
+              </a>
+            </li>
+          <!-- ends new edition -->
+
+
+
       <!--<li class="setting-nav" id="customJSApprovals" (click)="showTab('customJSApprovals')">-->
       <!--<a [routerLink]="['customJSApprovals']" data-toggle="tab">-->
       <!--<span class="left-sidebar-icon">-->

@@ -12,6 +12,7 @@ declare var moment: any;
 export class DatePickerComponent implements AfterViewInit, OnChanges {
   @Input() calc: any;
   @Output() date: EventEmitter<String> = new EventEmitter<String>();
+  @Input() parentElementName?:any;
   initialized: boolean = false;
 
   ngAfterViewInit() {
@@ -72,10 +73,10 @@ export class DatePickerComponent implements AfterViewInit, OnChanges {
     return {start_date, end_date};
   }
   addClass(){
-    jQuery("#add-calc").addClass('oh')
+    (this.parentElementName) && (jQuery(`#${this.parentElementName}`).addClass('oh'));
   }
   removeClass(){
-    jQuery("#add-calc").removeClass('oh');
+    (this.parentElementName) && jQuery("#add-calc").removeClass('oh');
   }
 }
 

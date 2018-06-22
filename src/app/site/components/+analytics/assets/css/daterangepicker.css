@@ -340,3 +340,6 @@
 .oh{
   overflow: hidden !important;
 }
+.daterangepicker.dropdown-menu.show-calendar.opensright{
+  width:490px !important;
+}

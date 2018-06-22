@@ -75,12 +75,15 @@ export class SidebarComponent implements OnInit {
     else if (tab === 'hello-bar') {
       jQuery('#hello-bar').addClass('active');
     }
+    else if (tab === 'cache-handling') {
+      jQuery('#cache-handling').addClass('active');
+    }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')
     // 	jQuery('#customJSApprovals').addClass('active');
     // }
     else if (tab === 'response-logs') {
-      this._adminService.notifylogType('requestsLogs')
+      this._adminService.notifylogType('requestsLogs');
       jQuery('#response-logs').addClass('active');
     }
     else if (tab === 'leads-tab') {

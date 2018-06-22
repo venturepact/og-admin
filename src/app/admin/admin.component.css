@@ -2314,6 +2314,9 @@ subdomain-container #table
 .panel-body pre .highlight{
   background-color: #01ff70;
 }
+.panel-body table .highlight{
+    background-color: #01ff70;
+  }
 
 .bootbox .modal-content {
     float: left;
@@ -2446,3 +2449,7 @@ subdomain-container #table
     border-top: none;
     padding-top: 0px;
 }
+
+
+.panel-body.table-outer table{ float: left; width:100%}
+.panel-body.table-outer table th,.panel-body.table-outer table td { float: left; width:50%}

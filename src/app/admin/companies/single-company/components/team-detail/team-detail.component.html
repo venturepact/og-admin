@@ -7,18 +7,18 @@
             <div class="col-sm-8">
               <h4>Team Details</h4>
             </div>
-            <div class="col-sm-2">
-              <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#modalAddUser"
-                 *ngIf="userLimit == -1 || team.length < userLimit"> <i class="material-icons">add</i> </a>
-              <h4>Edit:</h4>
-              <label class="switch">
+            <div class="col-sm-4">
+
+              <h4 style="width: 70px; display: inline-block; float: left;">Edit: </h4>
+              <label class="switch pull-left" style="margin-top:5px;">
                 <input type="checkbox" [(ngModel)]="editMode">
                 <div class="slider round"></div>
               </label>
+              <a style="float: left !important; margin-left: 20px;color: #fff; margin-top:7px;"
+                 href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#modalAddUser"
+                 *ngIf="userLimit == -1 || team.length < userLimit"> <i class="material-icons">add</i> </a>
             </div>
-            <div class="col-sm-2">
 
-            </div>
           </div>
         </div>
         <div class="panel-body">

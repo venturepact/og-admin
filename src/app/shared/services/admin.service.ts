@@ -8,7 +8,10 @@ import {BaseService} from "./base.service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
 
+var keys="";
 @Injectable()
+
+
 export class AdminService extends BaseService {
 
   public getLogSubject = new ReplaySubject<String>(2);
@@ -523,8 +526,30 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-  getAppsCreatedByPremade(id){
-    return this._http.get(`${this._url}/admin/getAppsCreatedByPremade/${id}`,this.get_options())
+
+
+  showCacheKey(){
+    // console.log("::In Cache Key fxn::")
+    return this._http.get(`${this._url}/cache/index`)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  clearCache(id:any){
+    // let urls = []
+    //   urls.push(id)
+    //   console.log(urls)
+    return this._http.delete(`${this._url}/cache/clear/`,{body:{urls:id}})
+      .map(this.extractData)
+  }
+  getAppsCreatedByPremade(url){
+    return this._http.get(`${this._url}/admin/getAppsCreatedByPremade/${url}`,this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  changeNCbP(id, ncbp) {
+    return this._http.put(`${this._url}/admin/updateNCbP/${id}`, {cf_non_cb_payments: ncbp}, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
