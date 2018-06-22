@@ -364,11 +364,6 @@ export class CompanyService extends BaseService {
     .map(this.extractData)
     .catch(this.handleError);
   }
-  getAllCalcs(company){
-    return this._http.get(`${this._url}/analytic/get_calculators/${company}`)
-    .map(this.extractData)
-    .catch(this.handleError);
-  }
   exportToSheetAsync(data: any) {
     let URL = this._url + '/analytic/export_to_sheet_async';
     return this._http.post(URL, data, this.post_options())

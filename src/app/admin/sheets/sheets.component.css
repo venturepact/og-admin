@@ -20,10 +20,11 @@ th {
  .sheet-View, .reset-sheet, .export-view {
     margin-left:269px;
 }
-.dropdown-view{
-    margin-left: 298px;
-    margin-top: 29px;
-}
 .reset-search, .sheet-search, .export-search{
-    margin-left:350px;
+    margin-left: 360px;
+    margin-top: 60px;
 }
+ul li {
+    list-style-type: disc;
+  }
+  

@@ -1,86 +1,60 @@
-<div class='dropdown-view'>
-  <label>Select option</label>
-  <select name="dropdown" id="id1" (change)='selectChanges($event)'>
-    <option value='any'>Select any</option>
-    <option value='reset'>Reset sheets</option>
-    <option value='view'>View sheets </option>
-    <option value='export'>Export sheet</option>
-  </select>
-</div>
-<div *ngIf='resetInfo' class="reset-sheet">
-  <div class="reset-search">
-    <label>Enter subdomain to reset sheets</label>
-    <br/>
-    <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
-    <input type='button' value='search' (click)='getcalculators()' />
-  </div>
-  <table *ngIf="allCalculatorIds?.length">
-    <tr>
-      <th>Calculator name</th>
-      <th>Reset buttons</th>
-    </tr>
-    <tr *ngFor="let calcs of allCalculatorIds">
-      <td>{{calcs.name}}</td>
-      <input type='button' value='reset' (click)='resetSheets(calcs._id)' />
-    </tr>
-  </table>
-  <br/>
-  <span *ngIf="errorInfo1">No calculators for this subdomain</span>
-</div>
-
-
-<div *ngIf='viewInfo' class="sheet-View">
+<div class="sheet-View">
   <div class="sheet-search">
     <label>Enter subdomain to view generated sheets</label>
     <br/>
     <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
-    <input type='button' value='search' (click)='sheetsView()' />
+    <button class="btn-primary" (click)='sheetsView()'>Search</button>
   </div>
   <table *ngIf="sheetArr?.length">
     <tr>
       <th>Calculator name</th>
       <th>Sheets</th>
+      <th>Reset button</th>
+      <th>Export leads</th>
+      <th>Export visits</th>
     </tr>
     <tr *ngFor="let obj of sheetArr">
       <td>{{nameMapping[obj._id]}}</td>
       <td>
-        <tr>
-          <th>Sheet Url</th>
-          <th>Leads</th>
-          <th>Visits</th>
-        </tr>
-        <tr *ngFor="let urls of obj.sheets">
-          <td>
-            <a [attr.href]="urls.sheetUrl" target="_blank">sheet url</a>
-          </td>
-          <td>{{urls.leadCount}}</td>
-          <td>{{urls.visitCount}}</td>
-        </tr>
+        <div class="col-md-1">
+          <button (click)="sheetPopup(obj.sheets,true)" class="btn btn-primary" [disabled]='!obj.sheets.length'>
+            View sheets
+          </button>
+        </div>
+      </td>
+      <td>
+        <button [disabled]='!obj.sheets.length' class="btn btn-danger" (click)='resetSheets(obj._id)'>Reset</button>
+      </td>
+      <td>
+        <button class="btn btn-success" (click)="exportSheet(obj._id,true)">Export leads</button>
+      </td>
+      <td>
+        <button class="btn btn-success" (click)="exportSheet(obj._id,false)">Export visits</button>
       </td>
     </tr>
   </table>
   <br/>
-  <span *ngIf="errorInfo">No sheets were generated for this subdomain</span>
+  <p *ngIf="errorInfo">{{errorInfo}}</p>
 </div>
-<div class="export-view" *ngIf="exportInfo">
-  <div class="export-search">
-    <label>Enter subdomain to export sheets</label>
-    <br/>
-    <input type='text' [(ngModel)]='searchText' placeholder='Please enter subdomain' />
-    <input type='button' value='search' (click)='getLivecalcs()' />
-  </div>
-  <table *ngIf="allLiveCalcs?.length">
-    <tr>
-      <th>Calculator name</th>
-      <th>Export buttons</th>
-    </tr>
-    <tr *ngFor="let calcs of allLiveCalcs">
-      <td>{{calcs.name}}</td>
-      <input type='button' value='Export leads' (click)='exportSheet(calcs._id,$event.target.value)' />
-      <input type='button' value='Export visits' (click)='exportSheet(calcs._id,$event.target.value)' />
-    </tr>
-  </table>
-  <br/>
-  <span *ngIf="errorInfo1">No calculators for this subdomain</span>
 
+
+<div id="sheetModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Generated sheets</h4>
+      </div>
+      <div class="modal-body">
+        <label>Sheet urls</label>
+        <ul *ngFor="let urls of sheetUrlArr">
+          <li style="width:555px;word-break: break-all">{{urls.sheetUrl}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
