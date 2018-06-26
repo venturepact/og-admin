@@ -1,0 +1,361 @@
+<div class="">
+  <div class="row">
+    <div class="col-md-10" style="padding: 21px 0 0 0">
+      <div class="col-md-2 pull-right" style="padding:5px;">
+        <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-calc" (click)="calculatorForm.reset();edit=false;loader=false;">Add Calculator</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">&nbsp;</div>
+  <div class="row">
+    <div class="alert alert-danger custom-alert" *ngIf="errorMessage!=''">{{errorMessage}}</div>
+  </div>
+  <div id="table">
+    <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer" style="width: 84%;">
+      <div class="dataTables_length" id="table-dataTables_length">
+        <label>Show
+          <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)">
+            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+          </select>
+          entries
+        </label>
+      </div>
+      <div id="table-datatable_filter" class="dataTables_filter">
+        <label>
+          Search:
+          <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="searchData()">
+        </label>
+      </div>
+      <div style="clear:both"></div>
+      <div *ngIf="loading" >
+        <div>
+          <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+        </div>
+      </div>
+      <div class="premade-scroller">
+        <div *ngIf="!loading && calculators.length==0">
+          No Record Found...
+        </div>
+        <div *ngIf="rejectedCalcs.length>0">
+          <div> Rejected Calculators:</div>
+          <div class="alert alert-danger custom-alert" *ngIf="rejectedCalcs.length>0">
+            <div *ngFor="let calc of rejectedCalcs">
+              {{calc}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!loading && calculators.length>0">
+          <table class="dataTable">
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  live Url
+                </th>
+                <th>
+                  media
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Template
+                </th>
+                <th>
+                  Launch Date
+                </th>
+                <th>
+                  Created Date
+                </th>
+                <th>
+                  Industry
+                </th>
+                <th>
+                  App Count
+                </th>
+                <th>
+                  Edit
+                </th>
+                <th>
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody class="custom-tbody">
+              <tr *ngFor="let calculator of calculators;let i=index;">
+                <td>
+                  {{calculator.title}}
+                </td>
+                <td>
+                  {{calculator.liveApp?.url}}
+                </td>
+                <td>
+                  <img width="100px" [src]="calculator.media" alt="not found" />
+                </td>
+                <td>
+                  {{calculator.type}}
+                </td>
+                <td>
+                  {{getTemplateType(calculator?.template,'selector')}}
+                </td>
+                <td [ngClass]="!calculator.launch_date ? 'text-center' : ''">
+                  {{calculator?.launch_date ? mt(calculator?.launch_date).format('DD-MM-YYYY') : '----'}}
+                </td>
+                <td [ngClass]="!calculator.created_at ? 'text-center' : ''">
+                  {{calculator?.created_at ? mt(calculator?.created_at).format('DD-MM-YYYY') : '----'}}
+                </td>
+                <td>
+                  {{calculator.industry}}
+                </td>
+                <td *ngIf="calculator.count>0;else noLink">
+                  <a href="javascript::void(0)" data-toggle="modal" data-target="#apps_created" 
+                  (click)="modalSelected='countDetails';fetchApps(calculator.liveApp.url.split('/').pop());">{{calculator?.count}}</a>
+                </td>
+                <ng-template #noLink >
+                  <td>
+                    {{calculator?.count}}
+                  </td>
+                </ng-template>
+                <td>
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="#add-calc"
+                   (click)="modalSelected='premadeCalc';editCalculator(i);">
+                    <i class="material-icons">edit</i>
+                  </a>
+                </td>
+                <td>
+                  <a href="javascript:void(0);" (click)="removeCalculator(calculator._id)">
+                    <i class="material-icons">delete</i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+          <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+            <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+              id="all-companies-datatable_previous">Previous</a>
+            <span>
+              <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+                tabindex="0">1</a>
+            </span>
+            <span *ngIf="current_page >= 5">...</span>
+            <span>
+              <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+                tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+            </span>
+            <span *ngIf="current_page <= total_pages - 5">...</span>
+            <span>
+              <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
+                (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+            </span>
+            <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" [disabled]="current_page == total_pages"
+              (click)="next()" id="all-companies-datatable_next">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="add-calc" class="modal fade"  tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Add a Premade Calculator</h5>
+      </div>
+      <div class="modal-body">
+        <!-- <div>
+          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div> -->
+        <div>
+          <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+          <form id="addCalculatorForm" [formGroup]="calculatorForm">
+            <div class="form-group label-floating">
+              <label class="control-label" for="title">Name</label>
+              <input class="form-control" id="title" type="text" name="title" formControlName="title" />
+              <div class="er-msg" *ngIf="calculatorForm.controls.title.dirty && !calculatorForm.controls.title.valid">
+                Please enter calculator name
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="live_url">Live Calc Url</label>
+              <input class="form-control" id="live_url" type="text" name="live_url" formControlName="live_url">
+              <div class="er-msg" *ngIf="calculatorForm.controls.live_url.dirty && !calculatorForm.controls.live_url.valid">
+                Please enter calculator url
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="media">Calculator Media</label>
+              <div *ngIf="!loader">
+                <input class="form-control" id="media" type="text" name="media" [readonly]="'true'" formControlName="media">
+                <img #imgSrc/>
+                <input type="file" (change)="upload($event.target.files,imgSrc);" #fileUpload style="display:none;" />
+                <button (click)="fileUpload.click()">Upload Gif</button>
+              </div>
+              <div *ngIf="loader">
+                <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+              </div>
+              <div class="er-msg" *ngIf="!calculatorForm.controls.media.valid">
+                Please enter calculator gif url 
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="tier">Tier</label>
+              <select class="form-control" id="tier" name="tier" formControlName="tier">
+                <option [value]="'standard'" selected>Standard</option>
+                <option [value]="'premium'">Premium</option>
+              </select>
+              <div class="er-msg" *ngIf="calculatorForm.controls.tier.dirty && !calculatorForm.controls.tier.valid">
+                Please select calculator tier
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="template">Template</label>
+              <select class="form-control" id="template" name="type" formControlName="template">
+                <option *ngFor="let template of templates" [value]="template['selector']">{{template['name']}}</option>
+              </select>
+              <div class="er-msg" *ngIf="calculatorForm.controls.template.dirty && !calculatorForm.controls.template.valid">
+                Please select calculator layout
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="type">type</label>
+              <select class="form-control" id="type" name="type" formControlName="type">
+                <option *ngFor="let type of ['Outcome Quiz','Calculator','Graded Quiz','Poll']" [value]="type">{{type}}</option>
+              </select>
+              <div class="er-msg" *ngIf="calculatorForm.controls.type.dirty && !calculatorForm.controls.type.valid">
+                Please select calculator experience
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="type">Industry</label>
+              <select class="form-control" id="industry" name="type" formControlName="industry">
+                <option *ngFor="let industry of industries" [value]="industry">{{industry}}</option>
+              </select>
+              <div class="er-msg" *ngIf="calculatorForm.controls.industry.dirty && !calculatorForm.controls.industry.valid">
+                Please select calculator industry
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="launch_date">Launch Date</label>
+              <og-date-picker *ngIf="scriptLoaded && modalSelected=='premadeCalc'" [parentElementName]="'add-calc'" (date)="setLaunchDate($event)">
+              </og-date-picker>
+              <div class="er-msg" *ngIf="calculatorForm.controls.launch_date.dirty && !calculatorForm.controls.launch_date.valid">
+                Please select calculator launch date
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="event_name">Event Name</label>
+              <input class="form-control" id="event_name" type="text" name="event_name" formControlName="event_name">
+              <div class="er-msg" *ngIf="calculatorForm.controls.event_name.dirty && !calculatorForm.controls.event_name.valid">
+                Please enter event name
+              </div>
+            </div>
+            <div class="form-group label-floating">
+              <label class="control-label" for="description">Description</label>
+              <textarea class="form-control" id="description" type="text" name="description" rows="5" formControlName="description"></textarea>
+              <div class="er-msg" *ngIf="calculatorForm.controls.description.dirty && !calculatorForm.controls.description.valid">
+                Please enter calculator description
+              </div>
+            </div>
+            <button *ngIf="!edit" #saveButton (click)="addCalculator(calculatorForm.value,saveButton)" class="btn btn btn-red-outline btn-add-user btn-hover"
+              id="addCalulator" [disabled]="!calculatorForm.valid">Add</button>
+            <button *ngIf="edit" #updateButton (click)="updateCalculator(calculatorForm.value,updateButton)" class="btn btn btn-red-outline btn-add-user btn-hover"
+              id="updateCalulator" [disabled]="!calculatorForm.valid">Update</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="apps_created"  class="modal fade"  tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content modal-bg">
+      <div class="modal-header">
+        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <h5 class="modal-title">Apps Created From Premade Calculator</h5>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!allApps">
+          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div>
+        <div *ngIf="allApps && !allApps.length;else apps">
+          No Premades
+        </div>
+        <ng-template #apps>
+          <div>
+            <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+            <div id="appCountPicker">
+              <div style=" float:left; width:100%">
+                  <div style=" float:left;">
+              <!-- <og-date-range-picker [parentElementName]="'apps_created'" 
+                *ngIf="scriptLoaded && modalSelected=='countDetails'" (date)="filterApps($event)">
+              </og-date-range-picker> -->
+              </div>
+              <span style="float:left; margin-left: 40px; margin-top: 8px;">Apps Count: <b>{{fetchedApps.length}}</b></span>
+              </div>
+              <table class="dataTable">
+                <thead>
+                  <tr>
+                    <th>
+                      SubDomain
+                    </th>
+                    <th>
+                      Title
+                    </th>
+                    <th>
+                      Link
+                    </th>
+                    <th>
+                      create date
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody class="custom-tbody">
+                  <tr *ngFor="let app of fetchedApps;let i=index;">
+                    <td>
+                      <a target="_blank" [routerLink]="['/admin/company',app.company._id]">
+                      {{app?.company?.sub_domain}}                      
+                      </a>
+                    </td>
+                    <td>
+                      {{app?.title}}
+                    </td>
+                    <td *ngIf="app['liveApp'];else noLink">
+                      <a [href]="getLink(app?.company?.sub_domain || '',app.url || '')" target="_blank">{{app.url}}</a>
+                    </td>
+                    <ng-template #noLink>
+                      <td>
+                        {{app.url}}
+                      </td>
+                    </ng-template>
+                    <td>
+                      {{mt(app?.createdAt).format('DD-MM-YYYY')}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+        
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
