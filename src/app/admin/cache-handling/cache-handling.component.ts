@@ -10,6 +10,7 @@ declare var bootbox: any;
   styleUrls: ['./cache-handling.component.css']
 })
 export class CacheHandlingComponent extends Datatable implements OnInit {
+  loading: boolean=false;
   KeyName: any;
   valueOfKey: any;
   values: any;
@@ -30,6 +31,7 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
     this.getCacheLogs()
   }
   getCacheLogs() {
+    this.loading=true;
     let obj = {
       limit: this.current_limit,
       page: this.current_page - 1
@@ -41,6 +43,7 @@ export class CacheHandlingComponent extends Datatable implements OnInit {
         this.keyValues = success.data;
         this.main = this.keyValues;
         this.total_pages = Math.ceil(success.count / this.current_limit);
+        this.loading=false;
       }, (error: any) => {
         window.toastNotification("Failed to load cache...")
       })

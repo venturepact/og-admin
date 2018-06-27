@@ -67,7 +67,8 @@
             placeholder="Select a Plan">
             </ng-select>
           </div>
-          <div class="col-md-3" *ngIf="filters[i].selected_property==='GDPR'||filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='integration'||filters[i].selected_property==='is_appsumo_created'">
+          <div class="col-md-3" *ngIf="filters[i].selected_property==='GDPR'||filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='integration'||filters[i].selected_property==='is_appsumo_created'||filters[i].selected_property==='referral.is_referralcandy_visible'
+          ||filters[i].selected_property==='agency'||filters[i].selected_property==='remove_leads_after_saving'||filters[i].selected_property==='company_logo'">
             <ng-select [multiple]="false" [items]="[{id: 'true', text: 'true'},{id: 'false', text: 'false'}]"
             (selected)="select($event,i)"
             (removed)="removed($event.id,i,'current_plan')"

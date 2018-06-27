@@ -1,0 +1,294 @@
+<div class="events_container">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-2 pull-right">
+          <a href="javascript:void(0);" class="btn btn-default " id="btnEvent" data-toggle="modal" data-target="#add-event" (click)="eventForm.reset();edit=false;loader=false;errorMessage=''">Add Event</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <!-- <div class="row">
+      <div class="alert alert-danger custom-alert" *ngIf="errorMessage!=''">{{errorMessage}}</div>
+    </div> -->
+    <div id="table">
+      <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+        <div (click)="showAdvancedFilter=!showAdvancedFilter;" class="filter-icon">
+          <span class="glyphicon glyphicon-filter"></span>Filter
+        </div>
+        <div class="dataTables_length" id="table-dataTables_length">
+          <label>Show
+            <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)">
+              <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+            </select>
+            entries
+          </label>
+        </div>
+        <div id="table-datatable_filter" class="dataTables_filter">
+          <label>
+            Search:
+            <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="searchData()">
+          </label>
+        </div>
+        <div *ngIf="showAdvancedFilter" class="advanced-filter">
+          <div class="filter-params-container mt-1" *ngFor="let filter of filters;let i = index;">
+            <div class="row" [ngClass]="{'hidden':!(filter.visible)}">
+              <div class="col-md-1">
+                <button class="btn btn-danger" (click)="removeFilter(i)">
+                  <span class="glyphicon glyphicon-minus"></span>
+                </button>
+              </div>
+              <div class="col-md-3">
+                <select class="form-control-1" [(ngModel)]="filters[i].selected_property" (change)="setFilterProperty($event.target,i)" title="Select Operators">
+                  <option style="display: none"></option>
+                  <option *ngFor="let property of filter.event;" class="event" [value]="property.id">
+                    {{property.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='billing.chargebee_subscription_status'">
+                <ng-select [multiple]="false" [items]="[{id: 'active', text: 'Active'},{id: 'in_trial', text: 'IN Trial'},{id: 'future', text: 'future'},{id: 'non_renewing', text: 'Non Renewing'},{id: 'paused', text: 'Non Paused'},{id: 'cancelled', text: 'Cancelled'}]"
+                  (selected)="select($event,i)" placeholder="Select Subscription status">
+                </ng-select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='launch_date'">
+                <ng-select [multiple]="false" [items]="[{id: 'btw', text: 'Between'},{id:'$gt', text:'After'},{id:'$lt', text: 'Before'},{id: '==', text: 'on'}]"
+                  (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+                </ng-select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='created_at'">
+                <ng-select [multiple]="false" [items]="[{id: 'btw', text: 'Between'},{id:'$gt', text:'After'},{id:'$lt', text: 'Before'},{id: '==', text: 'on'}]"
+                  (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+                </ng-select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='event_type'">
+                <ng-select [multiple]="false" [items]="[{id: 'standard', text: 'standard'},{id: 'premium', text: 'premium'}]" (selected)="select($event,i)"
+                  (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+                </ng-select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='event_name'||
+                  filters[i].selected_property==='description'">
+                <ng-select [multiple]="false" [items]="[{id: 'startsWith', text: 'Starts With'},{id:'endsWith', text:'Ends With'},{id:'contains', text: 'Contains'},{id: '==', text: 'Equals TO'}]"
+                  (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+                </ng-select>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='created_at' && filters[i].selected_operator!=='btw'">
+                <og-date-picker (date)="select($event,i)"></og-date-picker>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='created_at' && filters[i].selected_operator==='btw'">
+                <og-date-range-picker (date)="select($event,i)"></og-date-range-picker>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='launch_date' && filters[i].selected_operator!=='btw'">
+                <og-date-picker (date)="select($event,i)"></og-date-picker>
+              </div>
+              <div class="col-md-3" *ngIf="filters[i].selected_property==='launch_date' && filters[i].selected_operator==='btw'">
+                <og-date-range-picker (date)="select($event,i)"></og-date-range-picker>
+              </div>
+              <div class="col-md-3">
+                <input [(ngModel)]="filters[i].selected_value" class="form-control-1" *ngIf="filters[i].selected_property==='event_name'||
+                        filters[i].selected_property==='description'" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="filter-params-container mt-1">
+            <button class="btn btn-success" style="margin: 5px;margin-left: 20px" (click)="addFilter()">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            Add more search parameters
+          </div>
+          <div class="apply-filter-container">
+            <button class="btn btn-info" (click)="getEvents()">Fetch Results</button>
+            <button class="btn btn-warning" (click)="clearFilters()">Clear Filters</button>
+          </div>
+        </div>
+        <div style="clear:both"></div>
+        <div *ngIf="loading">
+          <div>
+            <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+          </div>
+        </div>
+        <div class="premade-scroller">
+          <div *ngIf="!loading && events.length==0">
+            No Record Found...
+          </div>
+
+          <div *ngIf="!loading && events.length>0">
+            <table class="dataTable">
+              <thead>
+                <tr>
+                  <th>
+                    Event Name
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>
+                    media
+                  </th>
+                  <th>
+                    Event Type
+                  </th>
+                  <th>
+                    Launch Date
+                  </th>
+                  <th>
+                    Launch Time
+                  </th>
+                  <th>
+                    Created At
+                  </th>
+                  <th>
+                    Edit
+                  </th>
+                  <th>
+                    Delete
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="custom-tbody">
+                <tr *ngFor="let event of events;let i=index;">
+                  <td>
+                    {{event.event_name}}
+                  </td>
+                  <td>
+                    {{event.description}}
+                  </td>
+                  <td>
+                    <img width="100px" [src]="event.media" alt="not found" />
+                  </td>
+                  <td>
+                    {{event.event_type}}
+                  </td>
+                  <td [ngClass]="!event.launch_date? 'text-center' : ''">
+                    {{event?.launch_date ? mt(event?.launch_date).format('DD-MM-YYYY') : '----'}}
+                  </td>
+                  <td [ngClass]="!event.launch_time? 'text-center' : ''">
+                    {{event?.launch_time}} (IST)
+                  </td>
+                  <td [ngClass]="!event.createdAt? 'text-center' : ''">
+                    {{event?.createdAt ? mt(event?.createdAt).format('DD-MM-YYYY kk:mm') : '----'}}
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#add-event" (click)="editEvent(i);">
+                      <i class="material-icons">edit</i>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="removeEvent(event,i)">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+            <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+              <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+                id="all-companies-datatable_previous">Previous</a>
+              <span>
+                <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+                  tabindex="0">1</a>
+              </span>
+              <span *ngIf="current_page >= 5">...</span>
+              <span>
+                <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+                  tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+              </span>
+              <span *ngIf="current_page <= total_pages - 5">...</span>
+              <span>
+                <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
+                  (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+              </span>
+              <button class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" [disabled]="current_page == total_pages"
+                (click)="next()" id="all-companies-datatable_next">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="add-event" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content modal-bg">
+        <div class="modal-header">
+          <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+            <i class="material-icons">close</i>
+          </button>
+          <h5 class="modal-title">Add a New Event</h5>
+        </div>
+        <div class="modal-body">
+          <!-- <div>
+          <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+        </div> -->
+          <div>
+            <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+            <form id="addEventForm" [formGroup]="eventForm">
+              <div class="form-group label-floating">
+                <label class="control-label" for="event_name">Event Name</label>
+                <input class="form-control" id="event_name" type="text" name="event_name" formControlName="event_name">
+                <div class="er-msg" *ngIf="eventForm.controls.event_type.dirty && !eventForm.controls.event_type.valid">
+                  Please enter event name
+                </div>
+              </div>
+              <div class="form-group label-floating">
+                <label class="control-label" for="description">Description</label>
+                <textarea class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
+                <div class="er-msg" *ngIf="eventForm.controls.description.dirty && !eventForm.controls.description.valid">
+                  150 characters supported only
+                </div>
+              </div>
+              <div class="form-group label-floating">
+                <label class="control-label" for="media">Event Media</label>
+                <div *ngIf="!loader">
+                  <input class="form-control" id="media" type="text" name="media" [readonly]="'true'" formControlName="media">
+                  <img #imgSrc/>
+                  <input type="file" (change)="upload($event.target.files,imgSrc);" #fileUpload style="display:none;" />
+                  <button (click)="fileUpload.click()">Upload Gif</button>
+                </div>
+                <div *ngIf="loader">
+                  <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+                </div>
+                <div class="er-msg" *ngIf="!eventForm.controls.media.valid">
+                  Please enter event gif url
+                </div>
+              </div>
+              <div class="form-group label-floating">
+                <label class="control-label" for="event_type">Event_type</label>
+                <select class="form-control" id="event_type" name="event_type" formControlName="event_type">
+                  <option [value]="'standard'" selected>Standard</option>
+                  <option [value]="'premium'">Premium</option>
+                </select>
+                <div class="er-msg" *ngIf="eventForm.controls.event_type.dirty && !eventForm.controls.event_type.valid">
+                  Please select event_type
+                </div>
+              </div>
+              <div class="form-group label-floating">
+                <label class="control-label" for="launch_date">Launch Date</label>
+                <og-date-picker *ngIf="scriptLoaded" (date)="setLaunchDate($event)">
+                </og-date-picker>
+                <div class="er-msg" *ngIf="eventForm.controls.launch_date.dirty && !eventForm.controls.launch_date.valid">
+                  Please select event launch date
+                </div>
+              </div>
+
+              <div class="form-group label-floating">
+                <label class="control-label" for="launch_time">Choose a Launch time: </label>
+                <input class="form-control" id="launch_time" type="time" name="launch_time" formControlName="launch_time">
+              </div>
+
+              <button *ngIf="!edit" #saveButton (click)="createEvent(eventForm.value,saveButton)" class="btn btn btn-red-outline btn-add-event btn-hover"
+                id="createEvent" [disabled]="!eventForm.valid">Add</button>
+              <button *ngIf="edit" #updateButton (click)="updateEvent(eventForm.value,updateButton)" class="btn btn btn-red-outline btn-add-event btn-hover"
+                id="updateEvent" [disabled]="!eventForm.valid">Update</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
