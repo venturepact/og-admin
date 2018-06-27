@@ -1,0 +1,68 @@
+<div>
+
+    <div class="mat-elevation-z8">
+        <div class="alert alert-info" role="alert" *ngIf="!logsPresent">
+            No Logs Found.
+        </div>
+        <div>
+            <div *ngIf="isLoading">
+                <div>
+                    <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+                </div>
+            </div>
+            <mat-table *ngIf="!isLoading" [dataSource]="dataSource">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                    <mat-cell *matCellDef="let row; let i = index;"> {{ i + 1 || '1'}} </mat-cell>
+                </ng-container>
+
+                <!-- Error Column -->
+                <ng-container matColumnDef="err_trace">
+                    <mat-header-cell *matHeaderCellDef> Error Code </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.err_data.code || "Unavailable"}} </mat-cell>
+                </ng-container>
+
+                <!-- User Info Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <p>{{row.userInfo.name}}
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
+                                <i class="ui-tooltip material-icons" (click)="parseBody( row.userInfo , 'userInfo')" style="font-size: 22px;" data-original-title="Edit">visibility</i>
+                            </a>
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Error Data/Trace Column -->
+                <ng-container matColumnDef="message">
+                    <mat-header-cell *matHeaderCellDef> Message </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
+                            <i class="ui-tooltip material-icons" (click)="parseBody( row.err_data.err_trace || row.err_data?.message, 'err_data')" style="font-size: 22px;"
+                                data-original-title="Edit">visibility</i>
+                        </a>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Time Column -->
+                <ng-container matColumnDef="time">
+                    <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{createDate(row.createdAt) | date: 'MMM d, y, h:mm:ss a'}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+            </mat-table>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEventCall($event)"></mat-paginator>
+            <div style="width: 16em;
+            position: relative;
+            top: -49px;">
+            </div>
+        </div>
+    </div>
+</div>

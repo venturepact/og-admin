@@ -1,147 +1,60 @@
 <div class="all-erorrs-container">
-  <div class="ab-select">
-    <select class="ab-select__native-control" (change)="apiChange()" [(ngModel)]="apiSelect">
-      <option value="" disabled>Select an API</option>
-      <option value="default" selected>
-        Default
-      </option>
-      <option value="api_2">
-        LIVE API
-      </option>
-    </select>
-    <label class="ab-floating-label">Select API</label>
-    <div class="ab-line-ripple"></div>
+  <div class="" style="background-color: transparent;
+  height: 60px;
+  width: inherit;
+  margin-top: -160px;">
   </div>
-  <div *ngIf="!apiSwitched" class="ab-input-search">
-    <div class="ab-icon">
-      <i class="material-icons">search</i>
-    </div>
-    <input type="text" [disabled]="searchON" id="text-field--leading-outlined" class="ab-text-field__input" [(ngModel)]="searchQuery"
-      aria-controls="table" (keyup)="searchData()">
-    <label class="ab-floating-label">Search</label>
-  </div>
-  <div *ngIf="isLoading">
-    <div>
-      <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
-    </div>
-  </div>
-  <div *ngIf="!apiSwitched" id="table-datatable_filter" class="dataTables_filter">
-    <og-date-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)"></og-date-picker>
-    <button (click)="onRefresh()"> Refresh </button>
-  </div>
-  <br />
-  <div id="table" *ngIf="logs && logs.length > 0 && !isLoading">
-    <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
-      <div class="dataTables_length" id="table-dataTables_length">
-        <label>Show
-          <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)" class="">
-            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
-          </select>
-          entries
-        </label>
-      </div>
-      <div *ngIf="loading">
-        <div>
-          <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
-        </div>
-      </div>
-      <table *ngIf="!loading" class="dataTable">
-        <thead style="background-color: black; color: white;">
-          <tr>
-
-            <th scope="col">#</th>
-            <th scope="col">Error Code</th>
-            <th scope="col">User</th>
-            <th scope="col">Message</th>
-            <th scope="col">Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let log of logs; let i = index">
-            <th scope="row">{{i+1+((current_page-1) * current_limit)}}</th>
-            <td>{{log.err_data.code || "Unavailable"}}</td>
-            <td>
-              <p>{{log.userInfo.name}}
-                <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
-                  <i class="ui-tooltip material-icons" (click)="parseBody( log.userInfo , 'userInfo')" style="font-size: 22px;" data-original-title="Edit">visibility</i>
-                </a>
-              </p>
-            </td>
-            <!-- <td>{{log.err_data.message || "Unavailable"}}&nbsp;
-            <i (click)="log.active = true" data-toggle="tooltip" title="{{log.err_data.err_message || 'Click to know more.'}}" class="material-icons"
-              style="cursor: pointer; color: tomato;">
-              info
-            </i>
-          </td> -->
-            <td>
-              <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
-                <i class="ui-tooltip material-icons" (click)="parseBody( log.err_data.err_trace || log.err_data.message, 'err_data')" style="font-size: 22px;"
-                  data-original-title="Edit">visibility</i>
-              </a>
-            </td>
-            <td>{{createDate(log.createdAt) | date: 'MMM d, y, h:mm:ss a' }}</td>
-            <!-- <div [ngClass]="{'hidden': !log.active}" class="ab-accordion">
-            <i (click)="log.active = false;" class="material-icons">
-              close
-            </i>
-            {{log.err_data.err_trace || 'Oops!. Nothing To Show'}}
-          </div> -->
-          </tr>
-        </tbody>
-      </table>
-      <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
-      <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
-        <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
-          id="all-companies-datatable_previous">Previous</a>
-        <span>
-          <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
-            tabindex="0">1</a>
-        </span>
-        <span *ngIf="current_page >= 5">...</span>
-        <span>
-          <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
-            tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
-        </span>
-        <span *ngIf="current_page <= total_pages - 5">...</span>
-        <span>
-          <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
-            (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
-        </span>
-        <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
-      </div>
-    </div>
-  </div>
-
-
-
+  <!-- tabel -->
+  <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Error Logs">
+      <og-error-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
+        *ngIf="onErrorTab"></og-error-log>
+    </mat-tab>
+    <mat-tab label="Frontend Logs">
+      <og-frontend-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
+        *ngIf="!onErrorTab"></og-frontend-log>
+    </mat-tab>
+    <!-- Date Picker Always be the Last Child -->
+    <mat-tab label="Pick Date" class="date-picker" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field>
+          <input matInput [matDatepicker]="myDatepicker" [ngModel]="dateData">
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker (selectedChanged)="applyDateChange($event)" #myDatepicker></mat-datepicker>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <!-- filter search -->
+    <mat-tab label="Filter" class="filter-search" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field *ngIf="canFilter">
+          <input matInput [(ngModel)]="searchQuery" placeholder="Filter">
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <!-- Api select -->
+    <mat-tab label="API Options" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field>
+          <mat-select placeholder="Select API" (selectionChange)="changeAPISource()" [(ngModel)]="APISource">
+            <mat-option *ngFor="let api of APIs" [value]="api.value">
+              {{ api.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
-<div id="pending-item" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content modal-bg">
-      <div class="modal-header">
-        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
-          <i class="material-icons">close</i>
-        </button>
-        <h5 class="modal-title">Error Log Details</h5>
-      </div>
-      <div class="modal-body">
-        <div class="sahil-material" *ngIf="selected">
-          <textarea *ngIf="!dataIsObject" [innerHTML]="selected" [readonly]="true" rows="10" style="width:100%"></textarea>
-          <span *ngIf="dataIsObject">
-            <div *ngFor="let key of generateKeys(selected)">
-              <p>
-                <i>{{ key + ' :- ' }}</i>
-                <span [innerHTML]="selected[key]"></span>
-              </p>
-            </div>
-          </span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-basic" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<og-modal [modalData]="modalData"></og-modal>
