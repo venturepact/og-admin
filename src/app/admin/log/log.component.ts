@@ -1,202 +1,84 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { AdminService } from '../../shared/services/admin.service';
+import { Component, OnInit, AfterViewInit, NgModule } from "@angular/core";
+import { AdminService } from "../../shared/services/admin.service";
 import { Router } from "@angular/router";
 import { CookieService, Script } from "../../shared/services";
-import { Datatable } from '../../shared/interfaces/datatable.interface';
-
-declare var jQuery: any;
-declare var window: any;
+import { Datatable } from "../../shared/interfaces/datatable.interface";
 
 @Component({
-  selector: 'error-log',
-  templateUrl: './log.component.html',
-  styleUrls: ['./log.component.css'
-    , '../../site/components/+analytics/assets/css/daterangepicker.css',
-    './../search-calc/search-calc.component.css']
+  selector: "log",
+  templateUrl: "./log.component.html",
+  styleUrls: [
+    "./log.component.css",
+    "../../site/components/+analytics/assets/css/daterangepicker.css",
+    "./../search-calc/search-calc.component.css"
+  ]
 })
-
-
-
 export class LogComponent extends Datatable {
-  scriptLoaded = false;
   apiSelect: string;
-  logs: Array<String>;
-  message: String;
-  folderName: String;
-  dateme: string;
-  firsTime = true;
-  selected: any;
-  isLoading = false;
-  searchQuery: string;
-  searchON = true;
   apiSwitched: boolean;
-  dataIsObject = false;
-  
-  constructor(public _script: Script, public _adminService: AdminService,
-    public _cookieService: CookieService, public router: Router) {
+
+  APIs = [
+    {value: 'default', viewValue: 'Default'},
+    {value: 'LIVE_API', viewValue: 'Live API'}
+  ];
+
+  // Base Values
+  modalData: any;
+  dateData: any;
+  onErrorTab = true;
+  searchQuery: string = "";
+  APISource = "default";
+
+  constructor(
+    public _script: Script,
+    public _adminService: AdminService,
+    public _cookieService: CookieService,
+    public router: Router
+  ) {
     super();
-    if (this._cookieService.readCookie('storage')) {
-      let storage = JSON.parse(this._cookieService.readCookie('storage'));
+    if (this._cookieService.readCookie("storage")) {
+      let storage = JSON.parse(this._cookieService.readCookie("storage"));
       if (storage.user.sub_role !== null)
-        this.router.navigate(['/admin/users']);
+        this.router.navigate(["/admin/users"]);
     }
   }
 
   ngOnInit() {
-    this.loadScripts(); // remomve this
-    this._adminService.getlogType().subscribe((data) => {
-      this.folderName = data || 'errorLogs';
-      let dateObj = new Date();
-      let dateString = this.formateDate(dateObj);
-      this.dateme = dateString; // here
-      this.requestForLog(this.dateme, this.folderName);
-    });
-
-    let $cont = jQuery('#logContainer');
-    $cont[0].scrollTop = $cont[0].scrollHeight;
-  };
-  loadScripts() {
-    this._script.load('datatables', 'daterangepicker')
-      .then((data) => {
-        this.scriptLoaded = true;
-        // this.requestForLog(this.dateme, this.folderName);
-      })
-      .catch((error) => {
-        console.log('Script not loaded', error);
-      });
-
-    jQuery('.modal').on('hidden.bs.modal', function () {
-      this.error = false;
-      this.errorMessage = '';
-    });
-    jQuery('.daterangepicker').click(() => {
-      alert('select date');
-    })
+    this.dateData = this.formatDate(new Date());
+    // console.log('logs')
+    // this.updateFilterOptions();
   }
 
-  requestForLog(dateString, folder) {
-    let obj = {
-      limit: this.current_limit,
-      page: this.current_page - 1,
-      // searchKey: this.search,
-      selectedDate: dateString,
-      folder: folder,
-      searchKey: this.searchQuery,
-      isFirstTime: this.firsTime
-    };
-    this.isLoading = true;
-    this.message = 'loading...';
-    this._adminService.getLog(this.apiSelect, obj).subscribe((response) => {
-      this.logs = response.logs;
-      this.apiSwitched = false;
-      this.isLoading = false;
-      this.searchON = false;
-      this.total_pages = Math.ceil(response.count / this.current_limit);
-      this.message = '';
-    }, (error) => {
-      this.errorHandler();
-    });
+  tabChanged(e) {
+    this.onErrorTab = !this.onErrorTab;
+    this.searchQuery = "";
+    this.dateData = this.formatDate(new Date());
+    this.APISource = "default";
   }
 
-  errorHandler() {
-    if (this.apiSwitched) {
-      window.toastNotification("API Not Responding!...");
-    } else {
-      window.toastNotification("No log found!...");
-    }
-    this.isLoading = false;
-    this.searchON = true; // disabling search while true
-    this.logs = [];
-  }
 
-  formateDate(d) {
-    let month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
+  // @desc: Format Date to Kabab-Case style to load the correct file
+  formatDate(d) {
+    let month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
       year = d.getFullYear();
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
 
-    return [year, month, day].join('-');
+    return [year, month, day].join("-");
   }
 
-  onDateSelect(date: any) {
-    this.firsTime = true;
+  // @desc: API Change Request
+  changeAPISource() {
     this.searchQuery = "";
-    this.reset();
-    this.dateme = date.start_date;
-    this.requestForLog(this.dateme, this.folderName);
+    this.dateData = this.formatDate(new Date());
+    this._adminService.API_URL_SUBJECT.next(this.APISource);
   }
 
-  onRefresh() {
-    this.firsTime = true;
+  // @desc: Apply Date Change
+  applyDateChange(date) {
     this.searchQuery = "";
-    let dateObj = new Date();
-    this.setDateInDatePicker(dateObj);
-    this.reset();
-    this.dateme = this.formateDate(dateObj);
-    this.requestForLog(this.dateme, this.folderName);
-  }
-
-  setDateInDatePicker(date) {
-    jQuery('.input-daterange-datepicker.datepicker-outer[name=daterange]').val(
-      `${("0" + (date.getMonth() + 1)).slice(-2)}/${("0" + date.getDate()).slice(-2)}/${date.getFullYear()}`
-    );
-  }
-  paging(num: number) {
-    this.firsTime = false;
-    super.paging(num);
-    this.requestForLog(this.dateme, this.folderName);
-  }
-  //
-  previous() {
-    this.firsTime = false;
-    super.previous();
-    this.requestForLog(this.dateme, this.folderName);
-  }
-  //
-  next() {
-    this.firsTime = false;
-    super.next();
-    this.requestForLog(this.dateme, this.folderName);
-  }
-
-  limitChange(event: any) {
-    this.firsTime = false;
-    super.limitChange(event);
-    this.requestForLog(this.dateme, this.folderName);
-  }
-
-  searchData() {
-    if (this.searchQuery || this.searchQuery.length > 2 || this.searchQuery.length === 0) {
-      super.searchData();
-      this.firsTime = false;
-      this.requestForLog(this.dateme, this.folderName);
-    }
-  }
-
-  apiChange() {
-    this.apiSwitched = true;
-    this.onRefresh();
-  }
-
-  parseBody(body, logType) {
-    if (!body || body === "undefined" || logType === 'err_data') {
-      this.dataIsObject = false;
-      this.selected = body || "Data is not available."
-    } else {
-      this.dataIsObject = true;
-      this.selected = JSON.parse(body);
-    }
-  }
-  generateKeys(obj) {
-    return Object.keys(obj);
-  }
-
-  createDate(body) {
-    let date = body.trim().split(/[\s-\/:]+/);
-    return new Date(...date);
+    this.dateData = this.formatDate(new Date(date));
   }
 }
-
-

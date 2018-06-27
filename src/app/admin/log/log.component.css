@@ -3,7 +3,7 @@
 }
 
 .all-erorrs-container {
-  top: 100px;
+  top: 200px;
   position: relative;
   margin-left: 255px;
 }
@@ -45,7 +45,7 @@
   color: red;
 }
 
-.ab-accordion>i {
+.ab-accordion > i {
   top: 1px;
   cursor: pointer;
   right: 1px;
@@ -65,11 +65,11 @@
   width: fit-content;
 }
 
-/* .ab-select:focus > .ab-floating-label {
+.ab-select:focus > .ab-floating-label {
   color: #fb545b;
-} */
+}
 
-.ab-select>.ab-select__native-control:focus+.ab-floating-label {
+.ab-select > .ab-select__native-control:focus + .ab-floating-label {
   color: #fb545b;
   left: 0.4em;
   top: -70px;
@@ -78,7 +78,7 @@
   padding: 0px 2px;
 }
 
-.ab-select>.ab-select__native-control.ng-dirty+.ab-floating-label {
+.ab-select > .ab-select__native-control.ng-dirty + .ab-floating-label {
   color: #fb545b;
   left: 0.4em;
   top: -70px;
@@ -87,7 +87,7 @@
   padding: 0px 2px;
 }
 
-.ab-select>.ab-select__native-control {
+.ab-select > .ab-select__native-control {
   display: block;
   margin: 0px 0px;
   top: 0px;
@@ -101,7 +101,7 @@
   font-weight: bolder;
 }
 
-.ab-select>.ab-floating-label {
+.ab-select > .ab-floating-label {
   position: relative;
   top: -52px;
   font-size: 1.5em;
@@ -121,7 +121,7 @@
   width: fit-content;
 }
 
-.ab-input-search>.ab-floating-label {
+.ab-input-search > .ab-floating-label {
   position: relative;
   left: 12px;
   background-color: white;
@@ -130,7 +130,7 @@
   padding: 0px 4px;
 }
 
-.ab-input-search>.ab-icon {
+.ab-input-search > .ab-icon {
   position: relative;
   float: right;
   top: 0px;
@@ -141,9 +141,80 @@
   background-color: whitesmoke;
 }
 
-.ab-input-search>input {
+.ab-input-search > input {
   display: block;
   height: 3em;
   padding: 1em;
   width: 20em;
+}
+
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+
+/* For Material Table */
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.checkk {
+  border: #222 solid 2px;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+i {
+  color: #673ab7;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.ab-filter {
+  border: 2px solid;
+  position: relative;
+  top: -316px;
+  width: 16em;
+  height: 22em;
+  display: block;
+  background-color: white;
+}
+
+.ab-filter > label {
+  display: block;
+  position: relative;
+  text-align: center;
+  padding: 1em;
+  background: tomato;
+  box-shadow: 0px 0px 8px 0px;
+  border-radius: 0em 0em 0.2em 0.2em;
+}
+
+.mat-tab-label {
+  height: fit-content;
 }

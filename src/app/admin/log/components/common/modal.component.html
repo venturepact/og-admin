@@ -1,0 +1,29 @@
+<div id="pending-item" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal-bg">
+            <div class="modal-header">
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+                <h5 class="modal-title">Error Log Details</h5>
+            </div>
+            <div class="modal-body">
+                <div class="sahil-material" *ngIf="selected">
+                    <textarea *ngIf="!dataIsObject" [innerHTML]="selected" [readonly]="true" rows="10" style="width:100%"></textarea>
+                    <span *ngIf="dataIsObject">
+                        <div *ngFor="let key of generateKeys(selected)">
+                            <p>
+                                <i>{{ key + ' :- ' }}</i>
+                                <code [innerHTML]="selected[key]" style="word-wrap:break-word;"></code>
+                            </p>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-basic" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
