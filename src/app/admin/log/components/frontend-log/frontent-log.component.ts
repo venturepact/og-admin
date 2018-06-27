@@ -27,6 +27,9 @@ export class FrontentLogComponent {
 
   // EventEmitter for Modal
   @Output() openModel: EventEmitter<any> = new EventEmitter();
+  @Output() filterChange: EventEmitter<boolean> = new EventEmitter();
+  @Input()
+  filter = true;
 
   // Date Data
   @Input()
@@ -35,9 +38,10 @@ export class FrontentLogComponent {
   searchQuery: any;
   @Input()
   APISource: any;
+  @Input()
+  logsPresent = true;
 
   scriptLoaded: boolean;
-  logsPresent = true;
   logs: any;
   isLoading = false;
   apiSwitched = false;
@@ -122,6 +126,7 @@ export class FrontentLogComponent {
       this.logs = response.logs;
       this.isLoading = false;
       this.logsPresent = true;
+      this.filterChange.emit(true);
       this.dataSource = new MatTableDataSource(this.logs);
       this.paginator.length = response.count;
     },
@@ -162,11 +167,11 @@ export class FrontentLogComponent {
     } else {
       window.toastNotification("No log found!...");
     }
-    this.logsPresent = false;
     this.isLoading = false;
     this.paginator.length = 0;
     this.paginator.pageSizeOptions = [];
     this.logsPresent = false;
+    this.filterChange.emit(false);
     this.logs = [];
   }
 }

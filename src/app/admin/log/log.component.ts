@@ -28,6 +28,7 @@ export class LogComponent extends Datatable {
   onErrorTab = true;
   searchQuery: string = "";
   APISource = "default";
+  canFilter = true;
 
   constructor(
     public _script: Script,
@@ -45,8 +46,6 @@ export class LogComponent extends Datatable {
 
   ngOnInit() {
     this.dateData = this.formatDate(new Date());
-    // console.log('logs')
-    // this.updateFilterOptions();
   }
 
   tabChanged(e) {
@@ -54,6 +53,7 @@ export class LogComponent extends Datatable {
     this.searchQuery = "";
     this.dateData = this.formatDate(new Date());
     this.APISource = "default";
+    this.changeAPISource();
   }
 
 

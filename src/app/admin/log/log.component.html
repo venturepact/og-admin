@@ -7,11 +7,21 @@
   <!-- tabel -->
   <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
     <mat-tab label="Error Logs">
-      <og-error-log [APISource]="APISource" [searchQuery]="searchQuery" [dateData]="dateData" (openModel)="modalData = $event"
+      <og-error-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
         *ngIf="onErrorTab"></og-error-log>
     </mat-tab>
     <mat-tab label="Frontend Logs">
-      <og-frontend-log [APISource]="APISource" [searchQuery]="searchQuery" [dateData]="dateData" (openModel)="modalData = $event"
+      <og-frontend-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
         *ngIf="!onErrorTab"></og-frontend-log>
     </mat-tab>
     <!-- Date Picker Always be the Last Child -->
@@ -27,7 +37,7 @@
     <!-- filter search -->
     <mat-tab label="Filter" class="filter-search" disabled>
       <ng-template mat-tab-label>
-        <mat-form-field>
+        <mat-form-field *ngIf="canFilter">
           <input matInput [(ngModel)]="searchQuery" placeholder="Filter">
         </mat-form-field>
       </ng-template>

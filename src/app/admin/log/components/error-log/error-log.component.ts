@@ -28,6 +28,10 @@ export class ErrorLogComponent {
 
   // EventEmitter for Modal
   @Output() openModel: EventEmitter<any> = new EventEmitter();
+  @Output() filterChange: EventEmitter<boolean> = new EventEmitter();
+  @Input()
+  filter = true;
+  logsPresent = true;
 
   // Date Data
   @Input() // experimental
@@ -46,7 +50,6 @@ export class ErrorLogComponent {
   folderName: String;
   firsTime = true;
   isLoading = false;
-  logsPresent = true;
 
   // From API
   paginatorON = true;
@@ -103,6 +106,7 @@ export class ErrorLogComponent {
       response => {
         this.logs = response.logs;
         this.logsPresent = true;
+        this.filterChange.emit(true);
         this.dataSource = new MatTableDataSource(this.logs);
         this.paginator.length = response.count;
         this.apiSwitched = false;
@@ -190,6 +194,7 @@ export class ErrorLogComponent {
     this.paginator.pageSizeOptions = [];
     this.paginatorON = false;
     this.logsPresent = false;
+    this.filterChange.emit(false);
     this.logs = [];
   }
 }
