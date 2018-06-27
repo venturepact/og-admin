@@ -5,8 +5,8 @@
   
 </div>
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <!-- <div class="col-md-4"></div> -->
+  <div class="col-md-12">
       <div id="table" style="padding:20px">
           <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer" style="width: 84%;">
             <div class="dataTables_length" id="table-dataTables_length">
@@ -25,18 +25,61 @@
                 <table class="dataTable">
                   <thead>
                     <tr>
-                      <th>
-                        Url 
-                      </th>
-                      <th>
-                        Apps
-                      </th>
+                      <tr>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          live Url
+                        </th>
+                        <th>
+                          media
+                        </th>
+                        <th>
+                          Type
+                        </th>
+                        <th>
+                          Template
+                        </th>
+                        <th>
+                          Launch Date
+                        </th>
+                        <th>
+                          Created Date
+                        </th>
+                        <th>
+                          Industry
+                        </th>
+                        <th>
+                          App Count
+                        </th>
                     </tr>
                   </thead>
                   <tbody class="custom-tbody">
                     <tr *ngFor="let premade of premades;let i=index;">
                       <td>
-                        {{premade._id}}
+                        {{premade.premade.title}}
+                      </td>
+                      <td>
+                        {{premade.premade.liveApp?.url}}
+                      </td>
+                      <td>
+                        <img width="100px" [src]="premade.premade.media" alt="not found" />
+                      </td>
+                      <td>
+                        {{premade.premade.type}}
+                      </td>
+                      <td>
+                        {{getTemplateType(premade.premade?.template,'selector')}}
+                      </td>
+                      <td [ngClass]="!premade.premade.launch_date ? 'text-center' : ''">
+                        {{premade.premade?.launch_date ? mt(premade.premade?.launch_date).format('DD-MM-YYYY') : '----'}}
+                      </td>
+                      <td [ngClass]="!premade.premade.created_at ? 'text-center' : ''">
+                        {{premade.premade?.created_at ? mt(premade.premade?.created_at).format('DD-MM-YYYY') : '----'}}
+                      </td>
+                      <td>
+                        {{premade.premade.industry}}
                       </td>
                       <td>
                           <a href="javascript:void(0);" data-toggle="modal" 
@@ -51,7 +94,7 @@
         </div>
       
   </div>
-  <div class="col-md-4"></div>
+  <!-- <div class="col-md-4"></div> -->
   
 </div>
 <div id="app_details"  class="modal fade"  tabindex="-1" role="dialog">

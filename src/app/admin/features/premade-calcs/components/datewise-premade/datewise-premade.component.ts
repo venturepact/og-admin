@@ -14,6 +14,8 @@ declare var jQuery: any;
 export class DatewisePremadeComponent extends Datatable implements OnInit {
   loading: boolean = true;
   mt = moment;
+  templates = [];
+  
   constructor(public _adminService: AdminService,public _script:Script) {
     super();
   }
@@ -56,6 +58,7 @@ export class DatewisePremadeComponent extends Datatable implements OnInit {
       console.log(data, ">>>>>>>>");
       this.premades = data;
       this.loading = false;
+      this.templates = this._adminService.availableTemplates;
     }, error => {
       this.loading = false;
     })
@@ -67,5 +70,15 @@ export class DatewisePremadeComponent extends Datatable implements OnInit {
   }
   getLink(sub_domain, url) {
     return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
+  }
+  getTemplateType(name, prop) {
+    if (!name) return this.templates[0][(prop == 'selector') ? 'name' : 'selector'];
+    let item = this.templates.find((value) => {
+      if (prop == 'name') {
+        return value[prop] == `The ${name}`
+      }
+      return value[prop] == name;
+    })
+    return item[(prop == 'selector') ? 'name' : 'selector'];
   }
 }
