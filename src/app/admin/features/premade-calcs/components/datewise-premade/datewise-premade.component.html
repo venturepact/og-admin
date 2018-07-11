@@ -1,6 +1,6 @@
 <div class="row" style="padding: 15px 0 10px 0;">
   <div class="col-md-4 text-center"><input id="date_picker_premade" type="text"/></div>
-  <div class="col-md-4">&nbsp;</div>
+  <div class="col-md-4"><span *ngIf="appCounts">Total Apps : {{appCounts }}</span></div>
   <div class="col-md-4">&nbsp;</div>
   
 </div>
@@ -58,28 +58,28 @@
                   <tbody class="custom-tbody">
                     <tr *ngFor="let premade of premades;let i=index;">
                       <td>
-                        {{premade.premade.title}}
+                        {{premade?.premade?.title}}
                       </td>
                       <td>
-                        {{premade.premade.liveApp?.url}}
+                        {{premade?.premade?.liveApp?.url}}
                       </td>
                       <td>
-                        <img width="100px" [src]="premade.premade.media" alt="not found" />
+                        <img width="100px" [src]="premade?.premade?.media" alt="not found" />
                       </td>
                       <td>
-                        {{premade.premade.type}}
+                        {{premade?.premade?.type}}
                       </td>
                       <td>
-                        {{getTemplateType(premade.premade?.template,'selector')}}
+                        {{getTemplateType(premade?.premade?.template,'selector')}}
                       </td>
-                      <td [ngClass]="!premade.premade.launch_date ? 'text-center' : ''">
-                        {{premade.premade?.launch_date ? mt(premade.premade?.launch_date).format('DD-MM-YYYY') : '----'}}
+                      <td [ngClass]="!premade?.premade?.launch_date ? 'text-center' : ''">
+                        {{premade?.premade?.launch_date ? mt(premade?.premade?.launch_date).format('DD-MM-YYYY') : '----'}}
                       </td>
-                      <td [ngClass]="!premade.premade.created_at ? 'text-center' : ''">
-                        {{premade.premade?.created_at ? mt(premade.premade?.created_at).format('DD-MM-YYYY') : '----'}}
+                      <td [ngClass]="!premade?.premade?.created_at ? 'text-center' : ''">
+                        {{premade?.premade?.created_at ? mt(premade?.premade?.created_at).format('DD-MM-YYYY') : '----'}}
                       </td>
                       <td>
-                        {{premade.premade.industry}}
+                        {{premade?.premade?.industry}}
                       </td>
                       <td>
                           <a href="javascript:void(0);" data-toggle="modal" 
