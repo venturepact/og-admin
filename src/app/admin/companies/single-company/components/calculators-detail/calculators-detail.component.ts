@@ -15,7 +15,7 @@ declare var jQuery: any;
 
 export class CalculatorDetailComponent implements AfterViewInit {
   id: string;
-  calc_details: Object = [];
+  calc_details = [];
   generateKeys = Object.keys;
   event: any = {};
 
@@ -51,7 +51,7 @@ export class CalculatorDetailComponent implements AfterViewInit {
   tableInit() {
     this.adminService.getCompanyProjects(this.company.sub_domain)
       .subscribe((result) => {
-          this.calc_details =  this.getAppsFromFolders(result['folders'], result['leaves']);
+          this.calc_details = this.getAppsFromFolders(result['folders'], result['leaves']);
           this.getAppsScore();
           setTimeout(function () {
             jQuery('#calc-datatable').DataTable();
@@ -89,7 +89,6 @@ export class CalculatorDetailComponent implements AfterViewInit {
         )
     }
   }
-
   getAppsFromFolders(folderArr, leaves) {
     return [...leaves, ...folderArr.reduce((acc, folder) => {
       acc.push(...folder['apps']);

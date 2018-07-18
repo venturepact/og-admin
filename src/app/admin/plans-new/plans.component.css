@@ -17,8 +17,6 @@
 .panel-body input[type=checkbox]:checked + label { text-decoration: line-through;color: rgb(128, 144, 160); }
 .list-group-item:hover, a.list-group-item:focus {text-decoration: none;background-color: rgb(245, 245, 245);}
 .list-group { margin-bottom:0px; }
-#plansBox{
-    position: relative;
-    top: 10px;
-    left: 160px;
-}
+#plansBox{ position: relative; top: 10px;  left: 160px;}
+.loader-outer{position: absolute; height: 100vh; width: 100%; background: #fff; overflow: hidden; top: 60px;}
+.loader-position{    position: absolute;  left: 40%;  top: 20%;}    

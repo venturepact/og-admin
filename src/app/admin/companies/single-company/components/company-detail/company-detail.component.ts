@@ -101,13 +101,16 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   getCurrentSubscription() {
-    this._membershipService.getplanSubscription(this.id).subscribe((result: any) => {
-      if(result.currentplan.subscription.cf_non_cb_payments && result.currentplan.subscription.cf_non_cb_payments == 'True')
-        this.non_cb_payment = true;
-      else
-        this.non_cb_payment = false;
+    this._membershipService.getplanSubscription(this.id)
+      .subscribe((result: any) => {
+        if(result.currentplan.subscription.cf_non_cb_payments && result.currentplan.subscription.cf_non_cb_payments == 'True')
+          this.non_cb_payment = true;
+        else
+          this.non_cb_payment = false;
+        // result.currentplan.subscription;
       });
   }
+
   changeNCbP() {
     this.non_cb_payment = !this.non_cb_payment;
     this.loading = true;

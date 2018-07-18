@@ -54,7 +54,6 @@ import { IntegrationLogDetailsComponent } from "./integration-logs/integration-l
 import { HelloBarComponent } from "./hello-bar/hello-bar.component";
 import { EditHelloBarComponent } from "./hello-bar/edit-hello-bar/edit-hello-bar.component";
 import { AutologinTokenComponent } from "./sitesettings/autologin-token/autologinToken.component";
-import { CacheHandlingComponent } from "./cache-handling/cache-handling.component";
 import { MaterialModule } from "./../shared/modules/material.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ErrorLogComponent } from "./log/components/error-log/error-log.component";
@@ -62,6 +61,10 @@ import { FrontentLogComponent } from "./log/components/frontend-log/frontent-log
 import { ModalComponent } from "./log/components/common/modal.component";
 import { EventsService } from '../shared/services/events.service';
 import { EventsComponent } from './events/events.component';
+import { LayoutPreviewComponent } from './layout-preview/layout-preview.component';
+import { LayoutService } from './../shared/services/layoutPreview.service';
+import { SheetsComponent } from './sheets/sheets.component';
+import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
 
 @NgModule({
   imports: [
@@ -114,7 +117,9 @@ import { EventsComponent } from './events/events.component';
     ErrorLogComponent,
     FrontentLogComponent,
     ModalComponent,
-    EventsComponent
+    EventsComponent,
+    LayoutPreviewComponent,
+    SheetsComponent
   ],
 
   providers: [
@@ -128,7 +133,8 @@ import { EventsComponent } from './events/events.component';
     FeatureAuthService,
     PremaidService,
     PremadeCalcService,
-    EventsService
+    EventsService,
+    LayoutService
   ]
 })
 export class AdminModule {}

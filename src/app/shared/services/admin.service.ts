@@ -684,29 +684,21 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  clearCache(keys) {
-    return this._http
-      .delete(`${this._url}/cache/clear/`, { body: { urls: keys } })
-      .map(this.extractData);
+  clearCache(id:any){
+    // let urls = []
+    //   urls.push(id)
+    //   console.log(urls)
+    return this._http.delete(`${this._url}/cache/clear/`,{body:{urls:id}})
+      .map(this.extractData)
   }
-
-  getAppsCreatedByPremade(url) {
-    return this._http
-      .get(
-        `${this._url}/admin/getAppsCreatedByPremade/${url}`,
-        this.get_options()
-      )
+  getAppsCreatedByPremade(url){
+    return this._http.get(`${this._url}/admin/getAppsCreatedByPremade/${url}`,this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   changeNCbP(id, ncbp) {
-    return this._http
-      .put(
-        `${this._url}/admin/updateNCbP/${id}`,
-        { cf_non_cb_payments: ncbp },
-        this.putOptions()
-      )
+    return this._http.put(`${this._url}/admin/updateNCbP/${id}`, {cf_non_cb_payments: ncbp}, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }

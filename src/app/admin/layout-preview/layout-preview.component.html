@@ -1,0 +1,55 @@
+<div>
+  <div *ngIf="loading">
+    <div>
+      <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+    </div>
+  </div>
+  <div *ngIf="!loading">
+    <ul style="margin-top: 3%;margin-left:35%;">
+      <li *ngFor="let templateType of templateTypes" style="display:inline;">
+        <a href="javascript:void(0);" class="hvr-underline-from-left" (click)="slectedType(templateType)"> &nbsp;{{templateType}}</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      </li>
+    </ul>
+    <br>
+    <br>
+    <div id="table" *ngIf="selectLayout" style="margin-left:30%;">
+      <div id="table-datatable_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                Template Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </th>
+              <th>
+                Template&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </th>
+              <th>
+                  Url&nbsp;&nbsp;&nbsp;&nbsp;
+                </th>
+              <th>
+                Save
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of layoutDetails[selectLayout]; let i = index;">
+              <td>
+                {{item.templateType}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </td>
+              <td>
+                {{item.template}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </td>
+              <td>
+                <input type="text" placeholder="enter live link ex: http://live.outgrow.us/biplab-1" [(ngModel)]="layoutDetails[selectLayout][i].url"
+                />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" style="margin-top: 10%;" [disabled]="!layoutDetails[selectLayout][i].url" (click)="saveUrl(i)">Save</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

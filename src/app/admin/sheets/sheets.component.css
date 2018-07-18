@@ -1,0 +1,30 @@
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-top: 41px;
+    margin-left:100px;
+    
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color:#fb5559;
+    color: white;
+}
+ .sheet-View, .reset-sheet, .export-view {
+    margin-left:269px;
+}
+.reset-search, .sheet-search, .export-search{
+    margin-left: 360px;
+    margin-top: 60px;
+}
+ul li {
+    list-style-type: disc;
+  }
+  
