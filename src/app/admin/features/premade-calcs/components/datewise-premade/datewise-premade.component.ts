@@ -15,7 +15,7 @@ export class DatewisePremadeComponent extends Datatable implements OnInit {
   loading: boolean = true;
   mt = moment;
   templates = [];
-  
+  appCounts=0;
   constructor(public _adminService: AdminService,public _script:Script) {
     super();
   }
@@ -59,6 +59,12 @@ export class DatewisePremadeComponent extends Datatable implements OnInit {
       this.premades = data;
       this.loading = false;
       this.templates = this._adminService.availableTemplates;
+      this.appCounts = data.reduce((acc,p)=>{
+        if(p['apps'] && p['apps'].length){
+          acc+=p['apps'].length;
+        }
+        return acc;
+      },0);
     }, error => {
       this.loading = false;
     })
