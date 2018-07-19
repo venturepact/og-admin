@@ -51,14 +51,17 @@ import { SharedModule } from "../shared/modules/shared.module";
 import { IntegrationLogsComponent } from './integration-logs/integration-logs.component';
 import { IntegrationLogDetailsComponent } from './integration-logs/integration-log-details/integration-log-details.component';
 
-import {HelloBarComponent} from "./hello-bar/hello-bar.component";
-import {EditHelloBarComponent} from "./hello-bar/edit-hello-bar/edit-hello-bar.component";
+import { HelloBarComponent } from "./hello-bar/hello-bar.component";
+import { EditHelloBarComponent } from "./hello-bar/edit-hello-bar/edit-hello-bar.component";
 import { AutologinTokenComponent } from "./sitesettings/autologin-token/autologinToken.component";
+import { LayoutPreviewComponent } from './layout-preview/layout-preview.component';
+import { LayoutService } from './../shared/services/layoutPreview.service';
+import { SheetsComponent } from './sheets/sheets.component';
 import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
 
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES), SharedModule, PlanModule, SubDomainModule, SingleCompanyModule,
-    SingleUserModule, UtilitiesModule, SingleadminModule, FeaturesModule,PlansNewModule],
+    SingleUserModule, UtilitiesModule, SingleadminModule, FeaturesModule, PlansNewModule],
 
   declarations: [AdminComponent, HomeComponent, SidebarComponent, BasicComponent, ToolbarComponent,
     AllUsersComponent, AllCompaniesComponent, EmailLogsComponent, LeadsComponent, CouponsComponent,
@@ -66,10 +69,9 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     SearchCalcComponent, LogComponent, LocalesAdminComponent, CustomJsApprovalsComponent, SubAdminComponent,
     PromotionChecklist, DealsComponent, PromoGoalsComponent, LondonerComponent,
     SpecialDealComponent, IntegrationLogsComponent, IntegrationLogDetailsComponent, PremaidComponent,
-    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, CacheHandlingComponent],
-
+    HelloBarComponent, EditHelloBarComponent, AutologinTokenComponent, LayoutPreviewComponent, SheetsComponent,CacheHandlingComponent],
   providers: [AdminService, CompanyService, UserService, LocaleService, CalculatorAnalytics,
-    JSONCompare, LondonerService, FeatureAuthService, PremaidService,PremadeCalcService]
+    JSONCompare, LondonerService, FeatureAuthService, PremaidService, PremadeCalcService, LayoutService]
 })
 
 export class AdminModule {
