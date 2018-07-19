@@ -47,7 +47,7 @@ export class SubDomainService extends BaseService{
 
   subDomainExists():Promise<any> {
     if (this.subDomain.is_sub_domain_url ) {
-      var promise = this._companyService.isSubDomainExist(this.subDomain.sub_domain).toPromise()
+      var promise = this._companyService.getCompanyBySubdomain(this.subDomain.sub_domain).toPromise()
       promise.then((result: any) => {
             this.setCurrentCompany(result);
             // console.log('subDomainExists CURRENT COMPANY SUBDOMAIN', this.currentCompany);

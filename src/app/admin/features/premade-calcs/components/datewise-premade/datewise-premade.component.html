@@ -1,0 +1,173 @@
+<div class="row" style="padding: 15px 0 10px 0;">
+  <div class="col-md-4 text-center"><input id="date_picker_premade" type="text"/></div>
+  <div class="col-md-4"><span *ngIf="appCounts">Total Apps : {{appCounts }}</span></div>
+  <div class="col-md-4">&nbsp;</div>
+  
+</div>
+<div class="row">
+  <!-- <div class="col-md-4"></div> -->
+  <div class="col-md-12">
+      <div id="table" style="padding:20px">
+          <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer" style="width: 84%;">
+            <div class="dataTables_length" id="table-dataTables_length">
+            </div>
+            <div style="clear:both"></div>
+            <div *ngIf="loading" >
+              <div>
+                <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+              </div>
+            </div>
+            <div class="premade-scroller">
+              <div *ngIf="!loading && premades.length==0">
+                No Record Found...
+              </div>
+              <div *ngIf="!loading && premades.length>0">
+                <table class="dataTable">
+                  <thead>
+                    <tr>
+                      <tr>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          live Url
+                        </th>
+                        <th>
+                          media
+                        </th>
+                        <th>
+                          Type
+                        </th>
+                        <th>
+                          Template
+                        </th>
+                        <th>
+                          Launch Date
+                        </th>
+                        <th>
+                          Created Date
+                        </th>
+                        <th>
+                          Industry
+                        </th>
+                        <th>
+                          App Count
+                        </th>
+                    </tr>
+                  </thead>
+                  <tbody class="custom-tbody">
+                    <tr *ngFor="let premade of premades;let i=index;">
+                      <td>
+                        {{premade?.premade?.title}}
+                      </td>
+                      <td>
+                        {{premade?.premade?.liveApp?.url}}
+                      </td>
+                      <td>
+                        <img width="100px" [src]="premade?.premade?.media" alt="not found" />
+                      </td>
+                      <td>
+                        {{premade?.premade?.type}}
+                      </td>
+                      <td>
+                        {{getTemplateType(premade?.premade?.template,'selector')}}
+                      </td>
+                      <td [ngClass]="!premade?.premade?.launch_date ? 'text-center' : ''">
+                        {{premade?.premade?.launch_date ? mt(premade?.premade?.launch_date).format('DD-MM-YYYY') : '----'}}
+                      </td>
+                      <td [ngClass]="!premade?.premade?.created_at ? 'text-center' : ''">
+                        {{premade?.premade?.created_at ? mt(premade?.premade?.created_at).format('DD-MM-YYYY') : '----'}}
+                      </td>
+                      <td>
+                        {{premade?.premade?.industry}}
+                      </td>
+                      <td>
+                          <a href="javascript:void(0);" data-toggle="modal" 
+                          data-target="#app_details" (click)="setSelectUrl(premade)">{{premade?.apps?.length}}</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+  </div>
+  <!-- <div class="col-md-4"></div> -->
+  
+</div>
+<div id="app_details"  class="modal fade"  tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content modal-bg">
+        <div class="modal-header">
+          <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+            <i class="material-icons">close</i>
+          </button>
+          <h5 class="modal-title">Apps Created From Premade Calculator</h5>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="!selected['apps']">
+            <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+          </div>
+          <div *ngIf="selected['apps'] && !selected['apps'].length;else apps">
+            No Premades
+          </div>
+          <ng-template #apps>
+            <div>
+              <div class="alert alert-danger custom-alert" *ngIf="errorMessage">{{errorMessage}}</div>
+              <div id="appDeatilsPicker">
+                
+                <table class="dataTable">
+                  <thead>
+                    <tr>
+                      <th>
+                        SubDomain
+                      </th>
+                      <th>
+                        Title
+                      </th>
+                      <th>
+                        Link
+                      </th>
+                      <th>
+                        create date
+                      </th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody class="custom-tbody">
+                    <tr *ngFor="let app of selected['apps'];let i=index;">
+                      <td>
+                        <a target="_blank" [routerLink]="['/admin/company',app.company._id]">
+                        {{app?.company[0]?.sub_domain}}                      
+                        </a>
+                      </td>
+                      <td>
+                        {{app?.title}}
+                      </td>
+                      <td *ngIf="app['liveApp'];else noLink">
+                        <a [href]="getLink(app?.company[0].sub_domain || '',app.url || '')" target="_blank">{{app.url}}</a>
+                      </td>
+                      <ng-template #noLink>
+                        <td>
+                          {{app.url}}
+                        </td>
+                      </ng-template>
+                      <td>
+                        {{mt(app?.createdAt).format('DD-MM-YYYY')}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </ng-template>
+          
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

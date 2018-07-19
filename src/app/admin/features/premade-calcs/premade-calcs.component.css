@@ -6,7 +6,7 @@
     width: calc(100% - 255px);
     float: left;
     margin-bottom: 50px;
-  
+
 }
 
 .dataTables_length{
@@ -100,7 +100,7 @@ ul {
         color: #fff !important;
   }
 
-  .modal .btn-red-outline.hvr-sweep-to-right:focus, 
+  .modal .btn-red-outline.hvr-sweep-to-right:focus,
   .modal .btn-red-outline.hvr-sweep-to-right:active {
       color: #fff !important;
       background: #ffb5b8 none repeat scroll 0 0 !important;
@@ -126,11 +126,16 @@ tbody.custom-tbody td
 
 
 .loader {
-    
+
     background: transparent url('http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif') center no-repeat;
 }
 .premade-scroller{
     float: left;
     width: 100%;
     overflow-y: auto;
+}
+.tab-width{
+    margin: 0;
+    float: left;
+    width: 100%;
 }

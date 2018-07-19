@@ -31,7 +31,7 @@ import { MaterialModule } from './shared/modules/material.module';
     BrowserAnimationsModule,
     MaterialModule,
     CoreModule.forRoot(),
-    SiteModule
+    SiteModule,
   ],
   providers: [APP_ROUTER_PROVIDERS],
   bootstrap: [AppComponent]

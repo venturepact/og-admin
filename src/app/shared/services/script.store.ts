@@ -53,5 +53,6 @@ export const ScriptStore: Scripts[] = [
   { name: 'progressbar', src: './../../../assets/js/jQuery-plugin-progressbar.js' },
   // { name: 'JSHINT', src: '../../../assets/js/jshint.js' },
   // { name: 'NumberedTextarea', src: '../../../assets/js/jquery.numberedtextarea.js'}
-  { name: 'ClipBoard', src: "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"}
+  { name: 'ClipBoard', src: "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"},
+  { name: "data_picker_demo" ,src : "//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js" }
 ];

@@ -702,4 +702,10 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  getPremadesDateWise(selectedDate){
+    return this._http.post(`${this._url}/admin/getPremadeDateWise`,selectedDate,this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }
