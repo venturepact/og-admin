@@ -47,7 +47,7 @@ export class SheetsComponent implements OnInit {
       offset: new Date().getTimezoneOffset(),
       lead: lead,
       userObj: {
-        primaryEmail: 'abhishek.singh@venturepact.com',
+        primaryEmail: 'admin@outgrow.co',
         name: 'admin'
       }
     };
