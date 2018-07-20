@@ -21,7 +21,7 @@ export class FeaturesService extends BaseService{
           media_link:[''],
           description:[''],
           heading:[''],
-          parent_feature:['']
+          parent_feature:[null]
         }
   }
   getFeatures(data){

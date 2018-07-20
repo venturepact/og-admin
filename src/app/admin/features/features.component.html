@@ -12,8 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-2 pull-right" style="padding:5px;">
-                    <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-feature"
-                     (click)="featureForm.reset();edit=false;">Add Feature</a>
+                    <a href="javascript:void(0);" class="btn btn-default " id="btnCalc" data-toggle="modal" data-target="#add-feature" (click)="featureForm.reset();edit=false;">Add Feature</a>
                 </div>
                 <!-- <div class="col-md-3 pull-right" style="padding:5px;">
                     <a class="btn btn-default" href="https://cdn.filestackcontent.com/2a4MRrjmT3qLoydsTCO7" target="_blank">Bulk Upload CSV Sample</a>
@@ -169,7 +168,8 @@
                     <i class="material-icons">close</i>
                 </button>
                 <h5 class="modal-title">
-                    <span *ngIf="edit">Update a feature</span><span *ngIf="!edit">Add a feature</span>
+                    <span *ngIf="edit">Update a feature</span>
+                    <span *ngIf="!edit">Add a feature</span>
                 </h5>
             </div>
             <div class="modal-body">
@@ -178,17 +178,27 @@
                     <form id="featureForm" [formGroup]="featureForm">
                         <div class="form-group label-floating">
                             <label class="control-label" for="id"> id </label>
-                            <input class="form-control" [attr.disabled]="edit?'':null" 
-                                id="id" type="text" name="id" formControlName="_id" />
+                            <input class="form-control" [attr.disabled]="edit?'':null" id="id" type="text" name="id" formControlName="_id" />
                         </div>
                         <div class="form-group label-floating">
                             <label class="control-label" for="name">Name</label>
                             <input class="form-control" id="name" type="text" name="name" formControlName="name">
                         </div>
-                        <div class="form-group label-floating">
+                        <!-- <div class="form-group label-floating">
                             <label class="control-label"  for="parent_feature">Parent Feature<span style="color:#777;font-size:12px"> (if feature haven't have parent feature then leave it empty)</span></label>
                             <input class="form-control" [attr.disabled]="(edit && (!oldFeature['parent_feature']))?'':null" id="parent_feature" 
                                 type="text" name="parent_feature" formControlName="parent_feature">
+                        </div> -->
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="parent_feature">Parent Feature
+                                <span style="color:#777;font-size:12px"> (if feature haven't have parent feature then leave it empty)</span>
+                            </label>
+
+                            <select class="form-control" id="parent_feature" formControlName="parent_feature"
+                                [attr.disabled]="(edit && (!oldFeature['parent_feature']))?'':null">
+                                <option value="null">None</option>
+                                <option *ngFor="let pf of parent_features" [value]="pf">{{pf}}</option>
+                            </select>
                         </div>
                         <!-- <div class="form-group label-floating">
                             <label class="control-label" for="media_type">Media Type</label>
@@ -197,15 +207,15 @@
                         <div class="form-group label-floating">
                             <label class="control-label" for="media_type">Media Type</label>
                             <ng-select #selections placeholder="Select Media Type" [items]="[{id:'IMAGE',text:'IMAGE'},{id:'VIDEO',text:'VIDEO'},{id:'GIF',text:'GIF'},{id:'YOUTUBE',text:'YOUTUBE'}]"
-                            (selected)="mediaType($event)" id="media_type"></ng-select>
+                                (selected)="mediaType($event)" id="media_type"></ng-select>
                         </div>
                         <div class="form-group label-floating">
-                                <label class="control-label" for="media_link">Media Link</label>
-                                <input class="form-control" id="media_link" type="text" name="media_link" formControlName="media_link">                                
+                            <label class="control-label" for="media_link">Media Link</label>
+                            <input class="form-control" id="media_link" type="text" name="media_link" formControlName="media_link">
                         </div>
                         <div class="form-group label-floating">
-                                <label class="control-label" for="heading">Heading</label>
-                                <input class="form-control" id="heading" type="text" name="heading" formControlName="heading">    
+                            <label class="control-label" for="heading">Heading</label>
+                            <input class="form-control" id="heading" type="text" name="heading" formControlName="heading">
                         </div>
                         <div class="form-group label-floating">
                             <label class="control-label" for="description">Description</label>
@@ -213,21 +223,19 @@
                         </div>
                         <div *ngIf="!edit && plans?.length > 0" class="form-group label-floating">
                             <label class="control-label" for="description">Plans</label>
-                            <ng-select #selections
-                                [allowClear]="true"
-                                [disabled]="disableSelection"
-                                placeholder="Select a plan to be duplicated"
-                                [items] = "plans"
-                                [multiple]="true"
-                                (data)="currentSelections($event)"
-                                id="plan_to_be_duplicated">
+                            <ng-select #selections [allowClear]="true" [disabled]="disableSelection" placeholder="Select a plan to be duplicated" [items]="plans"
+                                [multiple]="true" (data)="currentSelections($event)" id="plan_to_be_duplicated">
                             </ng-select>
                         </div>
-                        
-                        <button *ngIf="!edit" (click)="addfeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
-                            id="addCalulator" [disabled]="!featureForm.valid || !selectedPlans.length || disableSelection">Add</button>
-                        <button *ngIf="edit" (click)="updatefeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover"
-                            id="updateCalulator" [disabled]="!featureForm.valid || disableSelection">Update</button>
+                        <div *ngIf="edit">
+                            <span class="pLabel" *ngFor="let plan of getPlansByFeature(featureForm.get('_id').value)">{{plan}}</span>
+                        </div>
+                        <br style="clear:both" />
+                        <br/>
+                        <button *ngIf="!edit" (click)="addfeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover" id="addCalulator"
+                            [disabled]="!featureForm.valid || !selectedPlans.length || disableSelection">Add</button>
+                        <button *ngIf="edit" (click)="updatefeature(featureForm.value)" class="btn btn btn-red-outline btn-add-user btn-hover" id="updateCalulator"
+                            [disabled]="!featureForm.valid || disableSelection">Update</button>
                     </form>
                 </div>
             </div>
