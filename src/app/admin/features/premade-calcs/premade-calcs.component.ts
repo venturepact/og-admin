@@ -16,5 +16,5 @@ declare var moment: any;
   encapsulation: ViewEncapsulation.None
 })
 export class PremadeCalcsComponent{
-
+  
 }
