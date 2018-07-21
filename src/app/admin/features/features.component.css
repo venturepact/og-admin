@@ -131,7 +131,7 @@
     margin: 2px;
     border-radius: 5%;
   }
-  table.dataTable tbody td, table.dataTable tbody th{
+  #apps_created table.dataTable tbody td,#apps_created table.dataTable tbody th{
     word-wrap: break-word !important;
     word-break: break-word !important;
   }
