@@ -34,14 +34,14 @@ export class CompanyService extends BaseService {
 
   getFirstCompany(user_id: any): Observable<UsersCompany> {
     let getFirstCompany = this._url + '/users_companies/users/' + user_id;
-    return this._http.get(getFirstCompany, this.options)
+    return this._http.get(getFirstCompany, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getCompanies(): Observable<Company> {
     let getCompaniesUrl = this._url + '/users_companies/companies';
-    return this._http.get(getCompaniesUrl, this.options)
+    return this._http.get(getCompaniesUrl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -54,7 +54,7 @@ export class CompanyService extends BaseService {
       .catch(this.handleError);
   }
   getCompanyUsersForEmail(company_id: any): Observable<any> {
-    return this._http.get(this._url + '/users_companies/' + company_id + '/users', this.options)
+    return this._http.get(this._url + '/users_companies/' + company_id + '/users', this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -67,7 +67,7 @@ export class CompanyService extends BaseService {
 
   isCompanyExist(company: String): Observable<any> {
     let companyurl = this._url + '/companies/name/' + company;
-    return this._http.get(companyurl)
+    return this._http.get(companyurl,this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -89,7 +89,7 @@ export class CompanyService extends BaseService {
 
   isSubDomainExist(company: String): Observable<Company> {
     let companyurl = this._url + '/companies/sub_domain/' + company;
-    return this._http.get(companyurl)
+    return this._http.get(companyurl,this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -128,7 +128,7 @@ export class CompanyService extends BaseService {
 
   searchCompany(company: String): Observable<Company> {
     let companyurl = this._url + '/companies/list/' + company;
-    return this._http.get(companyurl, this.options)
+    return this._http.get(companyurl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -255,21 +255,21 @@ export class CompanyService extends BaseService {
 
   getCompanyHomeProjects(id: String) {
     let URL = this._url + '/dashboard/company_home_projects/' + id;
-    return this._http.get(URL)
+    return this._http.get(URL,this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getLiveCompanyProjects(company_id: String) {
     let URL = this._url + '/dashboard/live_projects/' + company_id;
-    return this._http.get(URL, this.options)
+    return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getProjectsStats(id: String) {
     let URL = this._url + '/analytic/projects_stats/' + id;
-    return this._http.get(URL, this.options)
+    return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -283,7 +283,7 @@ export class CompanyService extends BaseService {
 
   getCompanyInfo(id: number) {
     let URL = this._url + '/companies/' + id;
-    return this._http.get(URL, this.options)
+    return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
 
@@ -292,7 +292,7 @@ export class CompanyService extends BaseService {
   //Get Templates
   getTemplates() {
     let getPlanUrl = this._url + '/dashboard/get_templates';
-    return this._http.get(getPlanUrl)
+    return this._http.get(getPlanUrl,this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -307,7 +307,7 @@ export class CompanyService extends BaseService {
   }
 
   getHellobarMessage() {
-    return this._http.get(this._url + '/selectedHellobar', this.options)
+    return this._http.get(this._url + '/selectedHellobar', this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -325,7 +325,7 @@ export class CompanyService extends BaseService {
 
   checkCnameExist(company :any){
     let URL = this._url + '/companies/cname/'  + company;
-      return this._http.get(URL, this.options)
+      return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -345,7 +345,7 @@ export class CompanyService extends BaseService {
     return this.companyTemplates.asObservable();
   }
   getCustomFeatures(company_id){
-    return this._http.get(`${this._url}/company/${company_id}/custom_features`, this.get_options())
+    return this._http.get(`${this._url}/company/${company_id}/custom_features`,this.get_options())
         .map(this.extractData)
         .catch(this.handleError);
   }
@@ -367,12 +367,12 @@ export class CompanyService extends BaseService {
   }
  
   resetAppConfig(appId,passCode){
-    return this._http.get(`${this._url}/analytic/reset_appconfig/${appId}/${passCode}`)
+    return this._http.get(`${this._url}/analytic/reset_appconfig/${appId}/${passCode}`,this.get_options())
         .map(this.extractData)
         .catch(this.handleError);
   }
   getSheets(company,passCode){
-    return this._http.get(`${this._url}/analytic/get_sheets/${company}/${passCode}`)
+    return this._http.get(`${this._url}/analytic/get_sheets/${company}/${passCode}`,this.get_options())
     .map(this.extractData)
     .catch(this.handleError);
   }
