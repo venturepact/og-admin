@@ -134,3 +134,8 @@ tbody.custom-tbody td
     width: 100%;
     overflow-y: auto;
 }
+.tab-width{
+    margin: 0;
+    float: left;
+    width: 100%;
+}

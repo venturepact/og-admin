@@ -24,7 +24,7 @@ import {SiteModule} from './site/site.module';
     SharedModule,
     BrowserModule,
     CoreModule.forRoot(),
-    SiteModule
+    SiteModule,
   ],
   providers: [
     APP_ROUTER_PROVIDERS

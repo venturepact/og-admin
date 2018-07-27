@@ -123,3 +123,16 @@
       margin: 0;
   
   }
+  #featureForm .pLabel {
+    border: 1px solid black;
+    padding: 3px;
+    float: left;
+    cursor: pointer;
+    margin: 2px;
+    border-radius: 5%;
+  }
+  #apps_created table.dataTable tbody td,#apps_created table.dataTable tbody th{
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+  
