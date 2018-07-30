@@ -88,11 +88,7 @@ export class UserService extends BaseService {
   }
 
 
-<<<<<<< Updated upstream
-  login(username: String, password: String, companyName: String): any {
-=======
   login(username: String, password: String, companyName: String, isOauth: boolean = false) : any {
->>>>>>> Stashed changes
     let data = {
       'username': username,
       'password': password,
