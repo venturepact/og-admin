@@ -6,6 +6,8 @@ import { FormGroup } from '@angular/forms';
 import { PlanService } from '../../shared/services/plan.service';
 import { SelectComponent, SelectItem } from 'ng2-select';
 import { Script } from '../../shared/services/index';
+import { environment } from '../../../environments/environment';
+environment
 declare var jQuery: any;
 declare var bootbox: any;
 declare var window: any;
@@ -28,6 +30,7 @@ export class FeatureComponent extends Datatable implements OnInit {
   parent_features = [];
   disableSelection: Boolean = false;
   oldFeature: any = {};
+  syncApi = '';
   constructor(public _featureService: FeaturesService,
     public _planService: PlanService, public route: ActivatedRoute,
     public _script: Script) {
@@ -35,6 +38,15 @@ export class FeatureComponent extends Datatable implements OnInit {
   }
   features: any = [];
   ngOnInit() {
+
+    let hostName = window.location.hostname;
+    if (hostName.includes('rely.co')) {
+      this.syncApi = environment.STAGING_API;
+    } else if (hostName.includes('outgrow.co.in')) {
+      this.syncApi = environment.STAGING_API;
+    } else if (hostName.includes('outgrow.local')) {
+      this.syncApi = environment.STAGING_API;
+    }
     this.route.params.subscribe(params => {
       this.selectedItem = params['type'];
       if (this.selectedItem == 'features') {
@@ -148,7 +160,7 @@ export class FeatureComponent extends Datatable implements OnInit {
   removeFeature(feature) {
     bootbox.dialog({
       size: 'small',
-      message:  `<div class="bootbox-body-left">
+      message: `<div class="bootbox-body-left">
                   <div class="mat-icon">
                   <i class="material-icons">error</i>
                   </div>
@@ -247,12 +259,78 @@ export class FeatureComponent extends Datatable implements OnInit {
   mediaType(e) {
     this.featureForm.get('media_type').setValue(e.id);
   }
-  getPlansByFeature(feature){
-    return this.plan_features.reduce((acc,pf)=>{
-      if(pf['features'] && pf['features'].includes(feature)){
+  getPlansByFeature(feature) {
+    return this.plan_features.reduce((acc, pf) => {
+      if (pf['features'] && pf['features'].includes(feature)) {
         acc.push(pf['plan']);
       }
       return acc;
-    },[]);
+    }, []);
+  }
+  async syncFeature(feat, icon) {
+    bootbox.dialog({
+      size: 'small',
+      message: `<div class="bootbox-body-left">
+                  <div class="mat-icon">
+                  <i class="material-icons">error</i>
+                  </div>
+                </div>
+                <div class="bootbox-body-right">
+                  <p class="one-line-para">Are you sure you want to sync ${feat._id} feature to staging?</p>
+                </div>`,
+      buttons: {
+        cancel: {
+          label: "Cancel",
+          className: "btn-cancel btn-cancel-hover",
+        },
+        success: {
+          label: "OK",
+          className: "btn btn-ok btn-hover",
+          callback: async () => {
+            try {
+              jQuery(`#${icon}`).addClass('fa-spin');
+              console.log(feat);
+              delete feat['createdAt'];
+              delete feat['sub_features'];
+              delete feat['__v'];
+              delete feat['seq'];
+              delete feat['updatedAt'];
+        
+              feat['plans'] = this.getPlansByFeature(feat['_id']);
+              console.log(feat);
+        
+              let data = await this.syncFeatures([feat]);
+              if (data && data['invalidFeatures'].length) {
+                window.toastNotification(`Feature already exist or parent feature doesn't exists`);
+                jQuery(`#${icon}`).removeClass('fa-spin');
+        
+                return;
+              }
+              window.toastNotification(`Feature added..`);
+              jQuery(`#${icon}`).removeClass('fa-spin');
+            } catch (e) {
+              console.log(e);
+              window.toastNotification(e.error ? e.error.err_message : 'Something went wrong..');
+              jQuery(`#${icon}`).removeClass('fa-spin');
+        
+            }
+        
+          }
+        }
+      }
+    });
+   
+  }
+  async syncFeatures(arr) {
+
+
+    try {
+      if (Object.prototype.toString.call(arr) == '[object Array]' && arr.length > 0) {
+        return this._featureService.syncFeatures(arr, this.syncApi).toPromise();
+      }
+      return Promise.reject({ error: { err_message: 'No feature to add..' } });
+    } catch (e) {
+      throw e;
+    }
   }
 }

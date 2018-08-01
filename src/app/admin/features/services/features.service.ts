@@ -72,4 +72,9 @@ export class FeaturesService extends BaseService{
     });
     
   }
+  syncFeatures(data,api){
+    return this._http.post(`${api}/admin/addFeatures`,data,this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }
