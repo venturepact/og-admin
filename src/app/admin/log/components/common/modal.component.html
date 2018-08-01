@@ -15,7 +15,7 @@
                         <div *ngFor="let key of generateKeys(selected)">
                             <p>
                                 <i>{{ key + ' :- ' }}</i>
-                                <code [innerHTML]="selected[key]" style="word-wrap:break-word;"></code>
+                                <code [innerHTML]="getValue(selected[key])" style="word-wrap:break-word;"></code>
                             </p>
                         </div>
                     </span>
