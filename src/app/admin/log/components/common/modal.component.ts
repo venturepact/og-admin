@@ -22,7 +22,11 @@ export class ModalComponent implements OnChanges {
 
   setValues() {
     this.dataIsObject = this.testJSON();
-    this.selected = this.testJSON() || this.modalData || "Data Not Present.";
+    this.selected = this.testJSON() || (this.modalData !== "undefined" ? this.modalData :  "Data Not Present.");
+  }
+
+  getValue(data) {
+    return JSON.stringify(data,null,2)
   }
 
   generateKeys(obj) {
@@ -31,9 +35,10 @@ export class ModalComponent implements OnChanges {
 
   // @desc: Check if string is valid for json.parse
   testJSON() {
-    if (!this.modalData || this.modalData === undefined) return false;
+    const body = this.modalData;
+    if (!body || body === undefined) return false;
     try {
-      return JSON.parse(this.modalData);
+      return (typeof body === 'object') ? body : JSON.parse(body);
     } catch (error) {
       return false;
     }

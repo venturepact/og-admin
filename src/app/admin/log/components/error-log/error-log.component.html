@@ -28,7 +28,7 @@
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <p>{{row.userInfo.name}}
+                        <p>
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#pending-item">
                                 <i class="ui-tooltip material-icons" (click)="parseBody( row.userInfo , 'userInfo')" style="font-size: 22px;" data-original-title="Edit">visibility</i>
                             </a>
