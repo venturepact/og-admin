@@ -2,29 +2,31 @@
   <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
     <div class="dataTables_length" id="table-dataTables_length">
       <label>Show
-        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)"
-                class="">
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)" class="">
           <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
         </select>
         entries
       </label>
 
-    <div (click)="showAdvancedFilter=!showAdvancedFilter;populatePlanTypes()" class="filter-icon">
-      <span class="glyphicon glyphicon-filter"></span>
-      Filter
-    </div>
+      <div (click)="showAdvancedFilter=!showAdvancedFilter;populatePlanTypes()" class="filter-icon">
+        <span class="glyphicon glyphicon-filter"></span>
+        Filter
+      </div>
 
     </div>
     <div id="table-datatable_filter" class="dataTables_filter">
+      <label>
+        Search:
+        <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="searchData()">
+      </label>
       <label>Company Type
-        <select name="table-dataTables_length" aria-controls="all-companies-datatable"
-                (change)="companyTypeChange($event)" class="">
+        <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="companyTypeChange($event)" class="">
           <option *ngFor="let company of companyArray" [value]="company.value">{{company.name}}</option>
         </select>
       </label>
       <div class="smart-template-check" *ngIf="companyType==='JVZOO'">
-        <input type="checkbox" placeholder="Smart temhplate" [(ngModel)]="isSmartTemplate"
-               (change)="showSmartTemplates()"><span>smart template</span>
+        <input type="checkbox" placeholder="Smart temhplate" [(ngModel)]="isSmartTemplate" (change)="showSmartTemplates()">
+        <span>smart template</span>
       </div>
 
     </div>
@@ -48,43 +50,34 @@
             </select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='billing.customer_card_status'">
-            <ng-select [multiple]="false"
-              [items]="[{id: 'null', text: 'No card'},{id: 'valid', text: 'valid'},{id: 'expired', text: 'Expired'},{id: 'expiring', text: 'Expiring'}]"
-              (selected)="select($event,i)"
-              placeholder="Select Card status">
-              </ng-select>
+            <ng-select [multiple]="false" [items]="[{id: 'null', text: 'No card'},{id: 'valid', text: 'valid'},{id: 'expired', text: 'Expired'},{id: 'expiring', text: 'Expiring'}]"
+              (selected)="select($event,i)" placeholder="Select Card status">
+            </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='billing.chargebee_subscription_status'">
-            <ng-select [multiple]="false"
-            [items]="[{id: 'active', text: 'Active'},{id: 'in_trial', text: 'IN Trial'},{id: 'future', text: 'future'},{id: 'non_renewing', text: 'Non Renewing'},{id: 'paused', text: 'Non Paused'},{id: 'cancelled', text: 'Cancelled'}]"
-            (selected)="select($event,i)" placeholder="Select Subscription status">
+            <ng-select [multiple]="false" [items]="[{id: 'active', text: 'Active'},{id: 'in_trial', text: 'IN Trial'},{id: 'future', text: 'future'},{id: 'non_renewing', text: 'Non Renewing'},{id: 'paused', text: 'Non Paused'},{id: 'cancelled', text: 'Cancelled'}]"
+              (selected)="select($event,i)" placeholder="Select Subscription status">
             </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='billing.chargebee_plan_id'">
-            <ng-select [multiple]="true" [items]="[].concat(Plans)"
-            (selected)="selected($event,i,'current_plan')"
-            (removed)="removed($event.id,i,'current_plan')"
-            placeholder="Select a Plan">
+            <ng-select [multiple]="true" [items]="[].concat(Plans)" (selected)="selected($event,i,'current_plan')" (removed)="removed($event.id,i,'current_plan')"
+              placeholder="Select a Plan">
             </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='GDPR'||filters[i].selected_property==='is_admin_created'||filters[i].selected_property==='integration'||filters[i].selected_property==='is_appsumo_created'||filters[i].selected_property==='referral.is_referralcandy_visible'
           ||filters[i].selected_property==='agency'||filters[i].selected_property==='remove_leads_after_saving'||filters[i].selected_property==='company_logo'">
-            <ng-select [multiple]="false" [items]="[{id: 'true', text: 'true'},{id: 'false', text: 'false'}]"
-            (selected)="select($event,i)"
-            (removed)="removed($event.id,i,'current_plan')"
-            placeholder="Select">
+            <ng-select [multiple]="false" [items]="[{id: 'true', text: 'true'},{id: 'false', text: 'false'}]" (selected)="select($event,i)"
+              (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
             </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='current_limit.users'||filters[i].selected_property==='current_limit.calculators'||filters[i].selected_property==='current_limit.companies'">
-            <ng-select [multiple]="false"
-            [items]="[{id: '-1', text: 'Unlimted'},{id: '$gt', text: 'Greater Than'},{id: '$lt', text: 'Less Than'},{id: '==', text: 'Equals'}]"
-            (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+            <ng-select [multiple]="false" [items]="[{id: '-1', text: 'Unlimted'},{id: '$gt', text: 'Greater Than'},{id: '$lt', text: 'Less Than'},{id: '==', text: 'Equals'}]"
+              (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
             </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='created_at'">
-            <ng-select [multiple]="false"
-            [items]="[{id: 'btw', text: 'Between'},{id:'$gt', text:'After'},{id:'$lt', text: 'Before'},{id: '==', text: 'on'}]"
-            (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+            <ng-select [multiple]="false" [items]="[{id: 'btw', text: 'Between'},{id:'$gt', text:'After'},{id:'$lt', text: 'Before'},{id: '==', text: 'on'}]"
+              (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
             </ng-select>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='name'||
@@ -94,28 +87,25 @@
           filters[i].selected_property==='billing.chargebee_subscription_id'||
           filters[i].selected_property==='cname.url'||
           filters[i].selected_property==='current_referral_program'">
-            <ng-select [multiple]="false"
-            [items]="[{id: 'startsWith', text: 'Starts With'},{id:'endsWith', text:'Ends With'},{id:'contains', text: 'Contains'},{id: '==', text: 'Equals TO'}]"
-            (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
+            <ng-select [multiple]="false" [items]="[{id: 'startsWith', text: 'Starts With'},{id:'endsWith', text:'Ends With'},{id:'contains', text: 'Contains'},{id: '==', text: 'Equals TO'}]"
+              (selected)="selectOperator($event,i)" (removed)="removed($event.id,i,'current_plan')" placeholder="Select">
             </ng-select>
           </div>
           <div class="col-md-4" *ngIf="filters[i].selected_property==='created_at' && filters[i].selected_operator!=='btw'">
-            <og-date-picker  (date)="select($event,i)"></og-date-picker>
+            <og-date-picker (date)="select($event,i)"></og-date-picker>
           </div>
           <div class="col-md-4" *ngIf="filters[i].selected_property==='created_at' && filters[i].selected_operator==='btw'">
             <og-date-range-picker (date)="select($event,i)"></og-date-range-picker>
           </div>
           <div class="col-md-3" *ngIf="filters[i].selected_property==='deal_refered'" style="width: 300px; margin-bottom: 20px;float: left;margin-left: 10px">
-            <ng-select [multiple]="true"
-            [items]="[{id: 'DEALFUEL', text: 'DEALFUEL'},{id: 'WARRIOR', text: 'WARRIOR'},{id: 'APPSUMO_BLACK', text: 'APPSUMO_BLACK'},
+            <ng-select [multiple]="true" [items]="[{id: 'DEALFUEL', text: 'DEALFUEL'},{id: 'WARRIOR', text: 'WARRIOR'},{id: 'APPSUMO_BLACK', text: 'APPSUMO_BLACK'},
             {id: 'WEBMASTER', text: 'WEBMASTER'},{id: 'AFFILATES', text: 'AFFILATES'},{id: 'JVZOO', text: 'JVZOO'},
             {id: 'PKS', text: 'PKS'},{id: 'BLACK_FRIDAY', text: 'BLACK_FRIDAY'},{id: 'LTD', text: 'LTD'},{id: 'SPECIAL_PAYMENT', text: 'SPECIAL_PAYMENT'},{id: 'null', text: 'null'}]"
-            (selected)="selected($event,i,'current_plan')" (removed)="removed($event.id,i,'current_plan')" placeholder="Select Deal Refered">
+              (selected)="selected($event,i,'current_plan')" (removed)="removed($event.id,i,'current_plan')" placeholder="Select Deal Refered">
             </ng-select>
           </div>
           <div class="col-md-3">
-            <input [(ngModel)]="filters[i].selected_value" class="form-control"
-            *ngIf="filters[i].selected_property==='name'||filters[i].selected_property==='sub_domain'||
+            <input [(ngModel)]="filters[i].selected_value" class="form-control" *ngIf="filters[i].selected_property==='name'||filters[i].selected_property==='sub_domain'||
                   filters[i].selected_property==='api'||filters[i].selected_property==='sub_domain'||
                   filters[i].selected_property==='billing.chargebee_customer_id'||
                   filters[i].selected_property==='billing.current_referral_program'||
@@ -125,8 +115,7 @@
                   filters[i].selected_property==='current_limit.companies'||
                   filters[i].selected_property==='cname.url'||
                   filters[i].selected_property==='current_limit.calculators'||
-                  filters[i].selected_property==='current_referral_program'"
-                  type="text"/>
+                  filters[i].selected_property==='current_referral_program'" type="text" />
           </div>
         </div>
       </div>
@@ -143,76 +132,81 @@
     </div>
     <div class="row" *ngIf="!loading">
       <div class="col-md-12 text-right">
-        <span>Number of Companies:   {{totalCompanies}}</span>
+        <span>Number of Companies: {{totalCompanies}}</span>
       </div>
     </div>
     <div *ngIf="loading">
-      <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+      <div>
+        <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+      </div>
     </div>
     <table *ngIf="!loading" class="dataTable">
       <thead>
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Sub Domain
-        </th>
-        <th>
-          Current Plan
-        </th>
-        <th>
-          Parent Company
-        </th>
-        <th>
-          Created At
-        </th>
-        <th>
-          Edit
-        </th>
-      </tr>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th>
+            Sub Domain
+          </th>
+          <th>
+            Current Plan
+          </th>
+          <th>
+            Parent Company
+          </th>
+          <th>
+            Created At
+          </th>
+          <th>
+            Edit
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let company of data">
-        <td>
-          {{company.name}}
-        </td>
-        <td>
-          {{company.sub_domain}}
-        </td>
-        <td>
-          {{company.billing.chargebee_plan_id}}
-        </td>
-        <td>
-          <a (click)="navigateCompany(company.parent_company)">{{company.parent_company}}</a>
-        </td>
-        <td>
-          {{company.createdAt.split('T')[0]}}
-        </td>
-        <td>
-          <a [routerLink]="['/admin/company',company._id]"><i class="ui-tooltip material-icons" style="font-size: 22px;"
-                                                              data-original-title="Edit">mode_edit</i></a>
-        </td>
-      </tr>
+        <tr *ngFor="let company of data">
+          <td>
+            {{company.name}}
+          </td>
+          <td>
+            {{company.sub_domain}}
+          </td>
+          <td>
+            {{company.billing.chargebee_plan_id}}
+          </td>
+          <td>
+            <a (click)="navigateCompany(company.parent_company)">{{company.parent_company}}</a>
+          </td>
+          <td>
+            {{company.createdAt.split('T')[0]}}
+          </td>
+          <td>
+            <a [routerLink]="['/admin/company',company._id]">
+              <i class="ui-tooltip material-icons" style="font-size: 22px;" data-original-title="Edit">mode_edit</i>
+            </a>
+          </td>
+        </tr>
       </tbody>
     </table>
     <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
     <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
-      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0"
-         (click)="previous()"
-         id="all-companies-datatable_previous">Previous</a>
-      <span><a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable"
-               (click)="paging(1)" tabindex="0">1</a></span>
+      <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+        id="all-companies-datatable_previous">Previous</a>
+      <span>
+        <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+          tabindex="0">1</a>
+      </span>
       <span *ngIf="current_page >= 5">...</span>
-      <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
-               aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
-               *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
+      <span>
+        <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+          tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+      </span>
       <span *ngIf="current_page <= total_pages - 5">...</span>
-      <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
-               [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
-               (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
-      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()"
-         id="all-companies-datatable_next">Next</a>
+      <span>
+        <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''"
+          aria-controls="all-companies-datatable" (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+      </span>
+      <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
     </div>
   </div>
 </div>
