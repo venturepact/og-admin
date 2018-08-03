@@ -30,6 +30,7 @@ export class SingleUserComponent implements OnInit{
   ngOnInit() {
     this.loading = true;
     this._companyService.getUserCompanies(this.id).subscribe((result)=>{
+      
       this.companies = result;
       this.loading = false;
     });

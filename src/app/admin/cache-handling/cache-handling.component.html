@@ -1,78 +1,171 @@
-<div class="all-companies-container">
-  <!-- <button *ngIf="createHelloBar" (click)="goBack()">back</button> -->
-
-  <!-- <div *ngIf="!createHelloBar"> -->
-  <div>
-    <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
-      <!-- <div class="dataTables_length" id="table-dataTables_length">
-        <label style="color: black">Show
-          <select name="table-dataTables_length" aria-controls="all-companies-datatable"
-                  (change)="limitChange($event)"
-                  class="">
-            <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
-          </select>
-          entries
-        </label>
-      </div> -->
-
-      <!-- <div *ngIf="loading">
-        <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
-      </div> -->
-
-      <!-- <table *ngIf="!loading" class="dataTable table table-hover table-striped table-sortable"> -->
-      <table class="dataTable table table-hover table-striped table-sortable">
-        <thead>
-
-          <tr class="company-row">
-            <th>KEYS</th>
-            <!-- <th><a (click)="deleteAllCache()">CLEAR</a></th> -->
-            <th>CLEAR</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let key of keyValues">
-          <tr>
-            <td style="padding: 2px">
-              <div>
-                <h4>{{key}}</h4>
-                <!-- <p style="font-size: 12px">{{hellobar.description}}</p> -->
+<div class="col-md-10">
+  <div class="container" style="margin-left: 70px;margin-top: 40px">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <div class="col-sm-12 ">
+                <h4 style="text-align: center">Cache Logs</h4>
               </div>
-            </td>
-            <td>
-              <a (click)="deleteCache(key)">
-                <i class="material-icons">delete</i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- <div class="dataTables_info" id="table-datatable_info" role="status"
-           aria-live="polite"></div>
-      <div class="dataTables_paginate paging_simple_numbers"
-           id="all-companies-datatable_paginate">
-        <a class="paginate_button previous " aria-controls="all-companies-datatable"
-           data-dt-idx="0" tabindex="0"
-           (click)="previous()"
-           id="all-companies-datatable_previous">Previous</a>
-        <span><a class="paginate_button" [ngClass]="1==current_page?'current':''"
-                 aria-controls="all-companies-datatable"
-                 (click)="paging(1)" tabindex="0">1</a></span>
-        <span *ngIf="current_page >= 5">...</span>
-        <span><a class="paginate_button" [ngClass]="num==current_page?'current':''"
-                 aria-controls="all-companies-datatable" (click)="paging(num)" tabindex="0"
-                 *ngFor="let num of arrayOf(total_pages)">{{num}}</a></span>
-        <span *ngIf="current_page <= total_pages - 5">...</span>
-        <span><a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0"
-                 [ngClass]="total_pages==current_page?'current':''"
-                 aria-controls="all-companies-datatable"
-                 (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a></span>
-        <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0"
-           (click)="next()"
-           id="all-companies-datatable_next">Next</a> -->
-      <!-- </div> -->
+            </div>
+          </div>
+          <div class="panel-body">
+            <div id="table">
+              <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_length" id="table-dataTables_length">
+                  <label>Show
+                    <select name="table-dataTables_length" aria-controls="all-companies-datatable" (change)="limitChange($event)" class="">
+                      <option value="{{limit}}" *ngFor="let limit of limits">{{limit}}</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+                <div id="table-datatable_filter" class="dataTables_filter">
+                  <label>
+                    Search:
+                    <input type="search" class="" placeholder="" [(ngModel)]="searchText" aria-controls="table" (keyup)="searchData()">
+                  </label>
+                </div>
+                <div>
+                  
+                </div>
+                <div >
+                    <label >Select API</label>
+                  <select (change)="apiChange()" [(ngModel)]="apiSelect">
+                    <option value="" disabled>Select an API</option>
+                    <option value="default" selected>
+                      Default
+                    </option>
+                    <option value="LIVE_API">
+                      Live_Api
+                    </option>
+                  </select>
+                 
+                  <!-- <div class="ab-line-ripple"></div> -->
+                </div>
+                <div *ngIf="loading">
+                  <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+              </div>
+                <table *ngIf="!loading" class="dataTable">
+                  <thead>
+                    <tr>
+                      <th>
+                        Keys
+                      </th>
+                      <th>
+                        Values
+                      </th>
+                      <th>
+                        Clear
+                      </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let key of keyValues; let i = index">
+                      <td style="padding: 2px">
+                        <div>
+                          <h4>{{key.key}}</h4>
+                        </div>
+                      </td>
+                      <td style="padding: -5px">
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#key-value">
+                          <i class="material-icons" (click)="KeyValueDispaly(i,key.key)">remove_red_eye</i>
+                        </a>
+                      </td>
+                      <td>
+                        <a style="cursor:pointer">
+                          <i class="material-icons" (click)="deleteCache(i,key.key)">delete</i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+                <div class="dataTables_paginate paging_simple_numbers" id="all-companies-datatable_paginate">
+                  <a class="paginate_button previous " aria-controls="all-companies-datatable" data-dt-idx="0" tabindex="0" (click)="previous()"
+                    id="all-companies-datatable_previous">Previous</a>
+                  <span>
+                    <a class="paginate_button" [ngClass]="1==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(1)"
+                      tabindex="0">1</a>
+                  </span>
+                  <span *ngIf="current_page >= 5">...</span>
+                  <span>
+                    <a class="paginate_button" [ngClass]="num==current_page?'current':''" aria-controls="all-companies-datatable" (click)="paging(num)"
+                      tabindex="0" *ngFor="let num of arrayOf(total_pages)">{{num}}</a>
+                  </span>
+                  <span *ngIf="current_page <= total_pages - 5">...</span>
+                  <span>
+                    <a class="paginate_button" *ngIf="total_pages!=1 && total_pages!=0" [ngClass]="total_pages==current_page?'current':''" aria-controls="all-companies-datatable"
+                      (click)="paging(total_pages)" tabindex="0">{{total_pages}}</a>
+                  </span>
+                  <a class="paginate_button next" aria-controls="all-companies-datatable" tabindex="0" (click)="next()" id="all-companies-datatable_next">Next</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- <edit-hello-bar *ngIf="createHelloBar" (gotoDashboard)="showHellobar()"
-                  [selectedHellobar]="selectedHellobar"></edit-hello-bar> -->
+<div class="modal fade" id="key-value" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a title="close" href="#" data-dismiss="modal" aria-label="Close">
+          <i class="glyphicon glyphicon-remove pull-right"></i>
+        </a>
+        <h5 class="modal-title"> Cached details</h5>
+
+      </div>
+      <div class="modal-body">
+        <div class="sahil-material">
+          <div class="row">
+            <div class="col-md-12">
+              <table class="logs">
+                <tr>
+                  <td>Key :</td>
+                  <td>{{KeyName}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <div class="col-sm-12 ">
+                      <h4 style="text-align: center">{{KeyName}}</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body table-outer">
+
+                  <!-- <pre >
+                       &#123;
+                    <span *ngFor="let item of generateKeys(beforeChange)">
+                        <span [innerHTML]="beforeChange[item]"></span>
+                    </span>
+                       &#125;
+                  </pre> -->
+                  <div style="float:left; width:100%;">
+                    <span>value</span>
+                      <pre  style="float:left; width:100%; max-height:500px; overflow: auto; " id="json"></pre>
+                  </div>
+                
+                  <!-- {{beforeChange|json}} -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
 </div>

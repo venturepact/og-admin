@@ -33,6 +33,7 @@ import { HelloBarComponent } from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
 import { SheetsComponent } from '../../admin/sheets/sheets.component';
 import { CacheHandlingComponent } from '../../admin/cache-handling/cache-handling.component'
+import { EventsComponent } from '../../admin/events/events.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -198,6 +199,11 @@ export const ADMIN_ROUTES: Routes = [
             path: 'cache-handling',
             component:CacheHandlingComponent,
             canActivate: [AdminGuard]
+          },
+          {
+            path: 'events',
+            component: EventsComponent,
+            canActivate: [AdminGuard, AdminLtdGuard],
           },
           
         ]

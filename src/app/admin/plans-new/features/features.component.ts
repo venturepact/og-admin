@@ -15,7 +15,8 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
   changedFeatures:any=[];
   loading:Boolean=false;
   errorMessage='';
-  componentInfo:any={};
+  componentInfo:any={type:'features'};
+  featuresCopy:any =[]
   constructor(public _planService:PlanService) { 
     super();
   }  
@@ -24,36 +25,38 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
   ngOnChanges(changes:SimpleChanges){
     if(this.data && this.data.features){
       this.features = JSON.parse(JSON.stringify(this.data.features));
+      this.featuresCopy = JSON.parse(JSON.stringify(this.features));
+      this.componentInfo['featuresCopy']=this.featuresCopy;
       this.edit_mode=false;
     }
   }
   
-  pushChanges(feature){
-    let index = this.changedFeatures.findIndex(obj=>(obj['_id']===feature['_id']));
-    (index==-1 && feature['parent_feature']) && this.changedFeatures.push(feature);
-    if(index==-1 && !feature['parent_feature']){
-      let obj={_id:feature['_id'],parent_feature:null,name:feature['name'],active:feature['active']};
-     // let addableFeatures = feature['sub_features'].filter(obj=>(obj['active']!=feature['active']));
-      this.changeStatus(feature['sub_features'],feature.active);
-      //this.changedFeatures.push(obj,...feature['sub_features']);
-      feature['sub_features'].forEach(element => {
-        let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-        i!==-1 && (this.changedFeatures[i]=element);
-        i===-1 && this.changedFeatures.push(element);
-      });
-      this.changedFeatures.push(obj);
-    }
-    if(index!=-1 && feature['parent_feature']){
-      this.changedFeatures.splice(index,1);
-    }
-    if(index!=-1 && !feature['parent_feature']){
-      this.changedFeatures.splice(index,1);
-      this.changeStatus(feature['sub_features'],feature.active);
-      feature['sub_features'].forEach(element => {
-        let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-        i!=-1 && this.changedFeatures.splice(i,1);
-      });
-    }
+  pushChanges(features){
+    this.changedFeatures = this.removeRepeatEntries(features.unchangedFeatures,features.changedFeatures,this.changedFeatures);
+    
+    // let index = this.changedFeatures.findIndex(obj=>(obj['_id']===feature['_id']));
+    // (index==-1 && feature['parent_feature']) && this.changedFeatures.push(feature);
+    // if(index==-1 && !feature['parent_feature']){
+    //   let obj={_id:feature['_id'],parent_feature:null,name:feature['name'],active:feature['active']};
+    //   this.changeStatus(feature['sub_features'],feature.active);
+    //   feature['sub_features'].forEach(element => {
+    //     let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
+    //     i!==-1 && (this.changedFeatures[i]=element);
+    //     i===-1 && this.changedFeatures.push(element);
+    //   });
+    //   this.changedFeatures.push(obj);
+    // }
+    // if(index!=-1 && feature['parent_feature']){
+    //   this.changedFeatures.splice(index,1);
+    // }
+    // if(index!=-1 && !feature['parent_feature']){
+    //   this.changedFeatures.splice(index,1);
+    //   this.changeStatus(feature['sub_features'],feature.active);
+    //   feature['sub_features'].forEach(element => {
+    //     let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
+    //     i!=-1 && this.changedFeatures.splice(i,1);
+    //   });
+    // }
     console.log(this.changedFeatures);
   }
   changeStatus(subFeatures,status){
@@ -85,5 +88,11 @@ export class FeaturesComponent extends PremadeLayoutManager implements OnInit {
         this.changedFeatures=[];
       });
   }
-
+  removeRepeatEntries(unchangedEntries,newEntries,allEntries){
+    unchangedEntries.forEach((entry)=>{
+      let i = allEntries.findIndex((e)=>e._id===entry._id);
+      i!=-1 && allEntries.splice(i,1);
+    })
+    return [...allEntries,...newEntries];
+  }
 }

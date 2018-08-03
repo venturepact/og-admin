@@ -93,6 +93,12 @@ export class CompanyService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  getCompanyBySubdomain(company: String): Observable<any> {
+    let companyurl = this._url + '/companies/get/' + company;
+    return this._http.get(companyurl, this.options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   addUser(data: any, company_id: any): Observable<User> {
     let details = {
@@ -270,7 +276,7 @@ export class CompanyService extends BaseService {
 
   getAllCompanies(data: any) {
     let getCompaniesUrl = this._url + '/companies/all';
-    return this._http.post(getCompaniesUrl, data, this.get_options())
+    return this._http.post(getCompaniesUrl, data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -350,6 +356,12 @@ export class CompanyService extends BaseService {
   }
   updateFeatures(data,iteratee){
     return this._http.put(`${this._url}/company/update/company-${iteratee}`,data,this.putOptions())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  getPlanTypes() {
+    const url = `${this._url}/plan/usedPlans`;
+    return this._http.get(url, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }

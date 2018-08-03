@@ -93,6 +93,9 @@
                                     <th>
                                         Delete
                                     </th>
+                                    <th  *ngIf="syncApi">
+                                        Sync
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="custom-tbody">
@@ -126,6 +129,11 @@
                                     <td>
                                         <a href="javascript:void(0);" (click)="removeFeature(feature._id)">
                                             <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                    <td *ngIf="syncApi">
+                                        <a style="font-size:2rem"  href="javascript:void(0);" (click)="syncFeature(feature,'icon_'+feature._id)">
+                                            <i [id]="'icon_'+feature._id" class="fa">&#xf021;</i>
                                         </a>
                                     </td>
                                 </tr>

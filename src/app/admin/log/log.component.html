@@ -1,20 +1,60 @@
+<div class="all-erorrs-container">
+  <div class="" style="background-color: transparent;
+  height: 60px;
+  width: inherit;
+  margin-top: -160px;">
+  </div>
+  <!-- tabel -->
+  <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Error Logs">
+      <og-error-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
+        *ngIf="onErrorTab"></og-error-log>
+    </mat-tab>
+    <mat-tab label="Frontend Logs">
+      <og-frontend-log 
+      [APISource]="APISource" 
+      [searchQuery]="searchQuery" 
+      [dateData]="dateData" 
+      (openModel)="modalData = $event"
+      [(filter)]="canFilter"
+        *ngIf="!onErrorTab"></og-frontend-log>
+    </mat-tab>
+    <!-- Date Picker Always be the Last Child -->
+    <mat-tab label="Pick Date" class="date-picker" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field>
+          <input matInput [matDatepicker]="myDatepicker" [ngModel]="dateData">
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker (selectedChanged)="applyDateChange($event)" #myDatepicker></mat-datepicker>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <!-- filter search -->
+    <mat-tab label="Filter" class="filter-search" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field *ngIf="canFilter">
+          <input matInput [(ngModel)]="searchQuery" placeholder="Filter">
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+    <!-- Api select -->
+    <mat-tab label="API Options" disabled>
+      <ng-template mat-tab-label>
+        <mat-form-field>
+          <mat-select placeholder="Select API" (selectionChange)="changeAPISource()" [(ngModel)]="APISource">
+            <mat-option *ngFor="let api of APIs" [value]="api.value">
+              {{ api.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
- <div class="all-erorrs-container">
-   <og-date-picker *ngIf="scriptLoaded" (date)="onDateSelect($event)"></og-date-picker>
- <button type="button" class="btn btn-design" (click)="onRefresh()">Refresh</button>
- <table class="dataTable">
-     <thead>
-     <tr>
-       <th>Logs</th>
-     </tr>
-     </thead>
-
-     <tbody id="logContainer" class="logContainer">
-         <tr *ngFor="let log of logs">
-             {{log}}
-         </tr>
-         <tr>{{message}}</tr>
-     </tbody>
-
- </table>
- </div>
+<og-modal [modalData]="modalData"></og-modal>
