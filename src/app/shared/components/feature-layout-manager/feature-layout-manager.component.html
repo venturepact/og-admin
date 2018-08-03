@@ -1,19 +1,42 @@
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let feature of features; let i=index">
     <div *ngIf="info?.type!=='premades'; else premadeLabel">
-      <input type="checkbox" [disabled]="feature._id === 'formula_operators'" [(ngModel)]="feature.active" (change)="pushChanges(feature)" id="{{feature._id}}" class="featureCheck"
-      />
-      <label for="{{feature._id}}">
-        {{feature.name}}
-      </label>
-      <i *ngIf="feature['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
-      <i *ngIf="feature['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
-      <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
-        (click)="expand($event.target)">
-        <i class="glyphicon glyphicon-minus"></i>
-
-
-      </a>
+      <ng-container *ngIf="feature._id !== 'integrations'">
+          <input type="checkbox" [disabled]="feature._id === 'formula_operators'" [(ngModel)]="feature.active" (change)="pushChanges(feature)" id="{{feature._id}}" class="featureCheck"
+          />
+          <label for="{{feature._id}}">
+            {{feature.name}}
+          </label>
+          <i *ngIf="feature['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+          <i *ngIf="feature['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
+          <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
+            (click)="expand($event.target)">
+            <i class="glyphicon glyphicon-minus"></i>
+          </a>
+      </ng-container>
+      <ng-container *ngIf="feature._id === 'integrations'">
+          
+          <label for="{{feature._id}}">
+            {{feature.name}}
+          </label>
+          <input type="checkbox" [checked]="getChecked(feature,'limited')"  (change)="constructFeatures(feature,'limited',$event.target.checked)" id="{{feature._id + '_limited'}}" class="featureCheck"
+          />
+          <label for="{{feature._id + '_limited'}}">
+              Limited
+            </label>
+          <input type="checkbox" [checked]="getChecked(feature,'loaded')"  (change)="constructFeatures(feature,'loaded',$event.target.checked)" id="{{feature._id + '_loaded'}}" class="featureCheck"
+          />
+          <label for="{{feature._id + '_loaded'}}">
+              Loaded
+            </label>
+          <i *ngIf="feature['granted']" style="color:green" class="glyphicon glyphicon-ok"></i>
+          <i *ngIf="feature['revoked']" style="color:red" class="glyphicon glyphicon-remove"></i>
+          <a data-toggle="collapse" href="{{'#' + feature._id + 'child'}}" *ngIf="feature?.sub_features.length" class="pull-right"
+            (click)="expand($event.target)">
+            <i class="glyphicon glyphicon-minus"></i>
+          </a>
+      </ng-container>
+      
       <ul class="list-group" id="{{feature._id + 'child'}}" class="collapse in">
         <div *ngIf="feature._id !=='formula_operators';else fOps">
           <li class="list-group-item" *ngFor="let feat of feature.sub_features; let j=index">
