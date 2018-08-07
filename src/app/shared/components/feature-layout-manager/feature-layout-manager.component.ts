@@ -19,8 +19,25 @@ export class FeatureLayoutManagerComponent extends PremadeLayoutManager implemen
   }
   ngOnChanges() {
     if (this.info.type !== 'premades') {
-      this.featuresCopy = this.info.featuresCopy;
+      this.featuresCopy =  this.changeOrderOfIntgrations(this.info.featuresCopy,['webhook','fb_messenger']);
+      this.features = this.changeOrderOfIntgrations(this.features,['webhook','fb_messenger']);
     }
+  }
+  changeOrderOfIntgrations(features,subfeatures){
+    let integrationIndex = features.findIndex(f=>f._id == 'integrations');
+    if(integrationIndex!==-1){
+      subfeatures.forEach((sub)=>{
+        let subIndex = this.getIntegrationIndex(features[integrationIndex]['sub_features'],sub);
+        if(subIndex!==-1){
+          let item = features[integrationIndex]['sub_features'].splice(subIndex,1);
+          features[integrationIndex]['sub_features'].push(...item);
+        }
+      })
+    }
+    return features;
+  }
+  getIntegrationIndex(features,_id){
+    return features.findIndex(f=>f._id===_id);
   }
   pushChanges(feature, calc) {
     if (feature.parent_feature === 'formula_operators') {
