@@ -68,6 +68,13 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
+  getImages(data){
+    return this._http.post(this._url + '/admin/getimage', data)
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  
   updateCompanyAddon(data: any, company_id: String) {
     return this._http
       .put(

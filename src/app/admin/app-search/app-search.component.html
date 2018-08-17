@@ -1,0 +1,71 @@
+<div class="events_container">
+  <div class="">
+    <div class="row">&nbsp;</div>
+    <div id="table">
+      <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+        <div id="table-datatable_filter" class="dataTables_filter">
+          <label>
+            Search:
+            <input type="search" class="" placeholder="" [(ngModel)]="search" aria-controls="table" (keyup)="getImages()">
+          </label>
+        </div>
+        <div style="clear:both"></div>
+        <div *ngIf="loading">
+          <div>
+            <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+          </div>
+        </div>
+        <div class="premade-scroller">
+          <div *ngIf="!loading && imagesLength==0">
+            No Record Found...
+          </div>
+
+          <div *ngIf="!loading && imagesLength>0">
+            <table class="dataTable">
+              <thead>
+                <tr>
+                  <th>
+                    Background Name
+                  </th>
+                  <th>
+                    Background Image
+                  </th>
+                  <th>
+                    App Status
+                  </th>
+                  <th>
+                    App Name
+                  </th>
+                  <th>
+                    Sub Domain
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody class="custom-tbody">
+                <tr *ngFor="let image of images">
+                  <td>
+                    {{image.bgName}}
+                  </td>
+                  <td>
+                    {{image.bgImage}}
+                  </td>
+                  <td>
+                    {{image.appStatus}}
+                  </td>
+                  <td>
+                    {{image.appName}}
+                  </td>
+                  <td>
+                    {{image.companySubdomain}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="dataTables_info" id="table-datatable_info" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>

@@ -65,6 +65,7 @@ import { LayoutPreviewComponent } from './layout-preview/layout-preview.componen
 import { LayoutService } from './../shared/services/layoutPreview.service';
 import { SheetsComponent } from './sheets/sheets.component';
 import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
+import { AppSearchComponent } from './app-search/app-search.component';
 
 @NgModule({
   imports: [
@@ -119,7 +120,8 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     ModalComponent,
     EventsComponent,
     LayoutPreviewComponent,
-    SheetsComponent
+    SheetsComponent,
+    AppSearchComponent
   ],
 
   providers: [

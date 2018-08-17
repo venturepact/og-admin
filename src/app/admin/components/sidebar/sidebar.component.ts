@@ -101,5 +101,8 @@ export class SidebarComponent implements OnInit {
     else if (tab == 'sheets') {
       jQuery('#sheets').addClass('active');
     }
+    else if(tab == 'app-search') {
+      jQuery('#app-search').addClass('active');
+    }
   }
 }

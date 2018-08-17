@@ -1,0 +1,166 @@
+.events_container {
+    top: 20px !important;
+    position: relative;
+    margin-left: 255px;
+    padding: 0px 20px;
+    width: 80%;
+    float: left;
+    margin-bottom: 50px;
+  
+}
+.dataTables_length{
+    display: inherit;
+  }
+  
+  
+  .dataTables_filter{
+    display: inherit;
+  }
+  
+  input {
+    width: 250px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0 0 0 8px;
+  }
+  
+  /* Start: Add New User Modal */
+    #add-event .modal-content {
+        border-radius: 8px;
+    }
+  
+    #add-event .modal-header {
+        padding: 10px 17px;
+        border-bottom: none;
+        background: #fb6066;
+        border-radius: 7px 7px 0px 0px;
+    }
+  
+  
+    #add-event.modal button.close.btn-close {
+        text-shadow: none;
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        z-index: 9;
+        opacity: 1;
+        transition: all 0.3s ease 0s !important;
+    }
+  
+    #add-event.modal button.close.btn-help {
+        text-shadow: none;
+        position: absolute;
+        right: 40px;
+        top: 11px;
+        z-index: 9;
+        opacity: 1;
+        transition: all 0.3s ease 0s !important;
+    }
+  
+    #add-event.modal i.material-icons {
+        font-size: 16px;
+        color: #fff;
+    }
+  
+    #add-event.modal button.close.btn-help i.material-icons {
+        font-size: 14px;
+        color: #fff;
+    }
+  
+    #add-event .modal-title {
+        text-transform: uppercase;
+        color: #fff;
+    }
+  
+    #add-event .modal-body {
+        padding: 15px 25px 30px;
+    }
+  
+    #add-event .btn-red-outline {
+        color: #fb545b;
+        background-color: #fff;
+        border-color: #ffb5b8;
+        border-radius: 0;
+        font-size: 11px;
+        padding: 7px 20px;
+        margin: 10px 0px;
+        transition: all 0.3s ease 0s;
+        font-family: montserratregular;
+        text-transform: uppercase;
+        float : right ;
+    }
+  
+    .modal .btn-red-outline.hvr-sweep-to-right::before {
+        background: #ffb5b8 none repeat scroll 0 0;
+        color: #fff !important;
+    }
+  
+    .modal .btn-red-outline.hvr-sweep-to-right:hover{
+          color: #fff !important;
+    }
+  
+    .modal .btn-red-outline.hvr-sweep-to-right:focus, 
+    .modal .btn-red-outline.hvr-sweep-to-right:active {
+        color: #fff !important;
+        background: #ffb5b8 none repeat scroll 0 0 !important;
+    }
+  #add-event.modal .control-label{
+      top: -20px;
+      font-family: montserratregular;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #8e989f !important;
+      line-height: 18px;
+      font-weight: 500;
+  }
+  tbody.custom-tbody td
+  {
+      max-width: 150px!important;
+      word-break: break-word;
+      font-size: 13px;
+      margin-left: 0;
+  
+  }
+.loader {
+    
+    background: transparent url('http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif') center no-repeat;
+}
+.premade-scroller{
+    float: left;
+    width: 100%;
+    overflow-y: auto;
+}
+.advanced-filter {
+    clear: both;
+    margin-top: 20px;
+    background: beige;
+    padding-top: 20px;
+  }
+.mt-1 {
+    margin-top: 5px !important;
+}
+.form-control-1 {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.filter-icon {
+    cursor: pointer;
+    display: inline;
+    margin-left: 10px;
+}

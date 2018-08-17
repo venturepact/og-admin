@@ -34,6 +34,7 @@ import { FeatureComponent } from '../../admin/features/features.component';
 import { SheetsComponent } from '../../admin/sheets/sheets.component';
 import { CacheHandlingComponent } from '../../admin/cache-handling/cache-handling.component'
 import { EventsComponent } from '../../admin/events/events.component';
+import {AppSearchComponent} from '../../admin/app-search/app-search.component'
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -198,6 +199,11 @@ export const ADMIN_ROUTES: Routes = [
           {
             path: 'cache-handling',
             component:CacheHandlingComponent,
+            canActivate: [AdminGuard]
+          },
+          {
+            path: 'app-search',
+            component: AppSearchComponent,
             canActivate: [AdminGuard]
           },
           {
