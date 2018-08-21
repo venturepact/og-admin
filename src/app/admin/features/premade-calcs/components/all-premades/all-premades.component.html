@@ -192,7 +192,7 @@
               </div>
             </div>
             <div class="form-group label-floating">
-              <label class="control-label" for="media">Calculator Media (size should not be more than 2Mb)</label>
+              <label class="control-label" for="media">Calculator Media (size should be less than 2Mb)</label>
               <div *ngIf="!loader">
                 <input class="form-control" id="media" type="text" name="media" [readonly]="'true'" formControlName="media">
                 <img #imgSrc/>
