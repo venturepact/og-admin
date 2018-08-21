@@ -43,32 +43,7 @@ export class CompanyFeaturesNewComponent extends PremadeLayoutManager implements
     return [...allEntries,...newEntries];
   }
   pushChanges(features){
-    //console.log(changes);
     this.changedFeatures = this.removeRepeatEntries(features.unchangedFeatures,features.changedFeatures,this.changedFeatures);
-    // let index = this.changedFeatures.findIndex(obj=>(obj['_id']===feature['_id']));
-    // (index==-1 && feature['parent_feature']) && this.changedFeatures.push(feature);
-    // if(index==-1 && !feature['parent_feature']){
-    //   let obj={_id:feature['_id'],name:feature['name'],parent_feature:null,active:feature['active']};
-    //   this.changeStatus(feature['sub_features'],feature.active);
-    //   feature['sub_features'].forEach(element => {
-    //     let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-    //     i!==-1 && (this.changedFeatures[i]=element);
-    //     i===-1 && this.changedFeatures.push(element);
-    //   });
-    //   this.changedFeatures.push(obj);
-    // }
-    // if(index!=-1 && feature['parent_feature']){
-    //   this.changedFeatures.splice(index,1);
-    // }
-    // if(index!=-1 && !feature['parent_feature']){
-    //   this.changedFeatures.splice(index,1);
-    //   this.changeStatus(feature['sub_features'],feature.active);
-    //   feature['sub_features'].forEach(element => {
-    //     let i = this.changedFeatures.findIndex(obj=>(obj['_id']===element['_id']));
-    //     i!=-1 && this.changedFeatures.splice(i,1);
-    //   });
-    // }
-
     console.log(this.changedFeatures);
   }
   changeStatus(subFeatures,status){

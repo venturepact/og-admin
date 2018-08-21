@@ -7,13 +7,14 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AdminService } from './../../../../../shared/services/admin.service';
 declare var jQuery: any;
 declare var moment: any;
+declare var bootbox: any;
 
 @Component({
   selector: 'all-premades',
   templateUrl: './all-premades.component.html',
-  styleUrls: ['./all-premades.component.css','./../../../../../site/components/+analytics/assets/css/daterangepicker.css']
+  styleUrls: ['./all-premades.component.css', './../../../../../site/components/+analytics/assets/css/daterangepicker.css']
 })
-export class AllPremadesComponent extends Datatable implements OnInit  {
+export class AllPremadesComponent extends Datatable implements OnInit {
 
   loading: boolean;
   edit: boolean;
@@ -24,10 +25,10 @@ export class AllPremadesComponent extends Datatable implements OnInit  {
   $subscription;
   errorMessage = '';;
   loader = false;
-  mt=moment;
-  modalSelected='premadeCalc';
-  domain='';
-  fetchedApps=[];
+  mt = moment;
+  modalSelected = 'premadeCalc';
+  domain = '';
+  fetchedApps = [];
   allApps;
   @ViewChild('fileUpload') fileUpload: any;
   industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
@@ -107,12 +108,12 @@ export class AllPremadesComponent extends Datatable implements OnInit  {
         else
           this.calculatorAdded();
         this.getCalculators();
-        btnRef && this.changeButtonProps(btnRef,{textContent:'Update',disabled:false});
-    
-      },error=>{
-        this.errorMessage=error.error.err_message;
-        btnRef && this.changeButtonProps(btnRef,{textContent:'Update',disabled:false});
-    
+        btnRef && this.changeButtonProps(btnRef, { textContent: 'Update', disabled: false });
+
+      }, error => {
+        this.errorMessage = error.error.err_message;
+        btnRef && this.changeButtonProps(btnRef, { textContent: 'Update', disabled: false });
+
       });
 
   }
@@ -275,15 +276,15 @@ export class AllPremadesComponent extends Datatable implements OnInit  {
     this.selectedItem = this.calculators[index];
     console.log(this.selectedItem);
     this._calculatorService.setForm(this.selectedItem);
-    setTimeout(()=>{
+    setTimeout(() => {
       this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')),
-      jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
+        jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
       this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY')),
-      jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
+        jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'))
       );
-    },100);
-    
-    
+    }, 100);
+
+
     this.edit = true;
     this.errorMessage = '';
     this.loader = false;
@@ -291,23 +292,14 @@ export class AllPremadesComponent extends Datatable implements OnInit  {
   upload(files: FileList, imgSrc: any) {
     console.log(files);
     let file: File = files.item(0);
+    // console.log(file);
     if (file.type.startsWith('image/')) {
-      this.loader = true;
-      //let reader: FileReader = new FileReader();
-      this.uploadImageToServer(file);
-      // reader.readAsDataURL(file);
-      // reader.onload = (e:any) => {
-      //     console.log(e.target.result);
-      //     imgSrc.src=e.target.result;
-
-      // }
-      // reader.addEventListener('progress',e=>{
-      //   if(e.lengthComputable){
-      //     console.log(e.loaded);
-
-      //   }
-      // },false);
-      // this.errorMessage='';
+      if (file.size < 2097152) {
+        this.loader = true;
+        this.uploadImageToServer(file);
+      } else {
+        this.callBootBox(`File Size should be less than 2 Mb`);
+      }
     }
   }
   uploadImageToServer(url) {
@@ -326,25 +318,50 @@ export class AllPremadesComponent extends Datatable implements OnInit  {
     console.log(date);
     this.calculatorForm.get('launch_date').setValue(date['start_date']);
   }
-  fetchApps(id){
-    setTimeout(()=>{
+  fetchApps(id) {
+    setTimeout(() => {
       jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
       jQuery('#appCountPicker .input-daterange-datepicker').data('daterangepicker').setEndDate(moment(new Date()).utc().add(0, 'days').format('MM/DD/YYYY'));
-      
-    },100);
-    
-    this.allApps=undefined;
-    this.fetchedApps=[];
-    this._adminService.getAppsCreatedByPremade(id).subscribe(res=>{
+
+    }, 100);
+
+    this.allApps = undefined;
+    this.fetchedApps = [];
+    this._adminService.getAppsCreatedByPremade(id).subscribe(res => {
       this.fetchedApps = res;
-      this.allApps=res;
+      this.allApps = res;
       // this.domain=this.getDomain();
-    },error=>{
-  
-   })
+    }, error => {
+
+    })
   }
-  getLink(sub_domain,url){
+  getLink(sub_domain, url) {
     return `${environment.PROTOCOL}${sub_domain}.${environment.LIVE_EXTENSION}/${url}`;
+  }
+  callBootBox(message) {
+    bootbox.dialog({
+      closeButton: false,
+      message: `<button type="button" class="bootbox-close-button close" data-dismiss="modal"
+                                 aria-hidden="true" style="margin-top: -10px;">
+                                 <i class="material-icons">close</i></button>
+                              <div class="bootbox-body-left">
+                                    <div class="mat-icon">
+                                      <i class="material-icons">error</i>
+                                    </div>
+                                </div>
+                                <div class="bootbox-body-right">
+                                  <p>${message}</p>
+                                </div>
+                    `,
+      buttons: {
+        success: {
+          label: "OK",
+          className: "btn btn-ok btn-hover",
+          callback: function () {
+          }
+        }
+      }
+    });
   }
   // filterApps(date){
   //     console.log(date);
