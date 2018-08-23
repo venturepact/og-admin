@@ -346,7 +346,7 @@ export class FeatureComponent extends Datatable implements OnInit {
     const hostName = window.location.hostname;
     if (hostName.includes('rely.co')) {
       apis.unshift(liveApi);
-      apis.push([cricketApi, bizApi])
+      apis.push(...[cricketApi, bizApi])
     } else if (hostName.includes('outgrow.co.in') || hostName.includes('outgrow.in')) {
       apis.unshift(relyApi);
       hostName.includes('outgrow.co.in') && apis.push(cricketApi);
