@@ -327,34 +327,32 @@ export class FeatureComponent extends Datatable implements OnInit {
   }
   getApis(){
     const apis = [];
+    const liveApi = {
+      text: 'Live',
+      value: 'https://api.outgrow.co/api/v1',
+    }
+    const cricketApi = {
+      text: 'cricket(.in)',
+      value: 'https://og-safacademy.herokuapp.com/api/v1',
+    };
+    const bizApi = {
+      text: 'Biz (.co.in)',
+      value: 'https://outgrow-biz-api.herokuapp.com/api/v1',
+    };
+    const relyApi = {
+      text: 'Rely',
+      value: this.syncApi,
+    };
     const hostName = window.location.hostname;
     if (hostName.includes('rely.co')) {
-      apis.unshift({
-        text: 'Live',
-        value: 'https://api.outgrow.co/api/v1',
-      });
+      apis.unshift(liveApi);
+      apis.push([cricketApi, bizApi])
     } else if (hostName.includes('outgrow.co.in') || hostName.includes('outgrow.in')) {
-      apis.unshift({
-        text: 'Rely',
-        value: this.syncApi,
-      });
-      hostName.includes('outgrow.co.in') && apis.push({
-        text: 'cricket(.in)',
-        value: 'https://og-safacademy.herokuapp.com/api/v1',
-      });
-      hostName.includes('outgrow.co.in') || apis.push({
-        text: 'Biz (.co.in)',
-        value: 'https://outgrow-biz-api.herokuapp.com/api/v1',
-      });
+      apis.unshift(relyApi);
+      hostName.includes('outgrow.co.in') && apis.push(cricketApi);
+      hostName.includes('outgrow.co.in') || apis.push(bizApi);
     } else if (hostName.includes('outgrow.local')) {
-      apis.push(...[{
-        text: 'cricket(.in)',
-        value: 'https://og-safacademy.herokuapp.com/api/v1',
-      },
-      {
-        text: 'Biz (.co.in)',
-        value: 'https://outgrow-biz-api.herokuapp.com/api/v1',
-      }]);
+      apis.push(...[cricketApi,bizApi]);
     }
     return apis;
   }
