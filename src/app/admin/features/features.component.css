@@ -6,39 +6,38 @@
     width: calc(100% - 255px);
     float: left;
     margin-bottom: 50px;
-  
 }
 .dataTables_length{
     display: inherit;
   }
-  
-  
+
+
   .dataTables_filter{
     display: inherit;
   }
-  
+
   input {
     width: 250px;
   }
-  
+
   ul {
     list-style-type: none;
     padding: 0 0 0 8px;
   }
-  
+
   /* Start: Add New User Modal */
     #add-calc .modal-content {
         border-radius: 8px;
     }
-  
+
     #add-calc .modal-header {
         padding: 10px 17px;
         border-bottom: none;
         background: #fb6066;
         border-radius: 7px 7px 0px 0px;
     }
-  
-  
+
+
     #add-calc.modal button.close.btn-close {
         text-shadow: none;
         position: absolute;
@@ -48,7 +47,7 @@
         opacity: 1;
         transition: all 0.3s ease 0s !important;
     }
-  
+
     #add-calc.modal button.close.btn-help {
         text-shadow: none;
         position: absolute;
@@ -58,26 +57,26 @@
         opacity: 1;
         transition: all 0.3s ease 0s !important;
     }
-  
+
     #add-calc.modal i.material-icons {
         font-size: 16px;
         color: #fff;
     }
-  
+
     #add-calc.modal button.close.btn-help i.material-icons {
         font-size: 14px;
         color: #fff;
     }
-  
+
     #add-calc .modal-title {
         text-transform: uppercase;
         color: #fff;
     }
-  
+
     #add-calc .modal-body {
         padding: 15px 25px 30px;
     }
-  
+
     #add-calc .btn-red-outline {
         color: #fb545b;
         background-color: #fff;
@@ -91,17 +90,17 @@
         text-transform: uppercase;
         float : right ;
     }
-  
+
     .modal .btn-red-outline.hvr-sweep-to-right::before {
         background: #ffb5b8 none repeat scroll 0 0;
         color: #fff !important;
     }
-  
+
     .modal .btn-red-outline.hvr-sweep-to-right:hover{
           color: #fff !important;
     }
-  
-    .modal .btn-red-outline.hvr-sweep-to-right:focus, 
+
+    .modal .btn-red-outline.hvr-sweep-to-right:focus,
     .modal .btn-red-outline.hvr-sweep-to-right:active {
         color: #fff !important;
         background: #ffb5b8 none repeat scroll 0 0 !important;
@@ -121,7 +120,7 @@
       word-break: break-word;
       font-size: 13px;
       margin: 0;
-  
+
   }
   #featureForm .pLabel {
     border: 1px solid black;
@@ -135,4 +134,9 @@
     word-wrap: break-word !important;
     word-break: break-word !important;
   }
-  
+
+/*
+  .bootbox.modal.fade.dialogWide.in .bootbox-form{
+    width: 100% !important;
+    float:left;
+  } */
