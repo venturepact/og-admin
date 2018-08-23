@@ -6,7 +6,6 @@
     width: calc(100% - 255px);
     float: left;
     margin-bottom: 50px;
-    overflow-y: auto;
 }
 .dataTables_length{
     display: inherit;
