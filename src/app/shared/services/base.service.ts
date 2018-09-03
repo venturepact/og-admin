@@ -46,6 +46,15 @@ export class BaseService {
     }
     return new RequestOptions({headers: this.headers, method: 'put'});
   }
+  protected deleteOptions() {
+    this.storage = this.readCookie('storage');
+    if (this.storage) {
+      this.storage = JSON.parse(this.storage);
+      this.headers = new Headers({'Content-Type': 'application/json', 'Authorization': 'JWT ' + this.storage.token});
+    }
+    return new RequestOptions({headers: this.headers, method: 'delete'});
+  }
+
 
   protected patch_options() {
     return new RequestOptions({ headers: this.headers, method: 'patch' });
