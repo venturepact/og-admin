@@ -13,6 +13,7 @@ export class SheetsComponent implements OnInit {
   public searchText: string = '';
   public nameMapping: string = '';
   public passCode: string = 'out@in';
+  public company: string = '';
   constructor(private _companyService: CompanyService) {
 
   }
@@ -24,6 +25,9 @@ export class SheetsComponent implements OnInit {
     this.sheetArr = [];
     if (!this.searchText) return window.alert('Please enter subdomain');
     this._companyService.getSheets(this.searchText, this.passCode).subscribe((res) => {
+      if(res.company){
+        this.company = res.company._id;
+      }
       if (res.sheets) {
         this.sheetArr = res.sheets;
         if (!this.sheetArr.length) {
@@ -58,7 +62,12 @@ export class SheetsComponent implements OnInit {
         return window.alert('Processing your request');
     });
   }
-
+  exportSchedule(i){
+    this._companyService.updateSchedule(this.sheetArr[i]._id,this.company).subscribe((res) => {
+      window.alert('Updated!');
+    });
+  }
+  
   sheetPopup(sheets, open) {
     if (open) jQuery('#sheetModal').modal();
     this.sheetUrlArr = sheets;
