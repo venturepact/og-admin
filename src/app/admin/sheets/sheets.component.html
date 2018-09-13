@@ -9,11 +9,12 @@
     <tr>
       <th>Calculator name</th>
       <th>Sheets</th>
-      <th>Reset button</th>
+      <th>Reset sheets</th>
       <th>Export leads</th>
       <th>Export visits</th>
+      <th>Schedule Export To Sheet</th>
     </tr>
-    <tr *ngFor="let obj of sheetArr">
+    <tr *ngFor="let obj of sheetArr; let i = index">
       <td>{{nameMapping[obj._id]}}</td>
       <td>
         <div class="col-md-1">
@@ -31,6 +32,9 @@
       <td>
         <button class="btn btn-success" (click)="exportSheet(obj._id,false)">Export visits</button>
       </td>
+      <td>
+   <input id="option" type="checkbox" [checked]="obj.cron && obj.cron.enabled" value="option" (change)="exportSchedule(i)">
+       </td>
     </tr>
   </table>
   <br/>
