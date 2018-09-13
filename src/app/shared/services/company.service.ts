@@ -15,7 +15,7 @@ import { User } from './../models/user';
 export class CompanyService extends BaseService {
   token: string;
   response: any;
-  companyTemplates:BehaviorSubject<any>= new BehaviorSubject<any>([]);
+  companyTemplates: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   // currentCompany: CurrentCompany;
   constructor(public _http: Http) {
     super();
@@ -67,7 +67,7 @@ export class CompanyService extends BaseService {
 
   isCompanyExist(company: String): Observable<any> {
     let companyurl = this._url + '/companies/name/' + company;
-    return this._http.get(companyurl,this.get_options())
+    return this._http.get(companyurl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -89,7 +89,7 @@ export class CompanyService extends BaseService {
 
   isSubDomainExist(company: String): Observable<Company> {
     let companyurl = this._url + '/companies/sub_domain/' + company;
-    return this._http.get(companyurl,this.get_options())
+    return this._http.get(companyurl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -255,7 +255,7 @@ export class CompanyService extends BaseService {
 
   getCompanyHomeProjects(id: String) {
     let URL = this._url + '/dashboard/company_home_projects/' + id;
-    return this._http.get(URL,this.get_options())
+    return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -292,7 +292,7 @@ export class CompanyService extends BaseService {
   //Get Templates
   getTemplates() {
     let getPlanUrl = this._url + '/dashboard/get_templates';
-    return this._http.get(getPlanUrl,this.get_options())
+    return this._http.get(getPlanUrl, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -323,39 +323,39 @@ export class CompanyService extends BaseService {
       .catch(this.handleError);
   }
 
-  checkCnameExist(company :any){
-    let URL = this._url + '/companies/cname/'  + company;
-      return this._http.get(URL, this.get_options())
+  checkCnameExist(company: any) {
+    let URL = this._url + '/companies/cname/' + company;
+    return this._http.get(URL, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  getCompanyPremades(company){
-    company['special_jv']=company['integration'];
-    return this._http.post(`${this._url}/company/premade_calcs`,company,this.post_options())
-        .map(this.extractData)
-        .catch(this.handleError)
+  getCompanyPremades(company) {
+    company['special_jv'] = company['integration'];
+    return this._http.post(`${this._url}/company/premade_calcs`, company, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError)
   }
-  updateCompanyPremades(data){
-    return this._http.post(`${this._url}/company/update_premades`,data,this.post_options())
-        .map(this.extractData)
-        .catch(this.handleError);
-  }
-  getCompanyTemplates(){
-    return this.companyTemplates.asObservable();
-  }
-  getCustomFeatures(company_id){
-    return this._http.get(`${this._url}/company/${company_id}/custom_features`,this.get_options())
-        .map(this.extractData)
-        .catch(this.handleError);
-  }
-  getCompanyFeatures(data){
-    return this._http.post(`${this._url}/company/company_features`,data,this.post_options())
+  updateCompanyPremades(data) {
+    return this._http.post(`${this._url}/company/update_premades`, data, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
-  updateFeatures(data,iteratee){
-    return this._http.put(`${this._url}/company/update/company-${iteratee}`,data,this.putOptions())
+  getCompanyTemplates() {
+    return this.companyTemplates.asObservable();
+  }
+  getCustomFeatures(company_id) {
+    return this._http.get(`${this._url}/company/${company_id}/custom_features`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  getCompanyFeatures(data) {
+    return this._http.post(`${this._url}/company/company_features`, data, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  updateFeatures(data, iteratee) {
+    return this._http.put(`${this._url}/company/update/company-${iteratee}`, data, this.putOptions())
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -365,16 +365,22 @@ export class CompanyService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
- 
-  resetAppConfig(appId,passCode){
-    return this._http.get(`${this._url}/analytic/reset_appconfig/${appId}/${passCode}`,this.get_options())
-        .map(this.extractData)
-        .catch(this.handleError);
+
+  resetAppConfig(appId, passCode) {
+    return this._http.get(`${this._url}/analytic/reset_appconfig/${appId}/${passCode}`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
   }
-  getSheets(company,passCode){
-    return this._http.get(`${this._url}/analytic/get_sheets/${company}/${passCode}`,this.get_options())
-    .map(this.extractData)
-    .catch(this.handleError);
+  getSheets(company, passCode) {
+    return this._http.get(`${this._url}/analytic/get_sheets/${company}/${passCode}`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  updateSchedule(data: any, company: any) {
+    return this._http.post(`${this._url}/analytic/updateSchedule`, { id: data, company_id: company }, this.post_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+      
   }
   exportToSheetAsync(data: any) {
     let URL = this._url + '/analytic/export_to_sheet_async';
