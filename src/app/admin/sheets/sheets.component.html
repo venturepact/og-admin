@@ -33,7 +33,7 @@
         <button class="btn btn-success" (click)="exportSheet(obj._id,false)">Export visits</button>
       </td>
       <td>
-   <input id="option" type="checkbox" [checked]="obj.cron.enabled" value="option" (change)="exportSchedule(i)">
+   <input id="option" type="checkbox" [checked]="obj.cron && obj.cron.enabled" value="option" (change)="exportSchedule(i)">
        </td>
     </tr>
   </table>
