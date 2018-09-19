@@ -109,6 +109,10 @@
 												<button (click)="updateUser()" id='saveBasicDetails'>Update </button>
 											</td>
 										</tr>
+										<tr>
+											<td>2FA:</td>
+											<td *ngIf="!edit_mode">{{model.two_fact_auth.is_configured}}</td>
+										</tr>
 									</tbody>
 								</table>
 
@@ -169,6 +173,18 @@
                                         <div class="col-sm-8">
                                             <label class="switch">
                                                 <input type="checkbox" [(ngModel)]="updateModel.can_create_new_company" formControlName="can_create_new_company" name="can_create_new_company">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+									</div>
+									
+									<div *ngIf="model.two_fact_auth.is_configured" class="row">
+                                        <div class="col-sm-4">
+                                            2FA
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="switch">
+                                                <input type="checkbox" [(ngModel)]="updateModel.two_fact_auth" formControlName="two_fact_auth" name="two_fact_auth">
                                                 <div class="slider round"></div>
                                             </label>
                                         </div>
