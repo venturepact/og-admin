@@ -103,7 +103,13 @@ export class AllPremadesComponent extends Datatable implements OnInit {
   }
   updateCalculator(data, btnRef) {
     btnRef && this.changeButtonProps(btnRef, { textContent: 'Please wait...', disabled: true });
-
+    if(data['otherIndustry'] && data['otherIndustry'].trim().toLowerCase() === 'other'){
+      window.toastNotification(`Please change industry name other than other`)
+      return;
+    }
+    if(data['otherIndustry'] && data['industry']==='other'){
+      data['industry'] = this.getIndustry(this.industries,data['otherIndustry'].trim());
+    }
     this.$subscription = this._calculatorService.updateCalculator(Object.assign({}, this.selectedItem, data, this.extractData(data['live_url'])))
       .subscribe((response) => {
         console.log("Response", response);
