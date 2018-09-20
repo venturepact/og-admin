@@ -239,6 +239,13 @@
               <select class="form-control" id="industry" name="type" formControlName="industry">
                 <option *ngFor="let industry of industries" [value]="industry">{{industry}}</option>
               </select>
+              <div class="form-group label-floating"  *ngIf="calculatorForm.controls.industry.value === 'other'">
+                <label class="control-label" for="otherIndustry">Other Industry</label>
+                <input class="form-control" id="otherIndustry" type="text" name="otherIndustry" formControlName="otherIndustry" />              
+                <div class="er-msg" *ngIf="calculatorForm.controls.otherIndustry.dirty && !calculatorForm.controls.otherIndustry.valid">
+                  Please enter Other Industry
+                </div>
+              </div>
               <div class="er-msg" *ngIf="calculatorForm.controls.industry.dirty && !calculatorForm.controls.industry.valid">
                 Please select calculator industry
               </div>
