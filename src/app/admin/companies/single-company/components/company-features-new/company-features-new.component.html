@@ -1,6 +1,8 @@
 <div class="wrap">
-  <div *ngIf="loading"> 				
-    <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+  <div *ngIf="loading">
+    <div>
+      <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+    </div>
   </div>
   <div *ngIf="!loading" class="panel panel-primary">
     <div class="panel-heading">
@@ -16,10 +18,11 @@
       </div>
     </div>
     <div class="panel-body" *ngIf="edit_mode">
+
       <feature-layout-manager [features]="features" [info]="componentInfo" (changes)="pushChanges($event)"></feature-layout-manager>
-      
+
       <button (click)="updateFeatures(changedFeatures)">Update</button>
-      <div style="color:red;font-size:12px" *ngIf="errorMessage">{{errorMessage}}</div>  
+      <div style="color:red;font-size:12px" *ngIf="errorMessage">{{errorMessage}}</div>
     </div>
   </div>
 </div>

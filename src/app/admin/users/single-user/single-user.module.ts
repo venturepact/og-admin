@@ -10,12 +10,13 @@ import {OtherDetailsComponent} from './components/other-details/other-details.co
 import {TeamDetailsComponent} from './components/team-details/team-details.component';
 import {UserLogComponent} from './components/user-logs/user-logs.component';
 import {SharedModule} from './../../../shared/modules/shared.module';
+import { UserSessionsComponent } from './components/user-sessions/user-sessions.component';
 
 
 @NgModule({
   imports: [SharedModule, RouterModule],
   declarations: [ SingleUserComponent, AccountDetailsComponent,
-                 CalculatorsComponent , MembershipDetailsComponent , OtherDetailsComponent , TeamDetailsComponent , UserLogComponent]
+                 CalculatorsComponent , MembershipDetailsComponent , OtherDetailsComponent , TeamDetailsComponent , UserLogComponent, UserSessionsComponent]
 })
 
 export class SingleUserModule {}

@@ -109,7 +109,7 @@
                   </td>
 
                 </tr>
-                <tr *ngIf="!company.parent_company">
+                <!-- <tr *ngIf="!company.parent_company">
                   <td>
                     Agency
                   </td>
@@ -117,7 +117,7 @@
                     {{company.agency}}
                   </td>
 
-                </tr>
+                </tr> -->
                 <tr>
                   <td>
                     Admin Created
@@ -210,7 +210,7 @@
                     <span *ngIf="company.current_limit_users!= -1">{{company.current_limit_users}}</span>
                   </td>
                 </tr>
-                <tr *ngIf="!company.parent_company">
+                <!-- <tr *ngIf="!company.parent_company">
                   <td>
                     Number of Companies
                   </td>
@@ -218,7 +218,7 @@
                     <span *ngIf="company.current_limit_companies== -1">Unlimited</span>
                     <span *ngIf="company.current_limit_companies!= -1">{{company.current_limit_companies}}</span>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <td>
                     Template club
@@ -235,14 +235,14 @@
                     <span>{{company.child_intercom_id || 'Not set'}}</span>
                   </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>
                     Company Logo
                   </td>
                   <td *ngIf="!edit_mode">
                     <span>{{ customFeatures['extras']['company_logo']['active'] }}</span>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <td>
                     GDPR
@@ -452,7 +452,7 @@
                     <!--</label>-->
                   </div>
                 </div>
-                <div class="row" *ngIf="!company.parent_company">
+                <!-- <div class="row" *ngIf="!company.parent_company">
                   <div class="col-sm-4">
                     Agency
                   </div>
@@ -462,7 +462,7 @@
                       <div class="slider round"></div>
                     </label>
                   </div>
-                </div>
+                </div> -->
                 <div class="row">
                   <div class="col-sm-4">
                     Admin Created
@@ -567,7 +567,7 @@
                            formControlName="users"/>
                   </div>
                 </div>
-                <div class="row" *ngIf="!company.parent_company">
+                <!-- <div class="row" *ngIf="!company.parent_company">
                   <div class="col-sm-4">
                     Companies
                   </div>
@@ -575,7 +575,7 @@
                     <input class="form-control" type="number" [(ngModel)]="updateCompany.current_limit_companies"
                            formControlName="companies"/>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                   <div class="col-sm-4">
@@ -587,7 +587,7 @@
                   </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-sm-4">
                     company logo
                   </div>
@@ -598,7 +598,7 @@
                       <div class="slider round"></div>
                     </label>
                   </div>
-                </div>
+                </div> -->
                 <div class="row">
                   <div class="col-sm-4">
                     GDPR

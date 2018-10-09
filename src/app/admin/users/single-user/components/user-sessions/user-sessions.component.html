@@ -1,0 +1,42 @@
+<div class="row" style="margin: 20px">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div class="col-sm-12 ">
+            <h4>User sessions</h4>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Browser</th>
+                <th>Ip</th>
+                <th>Created At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let browser of getBrowserSessions(sessions)">
+
+              <tr *ngFor="let session of sessions[browser]">
+                  <td>{{session.platform}}</td>
+                  <td>{{browser }}{{session.version}}</td>
+                  <td>{{session.Ip}}</td>
+                  <td>{{session.createdAt}}</td>
+                  <td>
+                    <a href="javascript:void(0);" (click)="destroySession(session,browser)">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </td>
+
+              </tr>
+            </ng-container>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
