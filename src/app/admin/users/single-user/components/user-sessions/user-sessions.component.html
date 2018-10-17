@@ -12,26 +12,30 @@
                 <th>Platform</th>
                 <th>Browser</th>
                 <th>Ip</th>
+                <th>Status</th>
                 <th>Created At</th>
+                <th>Expires At</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let browser of getBrowserSessions(sessions)">
+                <!-- <ng-container *ngFor="let browser of getBrowserSessions(sessions)"> -->
 
-              <tr *ngFor="let session of sessions[browser]">
-                  <td>{{session.platform}}</td>
-                  <td>{{browser }}{{session.version}}</td>
-                  <td>{{session.Ip}}</td>
-                  <td>{{session.createdAt}}</td>
+              <tr *ngFor="let session of sessions">
+                  <td>{{session?.user_agent?.platform}}</td>
+                  <td>{{session.browser }}&nbsp;{{session?.user_agent?.version}}</td>
+                  <td>{{session.ip}}</td>
+                  <td>{{session.status}}</td>
+                  <td>{{getDate(session.createdAt)}}</td>
+                  <td>{{getDate(session.expiresAt)}}</td>
                   <td>
-                    <a href="javascript:void(0);" (click)="destroySession(session,browser)">
+                    <a *ngIf="session.status === 'ACTIVE'" href="javascript:void(0);" (click)="destroySession(session,session.browser)">
                       <i class="material-icons">delete</i>
                     </a>
                   </td>
 
               </tr>
-            </ng-container>
+            <!-- </ng-container> -->
 
             </tbody>
           </table>

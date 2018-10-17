@@ -36,12 +36,15 @@ export class UserSessionsComponent implements OnInit {
   }
   destroySession(session,browser){
     console.log(session);
-    const $session = this._userService.removeUserSession({session:session['sessionId'],browser,user:this.id})
+    const $session = this._userService.removeUserSession({session:session['session_id'],browser,user:this.id})
       .subscribe(res=>{
        $session.unsubscribe();
        this.getSessions();
       },err=>{
         $session.unsubscribe();
       })
+  }
+  getDate(date){
+    return new Date(date);
   }
 }
