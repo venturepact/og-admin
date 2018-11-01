@@ -18,7 +18,8 @@ export class AgencyComponent implements OnInit {
     this.agencyForm = this._fb.group({
       agency: [false],
       companies: [0],
-      logo: [false]
+      logo: [false],
+      child_intercom_id: ['']
     });
     this.getAgencyData(this.company);
   }
