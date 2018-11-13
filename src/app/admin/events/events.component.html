@@ -234,11 +234,16 @@
                 </div>
               </div>
               <div class="form-group label-floating">
-                <label class="control-label" for="description">Description</label>
-                <textarea class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
-                <div class="er-msg" *ngIf="eventForm.controls.description.dirty && !eventForm.controls.description.valid">
-                  150 characters supported only
+                <label class="control-label" for="launch_date">Launch Date</label>
+                <og-date-picker *ngIf="scriptLoaded" (date)="setLaunchDate($event)">
+                </og-date-picker>
+                <div class="er-msg" *ngIf="eventForm.controls.launch_date.dirty && !eventForm.controls.launch_date.valid">
+                  Please select event launch date
                 </div>
+              </div>
+              <div class="form-group label-floating">
+                <label class="control-label" for="launch_time">Choose a Launch time: </label>
+                <input class="form-control" id="launch_time" type="time" name="launch_time" formControlName="launch_time">
               </div>
               <div class="form-group label-floating">
                 <label class="control-label" for="media">Event Media</label>
@@ -266,19 +271,12 @@
                 </div>
               </div>
               <div class="form-group label-floating">
-                <label class="control-label" for="launch_date">Launch Date</label>
-                <og-date-picker *ngIf="scriptLoaded" (date)="setLaunchDate($event)">
-                </og-date-picker>
-                <div class="er-msg" *ngIf="eventForm.controls.launch_date.dirty && !eventForm.controls.launch_date.valid">
-                  Please select event launch date
+                <label class="control-label" for="description">Description</label>
+                <textarea class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
+                <div class="er-msg" *ngIf="eventForm.controls.description.dirty && !eventForm.controls.description.valid">
+                  150 characters supported only
                 </div>
               </div>
-
-              <div class="form-group label-floating">
-                <label class="control-label" for="launch_time">Choose a Launch time: </label>
-                <input class="form-control" id="launch_time" type="time" name="launch_time" formControlName="launch_time">
-              </div>
-
               <button *ngIf="!edit" #saveButton (click)="createEvent(eventForm.value,saveButton)" class="btn btn btn-red-outline btn-add-event btn-hover"
                 id="createEvent" [disabled]="!eventForm.valid">Add</button>
               <button *ngIf="edit" #updateButton (click)="updateEvent(eventForm.value,updateButton)" class="btn btn btn-red-outline btn-add-event btn-hover"
