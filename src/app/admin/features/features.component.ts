@@ -337,7 +337,7 @@ export class FeatureComponent extends Datatable implements OnInit {
     };
     const bizApi = {
       text: 'Biz (.co.in)',
-      value: 'https://outgrow-biz-api.herokuapp.com/api/v1',
+      value: 'https://outgrow-biz-api1.herokuapp.com/api/v1',
     };
     const relyApi = {
       text: 'Rely',
