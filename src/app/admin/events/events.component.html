@@ -271,6 +271,12 @@
                 </div>
               </div>
               <div class="form-group label-floating">
+                <label class="control-label" for="event_color">Background color</label>
+                  <input class="form-control" [(colorPicker)]="eventColor"
+                   (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+                  id="event_color" [style.background]="eventColor"/>
+              </div>
+              <div class="form-group label-floating">
                 <label class="control-label" for="description">Description</label>
                 <textarea class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
                 <div class="er-msg" *ngIf="eventForm.controls.description.dirty && !eventForm.controls.description.valid">
