@@ -125,7 +125,7 @@ export class EventsComponent extends Datatable implements OnInit {
     this.eventForm.get('launch_date').setValue(this.selectedItem.launch_date)
     this.eventForm.get('launch_time').setValue(this.selectedItem.launch_time);
     this.eventForm.get('color').setValue(this.selectedItem.color || this.defaultColor);
-
+    this.eventColor = this.selectedItem.color || this.defaultColor;
 
     this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).add(0, 'days').format('MM/DD/YYYY')),
       jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
@@ -146,7 +146,8 @@ export class EventsComponent extends Datatable implements OnInit {
       launch_date: new Date(data.launch_date).toISOString(),
       launch_time: data.launch_time,
       event_type: data.event_type,
-      media: data.media
+      media: data.media,
+      color:data.color
     };
     if (data.event_name != this.selectedItem.event_name || data.launch_date != this.selectedItem.launch_date) {
       updatedData['check'] = true;
