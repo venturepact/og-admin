@@ -56,7 +56,7 @@ export class EventsComponent extends Datatable implements OnInit {
     this.eventColor = this.defaultColor;
     this.eventForm = this.fb.group({
       event_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      description: ['', Validators.compose([Validators.required, Validators.maxLength(150)])],
+      description: ['', Validators.compose([Validators.required])],
       media: ['', Validators.compose([])],
       event_type: ['', Validators.required],
       launch_date: [''],
