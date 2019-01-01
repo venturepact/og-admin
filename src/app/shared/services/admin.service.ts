@@ -709,8 +709,13 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  getCancelRequest() {
-    return this._http.get(`${this._url}/admin/getcancelrequests`, this.get_options())
+  cancellationCompanies() {
+    return this._http.get(`${this._url}/admin/cancellationCompanies`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  cancellationCustomers() {
+    return this._http.get(`${this._url}/admin/cancellationCustomers`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
