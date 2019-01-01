@@ -33,6 +33,8 @@ import { HelloBarComponent } from "../../admin/hello-bar/hello-bar.component";
 import { FeatureComponent } from '../../admin/features/features.component';
 import { SheetsComponent } from '../../admin/sheets/sheets.component';
 import { CacheHandlingComponent } from '../../admin/cache-handling/cache-handling.component'
+import { CancelRequestComponent } from '../../admin/canel-request/cancel-request.component'
+
 import { EventsComponent } from '../../admin/events/events.component';
 
 export const ADMIN_ROUTES: Routes = [
@@ -205,7 +207,11 @@ export const ADMIN_ROUTES: Routes = [
             component: EventsComponent,
             canActivate: [AdminGuard, AdminLtdGuard],
           },
-          
+          {
+            path: 'cancel-request',
+            component:CancelRequestComponent,
+            canActivate: [AdminGuard]
+          }
         ]
       },
     ]
