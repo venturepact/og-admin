@@ -52,12 +52,12 @@ export class CancelRequestComponent implements OnInit, AfterViewInit {
   initializeGraphForMmr() {
     this.overviewChartForMmr = Morris.Line({
       element: 'area-example1',
-      data: [{date:'0', mmr:0}],
+      data: [{date:'0', mrr:0}],
       xkey: 'date',
       parseTime: false,
-      ykeys: ['mmr'],
+      ykeys: ['mrr'],
       hideHover: 'auto',
-      labels: ['Companies MMR'],
+      labels: ['Companies Mrr'],
       lineColors: ['green'],
     });
   }
