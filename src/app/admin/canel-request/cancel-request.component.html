@@ -1,4 +1,4 @@
-<div class="active basic-container" id="overview">
+<!-- <div class="active basic-container" id="overview">
     <div class="col-md-12 col-sm-12 col-xs-12 overview-outr">
         <div class="col-md-6 col-sm-12 col-xs-12 ">
             <div class="graph-val"><span class="red"></span> Cancelled Comapnies </div>
@@ -25,5 +25,85 @@
             <a class="icon-link" *ngIf="graphLoader1"><i class="material-icons">refresh</i></a>
         </div>
     </div>
-</div>
+</div> -->
+
+
+<div class="col-md-10">
+    <div class="container" style="margin-left: 70px;margin-top: 40px">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 toppad">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <div class="col-sm-12 ">
+                  <h4 style="text-align: center">MRR Calculations</h4>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div id="table">
+                <div id="table-datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div >
+                      <label >Select Your Preference</label>
+                    <select (change)="preferenceChange()" [(ngModel)]="mrrSelection">
+                      <option value="" disabled>Select an MRR Calculation</option>
+                      <option value="cancellationRequests" selected>
+                        Cancellation Requests
+                      </option>
+                      <option value="cancellationCustomers">
+                        Cancellation Customers
+                      </option>
+                      <option value="upgrades">
+                        Upgrades
+                      </option>
+                      <option value="downgrades">
+                        Downgrades
+                      </option>
+                    </select>
+                  </div>
+                  <div *ngIf="loading">
+                    <div><img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad"></div>
+                </div>
+                  <table *ngIf="!loading" class="dataTable">
+                    <thead>
+                      <tr>
+                        <th style="padding: 2px"> 
+                          Date (MM/YYYY)
+                        </th>
+                        <th style="padding: 2px">
+                          Companies
+                        </th>
+                        <th style="padding: 2px">
+                          MRR
+                        </th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of result; let i = index">
+                        <td style="padding: 2px">
+                          <div>
+                            <h4>{{data.date}}</h4>
+                          </div>
+                        </td>
+                        <td style="padding: 2px">
+                            <div>
+                              <h4>{{data.count}}</h4>
+                            </div>
+                          </td>
+                          <td style="padding: 2px">
+                            <div>
+                              <h4>{{data.mrr}}</h4>
+                            </div>
+                          </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
