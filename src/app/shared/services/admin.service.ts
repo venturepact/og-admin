@@ -709,13 +709,23 @@ export class AdminService extends BaseService {
       .catch(this.handleError);
   }
 
-  cancellationCompanies() {
-    return this._http.get(`${this._url}/admin/cancellationCompanies`, this.get_options())
+  cancellationRequests() {
+    return this._http.get(`${this._url}/admin/cancellationRequests`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
   cancellationCustomers() {
     return this._http.get(`${this._url}/admin/cancellationCustomers`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  upgrades() {
+    return this._http.get(`${this._url}/admin/upgrades`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  downgrades() {
+    return this._http.get(`${this._url}/admin/downgrades`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
