@@ -320,4 +320,13 @@ export class EventsComponent extends Datatable implements OnInit {
     console.log(event, data);
     this.eventForm.get('color').setValue(data);
   }
+  public onColorSelected(event) {
+    this.eventForm.get('color').setValue(event.target.value);
+    this.eventColor = event.target.value;
+    if (event.target.value == 'Select') {
+      this.eventColor = this.defaultColor;
+      this.eventForm.get('color').setValue(this.defaultColor);
+      console.log(this.eventColor);
+    }
+  }
 }

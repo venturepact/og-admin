@@ -271,10 +271,17 @@
                 </div>
               </div>
               <div class="form-group label-floating">
-                <label class="control-label" for="event_color">Background color</label>
-                  <input class="form-control" [(colorPicker)]="eventColor"
+                <label class="control-label" for="event_color" [style.background-color]="eventColor">Background color</label>
+                  <!-- <input class="form-control" [(colorPicker)]="eventColor"
                    (colorPickerClose)="onEventLog('colorPickerClose', $event)"
-                  id="event_color" [style.background]="eventColor"/>
+                  id="event_color" [style.background]="eventColor"/> -->
+                  <select class="color form-control" (change)="onColorSelected($event)" formControlName="color">
+                    <option>Select</option>
+                    <option value="#00afe1" class="color_00afe1">#00afe1</option>
+                    <option value="#ffb311" class="color_ffb311">#ffb311</option>
+                    <option value="#e16bdd" class="color_e16bdd">#e16bdd</option>
+                    <option value="#fb5f66" class="color_fb5f66">#fb5f66</option>
+                  </select>
               </div>
               <div class="form-group label-floating">
                 <label class="control-label" for="description">Description</label>
