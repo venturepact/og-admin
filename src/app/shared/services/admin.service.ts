@@ -729,4 +729,9 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  trialToActivated() {
+    return this._http.get(`${this._url}/admin/trialToActivated`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }
