@@ -25,6 +25,7 @@ export class CancelRequestComponent implements OnInit {
   result: any;
   cancellationCustomers: any;
   trialToActivated: any;
+  trialSignups: any;
   constructor(private adminService: AdminService, private script:Script) {
   }
 
@@ -63,7 +64,8 @@ export class CancelRequestComponent implements OnInit {
     this.cancellationRequests = await this.adminService.cancellationRequests().toPromise();
     this.upgrades = await this.adminService.upgrades().toPromise();
     this.downgrades = await this.adminService.downgrades().toPromise();
-    this.trialToActivated = await this.adminService.trialToActivated().toPromise()
+    this.trialToActivated = await this.adminService.trialToActivated().toPromise();
+    this.trialSignups = await this.adminService.trialSignups().toPromise();
     this.loading = false;
   }
 
@@ -78,6 +80,8 @@ export class CancelRequestComponent implements OnInit {
       this.result = this.downgrades
     } else if(this.mrrSelection === 'trialToActivated'){
       this.result = this.trialToActivated
+    }else if(this.mrrSelection === 'trialSignups'){
+      this.result = this.trialSignups
     }
   }
 
