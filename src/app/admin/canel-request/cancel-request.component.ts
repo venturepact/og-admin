@@ -69,20 +69,20 @@ export class CancelRequestComponent implements OnInit {
     this.loading = false;
   }
 
-  preferenceChange() {
-    if(this.mrrSelection === 'cancellationRequests'){
-      this.result = this.cancellationRequests
-    } else if(this.mrrSelection === 'cancellationCustomers'){
-      this.result = this.cancellationCustomers
-    } else if(this.mrrSelection === 'upgrades'){
-      this.result = this.upgrades
-    } else if(this.mrrSelection === 'downgrades'){
-      this.result = this.downgrades
-    } else if(this.mrrSelection === 'trialToActivated'){
-      this.result = this.trialToActivated
-    }else if(this.mrrSelection === 'trialSignups'){
-      this.result = this.trialSignups
-    }
-  }
+  // preferenceChange() {
+  //   if(this.mrrSelection === 'cancellationRequests'){
+  //     this.result = this.cancellationRequests
+  //   } else if(this.mrrSelection === 'cancellationCustomers'){
+  //     this.result = this.cancellationCustomers
+  //   } else if(this.mrrSelection === 'upgrades'){
+  //     this.result = this.upgrades
+  //   } else if(this.mrrSelection === 'downgrades'){
+  //     this.result = this.downgrades
+  //   } else if(this.mrrSelection === 'trialToActivated'){
+  //     this.result = this.trialToActivated
+  //   }else if(this.mrrSelection === 'trialSignups'){
+  //     this.result = this.trialSignups
+  //   }
+  // }
 
 }
