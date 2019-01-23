@@ -708,4 +708,35 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  cancellationRequests() {
+    return this._http.get(`${this._url}/admin/cancellationRequests`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  cancellationCustomers() {
+    return this._http.get(`${this._url}/admin/cancellationCustomers`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  upgrades() {
+    return this._http.get(`${this._url}/admin/upgrades`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  downgrades() {
+    return this._http.get(`${this._url}/admin/downgrades`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  trialToActivated() {
+    return this._http.get(`${this._url}/admin/trialToActivated`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  trialSignups() {
+    return this._http.get(`${this._url}/admin/trialSignups`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

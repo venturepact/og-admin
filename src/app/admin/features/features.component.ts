@@ -46,6 +46,8 @@ export class FeatureComponent extends Datatable implements OnInit {
       this.syncApi = environment.STAGING_API;
     } else if (hostName.includes('outgrow.local')) {
       this.syncApi = environment.STAGING_API;
+    } else if (hostName.includes('outgrow.in')) {
+      this.syncApi = environment.STAGING_API;
     }
     this.route.params.subscribe(params => {
       this.selectedItem = params['type'];
@@ -267,70 +269,91 @@ export class FeatureComponent extends Datatable implements OnInit {
       return acc;
     }, []);
   }
-  async syncFeature(feat, icon) {
-    bootbox.dialog({
-      size: 'small',
-      message: `<div class="bootbox-body-left">
-                  <div class="mat-icon">
-                  <i class="material-icons">error</i>
-                  </div>
-                </div>
-                <div class="bootbox-body-right">
-                  <p class="one-line-para">Are you sure you want to sync ${feat._id} feature to staging?</p>
-                </div>`,
-      buttons: {
-        cancel: {
-          label: "Cancel",
-          className: "btn-cancel btn-cancel-hover",
-        },
-        success: {
-          label: "OK",
-          className: "btn btn-ok btn-hover",
-          callback: async () => {
-            try {
-              jQuery(`#${icon}`).addClass('fa-spin');
-              console.log(feat);
-              delete feat['createdAt'];
-              delete feat['sub_features'];
-              delete feat['__v'];
-              delete feat['seq'];
-              delete feat['updatedAt'];
-        
-              feat['plans'] = this.getPlansByFeature(feat['_id']);
-              console.log(feat);
-        
-              let data = await this.syncFeatures([feat]);
-              if (data && data['invalidFeatures'].length) {
-                window.toastNotification(`Feature already exist or parent feature doesn't exists`);
-                jQuery(`#${icon}`).removeClass('fa-spin');
-        
-                return;
-              }
-              window.toastNotification(`Feature added..`);
-              jQuery(`#${icon}`).removeClass('fa-spin');
-            } catch (e) {
-              console.log(e);
-              window.toastNotification(e.error ? e.error.err_message : 'Something went wrong..');
-              jQuery(`#${icon}`).removeClass('fa-spin');
-        
-            }
-        
-          }
+  async syncFeature(feat, icon, api = this.syncApi) {
+    const apis = this.getApis();
+    const box = bootbox.prompt({
+      title: `Are you sure you want to sync ${feat._id}?`,
+      inputType: 'select',
+      className: "dialogWide",
+      inputOptions: apis,
+      callback: async (api) => {
+        if (!api) {
+          window.toastNotification(`Please select Api`);
+          return;
         }
+        try {
+          jQuery(`#${icon}`).addClass('fa-spin');
+          console.log(feat);
+          delete feat['createdAt'];
+          delete feat['sub_features'];
+          delete feat['__v'];
+          delete feat['seq'];
+          delete feat['updatedAt'];
+
+          feat['plans'] = this.getPlansByFeature(feat['_id']);
+          console.log(feat);
+
+          let data = await this.syncFeatures([feat], api);
+          if (data && data['invalidFeatures'].length) {
+            window.toastNotification(`Feature already exist or parent feature doesn't exists`);
+            jQuery(`#${icon}`).removeClass('fa-spin');
+            return;
+          }
+          window.toastNotification(`Feature added..`);
+          jQuery(`#${icon}`).removeClass('fa-spin');
+        } catch (e) {
+          console.log(e);
+          window.toastNotification(e.error ? e.error.err_message : 'Something went wrong..');
+          jQuery(`#${icon}`).removeClass('fa-spin');
+        }
+
       }
     });
-   
+    box.find('form').css({ 'width': '100%' });
+
+
   }
-  async syncFeatures(arr) {
+  async syncFeatures(arr, api = this.syncApi) {
 
 
     try {
       if (Object.prototype.toString.call(arr) == '[object Array]' && arr.length > 0) {
-        return this._featureService.syncFeatures(arr, this.syncApi).toPromise();
+        return this._featureService.syncFeatures(arr, api).toPromise();
       }
       return Promise.reject({ error: { err_message: 'No feature to add..' } });
     } catch (e) {
       throw e;
     }
+  }
+  getApis(){
+    const apis = [];
+    const liveApi = {
+      text: 'Live',
+      value: 'https://api.outgrow.co/api/v1',
+    }
+    const cricketApi = {
+      text: 'cricket(.in)',
+      value: 'https://og-safacademy.herokuapp.com/api/v1',
+    };
+    const bizApi = {
+      text: 'Biz (.co.in)',
+      value: 'https://outgrow-biz-api1.herokuapp.com/api/v1',
+    };
+    const relyApi = {
+      text: 'Rely',
+      value: this.syncApi,
+    };
+    const hostName = window.location.hostname;
+    if (hostName.includes('rely.co')) {
+      apis.unshift(liveApi);
+      apis.push(...[cricketApi, bizApi])
+    } else if (hostName.includes('outgrow.co.in') || hostName.includes('outgrow.in')) {
+      apis.unshift(relyApi);
+      hostName.includes('outgrow.co.in') && apis.push(cricketApi);
+      hostName.includes('outgrow.co.in') || apis.push(bizApi);
+    } else if (hostName.includes('outgrow.local')) {
+      apis.push(...[cricketApi,bizApi]);
+    }
+    return apis;
   }
 }

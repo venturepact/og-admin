@@ -88,7 +88,7 @@ export class UserService extends BaseService {
   }
 
 
-  login(username: String, password: String, companyName: String, isOauth: boolean = false) : any {
+  login(username: String, password: String, companyName: String, isOauth: boolean = false): any {
     let data = {
       'username': username,
       'password': password,
@@ -296,4 +296,15 @@ export class UserService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  getUserSession(user) {
+    return this._http.get(`${this._url}/admin/user/${user}/sessions`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  removeUserSession(data) {
+    return this._http.delete(`${this._url}/admin/user/removeSession/${data['session']}?user=${data['user']}&browser=${data['browser']}`, this.delete_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
 }

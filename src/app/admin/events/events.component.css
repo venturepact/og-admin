@@ -164,3 +164,15 @@
     display: inline;
     margin-left: 10px;
 }
+#add-event .form-group select.color option.color_00afe1 {
+    background-color: #00afe1;
+}
+#add-event .form-group select.color option.color_ffb311 {
+    background-color: #ffb311;
+}
+#add-event .form-group select.color option.color_e16bdd {
+    background-color: #e16bdd;
+}
+#add-event .form-group select.color option.color_fb5f66 {
+    background-color: #fb5f66;
+}

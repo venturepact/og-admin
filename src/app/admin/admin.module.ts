@@ -65,6 +65,8 @@ import { LayoutPreviewComponent } from './layout-preview/layout-preview.componen
 import { LayoutService } from './../shared/services/layoutPreview.service';
 import { SheetsComponent } from './sheets/sheets.component';
 import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
+import { CancelRequestComponent } from './canel-request/cancel-request.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   imports: [
@@ -79,6 +81,7 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     FeaturesModule,
     PlansNewModule,
     MaterialModule,
+    ColorPickerModule,
     ReactiveFormsModule
   ],
 
@@ -119,7 +122,8 @@ import { CacheHandlingComponent } from './cache-handling/cache-handling.componen
     ModalComponent,
     EventsComponent,
     LayoutPreviewComponent,
-    SheetsComponent
+    SheetsComponent,
+    CancelRequestComponent
   ],
 
   providers: [

@@ -16,12 +16,13 @@ import { CompanyPremadesComponent } from './components/company-premades/company-
 import { CompanyFeaturesNewComponent } from './components/company-features-new/company-features-new.component';
 import { CompanyPremadesNewComponent } from './components/company-premades-new/company-premades-new.component';
 import { UsageCycleComponent } from "./components/usage-cycle/usage-cycle.component";
+import { AgencyComponent } from './components/agency/agency.component';
 //import { FeatureLayoutManagerComponent } from './components/feature-layout-manager/feature-layout-manager.component';
 @NgModule({
   imports : [ RouterModule, SharedModule],
   declarations : [SingleCompanyComponent, CalculatorDetailComponent,
     CompanyDetailComponent, MembershipDetailComponent, TeamDetailComponent, CompanyFeatureComponent, IntegrationDetailComponent,
-     ChildCompaniesComponent,CompanylogComponent, CompanyPremadesComponent, CompanyFeaturesNewComponent, CompanyPremadesNewComponent,UsageCycleComponent],
+     ChildCompaniesComponent,CompanylogComponent, CompanyPremadesComponent, CompanyFeaturesNewComponent, CompanyPremadesNewComponent,UsageCycleComponent, AgencyComponent],
   })
 
 export class SingleCompanyModule {}

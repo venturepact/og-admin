@@ -28,6 +28,7 @@ export class CompanyFeaturesNewComponent extends PremadeLayoutManager implements
     this.loading=true;
     if(this.data && this.data.features){
       this.loading=false;
+      // this.data.features =
       this.features = JSON.parse(JSON.stringify(this.data.features));
       this.featuresCopy = JSON.parse(JSON.stringify(this.features));
       this.componentInfo['featuresCopy']=this.featuresCopy;
