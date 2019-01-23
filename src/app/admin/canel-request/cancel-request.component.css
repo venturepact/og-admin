@@ -44,3 +44,8 @@ ul {
   float: left;
   width: 100%;
 }
+.mrr-container .panel-body{
+
+  height: 360px;
+  overflow: overlay;
+}
