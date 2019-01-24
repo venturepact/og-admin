@@ -377,11 +377,10 @@ export class CompanyService extends BaseService {
       .catch(this.handleError);
   }
   updateSchedule(data: any, company: any) {
-    console.log('>>>>>>>',data,company);
     return this._http.post(`${this._url}/analytic/updateSchedule`, { id: data, company_id: company }, this.post_options())
       .map(this.extractData)
       .catch(this.handleError);
-      
+
   }
   exportToSheetAsync(data: any) {
     let URL = this._url + '/analytic/export_to_sheet_async';
@@ -389,6 +388,14 @@ export class CompanyService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
-
-
+  getAgencyData(id){
+    return this._http.get(`${this._url}/company/${id}/agency_data`, this.get_options())
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
+  updateAgencyData(id,data){
+    return this._http.post(`${this._url}/company/${id}/update_agency_data`,data, this.post_options())
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
 }

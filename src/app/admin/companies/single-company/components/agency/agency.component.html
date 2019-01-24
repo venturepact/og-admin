@@ -1,0 +1,87 @@
+<div class="wrap">
+  <div *ngIf="loading">
+    <div>
+      <img src="assets/images/logoAnim.gif" alt="loading..." id="imgLoad">
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6" *ngIf="!loading">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-9">Agency Settings</div>
+          <div class="col-md-1">Edit:</div>
+          <div class="col-md-2">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="edit_mode">
+              <div class="slider round"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" [formGroup]="agencyForm">
+        <table class="table table-bordered table-hover table-user-information">
+          <tbody>
+            <tr>
+              <td>
+                Agency
+              </td>
+              <td *ngIf="!edit_mode">
+                {{agencyForm.get('agency').value}}
+              </td>
+              <td *ngIf="edit_mode">
+                <label class="switch">
+                  <input type="checkbox" formControlName="agency">
+                  <div class="slider round"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Number of Companies
+              </td>
+              <td *ngIf="!edit_mode">
+                  <span *ngIf="agencyForm.get('companies').value== -1">Unlimited</span>
+                  <span *ngIf="agencyForm.get('companies').value!= -1">{{agencyForm.get('companies').value}}</span>
+
+              </td>
+              <td *ngIf="edit_mode">
+                  <input class="form-control" type="number" formControlName="companies"/>
+              </td>
+            </tr>
+            <tr>
+                <td>
+                  Company Logo
+                </td>
+                <td *ngIf="!edit_mode">
+                  {{agencyForm.get('logo').value}}
+                </td>
+                <td *ngIf="edit_mode">
+                  <label class="switch">
+                    <input type="checkbox" formControlName="logo">
+                    <div class="slider round"></div>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Child Intercom ID
+                </td>
+                <td *ngIf="!edit_mode">
+
+                    <span >{{agencyForm.get('child_intercom_id').value || 'Not Set'}}</span>
+
+                </td>
+                <td *ngIf="edit_mode">
+                    <input class="form-control" type="text" formControlName="child_intercom_id" readonly/>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+
+        <button (click)="updateAgencyData(company,agencyForm.value)">Update</button>
+        <div style="color:red;font-size:12px" *ngIf="errorMessage">{{errorMessage}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>

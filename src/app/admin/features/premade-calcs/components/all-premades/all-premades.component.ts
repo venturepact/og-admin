@@ -8,6 +8,7 @@ import { AdminService } from './../../../../../shared/services/admin.service';
 declare var jQuery: any;
 declare var moment: any;
 declare var bootbox: any;
+declare var window:any;
 
 @Component({
   selector: 'all-premades',
@@ -31,10 +32,7 @@ export class AllPremadesComponent extends Datatable implements OnInit {
   fetchedApps = [];
   allApps;
   @ViewChild('fileUpload') fileUpload: any;
-  industries = ['Auto', 'Education', 'Finance', 'Health & Fitness'
-    , 'Legal', 'Marketing & Advertising', 'Publishing'
-    , 'Quintessential', 'Real Estate & Construction', 'Technology'
-    , 'Travel', 'TV and Entertainment', 'Trending'];
+  industries:any= [];
   templates = [];
   // templates= [
   //   ['one-page-card-new','Chicago'],
@@ -79,7 +77,7 @@ export class AllPremadesComponent extends Datatable implements OnInit {
       this.calculators = response.calculators;
       this.errorMessage = '';
       this.templates = this._adminService.availableTemplates;
-
+      this.industries = this.addNewEntries([...this.industries,...response.industries]);
     }, error => {
       this.loading = false;
       this.errorMessage = error.message;
@@ -87,6 +85,14 @@ export class AllPremadesComponent extends Datatable implements OnInit {
     })
   }
   addCalculator(data, btn) {
+    if(data['otherIndustry'] && data['otherIndustry'].trim().toLowerCase() === 'other'){
+      window.toastNotification(`Please change industry name other than other`)
+      return;
+    }
+    if(data['otherIndustry'] && data['industry']==='other'){
+      data['industry'] = this.getIndustry(this.industries,data['otherIndustry'].trim());
+    }
+
     let calculatorData = Object.assign(data, this.extractData(data['live_url']));
     if (calculatorData['subdomain'] && calculatorData['calcName']) {
       this.requestToAdd([calculatorData], false, btn);
@@ -97,7 +103,13 @@ export class AllPremadesComponent extends Datatable implements OnInit {
   }
   updateCalculator(data, btnRef) {
     btnRef && this.changeButtonProps(btnRef, { textContent: 'Please wait...', disabled: true });
-
+    if(data['otherIndustry'] && data['otherIndustry'].trim().toLowerCase() === 'other'){
+      window.toastNotification(`Please change industry name other than other`)
+      return;
+    }
+    if(data['otherIndustry'] && data['industry']==='other'){
+      data['industry'] = this.getIndustry(this.industries,data['otherIndustry'].trim());
+    }
     this.$subscription = this._calculatorService.updateCalculator(Object.assign({}, this.selectedItem, data, this.extractData(data['live_url'])))
       .subscribe((response) => {
         console.log("Response", response);
@@ -137,6 +149,8 @@ export class AllPremadesComponent extends Datatable implements OnInit {
         this.rejectedCalcs = [...this.rejectedCalcs, ...rejects];
         if (!multi && rejects.length > 0) {
           this.calculatorRejected();
+          (btnRef) &&
+          this.changeButtonProps(btnRef, { textContent: 'Add' });
           return;
         }
         if (!multi && response['created'].length == 1) {
@@ -374,5 +388,15 @@ export class AllPremadesComponent extends Datatable implements OnInit {
   //       })
   //     }
   // }
-
+  addNewEntries(industries){
+    const arr = new Set(industries);
+    return Array.from(arr);
+  }
+  getIndustry(industries,newIndustry){
+    let lowerCaseIndustries = industries.map(ind => ind.toLowerCase());
+    if(lowerCaseIndustries.includes(newIndustry.toLowerCase())){
+      return industries[lowerCaseIndustries.findIndex(ind => (ind === newIndustry.toLowerCase()))];
+    }
+    return newIndustry;
+  }
 }

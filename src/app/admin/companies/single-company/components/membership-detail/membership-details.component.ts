@@ -106,6 +106,7 @@ export class MembershipDetailComponent implements OnInit {
         this.trial_end = moment.unix(result.currentplan.subscription.trial_end).format('DD-MM-YYYY');
         this.trial_start = moment.unix(result.currentplan.subscription.trial_start).format('DD-MM-YYYY');
         this.start_date = moment.unix(result.currentplan.subscription.started_at).format('DD-MM-YYYY');
+        console.log('resultresult: ', result);
         this.card = result.currentplan.card;
       });
   }
@@ -191,6 +192,8 @@ export class MembershipDetailComponent implements OnInit {
     this._membershipService.getInvoices(this.id)
       .subscribe(
         (invoices: any) => {
+          self.invoiceNo = 0;
+          console.log('invoiceList.invoiceinvoiceList.invoice : ', invoices);
           invoices.list.forEach((invoiceList: any) => {
             self.invoiceNo++;
             invoiceList.invoice.invoiceNo = self.invoiceNo;

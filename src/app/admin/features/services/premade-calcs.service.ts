@@ -31,7 +31,8 @@ export class PremadeCalcsService extends BaseService {
             template:['',Validators.required],
             tier:['',Validators.required],
             launch_date:[''],
-            event_name:['']
+            event_name:[''],
+            otherIndustry:['']
           }
     }
     addPremadeCalc(data){
