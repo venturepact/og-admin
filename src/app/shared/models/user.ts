@@ -19,6 +19,7 @@ export class User {
   public can_create_new_company: Boolean;
   public is_admin_created: Boolean;
   public last_login: Date;
+  public two_fact_auth : Two_Fact_Auth;
 
   constructor(user: any){
     if(user){
@@ -39,6 +40,7 @@ export class User {
       this.is_admin_created = user.is_admin_created;
       this.last_login = user.last_login;
       this.emails = [];
+      this.two_fact_auth = new Two_Fact_Auth(user.two_fact_auth);
       let i = 0;
       if(user.emails){
         user.emails.forEach((email: Emails) =>{
@@ -47,6 +49,30 @@ export class User {
         });
       }
       this.user_company = new UsersCompany(user.user_company);
+    }
+  }
+}
+
+export class Two_Fact_Auth {
+  public attempts:Number;
+  public created_at:Date;
+  public is_configured:Boolean;
+  public activation:Boolean;
+  public recovery_codes:any;
+  public secret:{
+    otpauth_url:any;
+    base32:any;
+    hex:any;
+    ascii:any;
+  }
+  constructor(two_fact_auth:any) {
+    if(two_fact_auth){
+      this.attempts = two_fact_auth.attempts; 
+      this.created_at = two_fact_auth.created_at;
+      this.is_configured = two_fact_auth.is_configured ;
+      this.activation = two_fact_auth.activation ;
+      this.recovery_codes = two_fact_auth.recovery_codes ? two_fact_auth.recovery_codes : {};
+      this.secret = two_fact_auth.secret ? two_fact_auth.secret : null;
     }
   }
 }

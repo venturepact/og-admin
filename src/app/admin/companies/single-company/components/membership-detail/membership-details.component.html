@@ -297,7 +297,7 @@
                         <div class="row">
                             <div class=" col-md-12 col-lg-12 ">
                                 <table class="table table-bordered table-hover table-user-information">
-                                    <tbody>
+                                    <tbody *ngIf="card">
                                         <tr>
                                             <td>Card Type</td>
                                             <td>
@@ -327,6 +327,11 @@
                                             <td>Masked No</td>
                                             <td>{{card?.masked_number}}</td>
                                         </tr>
+                                    </tbody>
+                                    <tbody *ngIf="!card">
+                                      <tr>
+                                        <td>Card not added yet.</td>
+                                      </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -380,7 +385,8 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Invoice No.</th>
+                                    <th>Serial No.</th>
+                                    <th>Invoice Id</th>
                                     <th>Date</th>
                                     <th>Amount</th>
                                     <th>Paid Via</th>
@@ -390,6 +396,7 @@
                             <tbody *ngFor="let invoice of invoices" value="invoice">
                                 <tr *ngIf="isInvoiceExist">
                                     <td>{{invoice.invoiceNo}}</td>
+                                    <td>{{invoice.id}}</td>
                                     <td class="text-opacity">{{invoice.date}} </td>
                                     <td>$ {{invoice.amount_paid/100}} </td>
                                     <td class="text-opacity">Credit Card</td>

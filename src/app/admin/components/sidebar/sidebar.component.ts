@@ -11,7 +11,7 @@ declare var jQuery: any;
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./sidebar.component.css']
 })
- 
+
 export class SidebarComponent implements OnInit {
   currentTab = 'users';
   sub_role: String = '';
@@ -77,6 +77,9 @@ export class SidebarComponent implements OnInit {
     }
     else if (tab === 'cache-handling') {
       jQuery('#cache-handling').addClass('active');
+    }
+    else if (tab === 'cancel-req') {
+      jQuery('#cancel-req').addClass('active');
     }
     // else if (tab === 'customJSApprovals') {
     // 		this._adminService.notifylogType('customJSApprovals')

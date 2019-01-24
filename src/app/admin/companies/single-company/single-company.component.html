@@ -45,6 +45,9 @@
                    [companyId]="company.id"></team-detail>
      </div>
     <div class="row hide features">
+      <div class="col-md-12 col-sm-12">
+        <agency [company]="company.id"></agency>
+      </div>
       <div class="col-md-6 col-sm-6">
         <!-- <company-feature></company-feature> -->
         <company-features-new [data]="companyFeatures" (featureUpdates)="emitChanges($event)"></company-features-new>

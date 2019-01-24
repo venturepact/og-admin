@@ -46,19 +46,22 @@ export class EventsComponent extends Datatable implements OnInit {
     visible: true
   };
   @ViewChild('fileUpload') fileUpload: any;
-
+  defaultColor = '#e9f2f9';
+  eventColor = '';
   constructor(private _adminService: AdminService, private _eventsService: EventsService, private fb: FormBuilder, private _script: Script) {
     super()
   }
 
   ngOnInit() {
+    this.eventColor = this.defaultColor;
     this.eventForm = this.fb.group({
       event_name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      description: ['', Validators.compose([Validators.required, Validators.maxLength(150)])],
+      description: ['', Validators.compose([Validators.required])],
       media: ['', Validators.compose([])],
       event_type: ['', Validators.required],
       launch_date: [''],
-      launch_time: ['']
+      launch_time: [''],
+      color:['']
     });
     this.getEvents();
   }
@@ -120,7 +123,9 @@ export class EventsComponent extends Datatable implements OnInit {
     this.eventForm.get('media').setValue(this.selectedItem.media)
     this.eventForm.get('event_type').setValue(this.selectedItem.event_type)
     this.eventForm.get('launch_date').setValue(this.selectedItem.launch_date)
-    this.eventForm.get('launch_time').setValue(this.selectedItem.launch_time)
+    this.eventForm.get('launch_time').setValue(this.selectedItem.launch_time);
+    this.eventForm.get('color').setValue(this.selectedItem.color || this.defaultColor);
+    this.eventColor = this.selectedItem.color || this.defaultColor;
 
     this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).add(0, 'days').format('MM/DD/YYYY')),
       jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
@@ -133,6 +138,7 @@ export class EventsComponent extends Datatable implements OnInit {
     this.loader = false;
   }
   updateEvent(data, btnRef: any = '') {
+    console.log(data);
     var updatedData = {
       _id: this.selectedItem['_id'],
       event_name: data.event_name,
@@ -140,7 +146,8 @@ export class EventsComponent extends Datatable implements OnInit {
       launch_date: new Date(data.launch_date).toISOString(),
       launch_time: data.launch_time,
       event_type: data.event_type,
-      media: data.media
+      media: data.media,
+      color:data.color
     };
     if (data.event_name != this.selectedItem.event_name || data.launch_date != this.selectedItem.launch_date) {
       updatedData['check'] = true;
@@ -309,5 +316,17 @@ export class EventsComponent extends Datatable implements OnInit {
         return val;
       });
   }
-
+  public onEventLog(event: string, data: any): void {
+    console.log(event, data);
+    this.eventForm.get('color').setValue(data);
+  }
+  public onColorSelected(event) {
+    this.eventForm.get('color').setValue(event.target.value);
+    this.eventColor = event.target.value;
+    if (event.target.value == 'Select') {
+      this.eventColor = this.defaultColor;
+      this.eventForm.get('color').setValue(this.defaultColor);
+      console.log(this.eventColor);
+    }
+  }
 }

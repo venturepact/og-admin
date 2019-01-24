@@ -11,7 +11,7 @@ export class LocaleService extends BaseService {
 
   /* returns all langCode and names list (langCode == undefined) */
   get(langCode?: any): Observable<any> {
-    return this._http.post(this._url + '/locale/get_locale', { langCode: langCode }, this.post_options())
+    return this._http.get(this._url + '/locale/get_locale/' + (langCode || ''), this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }
