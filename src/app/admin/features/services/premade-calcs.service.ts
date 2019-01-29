@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms/src/model';
 @Injectable()
 export class PremadeCalcsService extends BaseService {
     private premadeForm:FormGroup;
-    
+
     constructor(public _http: Http,private _fb:FormBuilder) {
         super();
     }
@@ -22,9 +22,9 @@ export class PremadeCalcsService extends BaseService {
     getFormFields(){
         return {
             title:['',Validators.required],
-            live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co|co.in)\/([a-zA-Z0-9_-]+)$/)])],
+            live_url:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co|in|co.in)\/([a-zA-Z0-9_-]+)$/)])],
             // media:['',Validators.compose([Validators.required,Validators.pattern(/^(http|https|ftp)?(:\/\/)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$/)])],
-            media:['',Validators.compose([])],            
+            media:['',Validators.compose([])],
             type:['',Validators.required],
             description:['',Validators.required],
             industry:['',Validators.required],
@@ -66,8 +66,8 @@ export class PremadeCalcsService extends BaseService {
         this.premadeForm.get('description').setValue(obj.description);
         this.premadeForm.get('launch_date').setValue(obj.launch_date);
         this.premadeForm.get('event_name').setValue(obj.event_name);
-        
-        
+
+
     }
 }
 

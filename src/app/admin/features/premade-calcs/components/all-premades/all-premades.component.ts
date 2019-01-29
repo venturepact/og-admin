@@ -238,7 +238,7 @@ export class AllPremadesComponent extends Datatable implements OnInit {
     return obj;
   }
   testliveUrl(url) {
-    return (/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co|co.in|.in)\/([a-zA-Z0-9_-]+)$/.test(url));
+    return (/^(http|https|ftp)?(:\/\/)?([a-zA-Z0-9]+){3,}(\.)(outgrow|rely)(\.)(local|us|co|in|co.in)\/([a-zA-Z0-9_-]+)$/.test(url));
   }
 
   dateFormat(date: any) {
