@@ -66,6 +66,7 @@ export class CancelRequestComponent implements OnInit {
     this.downgrades = await this.adminService.downgrades().toPromise();
     this.trialToActivated = await this.adminService.trialToActivated().toPromise();
     this.trialSignups = await this.adminService.trialSignups().toPromise();
+    this.cancellationCustomers = await this.adminService.cancellationCustomers().toPromise();
     this.loading = false;
   }
 
