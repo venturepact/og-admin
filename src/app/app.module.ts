@@ -14,7 +14,6 @@ import { SiteModule } from "./site/site.module";
 // Animation Module for the effects in angular-material
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from './shared/modules/material.module';
-
 // import { setTheme } from 'ngx-bootstrap/utils';
 @NgModule({
   declarations: [
@@ -31,7 +30,7 @@ import { MaterialModule } from './shared/modules/material.module';
     BrowserAnimationsModule,
     MaterialModule,
     CoreModule.forRoot(),
-    SiteModule,
+    SiteModule
   ],
   providers: [APP_ROUTER_PROVIDERS],
   bootstrap: [AppComponent]

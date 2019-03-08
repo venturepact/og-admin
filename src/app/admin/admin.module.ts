@@ -67,6 +67,8 @@ import { SheetsComponent } from './sheets/sheets.component';
 import { CacheHandlingComponent } from './cache-handling/cache-handling.component';
 import { CancelRequestComponent } from './canel-request/cancel-request.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 
 @NgModule({
   imports: [
@@ -82,7 +84,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
     PlansNewModule,
     MaterialModule,
     ColorPickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot()
   ],
 
   declarations: [
