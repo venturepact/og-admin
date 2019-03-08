@@ -739,4 +739,9 @@ export class AdminService extends BaseService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  monthlySummaryMrr() {
+    return this._http.get(`${this._url}/admin/monthlySummaryMrr`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }
