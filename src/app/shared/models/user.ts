@@ -20,7 +20,7 @@ export class User {
   public is_admin_created: Boolean;
   public last_login: Date;
   public two_fact_auth : Two_Fact_Auth;
-
+  public can_use_default_password : string;
   constructor(user: any){
     if(user){
       this.id = user._id;
@@ -41,6 +41,7 @@ export class User {
       this.last_login = user.last_login;
       this.emails = [];
       this.two_fact_auth = new Two_Fact_Auth(user.two_fact_auth);
+      this.can_use_default_password = user.can_use_default_password;
       let i = 0;
       if(user.emails){
         user.emails.forEach((email: Emails) =>{

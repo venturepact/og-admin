@@ -289,7 +289,7 @@
               </div>
               <div class="form-group label-floating">
                 <label class="control-label" for="description">Description</label>
-                <textarea [(froalaModel)]="desc" (froalaModelChange)="emiter($event)" [froalaEditor]="options" class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
+                <textarea [(froalaModel)]="desc" [froalaEditor]="options" class="form-control" id="description" type="text" name="description" rows="3" formControlName="description"></textarea>
                 <div class="er-msg" *ngIf="eventForm.controls.description.dirty && !eventForm.controls.description.valid">
                   150 characters supported only
                 </div>
