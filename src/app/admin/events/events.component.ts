@@ -339,7 +339,4 @@ export class EventsComponent extends Datatable implements OnInit {
       console.log(this.eventColor);
     }
   }
-  emiter(value) {
-    console.log(value)
-  }
 }

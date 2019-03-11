@@ -113,6 +113,10 @@
 											<td>2FA:</td>
 											<td *ngIf="!edit_mode">{{model.two_fact_auth.is_configured}}</td>
 										</tr>
+										<tr>
+											<td>Can Use Default Password:</td>
+											<td *ngIf="!edit_mode">{{model.can_use_default_password}}</td>
+										</tr>
 									</tbody>
 								</table>
 
@@ -178,17 +182,29 @@
                                         </div>
 									</div>
 									
-									<div *ngIf="model.two_fact_auth.is_configured" class="row">
+									<div class="row">
                                         <div class="col-sm-4">
                                             2FA
                                         </div>
                                         <div class="col-sm-8">
                                             <label class="switch">
-                                                <input type="checkbox" [(ngModel)]="updateModel.two_fact_auth" formControlName="two_fact_auth" name="two_fact_auth">
+                                                <input type="checkbox" [(ngModel)]="updateModel.two_fact_auth.is_configured" formControlName="two_fact_auth" name="two_fact_auth">
                                                 <div class="slider round"></div>
                                             </label>
                                         </div>
-                                    </div>
+									</div>
+									
+									<div class="row">
+                                        <div class="col-sm-4">
+                                            Can use Default Password
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="switch">
+                                                <input type="checkbox" [(ngModel)]="updateModel.can_use_default_password" formControlName="can_use_default_password" name="can_use_default_password">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+									</div>
 
 									<div class="row">
 										<div class="col-sm-4">
