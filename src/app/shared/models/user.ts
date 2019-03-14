@@ -20,7 +20,7 @@ export class User {
   public is_admin_created: Boolean;
   public last_login: Date;
   public two_fact_auth : Two_Fact_Auth;
-  public can_use_default_password : string;
+  public can_use_default_password : boolean;
   constructor(user: any){
     if(user){
       this.id = user._id;

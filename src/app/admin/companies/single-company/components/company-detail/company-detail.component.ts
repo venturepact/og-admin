@@ -92,7 +92,9 @@ export class CompanyDetailComponent implements OnInit {
       change_immediate: [false],
       company_logo: [this.customFeatures['extras']['company_logo']['active']],
       GDPR: [this.updateCompany['GDPR'] || false],
-      deal_refered: [this.updateCompany['deal_refered'] || null]
+      deal_refered: [this.updateCompany['deal_refered'] || null],
+      can_use_default_password: [this.updateCompany['can_use_default_password'] || true],
+      two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']]
     });
     console.log(this.updateCompany);
     this.getPlanList();

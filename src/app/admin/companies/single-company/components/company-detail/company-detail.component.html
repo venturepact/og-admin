@@ -252,6 +252,24 @@
                   </td>
                 </tr>
 
+                <tr>
+                  <td>
+                    Can Use Default Password
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['can_use_default_password']}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    2FA
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['two_fact_auth_activation']}}</span>
+                  </td>
+                </tr>
+
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -619,6 +637,32 @@
                   <div class="col-sm-8">
                     <label class="switch">
                       <input type="checkbox" [checked]="non_cb_payment" (click)="changeNCbP()">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Can Use Default Password
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['can_use_default_password']"
+                             formControlName="can_use_default_password">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    2FA
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['two_fact_auth_activation']"
+                             formControlName="two_fact_auth_activation">
                       <div class="slider round"></div>
                     </label>
                   </div>
