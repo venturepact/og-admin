@@ -107,6 +107,8 @@ export class AdminCompany {
   public subscription_updated: Date;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
+  public can_use_default_password : boolean;
+  public two_fact_auth_activation : boolean;
 
   constructor(company: any) {
     if (company) {
@@ -150,6 +152,8 @@ export class AdminCompany {
       this.GDPR=company['GDPR'];
       //this.referralcandy_url = company.referral.referralcandy_url;
       //this.leaddyno_url = company.referral.leaddyno_url;
+      this.can_use_default_password = company.can_use_default_password;
+      this.two_fact_auth_activation = company.two_fact_auth.activation;
     }
   }
 }

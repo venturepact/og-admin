@@ -166,7 +166,9 @@ export class AdminService extends BaseService {
       change_immediate: company.change_immediate,
       remove_leads_after_saving: company.remove_leads_after_saving,
       GDPR: company["GDPR"],
-      deal_refered: company["deal_refered"]
+      deal_refered: company["deal_refered"],
+      can_use_default_password: company['can_use_default_password'],
+      two_fact_auth_activation: company['two_fact_auth_activation']
     };
     return this._http
       .put(
