@@ -64,8 +64,8 @@ export class AccountDetailsComponent implements OnInit, AfterViewInit {
         active: [this.updateModel.active, Validators.compose([Validators.required])],
         timezone: [this.updateModel.timezone, Validators.compose([])],
         can_create_new_company:[this.updateModel.can_create_new_company, Validators.compose([Validators.required])],
-        two_fact_auth:[this.updateModel.two_fact_auth.is_configured, Validators.compose([Validators.required])],
-        can_use_default_password:[this.updateModel.can_use_default_password, Validators.compose([Validators.required])]
+        two_fact_auth:[this.updateModel.two_fact_auth.is_configured],
+        can_use_default_password:[this.updateModel.can_use_default_password]
     })
     this.emailForm = this.fb.group({
       email: [this.emailUpdate, Validators.compose([
