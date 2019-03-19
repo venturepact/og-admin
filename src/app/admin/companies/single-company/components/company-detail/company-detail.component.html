@@ -415,6 +415,30 @@
                     </label>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    remove Q / A data after sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_Questions_after_saving"
+                             formControlName="remove_Questions_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    remove all analytics after sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_analytics_after_saving"
+                             formControlName="remove_analytics_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
 
                 <div class="row" *ngIf="updateCompany.current_referral_program">
                   <div class="col-sm-4">
