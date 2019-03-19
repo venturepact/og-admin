@@ -19,8 +19,8 @@ export class FeatureLayoutManagerComponent extends PremadeLayoutManager implemen
   }
   ngOnChanges() {
     if (this.info.type !== 'premades') {
-      this.featuresCopy =  this.changeOrderOfIntgrations(this.info.featuresCopy,['webhook','fb_messenger']);
-      this.features = this.changeOrderOfIntgrations(this.features,['webhook','fb_messenger']);
+      this.featuresCopy =  this.changeOrderOfIntgrations(this.info.featuresCopy,['webhook','fb_messenger','integration_multiple_accounts']);
+      this.features = this.changeOrderOfIntgrations(this.features,['webhook','fb_messenger', 'integration_multiple_accounts']);
     }
   }
   changeOrderOfIntgrations(features,subfeatures){
@@ -123,23 +123,23 @@ export class FeatureLayoutManagerComponent extends PremadeLayoutManager implemen
   constructFeatures(feature, type, state) {
     console.log(feature, type, state);
     let features = feature.sub_features.filter(feat=>{
-      if(feat['_id'] ==='fb_messenger' || feat['_id'] === 'webhook'){
+      if(feat['_id'] ==='fb_messenger' || feat['_id'] === 'webhook' || feat['_id']=== 'integration_multiple_accounts'){
         return false;
       }
       return (type==='limited' ? feat._id.indexOf('_limited')!==-1 : feat._id.indexOf('_limited')===-1)
-    }).reduce((acc, feat,arr) => {  
+    }).reduce((acc, feat,arr) => {
       feat.active = state;
       let result = this.getDiff(feat, this.featuresCopy);
       acc['changedFeatures'] = [...acc['changedFeatures'],...result['changedFeatures']];
-      acc['unchangedFeatures'] = [...acc['unchangedFeatures'],...result['unchangedFeatures']];      
+      acc['unchangedFeatures'] = [...acc['unchangedFeatures'],...result['unchangedFeatures']];
       return acc;
     }, { changedFeatures: [], unchangedFeatures: [] })
     console.log(features);
-    this.changes.emit(features);    
+    this.changes.emit(features);
   }
   getChecked(feature,type){
     return feature.sub_features.filter(feat=>{
-      if(feat['_id'] ==='fb_messenger' || feat['_id'] === 'webhook'){
+      if(feat['_id'] ==='fb_messenger' || feat['_id'] === 'webhook' || feat['_id'] === 'integration_multiple_accounts'){
         return false;
       }
       return (type==='limited' ? feat._id.indexOf('_limited')!==-1 : feat._id.indexOf('_limited')===-1)
