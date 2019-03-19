@@ -109,7 +109,7 @@
 												<button (click)="updateUser()" id='saveBasicDetails'>Update </button>
 											</td>
 										</tr>
-										<tr>
+										<tr *ngIf="model.two_fact_auth.is_configured">
 											<td>2FA:</td>
 											<td *ngIf="!edit_mode">{{model.two_fact_auth.is_configured}}</td>
 										</tr>
@@ -181,8 +181,8 @@
                                             </label>
                                         </div>
 									</div>
-									
-									<div class="row">
+
+									<div class="row" *ngIf="model.two_fact_auth.is_configured">
                                         <div class="col-sm-4">
                                             2FA
                                         </div>
@@ -193,7 +193,7 @@
                                             </label>
                                         </div>
 									</div>
-									
+
 									<div class="row">
                                         <div class="col-sm-4">
                                             Can use Default Password
