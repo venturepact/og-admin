@@ -85,6 +85,8 @@ export class CompanyDetailComponent implements OnInit {
       leaddyno_url: [this.updateCompany.referral.leaddyno_url],
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
       remove_leads_after_saving: [this.updateCompany.remove_leads_after_saving],
+      remove_Questions_after_saving:[this.updateCompany.remove_Questions_after_saving],
+      remove_analytics_after_saving:[this.updateCompany.remove_analytics_after_saving],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
       growsumo_url: [this.updateCompany.referral.growsumo_url],
