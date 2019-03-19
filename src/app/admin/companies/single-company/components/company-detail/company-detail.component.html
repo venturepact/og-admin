@@ -102,6 +102,26 @@
                 </tr>
                 <tr>
                   <td>
+                    Remove Q/A After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <div>
+                      {{!!company.remove_Questions_after_saving}}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Remove All Analytics After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <div>
+                      {{!!company.remove_analytics_after_saving}}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Current Referral Program
                   </td>
                   <td *ngIf="!edit_mode">

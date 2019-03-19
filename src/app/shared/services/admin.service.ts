@@ -165,6 +165,8 @@ export class AdminService extends BaseService {
       child_intercom_id: company.child_intercom_id,
       change_immediate: company.change_immediate,
       remove_leads_after_saving: company.remove_leads_after_saving,
+      remove_Questions_after_saving:company.remove_Questions_after_saving,
+      remove_analytics_after_saving:company.remove_analytics_after_saving,
       GDPR: company["GDPR"],
       deal_refered: company["deal_refered"],
       can_use_default_password: company['can_use_default_password'],
