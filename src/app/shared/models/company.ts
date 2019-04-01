@@ -117,6 +117,7 @@ export class AdminCompany {
   // public referralcandy_url : String;
   public can_use_default_password : boolean;
   public two_fact_auth_activation : boolean;
+  public is_okta_enabled : boolean;
 
   constructor(company: any) {
     if (company) {
@@ -165,6 +166,7 @@ export class AdminCompany {
       //this.leaddyno_url = company.referral.leaddyno_url;
       this.can_use_default_password = company.can_use_default_password;
       this.two_fact_auth_activation = company.two_fact_auth.activation;
+      this.is_okta_enabled = company.isOktaEnabled;
     }
   }
 }

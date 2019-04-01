@@ -290,6 +290,15 @@
                   </td>
                 </tr>
 
+                <tr>
+                  <td>
+                    Is Okta Enabled
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['is_okta_enabled']}}</span>
+                  </td>
+                </tr>
+
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -707,6 +716,19 @@
                     <label class="switch">
                       <input type="checkbox" [(ngModel)]="updateCompany['two_fact_auth_activation']"
                              formControlName="two_fact_auth_activation">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Is Okta Enabled
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['is_okta_enabled']"
+                             formControlName="is_okta_enabled">
                       <div class="slider round"></div>
                     </label>
                   </div>
