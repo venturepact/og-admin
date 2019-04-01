@@ -21,6 +21,7 @@ declare var jQuery: any;
 export class CompanyDetailComponent implements OnInit {
 
   @Input() company: any = '';
+  @Input() sub_role: string = '';
   childCompany = new EventEmitter<any>();
   updateCompany: any = ''; //AdminCompany = new AdminCompany({});
   change_immediate: string;
@@ -99,7 +100,6 @@ export class CompanyDetailComponent implements OnInit {
       two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']],
       is_okta_enabled: [this.updateCompany['is_okta_enabled'] || false]
     });
-    console.log(this.updateCompany);
     this.getPlanList();
     this.getCompanyCoupon();
     this.getCurrentSubscription();

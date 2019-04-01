@@ -7,8 +7,7 @@
             <div class="col-sm-8">
               <h4>Team Details</h4>
             </div>
-            <div class="col-sm-4">
-
+            <div class="col-sm-4" *ngIf="sub_role === null">
               <h4 style="width: 70px; display: inline-block; float: left;">Edit: </h4>
               <label class="switch pull-left" style="margin-top:5px;">
                 <input type="checkbox" [(ngModel)]="editMode">
@@ -81,11 +80,11 @@
                     {{t.user_company.active}}
                   </td>
                   <td>
-                    <a href="javascript:void(0)" (click)="deleteUser(t)">
+                    <a href="javascript:void(0)" *ngIf="sub_role === null" (click)="deleteUser(t)">
                       <i class="material-icons">delete</i>
                     </a>
                   </td>
-                  <td *ngIf="t.user_company.status!='APPROVED'" style="cursor: pointer;">
+                  <td *ngIf="t.user_company.status!='APPROVED' && sub_role === null" style="cursor: pointer;">
                     <a (click)="approve(t._id)">Approve</a>
                   </td>
                 </tr>

@@ -9,10 +9,10 @@
                             <div class="col-sm-8">
                                 <h4>Membership Details</h4>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="sub_role === null">
                                 <h4>Edit:</h4>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="sub_role === null">
                                 <label class="switch">
                                     <input type="checkbox" [(ngModel)]="edit_mode">
                                     <div class="slider round"></div>
@@ -66,7 +66,8 @@
                                             Reset current usage on <br/>subscription renewal or upgrade.
                                           </td>
                                           <td>
-                                            <label class="switch">
+                                            <span *ngIf="sub_role !== null">{{reset_current_usage}}</span>
+                                            <label class="switch" *ngIf="sub_role === null">
                                               <input type="checkbox" id="resetChange" [(ngModel)] = "reset_current_usage" (change)="changed()" [ngModelOptions]="{standalone: true}">
                                               <div class="slider round"></div>
                                             </label>

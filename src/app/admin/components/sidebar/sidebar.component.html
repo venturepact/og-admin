@@ -60,7 +60,7 @@
       <!---
       Code for Landon Calc
       -->
-      <li class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="londonerSet" (click)="showTab('londoner')">
         <a [routerLink]="['londoner']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">public</i>
@@ -101,7 +101,7 @@
         </a>
       </li>
 
-      <li class="setting-nav" id="leads-tab" (click)="showTab('leads')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="leads-tab" (click)="showTab('leads')">
         <a [routerLink]="['leads']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">supervisor_account</i>
@@ -123,7 +123,7 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" id="special_deals-tab" (click)="showTab('specialdeals-tab')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="special_deals-tab" (click)="showTab('specialdeals-tab')">
         <a [routerLink]="['specialDeals']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">local_activity</i>
@@ -145,7 +145,7 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" id="hello-bar" (click)="showTab('hello-bar')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="hello-bar" (click)="showTab('hello-bar')">
         <a [routerLink]="['hello-bar']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -168,7 +168,7 @@
         </a>
       </li>
 
-      <li class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
+      <li *ngIf="sub_role == null" class="setting-nav hidden" id="response-logs" (click)="showTab('response-logs')">
         <a [routerLink]="['responseLogs']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -179,7 +179,7 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="promotion-checklist" (click)="showTab('promotion-checklist')">
         <a [routerLink]="['promotion-checklist']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -190,7 +190,7 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="integration-logs" (click)="showTab('integration-log')">
         <a [routerLink]="['integration-logs']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -212,7 +212,7 @@
           </div>
         </a>
       </li>
-      <li class="setting-nav" id="layout-preview" (click)="showTab('layout-preview')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="layout-preview" (click)="showTab('layout-preview')">
         <a [routerLink]="['layout-preview']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -236,7 +236,7 @@
       </li>
 
       <!-- new edition -->
-      <li class="setting-nav" id="cache-handling" (click)="showTab('cache-handling')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="cache-handling" (click)="showTab('cache-handling')">
         <a [routerLink]="['cache-handling']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>
@@ -249,7 +249,7 @@
       </li>
       <!-- ends new edition -->
 
-      <li class="setting-nav" id="cancel-req" (click)="showTab('cancel-req')">
+      <li *ngIf="sub_role == null" class="setting-nav" id="cancel-req" (click)="showTab('cancel-req')">
         <a [routerLink]="['cancel-request']" data-toggle="tab">
           <span class="left-sidebar-icon">
             <i class="material-icons">list</i>

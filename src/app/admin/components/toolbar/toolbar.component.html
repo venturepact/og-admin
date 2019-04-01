@@ -9,19 +9,36 @@
       <div class="navbar-collapse collapse" id="navbar">
         <div class="navbar-left col-md-7 np">
           <ul *ngIf="loggedIn.isLoggedIn" style="width:850px">
-            <li  *ngIf="sub_role == null"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/graph']"><i class="material-icons">home</i>
-              &nbsp;Admin</a></li>
-            <li *ngIf="sub_role == null"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/sitesettings']">
-
-              <i class="material-icons">build</i> &nbsp;SiteSettings</a></li>
-            <li><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/successrate']"><i
-              class="material-icons">data_usage</i> Success Rate</a></li>
-            <li><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/searchcalc']"><i
-              class="material-icons">search</i>Search Apps</a></li>
-              <li *ngIf="sub_role !== 'ADMIN_LTD'"><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/customJSApprovals']"><i
-              class="material-icons">notifications</i>Scripts <span class="tag-beta"> Beta</span></a></li>
-              <li><a href="" class="hvr-underline-from-left" [routerLink]="['/admin/events']"><i
-                class="material-icons">event</i>EVENTS</a></li>
+            <li  *ngIf="sub_role == null">
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/graph']">
+                <i class="material-icons">home</i>&nbsp;Admin
+              </a>
+            </li>
+            <li *ngIf="sub_role == null">
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/sitesettings']">
+                <i class="material-icons">build</i> &nbsp;SiteSettings
+              </a>
+            </li>
+            <li>
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/successrate']">
+                <i class="material-icons">data_usage</i> Success Rate
+              </a>
+            </li>
+            <li>
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/searchcalc']">
+                <i class="material-icons">search</i>Search Apps
+              </a>
+            </li>
+            <li *ngIf="sub_role == null">
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/customJSApprovals']">
+                <i class="material-icons">notifications</i>Scripts <span class="tag-beta"> Beta</span>
+              </a>
+            </li>
+            <li *ngIf="sub_role == null">
+              <a href="" class="hvr-underline-from-left" [routerLink]="['/admin/events']">
+                <i class="material-icons">event</i>EVENTS
+              </a>
+            </li>
           </ul>
           <ul *ngIf="!loggedIn.isLoggedIn">
             <li><a [routerLink]="['/']"><i class="material-icons">home</i> &nbsp;Home</a></li>

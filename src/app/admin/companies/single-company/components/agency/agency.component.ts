@@ -12,6 +12,7 @@ export class AgencyComponent implements OnInit {
   edit_mode = false;
   errorMessage = '';
   @Input() company: any;
+  @Input() sub_role: string;
   constructor(private _fb: FormBuilder, public companyService: CompanyService) { }
   agencyForm: FormGroup;
   ngOnInit() {

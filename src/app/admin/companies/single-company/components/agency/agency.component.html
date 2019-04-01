@@ -9,8 +9,8 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-md-9">Agency Settings</div>
-          <div class="col-md-1">Edit:</div>
-          <div class="col-md-2">
+          <div class="col-md-1" *ngIf="sub_role === null">Edit:</div>
+          <div class="col-md-2" *ngIf="sub_role === null">
             <label class="switch">
               <input type="checkbox" [(ngModel)]="edit_mode">
               <div class="slider round"></div>

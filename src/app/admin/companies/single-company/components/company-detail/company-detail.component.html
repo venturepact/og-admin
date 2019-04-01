@@ -7,10 +7,10 @@
             <div class="col-sm-8">
               <h4>Company Details</h4>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" *ngIf="sub_role === null">
               <h4>Edit:</h4>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" *ngIf="sub_role === null">
               <label class="switch">
                 <input type="checkbox" [(ngModel)]="edit_mode">
                 <div class="slider round"></div>
