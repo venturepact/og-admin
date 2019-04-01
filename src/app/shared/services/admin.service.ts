@@ -170,7 +170,8 @@ export class AdminService extends BaseService {
       GDPR: company["GDPR"],
       deal_refered: company["deal_refered"],
       can_use_default_password: company['can_use_default_password'],
-      two_fact_auth_activation: company['two_fact_auth_activation']
+      two_fact_auth_activation: company['two_fact_auth_activation'],
+      is_okta_enabled: company['is_okta_enabled']
     };
     return this._http
       .put(

@@ -96,7 +96,8 @@ export class CompanyDetailComponent implements OnInit {
       GDPR: [this.updateCompany['GDPR'] || false],
       deal_refered: [this.updateCompany['deal_refered'] || null],
       can_use_default_password: [this.updateCompany['can_use_default_password'] || true],
-      two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']]
+      two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']],
+      is_okta_enabled: [this.updateCompany['is_okta_enabled'] || false]
     });
     console.log(this.updateCompany);
     this.getPlanList();
