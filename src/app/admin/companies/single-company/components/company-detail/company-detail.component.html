@@ -274,6 +274,15 @@
 
                 <tr>
                   <td>
+                    Hipaa
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{ updateCompany['hipaa'] || false }}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
                     Can Use Default Password
                   </td>
                   <td *ngIf="!edit_mode">
@@ -678,6 +687,19 @@
                     <label class="switch">
                       <input type="checkbox" [(ngModel)]="updateCompany['GDPR']"
                              formControlName="GDPR">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Hipaa
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['hipaa']"
+                             formControlName="hipaa">
                       <div class="slider round"></div>
                     </label>
                   </div>

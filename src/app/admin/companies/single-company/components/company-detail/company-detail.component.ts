@@ -54,6 +54,8 @@ export class CompanyDetailComponent implements OnInit {
   ngOnInit() {
     this.errorMsg = '';
     this.updateCompany = this.company;
+    console.log('?????????? ', this.updateCompany);
+    console.log('><><><>< ', this.company);
     this.updateCompany['change_immediate'] = false;
     this.change_immediate = this.company.chargebee_plan_id;
     if (!this.updateCompany.child_intercom_id) {
@@ -95,6 +97,7 @@ export class CompanyDetailComponent implements OnInit {
       change_immediate: [false],
       company_logo: [this.customFeatures['extras']['company_logo']['active']],
       GDPR: [this.updateCompany['GDPR'] || false],
+      hipaa: [this.updateCompany['hipaa'] || false],
       deal_refered: [this.updateCompany['deal_refered'] || null],
       can_use_default_password: [this.updateCompany['can_use_default_password'] || true],
       two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']],

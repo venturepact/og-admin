@@ -175,6 +175,7 @@ export class AdminService extends BaseService {
       remove_Questions_after_saving:company.remove_Questions_after_saving,
       remove_analytics_after_saving:company.remove_analytics_after_saving,
       GDPR: company["GDPR"],
+      hipaa: company["hipaa"],
       deal_refered: company["deal_refered"],
       can_use_default_password: company['can_use_default_password'],
       two_fact_auth_activation: company['two_fact_auth_activation'],

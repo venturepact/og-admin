@@ -112,6 +112,7 @@ export class AdminCompany {
   public remove_analytics_after_saving: boolean;
 
   public GDPR:boolean;
+  public hipaa: boolean;
   public subscription_updated: Date;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
@@ -162,6 +163,7 @@ export class AdminCompany {
       this.remove_analytics_after_saving = company.remove_analytics_after_saving;
 
       this.GDPR=company['GDPR'];
+      this.hipaa=company['hipaa'];
       //this.referralcandy_url = company.referral.referralcandy_url;
       //this.leaddyno_url = company.referral.leaddyno_url;
       this.can_use_default_password = company.can_use_default_password;
