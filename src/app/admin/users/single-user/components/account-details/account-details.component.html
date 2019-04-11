@@ -8,10 +8,10 @@
 							<div class="col-sm-8 ">
 								<h4>Account Details</h4>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-2" *ngIf="sub_role == null">
 								<h4>Edit:</h4>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-2" *ngIf="sub_role == null">
 								<label class="switch">
 									<input type="checkbox" [(ngModel)]="edit_mode" />
 									<div class="slider round"></div>
@@ -53,7 +53,7 @@
 													<i class="material-icons">report_problem</i>
 													<span class="tooltiptext">Email is not verified</span>
 												</div>
-												<div *ngIf = "!email_verify">
+												<div *ngIf = "!email_verify && sub_role == null">
 													<button (click)="verifyEmail()">verify</button>
 												</div>
 											</td>
@@ -109,9 +109,13 @@
 												<button (click)="updateUser()" id='saveBasicDetails'>Update </button>
 											</td>
 										</tr>
-										<tr>
+										<tr *ngIf="model.two_fact_auth.is_configured">
 											<td>2FA:</td>
 											<td *ngIf="!edit_mode">{{model.two_fact_auth.is_configured}}</td>
+										</tr>
+										<tr>
+											<td>Can Use Default Password:</td>
+											<td *ngIf="!edit_mode">{{model.can_use_default_password}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -177,18 +181,30 @@
                                             </label>
                                         </div>
 									</div>
-									
-									<div *ngIf="model.two_fact_auth.is_configured" class="row">
+
+									<div class="row" *ngIf="model.two_fact_auth.is_configured">
                                         <div class="col-sm-4">
                                             2FA
                                         </div>
                                         <div class="col-sm-8">
                                             <label class="switch">
-                                                <input type="checkbox" [(ngModel)]="updateModel.two_fact_auth" formControlName="two_fact_auth" name="two_fact_auth">
+                                                <input type="checkbox" [(ngModel)]="updateModel.two_fact_auth.is_configured" formControlName="two_fact_auth" name="two_fact_auth">
                                                 <div class="slider round"></div>
                                             </label>
                                         </div>
-                                    </div>
+									</div>
+
+									<div class="row">
+                                        <div class="col-sm-4">
+                                            Can use Default Password
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="switch">
+                                                <input type="checkbox" [(ngModel)]="updateModel.can_use_default_password" formControlName="can_use_default_password" name="can_use_default_password">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+									</div>
 
 									<div class="row">
 										<div class="col-sm-4">

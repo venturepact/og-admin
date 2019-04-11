@@ -7,10 +7,10 @@
             <div class="col-sm-8">
               <h4>Company Details</h4>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" *ngIf="sub_role === null">
               <h4>Edit:</h4>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" *ngIf="sub_role === null">
               <label class="switch">
                 <input type="checkbox" [(ngModel)]="edit_mode">
                 <div class="slider round"></div>
@@ -97,6 +97,26 @@
                   <td *ngIf="!edit_mode">
                     <div>
                       {{!!company.remove_leads_after_saving}}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Remove Q/A After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <div>
+                      {{!!company.remove_Questions_after_saving}}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Remove All Analytics After Sync
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <div>
+                      {{!!company.remove_analytics_after_saving}}
                     </div>
                   </td>
                 </tr>
@@ -252,6 +272,33 @@
                   </td>
                 </tr>
 
+                <tr>
+                  <td>
+                    Can Use Default Password
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['can_use_default_password']}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    2FA
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['two_fact_auth_activation']}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    Is Okta Enabled
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['is_okta_enabled']}}</span>
+                  </td>
+                </tr>
+
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -393,6 +440,30 @@
                     <label class="switch">
                       <input type="checkbox" [(ngModel)]="updateCompany.remove_leads_after_saving"
                              formControlName="remove_leads_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    remove Q / A data after sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_Questions_after_saving"
+                             formControlName="remove_Questions_after_saving">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    remove all analytics after sync
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany.remove_analytics_after_saving"
+                             formControlName="remove_analytics_after_saving">
                       <div class="slider round"></div>
                     </label>
                   </div>
@@ -619,6 +690,45 @@
                   <div class="col-sm-8">
                     <label class="switch">
                       <input type="checkbox" [checked]="non_cb_payment" (click)="changeNCbP()">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Can Use Default Password
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['can_use_default_password']"
+                             formControlName="can_use_default_password">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    2FA
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['two_fact_auth_activation']"
+                             formControlName="two_fact_auth_activation">
+                      <div class="slider round"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    Is Okta Enabled
+                  </div>
+                  <div class="col-sm-8">
+                    <label class="switch">
+                      <input type="checkbox" [(ngModel)]="updateCompany['is_okta_enabled']"
+                             formControlName="is_okta_enabled">
                       <div class="slider round"></div>
                     </label>
                   </div>

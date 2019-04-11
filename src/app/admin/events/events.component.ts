@@ -48,6 +48,15 @@ export class EventsComponent extends Datatable implements OnInit {
   @ViewChild('fileUpload') fileUpload: any;
   defaultColor = '#e9f2f9';
   eventColor = '';
+  desc = ''
+  public options: Object = {
+    placeholderText: 'Add Some Description Here!',
+    charCounterCount: false,
+    toolbarButtons: ['bold'],
+    toolbarButtonsXS: ['bold'],
+    toolbarButtonsSM: ['bold'],
+    toolbarButtonsMD: ['bold'],
+  }
   constructor(private _adminService: AdminService, private _eventsService: EventsService, private fb: FormBuilder, private _script: Script) {
     super()
   }
@@ -103,6 +112,7 @@ export class EventsComponent extends Datatable implements OnInit {
   createEvent(data, btnRef: any = '') {
     btnRef && this.changeButtonProps(btnRef, { textContent: 'Please wait...', disabled: true });
     data.launch_date = new Date(data.launch_date).toISOString();
+    data.description = this.desc.replace(/(<p .*?)>Powered by.*/gmi,'');
     this.newEvent = this._eventsService.createEvent(data)
       .subscribe((response) => {
         this.getEvents();
@@ -119,14 +129,14 @@ export class EventsComponent extends Datatable implements OnInit {
   editEvent(index) {
     this.selectedItem = this.events[index];
     this.eventForm.get('event_name').setValue(this.selectedItem.event_name)
-    this.eventForm.get('description').setValue(this.selectedItem.description)
+    // this.eventForm.get('description').setValue(this.selectedItem.description)
     this.eventForm.get('media').setValue(this.selectedItem.media)
     this.eventForm.get('event_type').setValue(this.selectedItem.event_type)
     this.eventForm.get('launch_date').setValue(this.selectedItem.launch_date)
     this.eventForm.get('launch_time').setValue(this.selectedItem.launch_time);
     this.eventForm.get('color').setValue(this.selectedItem.color || this.defaultColor);
     this.eventColor = this.selectedItem.color || this.defaultColor;
-
+    this.desc = this.selectedItem.description
     this.selectedItem['launch_date'] && (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(this.selectedItem['launch_date']).add(0, 'days').format('MM/DD/YYYY')),
       jQuery('.input-daterange-datepicker').data('daterangepicker').setEndDate(moment(this.selectedItem['launch_date']).utc().add(0, 'days').format('MM/DD/YYYY')));
     this.selectedItem['launch_date'] || (jQuery('.input-daterange-datepicker').data('daterangepicker').setStartDate(moment(new Date()).add(0, 'days').format('MM/DD/YYYY')),
@@ -142,7 +152,7 @@ export class EventsComponent extends Datatable implements OnInit {
     var updatedData = {
       _id: this.selectedItem['_id'],
       event_name: data.event_name,
-      description: data.description,
+      description: this.desc.replace(/(<p .*?)>Powered by.*/gmi,''),
       launch_date: new Date(data.launch_date).toISOString(),
       launch_time: data.launch_time,
       event_type: data.event_type,

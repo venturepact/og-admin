@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from "../../shared/services/admin.service";
 import { Script } from '../../shared/services';
+import { AllCompaniesComponent } from '../companies/all-companies/all-companies.component';
+import { Observable } from 'rxjs/Observable';
 declare var window: any;
 declare var bootbox: any;
 declare var Morris:any;
@@ -26,6 +28,7 @@ export class CancelRequestComponent implements OnInit {
   cancellationCustomers: any;
   trialToActivated: any;
   trialSignups: any;
+  monthlySummaryMrr: any;
   constructor(private adminService: AdminService, private script:Script) {
   }
 
@@ -61,28 +64,45 @@ export class CancelRequestComponent implements OnInit {
   }
   async getAllMrr() {
     this.loading = true;
-    this.cancellationRequests = await this.adminService.cancellationRequests().toPromise();
-    this.upgrades = await this.adminService.upgrades().toPromise();
-    this.downgrades = await this.adminService.downgrades().toPromise();
-    this.trialToActivated = await this.adminService.trialToActivated().toPromise();
-    this.trialSignups = await this.adminService.trialSignups().toPromise();
-    this.loading = false;
+    Observable.forkJoin([
+      this.adminService.cancellationRequests(),
+      this.adminService.upgrades(),
+      this.adminService.downgrades(),
+      this.adminService.trialToActivated(),
+      this.adminService.trialSignups(),
+      this.adminService.cancellationCustomers(),
+      this.adminService.monthlySummaryMrr()
+    ]).subscribe(
+      (response: any) => {
+        this.cancellationRequests = response[0];
+        this.upgrades = response[1];
+        this.downgrades = response[2];
+        this.trialToActivated = response[3];
+        this.trialSignups = response[4]
+        this.cancellationCustomers = response[5];
+        this.monthlySummaryMrr = response[6];
+        this.loading = false
+      },
+      (error: any) => {
+        this.loading = false
+      }
+    )
   }
 
-  preferenceChange() {
-    if(this.mrrSelection === 'cancellationRequests'){
-      this.result = this.cancellationRequests
-    } else if(this.mrrSelection === 'cancellationCustomers'){
-      this.result = this.cancellationCustomers
-    } else if(this.mrrSelection === 'upgrades'){
-      this.result = this.upgrades
-    } else if(this.mrrSelection === 'downgrades'){
-      this.result = this.downgrades
-    } else if(this.mrrSelection === 'trialToActivated'){
-      this.result = this.trialToActivated
-    }else if(this.mrrSelection === 'trialSignups'){
-      this.result = this.trialSignups
-    }
-  }
+  // preferenceChange() {
+  //   if(this.mrrSelection === 'cancellationRequests'){
+  //     this.result = this.cancellationRequests
+  //   } else if(this.mrrSelection === 'cancellationCustomers'){
+  //     this.result = this.cancellationCustomers
+  //   } else if(this.mrrSelection === 'upgrades'){
+  //     this.result = this.upgrades
+  //   } else if(this.mrrSelection === 'downgrades'){
+  //     this.result = this.downgrades
+  //   } else if(this.mrrSelection === 'trialToActivated'){
+  //     this.result = this.trialToActivated
+  //   }else if(this.mrrSelection === 'trialSignups'){
+  //     this.result = this.trialSignups
+  //   }
+  // }
 
 }

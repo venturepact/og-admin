@@ -31,6 +31,9 @@ export class Company {
   public parent_company: String;
   public cname: CName;
   public remove_leads_after_saving: boolean;
+  public remove_Questions_after_saving: boolean;
+  public remove_analytics_after_saving: boolean;
+
 
 
   constructor(company: any) {
@@ -59,6 +62,8 @@ export class Company {
       this.parent_company = company.parent_company;
       this.cname = new CName(company.cname);
       this.remove_leads_after_saving = company.remove_leads_after_saving
+      this.remove_Questions_after_saving = company.remove_Questions_after_saving;
+      this.remove_analytics_after_saving = company.remove_analytics_after_saving;
     }
   }
 }
@@ -103,10 +108,16 @@ export class AdminCompany {
   public cname: CName;
   public child_intercom_id: String;
   public remove_leads_after_saving: boolean;
+  public remove_Questions_after_saving: boolean;
+  public remove_analytics_after_saving: boolean;
+
   public GDPR:boolean;
   public subscription_updated: Date;
   // public leaddyno_url : String;
   // public referralcandy_url : String;
+  public can_use_default_password : boolean;
+  public two_fact_auth_activation : boolean;
+  public is_okta_enabled : boolean;
 
   constructor(company: any) {
     if (company) {
@@ -147,9 +158,15 @@ export class AdminCompany {
       this.cname = new CName(company.cname);
       this.child_intercom_id = company.child_intercom_id;
       this.remove_leads_after_saving = company.remove_leads_after_saving;
+      this.remove_Questions_after_saving = company.remove_Questions_after_saving;
+      this.remove_analytics_after_saving = company.remove_analytics_after_saving;
+
       this.GDPR=company['GDPR'];
       //this.referralcandy_url = company.referral.referralcandy_url;
       //this.leaddyno_url = company.referral.leaddyno_url;
+      this.can_use_default_password = company.can_use_default_password;
+      this.two_fact_auth_activation = company.two_fact_auth.activation;
+      this.is_okta_enabled = company.isOktaEnabled;
     }
   }
 }

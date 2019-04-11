@@ -1,10 +1,10 @@
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-import {AfterViewInit, Component, Output} from '@angular/core';
+import {AfterViewInit, Component, Output, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AdminCompany} from '../../../shared/models/company';
 import {AdminService} from '../../../shared/services/admin.service';
-import {CompanyService} from "../../../shared/services";
+import {CompanyService, CookieService} from "../../../shared/services";
 
 declare var jQuery: any;
 
@@ -14,7 +14,7 @@ declare var jQuery: any;
   styleUrls: ['./single-company.component.css'],
 })
 
-export class SingleCompanyComponent implements AfterViewInit {
+export class SingleCompanyComponent implements OnInit, AfterViewInit {
   templates: any = [];
   company_users: any[];
   id: any;
@@ -23,15 +23,23 @@ export class SingleCompanyComponent implements AfterViewInit {
   custom_features: any;
   companyFeatures: any;
   childCompanies: any;
-
+  sub_role: string;
   constructor(public companyService: CompanyService,
               public route: ActivatedRoute,
-              public _adminService: AdminService) {
+              public _adminService: AdminService,
+              public _cookieService: CookieService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getCompanyInfo(this.id);
     });
 
+  }
+
+  ngOnInit() {
+    if (this._cookieService.readCookie('storage')) {
+      let storage = JSON.parse(this._cookieService.readCookie('storage'));
+      this.sub_role = storage.user.sub_role;
+    }
   }
 
   ngAfterViewInit() {

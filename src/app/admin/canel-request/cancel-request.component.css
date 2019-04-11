@@ -1,22 +1,51 @@
-.panel{
-    border: 1px solid #fb5559 !important;
-    float: left;
-    width: 100%;
-  }
-  .panel-heading{
-    background-color: #2196F3;
-  }
-  .panel-title div{
-    color: #fff;
-    background: #fb5559;
-    padding: 15px 15px;
-  }
-
-  .logs{
-    width:50%;
-  }
-  label {
-    margin: 0 0 0 17px;
+:host {
+  display: block;
+  padding: 0 16px;
 }
-  
-  
+
+input {
+  width: 250px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0 0 0 8px;
+}
+
+.single-user-container{
+    top: 72px;
+    position: relative;
+    margin-left: 255px;
+}
+
+.div-container div{
+	height:30px;
+}
+
+
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+
+.panel-title{
+  color: #fff;
+  background: #fb5559;
+  padding: 15px 15px;
+  float: left;
+  width: 100%;
+}
+.panel{
+  border: 1px solid #fb5559 !important;
+  float: left;
+  width: 100%;
+}
+.mrr-container .panel-body{
+
+  height: 360px;
+  overflow: overlay;
+}

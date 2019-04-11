@@ -13,7 +13,7 @@
         <li role="presentation" [class.active]="" (click)="showTab('membership')" >
           <a href="#" aria-controls="myProfile" role="tab" data-toggle="pill" class="hvr-sweep-to-right">Membership details</a>
         </li>
-          <li role="presentation" [class.active]="" (click)="showTab('features')" >
+        <li role="presentation" [class.active]="" (click)="showTab('features')" *ngIf="sub_role === null">
           <a href="#" aria-controls="myProfile" role="tab" data-toggle="tab" class="hvr-sweep-to-right">Company features</a>
         </li>
         <li role="presentation" [class.active]="" (click)="showTab('integration')">
@@ -31,7 +31,7 @@
   <div class="container col-md-12 company-cont">
     <div class="row company">
       <div>
-        <company-detail [company]="company" [customFeatures]="custom_features"
+        <company-detail [company]="company" [sub_role]="sub_role" [customFeatures]="custom_features"
          (childCompany)="updatecompany($event)"></company-detail>
       </div>
       <div>
@@ -41,12 +41,12 @@
       </div>
     </div>
     <div class="row hide team">
-      <team-detail [team]="company_users" [company]="company" [userLimit]="company.current_limit_users"
+      <team-detail [team]="company_users" [sub_role]="sub_role" [company]="company" [userLimit]="company.current_limit_users"
                    [companyId]="company.id"></team-detail>
      </div>
     <div class="row hide features">
       <div class="col-md-12 col-sm-12">
-        <agency [company]="company.id"></agency>
+        <agency [sub_role]="sub_role" [company]="company.id"></agency>
       </div>
       <div class="col-md-6 col-sm-6">
         <!-- <company-feature></company-feature> -->
@@ -69,7 +69,7 @@
     </div>
     <div class="row hide membership">
       <div class="col-md-12 col-sm-12">
-        <membership-detail [company]="company"></membership-detail>
+        <membership-detail [sub_role]="sub_role" [company]="company"></membership-detail>
       </div>
     </div>
     <div class="row hide logs">

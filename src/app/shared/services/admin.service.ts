@@ -172,8 +172,13 @@ export class AdminService extends BaseService {
       child_intercom_id: company.child_intercom_id,
       change_immediate: company.change_immediate,
       remove_leads_after_saving: company.remove_leads_after_saving,
+      remove_Questions_after_saving:company.remove_Questions_after_saving,
+      remove_analytics_after_saving:company.remove_analytics_after_saving,
       GDPR: company["GDPR"],
-      deal_refered: company["deal_refered"]
+      deal_refered: company["deal_refered"],
+      can_use_default_password: company['can_use_default_password'],
+      two_fact_auth_activation: company['two_fact_auth_activation'],
+      is_okta_enabled: company['is_okta_enabled']
     };
     return this._http
       .put(
@@ -743,6 +748,11 @@ export class AdminService extends BaseService {
   }
   trialSignups() {
     return this._http.get(`${this._url}/admin/trialSignups`, this.get_options())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  monthlySummaryMrr() {
+    return this._http.get(`${this._url}/admin/monthlySummaryMrr`, this.get_options())
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -18,6 +18,7 @@ declare var window: any;
 export class MembershipDetailComponent implements OnInit {
   id: string;
   @Input() company: any;
+  @Input() sub_role: any;
   payment: any;
   plan: any;
   subscriptionStatus: string = '';

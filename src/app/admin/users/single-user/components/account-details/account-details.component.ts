@@ -64,9 +64,9 @@ export class AccountDetailsComponent implements OnInit, AfterViewInit {
         active: [this.updateModel.active, Validators.compose([Validators.required])],
         timezone: [this.updateModel.timezone, Validators.compose([])],
         can_create_new_company:[this.updateModel.can_create_new_company, Validators.compose([Validators.required])],
-        two_fact_auth:[this.updateModel.two_fact_auth, Validators.compose([Validators.required])]
+        two_fact_auth:[this.updateModel.two_fact_auth.is_configured],
+        can_use_default_password:[this.updateModel.can_use_default_password]
     })
-
     this.emailForm = this.fb.group({
       email: [this.emailUpdate, Validators.compose([
         Validators.required, Validators.minLength(4), EmailValidator.format
@@ -129,7 +129,7 @@ export class AccountDetailsComponent implements OnInit, AfterViewInit {
       .subscribe((result) => {
         this.model = new User(result);
         this.updateModel = new User(result);
-        // console.log(result, 'user model');
+        console.log(this.updateModel, 'user model');
         this.emailUpdate = result.emails[0].email;
         this.email_verify = result.emails[0].verification.complete;
         this.loading = false;

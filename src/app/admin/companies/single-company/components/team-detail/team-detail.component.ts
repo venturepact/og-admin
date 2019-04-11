@@ -20,6 +20,7 @@ export class TeamDetailComponent implements OnInit {
   @Input() company: any;
   @Input() userLimit: number;
   @Input() companyId: string;
+  @Input() sub_role: string;
   updateTeam: any;
   delUser: any = '';
   error: any = '';

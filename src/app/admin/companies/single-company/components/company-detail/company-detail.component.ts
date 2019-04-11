@@ -21,6 +21,7 @@ declare var jQuery: any;
 export class CompanyDetailComponent implements OnInit {
 
   @Input() company: any = '';
+  @Input() sub_role: string = '';
   childCompany = new EventEmitter<any>();
   updateCompany: any = ''; //AdminCompany = new AdminCompany({});
   change_immediate: string;
@@ -85,6 +86,8 @@ export class CompanyDetailComponent implements OnInit {
       leaddyno_url: [this.updateCompany.referral.leaddyno_url],
       is_referralcandy_visible: [this.updateCompany.referral.is_referralcandy_visible],
       remove_leads_after_saving: [this.updateCompany.remove_leads_after_saving],
+      remove_Questions_after_saving:[this.updateCompany.remove_Questions_after_saving],
+      remove_analytics_after_saving:[this.updateCompany.remove_analytics_after_saving],
       referralcandy_url: [this.updateCompany.referral.referralcandy_url],
       sharing_url: [this.updateCompany.referral.sharing_url],
       growsumo_url: [this.updateCompany.referral.growsumo_url],
@@ -92,9 +95,11 @@ export class CompanyDetailComponent implements OnInit {
       change_immediate: [false],
       company_logo: [this.customFeatures['extras']['company_logo']['active']],
       GDPR: [this.updateCompany['GDPR'] || false],
-      deal_refered: [this.updateCompany['deal_refered'] || null]
+      deal_refered: [this.updateCompany['deal_refered'] || null],
+      can_use_default_password: [this.updateCompany['can_use_default_password'] || true],
+      two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']],
+      is_okta_enabled: [this.updateCompany['is_okta_enabled'] || false]
     });
-    console.log(this.updateCompany);
     this.getPlanList();
     this.getCompanyCoupon();
     this.getCurrentSubscription();
