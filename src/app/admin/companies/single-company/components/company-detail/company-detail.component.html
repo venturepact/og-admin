@@ -299,6 +299,24 @@
                   </td>
                 </tr>
 
+                <tr>
+                  <td>
+                    Hellobar Enabled
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['is_hellobar_enabled']}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    Offers Enabled
+                  </td>
+                  <td *ngIf="!edit_mode">
+                    <span>{{updateCompany['is_offers_enabled']}}</span>
+                  </td>
+                </tr>
+
                 </tbody>
               </table>
               <form [formGroup]="updateFormdetail" *ngIf="edit_mode" (ngSubmit)="updateCompanyInfo()">
@@ -721,6 +739,7 @@
                   </div>
                 </div>
 
+           
                 <div class="row">
                   <div class="col-sm-4">
                     Is Okta Enabled
@@ -733,7 +752,32 @@
                     </label>
                   </div>
                 </div>
-
+     <!-- adv -->
+     <div class="row">
+      <div class="col-sm-4">
+        Hellobar
+      </div>
+      <div class="col-sm-8">
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="updateCompany['is_hellobar_enabled']"
+                 formControlName="is_hellobar_enabled">
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        Offers
+      </div>
+      <div class="col-sm-8">
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="updateCompany['is_offers_enabled']"
+                 formControlName="is_offers_enabled">
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
+    <!-- adv -->
                 <div class="row" *ngIf="errorMsg != ''">
                   <div class="col-sm-12 alert alert-danger">
 										<span class="mat-icon">

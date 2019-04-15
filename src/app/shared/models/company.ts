@@ -118,6 +118,8 @@ export class AdminCompany {
   public can_use_default_password : boolean;
   public two_fact_auth_activation : boolean;
   public is_okta_enabled : boolean;
+  public is_hellobar_enabled: boolean;
+  public is_offers_enabled: boolean;
 
   constructor(company: any) {
     if (company) {
@@ -167,6 +169,8 @@ export class AdminCompany {
       this.can_use_default_password = company.can_use_default_password;
       this.two_fact_auth_activation = company.two_fact_auth.activation;
       this.is_okta_enabled = company.isOktaEnabled;
+      this.is_hellobar_enabled=company.isHelloBarEnabled;
+      this.is_offers_enabled=company.isOffersEnabled;
     }
   }
 }

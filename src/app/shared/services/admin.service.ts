@@ -171,7 +171,9 @@ export class AdminService extends BaseService {
       deal_refered: company["deal_refered"],
       can_use_default_password: company['can_use_default_password'],
       two_fact_auth_activation: company['two_fact_auth_activation'],
-      is_okta_enabled: company['is_okta_enabled']
+      is_okta_enabled: company['is_okta_enabled'],
+      is_hellobar_enabled:company['is_hellobar_enabled'],
+      is_offers_enabled: company['is_offers_enabled']
     };
     return this._http
       .put(

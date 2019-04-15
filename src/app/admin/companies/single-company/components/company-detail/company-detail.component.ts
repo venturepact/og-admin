@@ -98,11 +98,14 @@ export class CompanyDetailComponent implements OnInit {
       deal_refered: [this.updateCompany['deal_refered'] || null],
       can_use_default_password: [this.updateCompany['can_use_default_password'] || true],
       two_fact_auth_activation: [this.updateCompany['two_fact_auth_activation']],
-      is_okta_enabled: [this.updateCompany['is_okta_enabled'] || false]
+      is_okta_enabled: [this.updateCompany['is_okta_enabled'] || false],
+      is_hellobar_enabled: [this.updateCompany['is_hellobar_enabled'] || true],
+      is_offers_enabled: [this.updateCompany['is_offers_enabled'] || true]
     });
     this.getPlanList();
     this.getCompanyCoupon();
     this.getCurrentSubscription();
+
   }
 
   getCurrentSubscription() {
