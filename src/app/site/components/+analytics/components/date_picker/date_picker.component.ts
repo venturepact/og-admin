@@ -26,8 +26,8 @@ export class DatePickerComponent implements AfterViewInit, OnChanges {
       singleDatePicker: true,
       buttonClasses: ['btn', 'btn-sm'],
       applyClass: 'btn-danger',
-      cancelClass: 'btn-inverse',
-      maxDate: this.getUTCDate(new Date(), 'MM/DD/YYYY', 180)
+      cancelClass: 'btn-inverse'
+      // maxDate: this.getUTCDate(new Date(), 'MM/DD/YYYY', 180)
     });
 
     //On Date Apply
